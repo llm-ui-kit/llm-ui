@@ -1,0 +1,47 @@
+---
+import { Badge } from "@/components/ui/Badge";
+import { formatDate } from "@/lib/utils";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type Props = CollectionEntry<"blog">;
+
+const post = Astro.props;
+---
+
+<article class="group space-y-4">
+  <a
+    href={`/blog/${post.slug}/`}
+    class="flex h-52 transition duration-300 group-hover:-translate-y-2 group-hover:shadow-xl"
+  >
+    <Image
+      loading="eager"
+      class="h-full w-full overflow-hidden rounded-xl object-cover"
+      width={720}
+      height={360}
+      src={post.data.cover}
+      alt="descriptive text"
+      transition:name={`img-${post.slug}`}
+    />
+  </a>
+
+  <div class="flex items-center justify-between">
+    <span
+      class="text-muted-foreground font-medium"
+      transition:name={"date-" + post.slug}
+    >
+      {formatDate(post.data.pubDate)}
+    </span>
+  </div>
+
+  <div>
+    <a href={`/blog/${post.slug}/`} class="group-hover:underline">
+      <h2
+        class="font-heading line-clamp-3 text-xl leading-snug md:text-2xl"
+        transition:name={"title-" + post.slug}
+      >
+        {post.data.title}
+      </h2>
+    </a>
+  </div>
+</article>

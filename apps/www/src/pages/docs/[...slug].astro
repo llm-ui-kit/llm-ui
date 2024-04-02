@@ -1,0 +1,83 @@
+---
+import { MdxComponents } from "@/components/content/MdxComponents";
+import DocsSidebarNav from "@/components/layout/SidebarNav.astro";
+import DocsPageHeader from "@/components/PageHeader.astro";
+import DocsPager from "@/components/Pager.astro";
+import { DashboardTableOfContents } from "@/components/TableOfContents";
+import { ScrollArea } from "@/components/ui/ScrollArea";
+import { docsConfig } from "@/config/docs";
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getTableOfContents } from "@/lib/tableOfContents";
+import { Icon } from "astro-icon/components";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("docs");
+  return docs.map((doc) => ({
+    params: { slug: doc.slug },
+    props: doc,
+  }));
+}
+
+type Props = CollectionEntry<"docs">;
+
+const doc = Astro.props;
+const slug = Astro.params.slug;
+const toc = await getTableOfContents(doc.body);
+
+const { Content } = await doc.render();
+
+if (!slug || !doc) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+---
+
+<MainLayout title={doc.data.title} description={doc.data.description}>
+  <div class="container flex-1">
+    <div
+      class="flex-1 md:grid md:grid-cols-[220px_1fr] md:gap-6 lg:grid-cols-[240px_1fr] lg:gap-10"
+    >
+      <aside
+        class="fixed top-14 z-30 -ml-2 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 md:sticky md:block"
+      >
+        <ScrollArea className="h-full py-6 pr-6 lg:py-8" client:load>
+          <DocsSidebarNav items={docsConfig.sidebarNav} />
+        </ScrollArea>
+      </aside>
+      <main
+        class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]"
+        data-pagefind-body
+      >
+        <div class="mx-auto w-full min-w-0">
+          <div
+            class="text-muted-foreground mb-4 flex items-center space-x-1 text-sm"
+          >
+            <div class="truncate">Docs</div>
+            <Icon name="lucide:chevron-right" class="size-4" />
+            <div class="text-foreground font-medium">{doc.data.title}</div>
+          </div>
+
+          <DocsPageHeader
+            heading={doc.data.title}
+            text={doc.data.description}
+          />
+
+          <Content components={MdxComponents} />
+
+          <hr class="my-4 md:my-6" />
+          <DocsPager slug={doc.slug} />
+        </div>
+        <div class="hidden text-sm xl:block">
+          <div
+            class="top-18 sticky -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-10"
+          >
+            <DashboardTableOfContents toc={toc} client:load />
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</MainLayout>

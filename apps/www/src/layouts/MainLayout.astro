@@ -1,0 +1,63 @@
+---
+import Footer from "@/components/layout/Footer.astro";
+import Header from "@/components/layout/Header.astro";
+import { cn } from "@/lib/utils";
+import BaseLayout from "./BaseLayout.astro";
+import { SheetMobileNav } from "@/components/layout/SheetMobileNav";
+import { CommandMenu } from "@/components/CommandMenu";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { siteConfig } from "@/config/site";
+import { Icon } from "astro-icon/components";
+import { marketingConfig } from "@/config/marketing";
+import MainNav from "@/components/layout/MainNav.astro";
+
+type Props = {
+  title: string;
+  description?: string;
+  mainClass?: string;
+};
+
+const { title, description, mainClass } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <Header className="border-b">
+    <MainNav items={marketingConfig.mainNav} slot="left-header" />
+    <SheetMobileNav
+      mainNavItems={marketingConfig.mainNav}
+      slot="mobile-nav-header"
+      client:load
+    />
+    <div
+      class="flex flex-1 items-center gap-x-4 md:flex-initial"
+      slot="right-header"
+    >
+      <CommandMenu client:load />
+      <a
+        href={siteConfig.links.discord}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="discord"
+      >
+        <Icon name="discord" class="size-[22px]" />
+      </a>
+      <a
+        href={siteConfig.links.github}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="github"
+      >
+        <Icon name="github" class="size-[22px]" />
+      </a>
+      <div class="hidden sm:block sm:min-w-[22px]">
+        <ThemeToggle client:load />
+      </div>
+    </div>
+  </Header>
+
+  <main class={cn(mainClass)}>
+    <slot />
+  </main>
+
+  <Footer />
+</BaseLayout>

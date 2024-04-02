@@ -1,0 +1,25 @@
+name: "Setup and install"
+description: "Common setup steps for pnpm actions"
+
+# See: https://github.com/t3-oss/create-t3-turbo/blob/main/tooling/github/setup/action.yml
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: echo "NODE_VERSION=$(cat .node-version)" >> $GITHUB_OUTPUT
+      name: Read .node-version
+      id: nvm
+
+    - shell: bash
+      name: Enable Corepack
+      run: corepack enable
+
+    - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
+        cache: "pnpm"
+
+    - shell: bash
+      run: pnpm install --frozen-lockfile

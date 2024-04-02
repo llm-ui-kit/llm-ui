@@ -1,0 +1,7 @@
+apps/www/.astro
+apps/www/.vercel
+apps/www/dist
+apps/www/public
+apps/www/src/components/Posthog.astro
+
+pnpm-lock.yaml

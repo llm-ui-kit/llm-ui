@@ -1,0 +1,56 @@
+---
+import { DashboardTableOfContents } from "@/components/TableOfContents";
+import { buttonVariants } from "@/components/ui/Button";
+import { getTableOfContents } from "@/lib/tableOfContents";
+import { cn, formatDate } from "@/lib/utils";
+import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
+import MainLayout from "./MainLayout.astro";
+
+type Props = CollectionEntry<"guides">;
+
+const guide = Astro.props;
+const slug = guide.slug;
+const { title, description, pubDate } = guide.data;
+const toc = await getTableOfContents(guide.body);
+---
+
+<MainLayout title={title} description={description}>
+  <main
+    class="container max-w-5xl py-6 lg:grid lg:grid-cols-[1fr_300px] lg:gap-10 lg:py-10 xl:gap-20"
+  >
+    <article class="prose dark:prose-invert max-w-none">
+      <span
+        class="text-muted-foreground text-sm font-medium"
+        transition:name={"date-" + slug}
+      >
+        {formatDate(pubDate)}
+      </span>
+      <h1 class="font-heading my-4 text-4xl" transition:name={"title-" + slug}>
+        {title}
+      </h1>
+      <p class="text-muted-foreground" transition:name={"desc-" + slug}>
+        {description}
+      </p>
+      <hr class="my-6" />
+
+      <slot />
+
+      <hr class="my-4 flex md:hidden" />
+      <div class="flex justify-start py-6 md:hidden lg:py-10">
+        <a href="/guides" class={cn(buttonVariants({ variant: "ghost" }))}>
+          <Icon name="lucide:chevron-left" class="mr-2 size-4" />
+          See all guides
+        </a>
+      </div>
+    </article>
+    <div class="hidden text-sm lg:block">
+      <div
+        class="top-18 sticky -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-10"
+        transition:animate="slide"
+      >
+        <DashboardTableOfContents toc={toc} client:load />
+      </div>
+    </div>
+  </main>
+</MainLayout>

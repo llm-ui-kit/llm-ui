@@ -1,0 +1,61 @@
+---
+import { Badge } from "@/components/ui/Badge";
+import { buttonVariants } from "@/components/ui/Button";
+import { cn, formatDate } from "@/lib/utils";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import MainLayout from "./MainLayout.astro";
+
+type Props = CollectionEntry<"blog">;
+
+const slug = Astro.props.slug;
+const { title, description, pubDate, updatedDate, cover, category } =
+  Astro.props.data;
+---
+
+<MainLayout title={title} description={description}>
+  <div class="container relative max-w-screen-md py-10">
+    <button
+      onclick="history.back()"
+      class={cn(
+        buttonVariants({ variant: "ghost" }),
+        "absolute left-[-200px] top-10 hidden xl:inline-flex text-muted-foreground",
+      )}
+      transition:animate="slide"
+    >
+      <Icon name="lucide:chevron-left" class="mr-2 size-4" />
+      {" "}Back
+    </button>
+
+    <article class="prose dark:prose-invert max-w-none">
+      <Image
+        class="my-6 overflow-hidden rounded-xl"
+        width={720}
+        height={360}
+        src={cover}
+        alt={title}
+        transition:name={`img-${slug}`}
+      />
+      <div class="flex items-center justify-between">
+        <span
+          class="text-muted-foreground font-medium"
+          transition:name={`date-${slug}`}
+        >
+          {formatDate(pubDate)}
+          {
+            updatedDate && (
+              <span>- Last updated on {formatDate(updatedDate)}</span>
+            )
+          }
+        </span>
+      </div>
+      <h1 class="font-heading my-4 text-4xl" transition:name={`title-${slug}`}>
+        {title}
+      </h1>
+      <p>{description}</p>
+      <hr class="my-6" />
+      <slot />
+    </article>
+  </div>
+</MainLayout>

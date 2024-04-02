@@ -1,0 +1,60 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { cn, formatDate } from "@/lib/utils";
+import { Badge } from "@/components/ui/Badge";
+import { buttonVariants } from "@/components/ui/Button";
+import { Icon } from "astro-icon/components";
+
+export async function getStaticPaths() {
+  const changelogs = await getCollection("changelog");
+
+  return changelogs.map((changelog) => ({
+    params: { slug: changelog.slug },
+    props: { changelog },
+  }));
+}
+
+const { changelog } = Astro.props;
+const { Content } = await changelog.render();
+---
+
+<MainLayout title={changelog.data.title}>
+  <section class="container max-w-screen-lg pt-12">
+    <div class="flex w-full flex-col max-md:gap-y-4 md:flex-row">
+      <div class="shrink-0 grow-0 md:basis-32 lg:basis-56">
+        <div class="mr-6 flex w-auto md:sticky md:top-24">
+          <div class="flex flex-col gap-y-2 pb-4">
+            <button
+              onclick="history.back()"
+              class={cn(
+                buttonVariants({ variant: "ghost" }),
+                "text-muted-foreground mb-5",
+              )}
+              transition:animate="slide"
+            >
+              <Icon name="lucide:chevron-left" class="mr-2 size-4" />
+              {" "}Back
+            </button>
+            <Badge
+              variant="default"
+              radius="lg"
+              className="text-md bg_release_version h-7 w-14 justify-center text-white"
+            >
+              {changelog.data.versionNumber}
+            </Badge>
+            <span class="text-muted-foreground text-sm">
+              {formatDate(changelog.data.date)}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="prose dark:prose-invert prose-img:rounded-3xl w-full max-w-none pb-24"
+      >
+        <Content />
+      </div>
+    </div>
+  </section>
+</MainLayout>

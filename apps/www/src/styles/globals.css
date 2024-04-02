@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --background-200: 0 0% 98%;
+
+    --foreground: 0 0% 9%;
+
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 9%;
+
+    --accent: 0, 0%, 0%, 0.06;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+    --ds-shadow-border: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+
+  .dark {
+    --background: 0 0% 4%;
+    --background-200: 0 170% 0%;
+
+    --foreground: 0 0% 93%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 80%;
+
+    --accent: 0, 0%, 100%, 0.09;
+    --accent-foreground: 0 0% 93%;
+
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 93%;
+
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 93%;
+
+    --primary: 0 0% 93%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 93%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 93%;
+
+    --ring: 0 0% 12%;
+
+    --radius: 0.5rem;
+    --ds-shadow-border: 0 0 0 1px hsla(0, 0%, 100%, 0.145);
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: "CalSans Semibold";
+    src: url("/fonts/calsans-semibold.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    /* scroll-padding-top: 4rem; */
+    @apply scroll-pt-16 lg:scroll-pt-0;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+
+  /* Documentation part */
+  .docs-grid-cols-2 {
+    @apply grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2;
+  }
+
+  .callout > * {
+    @apply my-0 !important;
+  }
+
+  .font-icon-callout {
+    font-family:
+      Apple Color Emoji,
+      Segoe UI Emoji,
+      Segoe UI Symbol;
+  }
+
+  /* MdxComponent: For <code></code> with no parent <pre></pre> */
+  :not(pre) > code {
+    @apply bg-background text-foreground relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm;
+  }
+}
+
+.text-gradient_indigo-purple {
+  background: linear-gradient(90deg, #6366f1 0%, rgba(168 85 247 / 0.9) 100%);
+  /* background: linear-gradient(83.21deg,#3245ff 0%,#bc52ee 100%); */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg_release_version {
+  background: linear-gradient(
+    25deg,
+    #3a084e,
+    #5b0e81,
+    #bc4c9b,
+    #df7f4f
+  ) !important;
+}
+
+/* Vercel card style */
+.card_border {
+  box-shadow:
+    var(--ds-shadow-border),
+    0 4px 6px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.15s ease;
+}
+
+.card_border:hover {
+  box-shadow:
+    var(--ds-shadow-border),
+    0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.dark .card_border:hover {
+  box-shadow: 0 0 0 1px white;
+}
+
+/* Custom scrollbar  */
+[data-radix-scroll-area-viewport] {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+[data-radix-scroll-area-viewport]::-webkit-scrollbar {
+  display: none;
+}
+
+.anime-grid {
+  @apply grid grid-cols-[repeat(auto-fill,minmax(max(var(--min-column-width),var(--max-column-width)),1fr))] content-start gap-x-[--column-gap] gap-y-8 [--column-gap:12px] [--max-column-count:7] [--max-column-width:calc((100%-var(--total-gap-width))/var(--max-column-count))] [--min-column-width:150px] [--total-gap-width:calc((var(--max-column-count)-1)*var(--column-gap))] sm:[--column-gap:14px] md:gap-y-10 md:[--column-gap:18px];
+}

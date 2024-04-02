@@ -1,0 +1,123 @@
+---
+import { siteConfig } from "@/config/site";
+import "@/styles/globals.css";
+import { ViewTransitions } from "astro:transitions";
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const {
+  title,
+  description = siteConfig.description,
+  image = "/og.jpg",
+} = Astro.props;
+
+const calcFullTitle = (title: string | undefined) => {
+  if (!title) {
+    return "llm-ui";
+  }
+  if (title.startsWith("llm-ui")) {
+    return title;
+  }
+  return `${title} | llm-ui`;
+};
+const fullTitle = calcFullTitle(title);
+---
+
+<!-- inspiration https://github.com/withastro/astro/issues/8711#issue-1919938037 -->
+<script is:inline>
+  // Dark mode with prevent flickering flash between navigations
+  const disableAnimation = () => {
+    const css = document.createElement("style");
+    css.appendChild(
+      document.createTextNode(
+        `*{
+              -webkit-transition:none!important;
+              -moz-transition:none!important;
+              -o-transition:none!important;
+              -ms-transition:none!important;
+              transition:none!important
+              }`,
+      ),
+    );
+    document.head.appendChild(css);
+
+    return () => {
+      // Force restyle
+      (() => window.getComputedStyle(document.body))();
+
+      // Wait for next tick before removing
+      setTimeout(() => {
+        document.head.removeChild(css);
+      }, 1);
+    };
+  };
+
+  const setDarkMode = () => {
+    const theme = (() => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme");
+      }
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
+      return "light";
+    })();
+    if (theme === "light") {
+      document.documentElement.classList.remove("dark");
+    } else {
+      document.documentElement.classList.add("dark");
+    }
+    disableAnimation();
+    window.localStorage.setItem("theme", theme);
+  };
+  setDarkMode();
+  document.addEventListener("astro:after-swap", setDarkMode);
+</script>
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Font preloads -->
+<link
+  rel="preload"
+  href="/fonts/calsans-semibold.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<ViewTransitions />

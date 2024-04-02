@@ -1,0 +1,54 @@
+---
+import PageHeader from "@/components/PageHeader.astro";
+import { Badge } from "@/components/ui/Badge";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { formatDate } from "@/lib/utils";
+import { getCollection } from "astro:content";
+import * as R from "remeda";
+
+const posts = R.pipe(
+  await getCollection("changelog"),
+  R.sortBy((post) => post.data.date),
+  R.reverse(),
+);
+---
+
+<MainLayout title="Changelog">
+  <section class="container max-w-screen-lg space-y-6 pt-12">
+    <PageHeader heading="Changelog" />
+
+    <ul class="pt-6">
+      {
+        posts.map((post) => (
+          <li class="flex w-full flex-col max-md:gap-y-4 md:flex-row">
+            <div class="shrink-0 grow-0 md:basis-32 lg:basis-56">
+              <div class="mr-6 w-auto md:sticky md:top-24">
+                <a
+                  href={`/changelog/${post.slug}`}
+                  class="flex flex-col gap-y-2 pb-4"
+                >
+                  <Badge
+                    variant="default"
+                    radius="lg"
+                    className="w-14 h-7 justify-center text-md bg_release_version text-white"
+                  >
+                    {post.data.versionNumber}
+                  </Badge>
+                  <span class="text-muted-foreground text-sm">
+                    {formatDate(post.data.date)}
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            <div class="prose dark:prose-invert prose-img:rounded-3xl w-full max-w-none pb-24">
+              {post.render().then(({ Content }) => (
+                <Content />
+              ))}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</MainLayout>

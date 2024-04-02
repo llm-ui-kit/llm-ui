@@ -1,0 +1,37 @@
+---
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
+import { Icon } from "astro-icon/components";
+
+type Props = {
+  className?: string;
+};
+
+const { className } = Astro.props;
+---
+
+<header
+  class={cn(
+    "flex items-center h-16 md:h-18 z-50 sticky top-0 bg-background",
+    className,
+  )}
+>
+  <div class="container relative flex w-full items-center justify-between">
+    <div class="flex items-center gap-6 md:gap-8 lg:gap-10">
+      <a href="/" class="hidden items-center space-x-2 md:flex">
+        <Icon name="mark" class="size-6" color="#6366f1" />
+        <span class="hidden font-bold sm:inline-block">
+          {siteConfig.name}
+        </span>
+      </a>
+
+      <slot name="mobile-nav-header" />
+
+      <div class="hidden md:flex">
+        <slot name="left-header" />
+      </div>
+    </div>
+
+    <slot name="right-header" />
+  </div>
+</header>

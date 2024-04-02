@@ -1,0 +1,30 @@
+{
+  "name": "llm-ui",
+  "packageManager": "pnpm@8.15.5+sha256.4b4efa12490e5055d59b9b9fc9438b7d581a6b7af3b5675eb5c5f447cee1a589",
+  "scripts": {
+    "lint": "eslint .",
+    "dev": "nx run-many -t dev",
+    "tsc": "nx run-many -t tsc",
+    "prepare": "husky",
+    "format-check": "prettier --config=.prettierrc.precommit.mjs --check .",
+    "format-write": "prettier --config=.prettierrc.precommit.mjs --write ."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-astro": "^0.33.1",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.0.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "nx": "18.2.1",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "prettier-plugin-tailwindcss": "^0.5.13",
+    "typescript": "^5.4.3"
+  },
+  "license": "ISC"
+}

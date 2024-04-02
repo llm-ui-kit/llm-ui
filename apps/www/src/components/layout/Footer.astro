@@ -1,0 +1,13 @@
+---
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
+import { Icon } from "astro-icon/components";
+
+type Props = {
+  className?: string;
+};
+
+const { className } = Astro.props;
+---
+
+<footer class={cn(className, "border-t")}></footer>

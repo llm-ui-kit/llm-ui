@@ -1,0 +1,51 @@
+---
+import { cn } from "@/lib/utils";
+import type { SidebarNavItem } from "@/types";
+
+type Props = {
+  items: SidebarNavItem[];
+};
+
+const { items } = Astro.props;
+const { pathname } = Astro.url;
+---
+
+{
+  items.length ? (
+    <div class="w-full">
+      {items.map((item) => (
+        <div class={cn("pb-8")}>
+          <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-medium">
+            {item.title}
+          </h4>
+
+          {item.items?.length ? (
+            <div class="grid grid-flow-row auto-rows-max text-sm">
+              {item.items.map((item) =>
+                !item.disabled && item.href ? (
+                  <a
+                    href={item.href}
+                    class={cn(
+                      "flex w-full items-center rounded-md p-2 hover:underline",
+                      {
+                        "bg-muted": pathname === item.href,
+                      },
+                    )}
+                    target={item.external ? "_blank" : ""}
+                    rel={item.external ? "noreferrer" : ""}
+                  >
+                    {item.title}
+                  </a>
+                ) : (
+                  <span class="flex w-full cursor-not-allowed items-center rounded-md p-2 opacity-60">
+                    {item.title}
+                  </span>
+                ),
+              )}
+            </div>
+          ) : null}
+        </div>
+      ))}
+    </div>
+  ) : null
+}

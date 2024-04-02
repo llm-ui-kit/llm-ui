@@ -1,0 +1,20 @@
+---
+import { cn } from "@/lib/utils";
+
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  heading: string;
+  text?: string;
+  className?: string;
+}
+const { heading, text, className, ...attrs } = Astro.props;
+---
+
+<div class={cn("space-y-4", className)} {...attrs}>
+  <h1 class="font-heading inline-block text-4xl">
+    {heading}
+  </h1>
+  {text && <p class="text-muted-foreground">{text}</p>}
+</div>
+<hr class="my-4" />
