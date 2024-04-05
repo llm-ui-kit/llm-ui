@@ -58,3 +58,5 @@ web_modules/
 .DS_Store
 
 .nx
+
+packages/*/dist

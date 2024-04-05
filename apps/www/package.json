@@ -10,7 +10,7 @@
     "build-pagefind": "pagefind --site .vercel/output/static && cp -r .vercel/output/static/pagefind public",
     "preview": "astro preview",
     "astro": "astro",
-    "tsc": "astro check"
+    "typecheck": "astro check"
   },
   "dependencies": {
     "@astrojs/db": "^0.8.6",
@@ -57,7 +57,8 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "@llm-ui/react": "workspace:*"
   },
   "devDependencies": {
     "@astrojs/check": "^0.5.10",

@@ -1,0 +1,36 @@
+{
+  "name": "@llm-ui/react",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@llm-ui/tsconfig": "workspace:*",
+    "@types/react": "18.2.60",
+    "@types/react-dom": "18.2.19",
+    "@uploadthing/eslint-config": "0.2.0",
+    "react": "18.2.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  }
+}

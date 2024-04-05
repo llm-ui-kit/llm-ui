@@ -28,9 +28,9 @@ jobs:
       - uses: ./.github/shared
       - run: pnpm lint
 
-  tsc:
+  typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/shared
-      - run: pnpm tsc
+      - run: pnpm typecheck

@@ -7,31 +7,36 @@ import reactRecommended from "eslint-plugin-react/configs/recommended.js";
 import globals from "globals";
 const astroRecommended = eslintPluginAstro.configs["flat/recommended"];
 
-const wwwFolder = "apps/www";
+const appWww = "apps/www";
+const packageReact = "packages/react";
+
+const reactProjects = [appWww, packageReact];
+const reactProjectsGlob = `{${reactProjects.join(",")}}`;
+const typescriptProjects = [...reactProjects];
 
 export default [
   {
     ignores: [
-      `${wwwFolder}/{public,dist,.vercel,.astro}/**/*`,
-      `${wwwFolder}/src/components/Posthog.astro`,
+      `${appWww}/{public,dist,.vercel,.astro}/**/*`,
+      `${appWww}/src/components/Posthog.astro`,
     ],
   },
-  {
-    files: [`${wwwFolder}/**/*.{ts,tsx}`],
+  ...typescriptProjects.map((project) => ({
+    files: [`${project}/**/*.{ts,tsx}`],
     plugins: {
       "@typescript-eslint": typescriptPlugin,
     },
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
-        project: `${wwwFolder}/tsconfig.json`,
+        project: `${project}/tsconfig.json`,
         sourceType: "module",
         ecmaVersion: 2020,
       },
     },
-  },
+  })),
   {
-    files: [`${wwwFolder}/**/*.{jsx,tsx}`],
+    files: [`${reactProjectsGlob}/**/*.{jsx,tsx}`],
     ...reactRecommended,
     languageOptions: {
       ...reactRecommended.languageOptions,
@@ -46,7 +51,7 @@ export default [
     },
   },
   {
-    files: [`${wwwFolder}/**/*.{js,jsx,mjs,cjs,ts,tsx}`],
+    files: [`${reactProjectsGlob}/**/*.{js,jsx,mjs,cjs,ts,tsx}`],
     ...js.configs.recommended,
     plugins: {
       "prefer-arrow": preferArrow,
@@ -67,7 +72,7 @@ export default [
   },
   {
     ...astroRecommended,
-    files: [`${wwwFolder}/**/*.{astro}`],
+    files: [`${appWww}/**/*.{astro}`],
     rules: {
       ...astroRecommended.rules,
     },
