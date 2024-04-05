@@ -12,7 +12,10 @@ import {
 } from "@/components/ui/Command";
 import { search, type PagefindResultWithData } from "@/lib/search";
 import { cn } from "@/lib/utils";
+import { helloWorld } from "@llm-ui/react";
 import { FileIcon } from "lucide-react";
+
+helloWorld();
 
 type CommandMenuProps = DialogProps;
 
