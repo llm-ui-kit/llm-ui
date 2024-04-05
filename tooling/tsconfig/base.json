@@ -10,20 +10,12 @@
     "isolatedModules": true,
     "strict": true,
     "checkJs": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2022"
-    ],
+    "lib": ["dom", "dom.iterable", "ES2022"],
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "preserve"
   },
-  "include": [
-    "*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["*.ts"],
+  "exclude": ["node_modules"]
 }
