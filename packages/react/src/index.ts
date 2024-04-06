@@ -1,1 +1,1 @@
-export const helloWorld = () => console.log("Hello world!");
+export { useStreamExample } from "./hooks/useStreamExample";
