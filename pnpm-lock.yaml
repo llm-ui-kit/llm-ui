@@ -222,10 +222,22 @@ importers:
       llm-ui:
         specifier: workspace:*
         version: link:../react
+      react:
+        specifier: ^18.0.0
+        version: 18.2.0
+      shiki:
+        specifier: ^1.2.4
+        version: 1.2.4
     devDependencies:
       '@llm-ui/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/tsconfig
+      '@types/react':
+        specifier: 18.2.60
+        version: 18.2.60
+      '@types/react-dom':
+        specifier: 18.2.19
+        version: 18.2.19
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(typescript@5.4.3)
@@ -2797,6 +2809,10 @@ packages:
 
   /@shikijs/core@1.2.2:
     resolution: {integrity: sha512-GXbTyNP6HlxpyWMR4eirW54Cxp84nVuivcV5hGVBgKnIl+UmD4AJgCX1uXuNRcFFAw58lB3HqryuezIc0iCLgw==}
+    dev: false
+
+  /@shikijs/core@1.2.4:
+    resolution: {integrity: sha512-ClaUWpt8oTzjcF0MM1P81AeWyzc1sNSJlAjMG80CbwqbFqXSNz+NpQVUC0icobt3sZn43Sn27M4pHD/Jmp3zHw==}
     dev: false
 
   /@sinclair/typebox@0.27.8:
@@ -8921,6 +8937,12 @@ packages:
     resolution: {integrity: sha512-nqazfFgrU+DBLqk4+WjmGQz8sVWkcUcGriHqSM2zGk0GhjirVz4FyJ3AABEx91OpjGiKpuKBg2diYfRfQG3Fbg==}
     dependencies:
       '@shikijs/core': 1.2.2
+    dev: false
+
+  /shiki@1.2.4:
+    resolution: {integrity: sha512-Q9n9jKiOjJCRPztA9POn3/uZXNySHDNKAsPNpmtHDcFyi6ZQhx5vQKZW3Nhrwn8TWW3RudSRk66zqY603EZDeg==}
+    dependencies:
+      '@shikijs/core': 1.2.4
     dev: false
 
   /side-channel@1.0.6:
