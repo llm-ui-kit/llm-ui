@@ -46,25 +46,41 @@ describe("matchFullMarkdownCodeBlock", () => {
     options?: MarkdownMatcherOptions;
   }[] = [
     {
-      input: "```hello```",
-      expected: { startIndex: 0, endIndex: 11, match: "```hello```" },
+      input: "```\nhello\n```",
+      expected: { startIndex: 0, endIndex: 13, match: "```\nhello\n```" },
     },
     {
-      input: "abc ```hello```",
-      expected: { startIndex: 4, endIndex: 15, match: "```hello```" },
+      input: "abc ```\nhello\n```",
+      expected: { startIndex: 4, endIndex: 17, match: "```\nhello\n```" },
     },
     {
-      input: "abc ```hello``` def",
-      expected: { startIndex: 4, endIndex: 15, match: "```hello```" },
+      input: "abc ```\nhello\n```",
+      expected: { startIndex: 4, endIndex: 17, match: "```\nhello\n```" },
+    },
+    {
+      input: "abc ```\nhello\n``` def",
+      expected: { startIndex: 4, endIndex: 17, match: "```\nhello\n```" },
     },
     {
       input: "abc def hij",
       expected: undefined,
     },
     {
-      input: "abc ~~~hello~~~ def",
-      expected: { startIndex: 4, endIndex: 15, match: "~~~hello~~~" },
+      input: "abc ~~~\nhello\n~~~ def",
+      expected: { startIndex: 4, endIndex: 17, match: "~~~\nhello\n~~~" },
       options: { startEndChars: ["~~~", "```"] },
+    },
+    {
+      input: "```hello```",
+      expected: undefined,
+    },
+    {
+      input: "```hello\n```",
+      expected: undefined,
+    },
+    {
+      input: "```\nhello```",
+      expected: undefined,
     },
   ];
 
@@ -83,20 +99,24 @@ describe("matchPartialMarkdownCodeBlock", () => {
     options?: MarkdownMatcherOptions;
   }[] = [
     {
-      input: "```hello",
-      expected: { startIndex: 0, endIndex: 8, match: "```hello" },
+      input: "```\nhello",
+      expected: { startIndex: 0, endIndex: 9, match: "```\nhello" },
     },
     {
-      input: "abc ```hello``",
-      expected: { startIndex: 4, endIndex: 14, match: "```hello``" },
+      input: "abc ```\nhello\n``",
+      expected: { startIndex: 4, endIndex: 16, match: "```\nhello\n``" },
     },
     {
       input: "abc def hij",
       expected: undefined,
     },
     {
-      input: "abc ~~~hello",
-      expected: { startIndex: 4, endIndex: 12, match: "~~~hello" },
+      input: "```hello",
+      expected: undefined,
+    },
+    {
+      input: "abc ~~~\nhello",
+      expected: { startIndex: 4, endIndex: 13, match: "~~~\nhello" },
       options: { startEndChars: ["~~~", "```"] },
     },
   ];

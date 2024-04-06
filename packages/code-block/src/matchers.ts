@@ -1,4 +1,5 @@
 import { LLMOutputMatcher, MaybeMatch } from "llm-ui/components";
+import { getStartEndGroup } from "./shared";
 
 export const regexMatcher =
   (regex: RegExp) =>
@@ -25,15 +26,12 @@ const getOptions = (userOptions?: Partial<MarkdownMatcherOptions>) => {
   return { ...defaultOptions, ...userOptions };
 };
 
-const getStartEndGroup = (startEndChars: string[]) =>
-  `(${startEndChars.join("|")})`;
-
 export const matchFullMarkdownCodeBlock = (
   userOptions?: Partial<MarkdownMatcherOptions>,
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
   const startEndGroup = getStartEndGroup(options.startEndChars);
-  const regex = new RegExp(`${startEndGroup}[\\s\\S]*?${startEndGroup}`);
+  const regex = new RegExp(`${startEndGroup}\n[\\s\\S]*\n${startEndGroup}`);
   return regexMatcher(regex);
 };
 
@@ -42,6 +40,6 @@ export const matchPartialMarkdownCodeBlock = (
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
   const startEndGroup = getStartEndGroup(options.startEndChars);
-  const regex = new RegExp(`${startEndGroup}[\\s\\S]*`);
+  const regex = new RegExp(`${startEndGroup}\n[\\s\\S]*`);
   return regexMatcher(regex);
 };

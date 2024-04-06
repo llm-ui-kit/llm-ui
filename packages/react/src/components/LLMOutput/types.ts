@@ -6,7 +6,9 @@ export type LLMOutputMatch = {
 
 export type MaybeLLMOutputMatch = LLMOutputMatch | undefined;
 
-export type LLMOutputReactComponent = React.FC<{ llmOutput: string }>;
+export type LLMOutputReactComponent<Props = {}> = React.FC<
+  { llmOutput: string } & Props
+>;
 
 export type LLMOutputMatcher = (llmOutput: string) => MaybeLLMOutputMatch;
 
