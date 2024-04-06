@@ -58,7 +58,6 @@ export default [
       ...js.configs.recommended.plugins,
     },
     rules: {
-      "no-unused-vars": ["error", { varsIgnorePattern: "React" }],
       "prefer-arrow-callback": "error",
       "prefer-arrow/prefer-arrow-functions": [
         "error",
