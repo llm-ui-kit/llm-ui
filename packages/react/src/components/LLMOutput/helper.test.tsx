@@ -4,7 +4,7 @@ import {
   ComponentMatch,
   LLMOutputComponent,
   LLMOutputReactComponent,
-  MaybeMatch,
+  MaybeLLMOutputMatch,
 } from "./types";
 
 const fallbackComponent = () => null;
@@ -17,12 +17,15 @@ const noMatch = () => undefined;
 
 const neverMatchComponent: LLMOutputComponent = {
   component: component1,
-  fullMatch: noMatch,
-  partialMatch: noMatch,
+  isFullMatch: noMatch,
+  isPartialMatch: noMatch,
   partialComponent: component1,
 };
 
-const matchString = (inputString: string, target: string): MaybeMatch => {
+const matchString = (
+  inputString: string,
+  target: string,
+): MaybeLLMOutputMatch => {
   const startIndex = inputString.indexOf(target);
   if (startIndex === -1) {
     return undefined;
@@ -40,8 +43,8 @@ const fullMatchComponent = (
 ): LLMOutputComponent => {
   return {
     component,
-    fullMatch: (output) => matchString(output, target),
-    partialMatch: noMatch,
+    isFullMatch: (output) => matchString(output, target),
+    isPartialMatch: noMatch,
     partialComponent: component1,
   };
 };
@@ -88,8 +91,8 @@ describe("matchComponents", () => {
       components: [
         {
           component: component1,
-          fullMatch: (output) => matchString(output, "helloWorld"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, "helloWorld"),
+          isPartialMatch: noMatch,
           partialComponent: component2,
         },
       ],
@@ -108,8 +111,8 @@ describe("matchComponents", () => {
       components: [
         {
           component: component1,
-          fullMatch: (output) => matchString(output, "helloWorld"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, "helloWorld"),
+          isPartialMatch: noMatch,
           partialComponent: component2,
         },
       ],
@@ -133,8 +136,8 @@ describe("matchComponents", () => {
       components: [
         {
           component: component1,
-          fullMatch: (output) => matchString(output, " world"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, " world"),
+          isPartialMatch: noMatch,
           partialComponent: component2,
         },
       ],
@@ -158,8 +161,8 @@ describe("matchComponents", () => {
       components: [
         {
           component: component1,
-          fullMatch: (output) => matchString(output, "oWo"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, "oWo"),
+          isPartialMatch: noMatch,
           partialComponent: component2,
         },
       ],
@@ -189,8 +192,8 @@ describe("matchComponents", () => {
         neverMatchComponent,
         {
           component: component3,
-          fullMatch: (output) => matchString(output, "helloWorld"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, "helloWorld"),
+          isPartialMatch: noMatch,
           partialComponent: component4,
         },
       ],
@@ -214,14 +217,14 @@ describe("matchComponents", () => {
       components: [
         {
           component: component1,
-          fullMatch: (output) => matchString(output, "hello"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, "hello"),
+          isPartialMatch: noMatch,
           partialComponent: component2,
         },
         {
           component: component3,
-          fullMatch: (output) => matchString(output, "hello"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, "hello"),
+          isPartialMatch: noMatch,
           partialComponent: component4,
         },
       ],
@@ -245,14 +248,14 @@ describe("matchComponents", () => {
       components: [
         {
           component: component1,
-          fullMatch: (output) => matchString(output, "hello"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, "hello"),
+          isPartialMatch: noMatch,
           partialComponent: component2,
         },
         {
           component: component3,
-          fullMatch: (output) => matchString(output, "ell"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, "ell"),
+          isPartialMatch: noMatch,
           partialComponent: component4,
         },
       ],
@@ -276,8 +279,8 @@ describe("matchComponents", () => {
       components: [
         {
           component: component1,
-          fullMatch: noMatch,
-          partialMatch: (output) => matchString(output, "helloWorld"),
+          isFullMatch: noMatch,
+          isPartialMatch: (output) => matchString(output, "helloWorld"),
           partialComponent: component2,
         },
       ],
@@ -296,8 +299,8 @@ describe("matchComponents", () => {
       components: [
         {
           component: component1,
-          fullMatch: noMatch,
-          partialMatch: (output) => matchString(output, "World"),
+          isFullMatch: noMatch,
+          isPartialMatch: (output) => matchString(output, "World"),
           partialComponent: component2,
         },
       ],
@@ -321,14 +324,14 @@ describe("matchComponents", () => {
       components: [
         {
           component: component1,
-          fullMatch: noMatch,
-          partialMatch: (output) => matchString(output, "World"),
+          isFullMatch: noMatch,
+          isPartialMatch: (output) => matchString(output, "World"),
           partialComponent: component2,
         },
         {
           component: component3,
-          fullMatch: (output) => matchString(output, "hello"),
-          partialMatch: noMatch,
+          isFullMatch: (output) => matchString(output, "hello"),
+          isPartialMatch: noMatch,
           partialComponent: component4,
         },
       ],

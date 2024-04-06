@@ -1,8 +1,8 @@
 import {
   ComponentMatch,
   LLMOutputComponent,
+  LLMOutputMatch,
   LLMOutputReactComponent,
-  Match,
 } from "./types";
 
 const fullMatchesForComponent = (
@@ -13,7 +13,7 @@ const fullMatchesForComponent = (
   const matches: ComponentMatch[] = [];
   let index = 0;
   while (index < llmOutput.length) {
-    const nextMatch = component.fullMatch(llmOutput.slice(index));
+    const nextMatch = component.isFullMatch(llmOutput.slice(index));
     if (nextMatch) {
       matches.push({
         component: component.component,
@@ -46,7 +46,10 @@ const byMatchStartIndex = (
   match2: ComponentMatch,
 ): number => match1.match.startIndex - match2.match.startIndex;
 
-const isOverlapping = (match1: Match, match2: Match): boolean => {
+const isOverlapping = (
+  match1: LLMOutputMatch,
+  match2: LLMOutputMatch,
+): boolean => {
   return (
     (match1.startIndex >= match2.startIndex &&
       match1.startIndex < match2.endIndex) || // match1 starts inside match2
@@ -64,7 +67,9 @@ const findPartialMatch = (
   components: LLMOutputComponent[],
 ): ComponentMatch | undefined => {
   for (const [priority, component] of components.entries()) {
-    const partialMatch = component.partialMatch(llmOutput.slice(currentIndex));
+    const partialMatch = component.isPartialMatch(
+      llmOutput.slice(currentIndex),
+    );
     if (partialMatch) {
       return {
         component: component.partialComponent,

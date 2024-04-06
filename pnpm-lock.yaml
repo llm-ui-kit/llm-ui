@@ -217,6 +217,47 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
 
+  packages/code-block:
+    dependencies:
+      llm-ui:
+        specifier: workspace:*
+        version: link:../react
+    devDependencies:
+      '@llm-ui/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/tsconfig
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(typescript@5.4.3)
+      typescript:
+        specifier: ^5.4.3
+        version: 5.4.3
+
+  packages/markdown:
+    dependencies:
+      llm-ui:
+        specifier: workspace:*
+        version: link:../react
+      react:
+        specifier: ^18.0.0
+        version: 18.2.0
+    devDependencies:
+      '@llm-ui/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/tsconfig
+      '@types/react':
+        specifier: 18.2.60
+        version: 18.2.60
+      '@types/react-dom':
+        specifier: 18.2.19
+        version: 18.2.19
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(typescript@5.4.3)
+      typescript:
+        specifier: ^5.4.3
+        version: 5.4.3
+
   packages/react:
     dependencies:
       remeda:

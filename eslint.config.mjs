@@ -9,8 +9,15 @@ const astroRecommended = eslintPluginAstro.configs["flat/recommended"];
 
 const appWww = "apps/www";
 const packageReact = "packages/react";
+const packageMarkdown = "packages/markdown";
+const packageCodeBlocks = "packages/code-blocks";
 
-const reactProjects = [appWww, packageReact];
+const reactProjects = [
+  appWww,
+  packageReact,
+  packageMarkdown,
+  packageCodeBlocks,
+];
 const reactProjectsGlob = `{${reactProjects.join(",")}}`;
 const typescriptProjects = [...reactProjects];
 

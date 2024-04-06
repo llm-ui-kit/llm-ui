@@ -1,6 +1,3 @@
-import type { DialogProps } from "@radix-ui/react-alert-dialog";
-import * as React from "react";
-
 import { Button } from "@/components/ui/Button";
 import {
   CommandDialog,
@@ -12,7 +9,9 @@ import {
 } from "@/components/ui/Command";
 import { search, type PagefindResultWithData } from "@/lib/search";
 import { cn } from "@/lib/utils";
+import type { DialogProps } from "@radix-ui/react-alert-dialog";
 import { FileIcon } from "lucide-react";
+import * as React from "react";
 
 type CommandMenuProps = DialogProps;
 
