@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "type": "module",
+  "name": "@llm-ui/gen",
+  "scripts": {
+    "gen": "tsx src/generatePackage.ts"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "fast-glob": "^3.3.2",
+    "handlebars": "^4.7.8",
+    "tsx": "^4.7.2"
+  }
+}

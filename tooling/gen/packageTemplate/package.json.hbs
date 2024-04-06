@@ -1,0 +1,29 @@
+{
+  "name": "{{packageName}}",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "ISC",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@llm-ui/tsconfig": "workspace:*",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  }
+}
