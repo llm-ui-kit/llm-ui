@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build-local": "astro build && pnpm build-pagefind",
-    "build": "astro build --remote && pnpm build-pagefind",
+    "build": "astro build && pnpm build-pagefind",
+    "build-remote": "astro build --remote && pnpm build-pagefind",
     "build-pagefind": "pagefind --site .vercel/output/static && cp -r .vercel/output/static/pagefind public",
     "preview": "astro preview",
     "astro": "astro",
