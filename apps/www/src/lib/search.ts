@@ -1,7 +1,5 @@
 export type Pagefind = {
-  // eslint-disable-next-line no-unused-vars
   search: (query: string) => Promise<PagefindResponse>;
-  // eslint-disable-next-line no-unused-vars
   debouncedSearch: (query: string) => Promise<PagefindResponse>;
 };
 
@@ -39,7 +37,6 @@ export type PagefindDocument = {
 };
 
 declare global {
-  // eslint-disable-next-line no-unused-vars
   interface Window {
     pagefind: Pagefind;
   }
