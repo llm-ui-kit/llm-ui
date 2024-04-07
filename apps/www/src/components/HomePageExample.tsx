@@ -4,8 +4,6 @@ import { MarkdownComponent } from "@llm-ui/markdown";
 import { LLMOutput, type LLMOutputReactComponent } from "llm-ui/components";
 import type { ShikiCodeBlockComponent } from "node_modules/@llm-ui/code-block/src/shikiComponent";
 
-console.log("shikiFull", shikiFull);
-
 const example = `
 # llm-ui
 
