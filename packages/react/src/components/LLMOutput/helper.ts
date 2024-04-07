@@ -74,7 +74,8 @@ const findPartialMatch = (
       return {
         component: component.partialComponent,
         match: {
-          match: partialMatch.match,
+          output: partialMatch.output,
+          visibleOutput: partialMatch.visibleOutput,
           startIndex: partialMatch.startIndex + currentIndex,
           endIndex: partialMatch.endIndex + currentIndex,
         },
@@ -96,15 +97,17 @@ const fallbacksInGaps = (
       const previousMatchEndIndex =
         index === 0 ? 0 : componentMatches[index - 1].match.endIndex;
       if (previousMatchEndIndex < match.match.startIndex) {
+        const output = llmOutput.slice(
+          previousMatchEndIndex,
+          match.match.startIndex,
+        );
         return {
           component: fallbackComponent,
           match: {
             startIndex: previousMatchEndIndex,
             endIndex: match.match.startIndex,
-            match: llmOutput.slice(
-              previousMatchEndIndex,
-              match.match.startIndex,
-            ),
+            output,
+            visibleOutput: output,
           },
           priority: fallbackPriority,
         };
@@ -120,12 +123,14 @@ const fallbacksInGaps = (
       : 0;
 
   if (lastMatchEndIndex < llmOutput.length) {
+    const output = llmOutput.slice(lastMatchEndIndex, llmOutput.length);
     fallbacks.push({
       component: fallbackComponent,
       match: {
         startIndex: lastMatchEndIndex,
         endIndex: llmOutput.length,
-        match: llmOutput.slice(lastMatchEndIndex, llmOutput.length),
+        output,
+        visibleOutput: output,
       },
       priority: fallbackPriority,
     });

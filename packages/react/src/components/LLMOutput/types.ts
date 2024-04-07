@@ -1,7 +1,8 @@
 export type LLMOutputMatch = {
   startIndex: number;
   endIndex: number;
-  match: string;
+  output: string;
+  visibleOutput: string;
 };
 
 export type MaybeLLMOutputMatch = LLMOutputMatch | undefined;
