@@ -5,7 +5,7 @@ import {
   LLMOutputReactComponent,
 } from "./types";
 
-const fullMatchesForComponent = (
+const completeMatchesForComponent = (
   llmOutput: string,
   component: LLMOutputComponent,
   priority: number,
@@ -13,10 +13,10 @@ const fullMatchesForComponent = (
   const matches: ComponentMatch[] = [];
   let index = 0;
   while (index < llmOutput.length) {
-    const nextMatch = component.isFullMatch(llmOutput.slice(index));
+    const nextMatch = component.isCompleteMatch(llmOutput.slice(index));
     if (nextMatch) {
       matches.push({
-        component: component.component,
+        component: component.completeComponent,
         match: nextMatch,
         priority,
       });
@@ -138,10 +138,10 @@ export const matchComponents = (
   components: LLMOutputComponent[],
   fallbackComponent: LLMOutputReactComponent,
 ): ComponentMatch[] => {
-  const allFullMatches = components.flatMap((component, priority) =>
-    fullMatchesForComponent(llmOutput, component, priority),
+  const allCompleteMatches = components.flatMap((component, priority) =>
+    completeMatchesForComponent(llmOutput, component, priority),
   );
-  const matches = highestPriorityNonOverlappingMatches(allFullMatches);
+  const matches = highestPriorityNonOverlappingMatches(allCompleteMatches);
   matches.sort(byMatchStartIndex);
 
   const lastMatchEndIndex =

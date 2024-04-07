@@ -14,8 +14,8 @@ export type LLMOutputMatcher = (llmOutput: string) => MaybeLLMOutputMatch;
 
 export type LLMOutputComponent = {
   isPartialMatch: LLMOutputMatcher;
-  isFullMatch: LLMOutputMatcher;
-  component: LLMOutputReactComponent;
+  isCompleteMatch: LLMOutputMatcher;
+  completeComponent: LLMOutputReactComponent;
   partialComponent: LLMOutputReactComponent;
 };
 

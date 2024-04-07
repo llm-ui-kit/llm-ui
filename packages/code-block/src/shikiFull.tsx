@@ -1,12 +1,12 @@
 import { defaultOptions } from "./defaultShikiOptions";
 import {
-  matchFullMarkdownCodeBlock,
+  matchCompleteMarkdownCodeBlock,
   matchPartialMarkdownCodeBlock,
 } from "./matchers";
 import {
   ShikiCodeBlockComponent,
   ShikiCodeBlockProps,
-  ShikiFullCodeBlock,
+  ShikiCompleteCodeBlock,
   ShikiPartialCodeBlock,
 } from "./shikiComponent";
 
@@ -15,8 +15,8 @@ const shikiProps: ShikiCodeBlockProps = {
   codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
 };
 
-const ShikiFullComponent: ShikiCodeBlockComponent = (props) => {
-  return <ShikiFullCodeBlock {...shikiProps} {...props} />;
+const ShikiCompleteComponent: ShikiCodeBlockComponent = (props) => {
+  return <ShikiCompleteCodeBlock {...shikiProps} {...props} />;
 };
 
 const ShikiPartialComponent: ShikiCodeBlockComponent = (props) => {
@@ -24,8 +24,8 @@ const ShikiPartialComponent: ShikiCodeBlockComponent = (props) => {
 };
 
 export const shikiFull = {
-  isFullMatch: matchFullMarkdownCodeBlock(),
+  isFullMatch: matchCompleteMarkdownCodeBlock(),
   isPartialMatch: matchPartialMarkdownCodeBlock(),
-  component: ShikiFullComponent,
+  component: ShikiCompleteComponent,
   partialComponent: ShikiPartialComponent,
 };

@@ -16,8 +16,8 @@ const component4 = () => <div>4</div>;
 const noMatch = () => undefined;
 
 const neverMatchComponent: LLMOutputComponent = {
-  component: component1,
-  isFullMatch: noMatch,
+  completeComponent: component1,
+  isCompleteMatch: noMatch,
   isPartialMatch: noMatch,
   partialComponent: component1,
 };
@@ -37,18 +37,6 @@ const matchString = (
   };
 };
 
-const fullMatchComponent = (
-  component: LLMOutputReactComponent,
-  target: string,
-): LLMOutputComponent => {
-  return {
-    component,
-    isFullMatch: (output) => matchString(output, target),
-    isPartialMatch: noMatch,
-    partialComponent: component1,
-  };
-};
-
 type TestCase = {
   name: string;
   llmOutput: string;
@@ -60,7 +48,7 @@ type TestCase = {
 describe("matchComponents", () => {
   const testCases: TestCase[] = [
     {
-      name: "no components is full fallback match",
+      name: "no components is complete fallback match",
       llmOutput: "helloWorld",
       components: [],
       fallbackComponent,
@@ -73,7 +61,7 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "no matching components is full fallback match",
+      name: "no matching components is complete fallback match",
       llmOutput: "helloWorld",
       components: [neverMatchComponent],
       fallbackComponent,
@@ -86,12 +74,12 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "first component full matches whole input",
+      name: "first component complete matches whole input",
       llmOutput: "helloWorld",
       components: [
         {
-          component: component1,
-          isFullMatch: (output) => matchString(output, "helloWorld"),
+          completeComponent: component1,
+          isCompleteMatch: (output) => matchString(output, "helloWorld"),
           isPartialMatch: noMatch,
           partialComponent: component2,
         },
@@ -106,12 +94,12 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "first component full matches begginning of input",
+      name: "first component complete matches begginning of input",
       llmOutput: "helloWorld world",
       components: [
         {
-          component: component1,
-          isFullMatch: (output) => matchString(output, "helloWorld"),
+          completeComponent: component1,
+          isCompleteMatch: (output) => matchString(output, "helloWorld"),
           isPartialMatch: noMatch,
           partialComponent: component2,
         },
@@ -131,12 +119,12 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "first component full matches end of input",
+      name: "first component complete matches end of input",
       llmOutput: "helloWorld world",
       components: [
         {
-          component: component1,
-          isFullMatch: (output) => matchString(output, " world"),
+          completeComponent: component1,
+          isCompleteMatch: (output) => matchString(output, " world"),
           isPartialMatch: noMatch,
           partialComponent: component2,
         },
@@ -156,12 +144,12 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "first component full matches middle of input",
+      name: "first component complete matches middle of input",
       llmOutput: "helloWorld world",
       components: [
         {
-          component: component1,
-          isFullMatch: (output) => matchString(output, "oWo"),
+          completeComponent: component1,
+          isCompleteMatch: (output) => matchString(output, "oWo"),
           isPartialMatch: noMatch,
           partialComponent: component2,
         },
@@ -186,13 +174,13 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "second component full matches begginning of input",
+      name: "second component complete matches begginning of input",
       llmOutput: "helloWorld world",
       components: [
         neverMatchComponent,
         {
-          component: component3,
-          isFullMatch: (output) => matchString(output, "helloWorld"),
+          completeComponent: component3,
+          isCompleteMatch: (output) => matchString(output, "helloWorld"),
           isPartialMatch: noMatch,
           partialComponent: component4,
         },
@@ -212,18 +200,18 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "first full match takes priority over second identical full match",
+      name: "first complete match takes priority over second identical complete match",
       llmOutput: "helloWorld",
       components: [
         {
-          component: component1,
-          isFullMatch: (output) => matchString(output, "hello"),
+          completeComponent: component1,
+          isCompleteMatch: (output) => matchString(output, "hello"),
           isPartialMatch: noMatch,
           partialComponent: component2,
         },
         {
-          component: component3,
-          isFullMatch: (output) => matchString(output, "hello"),
+          completeComponent: component3,
+          isCompleteMatch: (output) => matchString(output, "hello"),
           isPartialMatch: noMatch,
           partialComponent: component4,
         },
@@ -243,18 +231,18 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "first full match takes priority over second overlapping full match",
+      name: "first complete match takes priority over second overlapping complete match",
       llmOutput: "helloWorld",
       components: [
         {
-          component: component1,
-          isFullMatch: (output) => matchString(output, "hello"),
+          completeComponent: component1,
+          isCompleteMatch: (output) => matchString(output, "hello"),
           isPartialMatch: noMatch,
           partialComponent: component2,
         },
         {
-          component: component3,
-          isFullMatch: (output) => matchString(output, "ell"),
+          completeComponent: component3,
+          isCompleteMatch: (output) => matchString(output, "ell"),
           isPartialMatch: noMatch,
           partialComponent: component4,
         },
@@ -278,8 +266,8 @@ describe("matchComponents", () => {
       llmOutput: "helloWorld",
       components: [
         {
-          component: component1,
-          isFullMatch: noMatch,
+          completeComponent: component1,
+          isCompleteMatch: noMatch,
           isPartialMatch: (output) => matchString(output, "helloWorld"),
           partialComponent: component2,
         },
@@ -298,8 +286,8 @@ describe("matchComponents", () => {
       llmOutput: "helloWorld",
       components: [
         {
-          component: component1,
-          isFullMatch: noMatch,
+          completeComponent: component1,
+          isCompleteMatch: noMatch,
           isPartialMatch: (output) => matchString(output, "World"),
           partialComponent: component2,
         },
@@ -319,18 +307,18 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "partial match after full matches",
+      name: "partial match after complete matches",
       llmOutput: "helloWorld",
       components: [
         {
-          component: component1,
-          isFullMatch: noMatch,
+          completeComponent: component1,
+          isCompleteMatch: noMatch,
           isPartialMatch: (output) => matchString(output, "World"),
           partialComponent: component2,
         },
         {
-          component: component3,
-          isFullMatch: (output) => matchString(output, "hello"),
+          completeComponent: component3,
+          isCompleteMatch: (output) => matchString(output, "hello"),
           isPartialMatch: noMatch,
           partialComponent: component4,
         },

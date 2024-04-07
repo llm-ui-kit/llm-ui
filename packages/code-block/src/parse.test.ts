@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   CodeBlock,
   ParseMarkdownCodeBlockOptions,
-  parseFullMarkdownCodeBlock,
+  parseCompleteMarkdownCodeBlock,
   parsePartialMarkdownCodeBlock,
 } from "./parse";
 
@@ -13,7 +13,7 @@ type TestCase = {
   expected: CodeBlock;
 };
 
-describe("parseFullMarkdownCodeBlock", () => {
+describe("parseCompleteMarkdownCodeBlock", () => {
   const testCases: TestCase[] = [
     {
       name: "single loc",
@@ -80,7 +80,7 @@ describe("parseFullMarkdownCodeBlock", () => {
 
   testCases.forEach(({ name, codeBlock, options, expected }) => {
     it(name, () => {
-      const result = parseFullMarkdownCodeBlock(codeBlock, options);
+      const result = parseCompleteMarkdownCodeBlock(codeBlock, options);
       expect(result).toEqual(expected);
     });
   });
@@ -104,7 +104,7 @@ describe("parsePartialMarkdownCodeBlock", () => {
       expected: { code: "\n", language: undefined, metaString: undefined },
     },
     {
-      name: "single line full",
+      name: "single line complete",
       codeBlock: "``````",
       expected: { code: undefined, language: undefined, metaString: undefined },
     },

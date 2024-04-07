@@ -62,7 +62,7 @@ export const parsePartialMarkdownCodeBlock: ParseFunction = (
   return parseMarkdownCodeBlock(codeBlock, startEndGroup, "");
 };
 
-export const parseFullMarkdownCodeBlock: ParseFunction = (
+export const parseCompleteMarkdownCodeBlock: ParseFunction = (
   codeBlock,
   userOptions,
 ) => {

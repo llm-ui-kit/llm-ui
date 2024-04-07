@@ -8,7 +8,7 @@ import {
 import { SetOptional } from "type-fest";
 import {
   ParseFunction,
-  parseFullMarkdownCodeBlock,
+  parseCompleteMarkdownCodeBlock,
   parsePartialMarkdownCodeBlock,
 } from "./parse";
 
@@ -46,8 +46,8 @@ const ShikiCodeBlock: LLMOutputReactComponent<
   return <div {...props} dangerouslySetInnerHTML={{ __html: html }} />;
 };
 
-export const ShikiFullCodeBlock: ShikiCodeBlockComponent = (props) => (
-  <ShikiCodeBlock {...props} parser={parseFullMarkdownCodeBlock} />
+export const ShikiCompleteCodeBlock: ShikiCodeBlockComponent = (props) => (
+  <ShikiCodeBlock {...props} parser={parseCompleteMarkdownCodeBlock} />
 );
 
 export const ShikiPartialCodeBlock: ShikiCodeBlockComponent = (props) => (

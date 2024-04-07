@@ -92,7 +92,7 @@ export type UseStreamExampleResponse = {
 };
 
 export const useStreamExample = (
-  fullOutput: string,
+  completeOutput: string,
   userOptions?: Partial<UseStreamExampleOptions>,
 ): UseStreamExampleResponse => {
   const options: UseStreamExampleOptions = useMemo(
@@ -101,8 +101,8 @@ export const useStreamExample = (
   );
   const [output, setOutput] = useState<string>("");
   const tokens = useMemo(
-    () => stringToTokenArray(fullOutput, options),
-    [fullOutput, options],
+    () => stringToTokenArray(completeOutput, options),
+    [completeOutput, options],
   );
   const clearTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const currentIndex = useRef<number>(0);
@@ -156,11 +156,4 @@ export const useStreamExample = (
     pause,
     start,
   };
-};
-
-export const useSloMoStreamExample = (fullOutput: string) => {
-  return useStreamExample(fullOutput, {
-    delayMsProbabilities: [{ delayMs: 10, prob: 1 }],
-    tokenCharsProbabilities: [{ tokenChars: 1, prob: 1 }],
-  });
 };

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { MaybeLLMOutputMatch } from "../../react/src/components/LLMOutput/types";
 import {
   MarkdownMatcherOptions,
-  matchFullMarkdownCodeBlock,
+  matchCompleteMarkdownCodeBlock,
   matchPartialMarkdownCodeBlock,
   regexMatcher,
 } from "./matchers";
@@ -45,7 +45,7 @@ type TestCase = {
   expected: MaybeLLMOutputMatch;
   options?: MarkdownMatcherOptions;
 };
-describe("matchFullMarkdownCodeBlock", () => {
+describe("matchCompleteMarkdownCodeBlock", () => {
   const testCases: TestCase[] = [
     {
       name: "single loc",
@@ -110,7 +110,7 @@ describe("matchFullMarkdownCodeBlock", () => {
 
   testCases.forEach(({ name, input, expected, options }) => {
     it(name, () => {
-      const result = matchFullMarkdownCodeBlock(options)(input);
+      const result = matchCompleteMarkdownCodeBlock(options)(input);
       expect(result).toEqual(expected);
     });
   });

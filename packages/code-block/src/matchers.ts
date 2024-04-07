@@ -26,7 +26,7 @@ const getOptions = (userOptions?: Partial<MarkdownMatcherOptions>) => {
   return { ...defaultOptions, ...userOptions };
 };
 
-export const matchFullMarkdownCodeBlock = (
+export const matchCompleteMarkdownCodeBlock = (
   userOptions?: Partial<MarkdownMatcherOptions>,
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
