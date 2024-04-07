@@ -1,3 +1,4 @@
+import { LLMOutputComponent } from "llm-ui/components";
 import { defaultOptions } from "./defaultShikiOptions";
 import {
   matchCompleteMarkdownCodeBlock,
@@ -23,9 +24,9 @@ const ShikiPartialComponent: ShikiCodeBlockComponent = (props) => {
   return <ShikiPartialCodeBlock {...shikiProps} {...props} />;
 };
 
-export const shikiFull = {
-  isFullMatch: matchCompleteMarkdownCodeBlock(),
+export const shikiFull: LLMOutputComponent = {
+  isCompleteMatch: matchCompleteMarkdownCodeBlock(),
   isPartialMatch: matchPartialMarkdownCodeBlock(),
-  component: ShikiCompleteComponent,
+  completeComponent: ShikiCompleteComponent,
   partialComponent: ShikiPartialComponent,
 };

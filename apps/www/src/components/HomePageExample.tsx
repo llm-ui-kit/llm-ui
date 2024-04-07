@@ -1,7 +1,11 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import { shikiFull } from "@llm-ui/code-block/shikiFull";
 import { MarkdownComponent } from "@llm-ui/markdown";
-import { LLMOutput, type LLMOutputReactComponent } from "llm-ui/components";
+import {
+  LLMOutput,
+  type LLMOutputComponent,
+  type LLMOutputReactComponent,
+} from "llm-ui/components";
 import type { ShikiCodeBlockComponent } from "node_modules/@llm-ui/code-block/src/shikiComponent";
 
 const example = `
@@ -33,18 +37,17 @@ const Markdown: LLMOutputReactComponent = ({ llmOutput }) => {
   );
 };
 
-// todo: full overloaded
-const ShikiFull: ShikiCodeBlockComponent = (props) => (
-  <shikiFull.component className="py-4" {...props} />
+const ShikiComplete: ShikiCodeBlockComponent = (props) => (
+  <shikiFull.completeComponent className="py-4" {...props} />
 );
 
 const ShikiPartial: ShikiCodeBlockComponent = (props) => (
   <shikiFull.partialComponent className="py-4" {...props} />
 );
 
-const exampleShikiFull = {
+const exampleShikiFull: LLMOutputComponent = {
   ...shikiFull,
-  component: ShikiFull,
+  completeComponent: ShikiComplete,
   partialComponent: ShikiPartial,
 };
 
