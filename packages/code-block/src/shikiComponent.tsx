@@ -12,12 +12,17 @@ import {
   parsePartialMarkdownCodeBlock,
 } from "./parse";
 
-type CodeToHtmlProps = Parameters<HighlighterCore["codeToHtml"]>[1];
+export type CodeToHtmlProps = SetOptional<
+  Parameters<HighlighterCore["codeToHtml"]>[1],
+  "lang"
+>;
 
-export type ShikiCodeBlockProps = {
+export type ShikiProps = {
   highlighterOptions: HighlighterCoreOptions;
-  codeToHtmlProps: SetOptional<CodeToHtmlProps, "lang">;
-} & React.HTMLProps<HTMLDivElement>;
+  codeToHtmlProps: CodeToHtmlProps;
+};
+
+export type ShikiCodeBlockProps = ShikiProps & React.HTMLProps<HTMLDivElement>;
 
 export type ShikiCodeBlockComponent =
   LLMOutputReactComponent<ShikiCodeBlockProps>;
@@ -27,7 +32,7 @@ const ShikiCodeBlock: LLMOutputReactComponent<
     parser: ParseFunction;
   }
 > = ({ llmOutput, highlighterOptions, codeToHtmlProps, parser, ...props }) => {
-  const highlighterRef = useRef<HighlighterCore>();
+  const highlighterRef = useRef<HighlighterCore | undefined>();
   const [html, setHtml] = useState("");
   useEffect(() => {
     (async () => {
@@ -50,6 +55,14 @@ export const ShikiCompleteCodeBlock: ShikiCodeBlockComponent = (props) => (
   <ShikiCodeBlock {...props} parser={parseCompleteMarkdownCodeBlock} />
 );
 
+export const buildShikiCompleteCodeBlock =
+  (shikiProps: ShikiProps): ShikiCodeBlockComponent =>
+  (props) => <ShikiCompleteCodeBlock {...shikiProps} {...props} />;
+
 export const ShikiPartialCodeBlock: ShikiCodeBlockComponent = (props) => (
   <ShikiCodeBlock {...props} parser={parsePartialMarkdownCodeBlock} />
 );
+
+export const buildShikiPartialCodeBlock =
+  (shikiProps: ShikiProps): ShikiCodeBlockComponent =>
+  (props) => <ShikiPartialCodeBlock {...shikiProps} {...props} />;

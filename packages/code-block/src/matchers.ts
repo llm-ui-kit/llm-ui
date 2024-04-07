@@ -1,9 +1,9 @@
-import { LLMOutputMatcher, MaybeMatch } from "llm-ui/components";
+import { LLMOutputMatcher, MaybeLLMOutputMatch } from "llm-ui/components";
 import { getStartEndGroup } from "./shared";
 
 export const regexMatcher =
   (regex: RegExp) =>
-  (llmOutput: string): MaybeMatch => {
+  (llmOutput: string): MaybeLLMOutputMatch => {
     const regexMatch = llmOutput.match(regex);
     if (regexMatch) {
       const matchString = regexMatch[0];

@@ -8,7 +8,10 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./shikiFull": "./src/shikiFull.tsx"
+    "./shikiBundles/all": "./src/shikiBundles/all.ts",
+    "./shikiBundles/allLangs": "./src/shikiBundles/allLangs.ts",
+    "./shikiBundles/allShikiOptions": "./src/shikiBundles/allShikiOptions.ts",
+    "./shikiBundles/allThemes": "./src/shikiBundles/allThemes.ts"
   },
   "files": [
     "dist"
