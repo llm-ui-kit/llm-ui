@@ -95,6 +95,12 @@ importers:
       '@iconify-json/ri':
         specifier: ^1.1.20
         version: 1.1.20
+      '@llm-ui/code-block':
+        specifier: workspace:*
+        version: link:../../packages/code-block
+      '@llm-ui/markdown':
+        specifier: workspace:*
+        version: link:../../packages/markdown
       '@radix-ui/react-accordion':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
@@ -241,6 +247,9 @@ importers:
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(typescript@5.4.3)
+      type-fest:
+        specifier: ^4.15.0
+        version: 4.15.0
       typescript:
         specifier: ^5.4.3
         version: 5.4.3
@@ -9625,6 +9634,11 @@ packages:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
     dev: false
+
+  /type-fest@4.15.0:
+    resolution: {integrity: sha512-tB9lu0pQpX5KJq54g+oHOLumOx+pMep4RaM6liXh2PKmVRFF+/vAtUP0ZaJ0kOySfVNjF6doBWPHhBhISKdlIA==}
+    engines: {node: '>=16'}
+    dev: true
 
   /typed-array-buffer@1.0.2:
     resolution: {integrity: sha512-gEymJYKZtKXzzBzM4jqa9w6Q1Jjm7x2d+sh19AdsD4wqnMPDYyvwpsIc2Q/835kHuo3BEQ7CjelGhfTsoBb2MQ==}

@@ -31,7 +31,7 @@ export const matchFullMarkdownCodeBlock = (
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
   const startEndGroup = getStartEndGroup(options.startEndChars);
-  const regex = new RegExp(`${startEndGroup}\n[\\s\\S]*\n${startEndGroup}`);
+  const regex = new RegExp(`${startEndGroup}.*\n[\\s\\S]*\n${startEndGroup}`);
   return regexMatcher(regex);
 };
 
@@ -40,6 +40,6 @@ export const matchPartialMarkdownCodeBlock = (
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
   const startEndGroup = getStartEndGroup(options.startEndChars);
-  const regex = new RegExp(`${startEndGroup}\n[\\s\\S]*`);
+  const regex = new RegExp(`${startEndGroup}.*\n[\\s\\S]*`);
   return regexMatcher(regex);
 };

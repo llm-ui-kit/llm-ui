@@ -27,16 +27,16 @@ const parseMarkdownCodeBlock = (
   let language: string | undefined;
   let metaString: string | undefined;
   let code: string | undefined;
-  if (lines.length > 0) {
+  if (lines.length > 1) {
     lines[0];
-    const regex = new RegExp(`${startGroup}([a-zA-Z0-9_-]*)\\s+(.*)`);
+    const regex = new RegExp(`${startGroup}([a-zA-Z0-9_-]*) *(.*)`);
     const match = lines[0].match(regex);
     if (match) {
-      language = match[2];
-      metaString = match[3];
+      language = match[2].length > 0 ? match[2] : undefined;
+      metaString = match[3].length > 0 ? match[3] : undefined;
     }
   }
-  const regex = new RegExp(`${startGroup}.*\n([\\s\\S]*)\n${endGroup}`);
+  const regex = new RegExp(`${startGroup}.*\n([\\s\\S]*)${endGroup}`);
   const match = codeBlock.match(regex);
   if (match) {
     code = match[2];
@@ -48,20 +48,25 @@ const parseMarkdownCodeBlock = (
   };
 };
 
-export const parsePartialMarkdownCodeBlock = (
+export type ParseFunction = (
   codeBlock: string,
-  userOptions?: ParseMarkdownCodeBlockOptions,
-): CodeBlock => {
+  options?: ParseMarkdownCodeBlockOptions,
+) => CodeBlock;
+
+export const parsePartialMarkdownCodeBlock: ParseFunction = (
+  codeBlock,
+  userOptions,
+) => {
   const options = getOptions(userOptions);
   const startEndGroup = getStartEndGroup(options.startEndChars);
   return parseMarkdownCodeBlock(codeBlock, startEndGroup, "");
 };
 
-export const parseFullMarkdownCodeBlock = (
-  codeBlock: string,
-  userOptions?: ParseMarkdownCodeBlockOptions,
-): CodeBlock => {
+export const parseFullMarkdownCodeBlock: ParseFunction = (
+  codeBlock,
+  userOptions,
+) => {
   const options = getOptions(userOptions);
   const startEndGroup = getStartEndGroup(options.startEndChars);
-  return parseMarkdownCodeBlock(codeBlock, startEndGroup, startEndGroup);
+  return parseMarkdownCodeBlock(codeBlock, startEndGroup, `\n${startEndGroup}`);
 };

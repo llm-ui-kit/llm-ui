@@ -7,8 +7,8 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    "./package.json": "./package.json",
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./shikiFull": "./src/shikiFull.tsx"
   },
   "files": [
     "dist"
@@ -27,10 +27,11 @@
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.3",
     "@types/react": "18.2.60",
-    "@types/react-dom": "18.2.19"
+    "@types/react-dom": "18.2.19",
+    "tsup": "^8.0.2",
+    "type-fest": "^4.15.0",
+    "typescript": "^5.4.3"
   },
   "peerDependencies": {
     "react": "^18.0.0"

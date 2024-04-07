@@ -62,6 +62,22 @@ describe("matchFullMarkdownCodeBlock", () => {
       expected: { startIndex: 4, endIndex: 17, match: "```\nhello\n```" },
     },
     {
+      input: "abc ```typescript\nhello\n``` def",
+      expected: {
+        startIndex: 4,
+        endIndex: 27,
+        match: "```typescript\nhello\n```",
+      },
+    },
+    {
+      input: "abc ```typescript meta\nhello\n``` def",
+      expected: {
+        startIndex: 4,
+        endIndex: 32,
+        match: "```typescript meta\nhello\n```",
+      },
+    },
+    {
       input: "abc def hij",
       expected: undefined,
     },
@@ -105,6 +121,22 @@ describe("matchPartialMarkdownCodeBlock", () => {
     {
       input: "abc ```\nhello\n``",
       expected: { startIndex: 4, endIndex: 16, match: "```\nhello\n``" },
+    },
+    {
+      input: "abc ```typescript\nhello\n``",
+      expected: {
+        startIndex: 4,
+        endIndex: 26,
+        match: "```typescript\nhello\n``",
+      },
+    },
+    {
+      input: "abc ```typescript meta\nhello\n``",
+      expected: {
+        startIndex: 4,
+        endIndex: 31,
+        match: "```typescript meta\nhello\n``",
+      },
     },
     {
       input: "abc def hij",

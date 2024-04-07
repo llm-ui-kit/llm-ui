@@ -1,39 +1,55 @@
 import { LLMOutputReactComponent } from "llm-ui/components";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   HighlighterCore,
   HighlighterCoreOptions,
   getHighlighterCore,
 } from "shiki/core";
-import { parseFullMarkdownCodeBlock } from "./parse";
+import { SetOptional } from "type-fest";
+import {
+  ParseFunction,
+  parseFullMarkdownCodeBlock,
+  parsePartialMarkdownCodeBlock,
+} from "./parse";
 
 type CodeToHtmlProps = Parameters<HighlighterCore["codeToHtml"]>[1];
 
-export const ShikiCodeBlock: LLMOutputReactComponent<{
+export type ShikiCodeBlockProps = {
   highlighterOptions: HighlighterCoreOptions;
-  codeToHtmlProps: CodeToHtmlProps;
-}> = ({ llmOutput, highlighterOptions, codeToHtmlProps }) => {
+  codeToHtmlProps: SetOptional<CodeToHtmlProps, "lang">;
+} & React.HTMLProps<HTMLDivElement>;
+
+export type ShikiCodeBlockComponent =
+  LLMOutputReactComponent<ShikiCodeBlockProps>;
+
+const ShikiCodeBlock: LLMOutputReactComponent<
+  ShikiCodeBlockProps & {
+    parser: ParseFunction;
+  }
+> = ({ llmOutput, highlighterOptions, codeToHtmlProps, parser, ...props }) => {
   const highlighterRef = useRef<HighlighterCore>();
+  const [html, setHtml] = useState("");
   useEffect(() => {
     (async () => {
-      const highlighter = await getHighlighterCore(highlighterOptions);
-      highlighterRef.current = highlighter;
+      if (!highlighterRef.current) {
+        highlighterRef.current = await getHighlighterCore(highlighterOptions);
+      }
+      const { code = "\n", language } = parser(llmOutput);
+      const html = highlighterRef.current.codeToHtml(code, {
+        ...codeToHtmlProps,
+        lang: codeToHtmlProps.lang ?? language ?? "plain",
+      });
+      setHtml(html);
     })();
-  }, []);
+  }, [llmOutput, highlighterOptions, codeToHtmlProps]);
 
-  const html = useMemo(() => {
-    if (!highlighterRef.current) {
-      return "";
-    }
-    const { code, language } = parseFullMarkdownCodeBlock(llmOutput);
-    if (!code) {
-      return "";
-    }
-    return highlighterRef.current.codeToHtml(code, {
-      ...codeToHtmlProps,
-      lang: codeToHtmlProps.lang ?? language ?? "plain",
-    });
-  }, [llmOutput]);
-
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div {...props} dangerouslySetInnerHTML={{ __html: html }} />;
 };
+
+export const ShikiFullCodeBlock: ShikiCodeBlockComponent = (props) => (
+  <ShikiCodeBlock {...props} parser={parseFullMarkdownCodeBlock} />
+);
+
+export const ShikiPartialCodeBlock: ShikiCodeBlockComponent = (props) => (
+  <ShikiCodeBlock {...props} parser={parsePartialMarkdownCodeBlock} />
+);
