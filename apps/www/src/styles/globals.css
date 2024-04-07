@@ -173,3 +173,18 @@
 .anime-grid {
   @apply grid grid-cols-[repeat(auto-fill,minmax(max(var(--min-column-width),var(--max-column-width)),1fr))] content-start gap-x-[--column-gap] gap-y-8 [--column-gap:12px] [--max-column-count:7] [--max-column-width:calc((100%-var(--total-gap-width))/var(--max-column-count))] [--min-column-width:150px] [--total-gap-width:calc((var(--max-column-count)-1)*var(--column-gap))] sm:[--column-gap:14px] md:gap-y-10 md:[--column-gap:18px];
 }
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  /* Optional, if you also want font styles */
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.shiki {
+  @apply p-4;
+  @apply rounded-md;
+}

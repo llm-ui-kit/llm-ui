@@ -1,5 +1,5 @@
 {
-  "name": "llm-ui",
+  "name": "@llm-ui/code-block",
   "version": "0.0.1",
   "type": "module",
   "license": "ISC",
@@ -7,8 +7,8 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    "./components": "./src/components/index.ts",
-    "./hooks": "./src/hooks/index.ts"
+    ".": "./src/index.ts",
+    "./shikiFull": "./src/shikiFull.tsx"
   },
   "files": [
     "dist"
@@ -21,21 +21,19 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest"
   },
-  "peerDependencies": {
-    "react": "^18.0.0"
+  "dependencies": {
+    "llm-ui": "workspace:*",
+    "shiki": "^1.2.4"
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",
-    "@testing-library/react-hooks": "^8.0.1",
     "@types/react": "18.2.60",
     "@types/react-dom": "18.2.19",
-    "@uploadthing/eslint-config": "0.2.0",
-    "react": "18.2.0",
-    "react-test-renderer": "^18.2.0",
     "tsup": "^8.0.2",
+    "type-fest": "^4.15.0",
     "typescript": "^5.4.3"
   },
-  "dependencies": {
-    "remeda": "^1.57.0"
+  "peerDependencies": {
+    "react": "^18.0.0"
   }
 }
