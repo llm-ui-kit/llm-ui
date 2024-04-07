@@ -36,7 +36,9 @@ const parseMarkdownCodeBlock = (
       metaString = match[3].length > 0 ? match[3] : undefined;
     }
   }
-  const regex = new RegExp(`${startGroup}.*\n([\\s\\S]*)${endGroup}`);
+  // ?= is a lookahead to stop [\\s\\S]* from being too greedy
+  const regex = new RegExp(`${startGroup}.*\n([\\s\\S]*?)(?=\n${endGroup}|$)`);
+  console.log("regex", regex);
   const match = codeBlock.match(regex);
   code = match ? match[2] : "";
   return {
@@ -57,7 +59,7 @@ export const parseCompleteMarkdownCodeBlock: ParseFunction = (
 ) => {
   const options = getOptions(userOptions);
   const startEndGroup = getStartEndGroup(options.startEndChars);
-  return parseMarkdownCodeBlock(codeBlock, startEndGroup, `\n${startEndGroup}`);
+  return parseMarkdownCodeBlock(codeBlock, startEndGroup, `${startEndGroup}`);
 };
 
 export const parsePartialMarkdownCodeBlock: ParseFunction = (
@@ -65,6 +67,9 @@ export const parsePartialMarkdownCodeBlock: ParseFunction = (
   userOptions,
 ) => {
   const options = getOptions(userOptions);
-  const startEndGroup = getStartEndGroup(options.startEndChars);
-  return parseMarkdownCodeBlock(codeBlock, startEndGroup, "");
+  const startGroup = getStartEndGroup(options.startEndChars);
+  const endGroup = options.startEndChars
+    .map((char) => `${char}{0,2}$`)
+    .join("|");
+  return parseMarkdownCodeBlock(codeBlock, startGroup, endGroup);
 };

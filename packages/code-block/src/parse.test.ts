@@ -91,7 +91,7 @@ describe("parsePartialMarkdownCodeBlock", () => {
     {
       name: "partial",
       codeBlock: "```\nhello\n",
-      expected: { code: "hello\n", language: undefined, metaString: undefined },
+      expected: { code: "hello", language: undefined, metaString: undefined },
     },
     {
       name: "partial with 1 newlines",
@@ -101,7 +101,12 @@ describe("parsePartialMarkdownCodeBlock", () => {
     {
       name: "partial with 2 newlines",
       codeBlock: "```\n\n",
-      expected: { code: "\n", language: undefined, metaString: undefined },
+      expected: { code: "", language: undefined, metaString: undefined },
+    },
+    {
+      name: "partial with 2 newlines and a character",
+      codeBlock: "```\n\nc",
+      expected: { code: "\nc", language: undefined, metaString: undefined },
     },
     {
       name: "single line complete",
@@ -137,9 +142,9 @@ describe("parsePartialMarkdownCodeBlock", () => {
     },
     {
       name: "partial with language, meta, 1 loc and newline",
-      codeBlock: "```typescript meta123\nconsole.log('hello')\n",
+      codeBlock: "```typescript meta123\nconsole.log('hello')",
       expected: {
-        code: "console.log('hello')\n",
+        code: "console.log('hello')",
         language: "typescript",
         metaString: "meta123",
       },
@@ -157,7 +162,7 @@ describe("parsePartialMarkdownCodeBlock", () => {
       name: "partial with language, meta, 1 loc, newline and 2 backticks",
       codeBlock: "```typescript meta123\nconsole.log('hello')\n``",
       expected: {
-        code: "console.log('hello')\n``",
+        code: "console.log('hello')",
         language: "typescript",
         metaString: "meta123",
       },
@@ -181,6 +186,16 @@ describe("parsePartialMarkdownCodeBlock", () => {
       name: "starting then not a block",
       codeBlock: "`abc",
       expected: { code: "", language: undefined, metaString: undefined },
+    },
+    {
+      name: "ending block 1 char",
+      codeBlock: "```\nhello\n`",
+      expected: { code: "hello", language: undefined, metaString: undefined },
+    },
+    {
+      name: "ending block 2 char",
+      codeBlock: "```\nhello\n``",
+      expected: { code: "hello", language: undefined, metaString: undefined },
     },
   ];
 
