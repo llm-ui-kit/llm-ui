@@ -176,7 +176,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
         startIndex: 4,
         endIndex: 16,
         output: "```\nhello\n``",
-        visibleOutput: "hello\n``",
+        visibleOutput: "hello",
       },
     },
     {
@@ -186,7 +186,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
         startIndex: 4,
         endIndex: 26,
         output: "```typescript\nhello\n``",
-        visibleOutput: "hello\n``",
+        visibleOutput: "hello",
       },
     },
     {
@@ -196,7 +196,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
         startIndex: 4,
         endIndex: 31,
         output: "```typescript meta\nhello\n``",
-        visibleOutput: "hello\n``",
+        visibleOutput: "hello",
       },
     },
     {
