@@ -130,7 +130,7 @@ describe("matchCompleteMarkdownCodeBlock", () => {
         output: "~~~\nhello\n~~~",
         visibleOutput: "hello",
       },
-      options: { startEndChars: ["~~~", "```"] },
+      options: { startEndChars: ["~", "`"] },
     },
     {
       name: "single line start and end (not valid block)",
@@ -207,7 +207,12 @@ describe("matchPartialMarkdownCodeBlock", () => {
     {
       name: "single line start (not valid block)",
       input: "```hello",
-      expected: undefined,
+      expected: {
+        endIndex: 8,
+        output: "```hello",
+        startIndex: 0,
+        visibleOutput: "",
+      },
     },
     {
       name: "custom startEndChars",
@@ -218,7 +223,42 @@ describe("matchPartialMarkdownCodeBlock", () => {
         output: "~~~\nhello",
         visibleOutput: "hello",
       },
-      options: { startEndChars: ["~~~", "```"] },
+      options: { startEndChars: ["~", "`"] },
+    },
+    {
+      name: "started block",
+      input: "`",
+      expected: {
+        startIndex: 0,
+        endIndex: 1,
+        output: "`",
+        visibleOutput: "",
+      },
+    },
+    {
+      name: "started block 2 chars",
+      input: "``",
+      expected: {
+        startIndex: 0,
+        endIndex: 2,
+        output: "``",
+        visibleOutput: "",
+      },
+    },
+    {
+      name: "started block 3 chars",
+      input: "```",
+      expected: {
+        startIndex: 0,
+        endIndex: 3,
+        output: "```",
+        visibleOutput: "",
+      },
+    },
+    {
+      name: "started block that turned out to not be a block",
+      input: "`something",
+      expected: undefined,
     },
   ];
 

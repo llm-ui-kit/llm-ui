@@ -30,7 +30,7 @@ export type MarkdownMatcherOptions = {
 };
 
 export const defaultOptions: MarkdownMatcherOptions = {
-  startEndChars: ["```"],
+  startEndChars: ["`"],
 };
 
 const getOptions = (userOptions?: Partial<MarkdownMatcherOptions>) => {
@@ -66,8 +66,9 @@ export const matchPartialMarkdownCodeBlock = (
   userOptions?: Partial<MarkdownMatcherOptions>,
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
-  const startEndGroup = getStartEndGroup(options.startEndChars);
-  const regex = new RegExp(`${startEndGroup}.*\n[\\s\\S]*`);
+  const regex = new RegExp(
+    `(${options.startEndChars.map((char) => `${char}{1,2}$|${char}{3}`).join("|")})[\\s\\S]*`,
+  );
   return regexMatcher(
     regex,
     parsePartial({ startEndChars: options.startEndChars }),
