@@ -38,7 +38,6 @@ const parseMarkdownCodeBlock = (
   }
   // ?= is a lookahead to stop [\\s\\S]* from being too greedy
   const regex = new RegExp(`${startGroup}.*\n([\\s\\S]*?)(?=\n${endGroup}|$)`);
-  console.log("regex", regex);
   const match = codeBlock.match(regex);
   code = match ? match[2] : "";
   return {
