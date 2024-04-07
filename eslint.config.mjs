@@ -5,9 +5,8 @@ import eslintPluginAstro from "eslint-plugin-astro";
 import preferArrow from "eslint-plugin-prefer-arrow";
 import reactRecommended from "eslint-plugin-react/configs/recommended.js";
 import fastGlob from "fast-glob";
-import fs from "fs";
 import globals from "globals";
-import path, { dirname } from "path";
+import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 const astroRecommended = eslintPluginAstro.configs["flat/recommended"];
