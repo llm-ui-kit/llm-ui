@@ -6,21 +6,27 @@ import {
   parsePartialMarkdownCodeBlock,
 } from "./parse";
 
+type TestCase = {
+  name: string;
+  codeBlock: string;
+  options?: ParseMarkdownCodeBlockOptions;
+  expected: CodeBlock;
+};
+
 describe("parseFullMarkdownCodeBlock", () => {
-  const testCases: {
-    codeBlock: string;
-    options?: ParseMarkdownCodeBlockOptions;
-    expected: CodeBlock;
-  }[] = [
+  const testCases: TestCase[] = [
     {
+      name: "single loc",
       codeBlock: "```\nhello\n```",
       expected: { code: "hello", language: undefined, metaString: undefined },
     },
     {
+      name: "empty",
       codeBlock: "```\n\n```",
       expected: { code: "", language: undefined, metaString: undefined },
     },
     {
+      name: "single loc with newlines",
       codeBlock: "```\n\nhello\n\n```",
       expected: {
         code: "\nhello\n",
@@ -29,10 +35,12 @@ describe("parseFullMarkdownCodeBlock", () => {
       },
     },
     {
+      name: "single line start and end (not valid block)",
       codeBlock: "``````",
       expected: { code: undefined, language: undefined, metaString: undefined },
     },
     {
+      name: "single loc with language",
       codeBlock: "```javascript\nhello\n```",
       expected: {
         code: "hello",
@@ -41,6 +49,7 @@ describe("parseFullMarkdownCodeBlock", () => {
       },
     },
     {
+      name: "single loc with language and meta",
       codeBlock: "```javascript meta123\nhello\n```",
       expected: {
         code: "hello",
@@ -49,6 +58,7 @@ describe("parseFullMarkdownCodeBlock", () => {
       },
     },
     {
+      name: "single loc with language, meta 2",
       codeBlock: "```typescript meta123\nconsole.log('hello')\n```",
       expected: {
         code: "console.log('hello')",
@@ -57,6 +67,7 @@ describe("parseFullMarkdownCodeBlock", () => {
       },
     },
     {
+      name: "custom startEndChars",
       codeBlock: "~~~typescript meta123\nconsole.log('hello')\n~~~",
       options: { startEndChars: ["~~~", "```"] },
       expected: {
@@ -67,9 +78,8 @@ describe("parseFullMarkdownCodeBlock", () => {
     },
   ];
 
-  testCases.forEach(({ codeBlock, options, expected }) => {
-    // todo: name
-    it(`parseFullMarkdownCodeBlock(${codeBlock} ${options ? `,${JSON.stringify(options, null, 2)}` : ""}) === ${JSON.stringify(expected, null, 2)}`, () => {
+  testCases.forEach(({ name, codeBlock, options, expected }) => {
+    it(name, () => {
       const result = parseFullMarkdownCodeBlock(codeBlock, options);
       expect(result).toEqual(expected);
     });
@@ -77,12 +87,7 @@ describe("parseFullMarkdownCodeBlock", () => {
 });
 
 describe("parsePartialMarkdownCodeBlock", () => {
-  const testCases: {
-    name: string;
-    codeBlock: string;
-    options?: ParseMarkdownCodeBlockOptions;
-    expected: CodeBlock;
-  }[] = [
+  const testCases: TestCase[] = [
     {
       name: "partial",
       codeBlock: "```\nhello\n",
