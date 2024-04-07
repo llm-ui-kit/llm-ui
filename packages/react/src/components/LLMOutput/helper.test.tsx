@@ -33,7 +33,8 @@ const matchString = (
   return {
     startIndex,
     endIndex: startIndex + target.length,
-    match: target,
+    output: target,
+    visibleOutput: target,
   };
 };
 
@@ -55,7 +56,12 @@ describe("matchComponents", () => {
       expected: [
         {
           component: fallbackComponent,
-          match: { match: "helloWorld", startIndex: 0, endIndex: 10 },
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 0,
+            endIndex: 10,
+          },
           priority: 0,
         },
       ],
@@ -68,7 +74,12 @@ describe("matchComponents", () => {
       expected: [
         {
           component: fallbackComponent,
-          match: { match: "helloWorld", startIndex: 0, endIndex: 10 },
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 0,
+            endIndex: 10,
+          },
           priority: 1,
         },
       ],
@@ -88,7 +99,12 @@ describe("matchComponents", () => {
       expected: [
         {
           component: component1,
-          match: { match: "helloWorld", startIndex: 0, endIndex: 10 },
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 0,
+            endIndex: 10,
+          },
           priority: 0,
         },
       ],
@@ -108,12 +124,22 @@ describe("matchComponents", () => {
       expected: [
         {
           component: component1,
-          match: { match: "helloWorld", startIndex: 0, endIndex: 10 },
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 0,
+            endIndex: 10,
+          },
           priority: 0,
         },
         {
           component: fallbackComponent,
-          match: { match: " world", startIndex: 10, endIndex: 16 },
+          match: {
+            output: " world",
+            visibleOutput: " world",
+            startIndex: 10,
+            endIndex: 16,
+          },
           priority: 1,
         },
       ],
@@ -133,12 +159,22 @@ describe("matchComponents", () => {
       expected: [
         {
           component: fallbackComponent,
-          match: { match: "helloWorld", startIndex: 0, endIndex: 10 },
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 0,
+            endIndex: 10,
+          },
           priority: 1,
         },
         {
           component: component1,
-          match: { match: " world", startIndex: 10, endIndex: 16 },
+          match: {
+            output: " world",
+            visibleOutput: " world",
+            startIndex: 10,
+            endIndex: 16,
+          },
           priority: 0,
         },
       ],
@@ -158,17 +194,32 @@ describe("matchComponents", () => {
       expected: [
         {
           component: fallbackComponent,
-          match: { match: "hell", startIndex: 0, endIndex: 4 },
+          match: {
+            output: "hell",
+            visibleOutput: "hell",
+            startIndex: 0,
+            endIndex: 4,
+          },
           priority: 1,
         },
         {
           component: component1,
-          match: { match: "oWo", startIndex: 4, endIndex: 7 },
+          match: {
+            output: "oWo",
+            visibleOutput: "oWo",
+            startIndex: 4,
+            endIndex: 7,
+          },
           priority: 0,
         },
         {
           component: fallbackComponent,
-          match: { match: "rld world", startIndex: 7, endIndex: 16 },
+          match: {
+            output: "rld world",
+            visibleOutput: "rld world",
+            startIndex: 7,
+            endIndex: 16,
+          },
           priority: 1,
         },
       ],
@@ -189,12 +240,22 @@ describe("matchComponents", () => {
       expected: [
         {
           component: component3,
-          match: { match: "helloWorld", startIndex: 0, endIndex: 10 },
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 0,
+            endIndex: 10,
+          },
           priority: 1,
         },
         {
           component: fallbackComponent,
-          match: { match: " world", startIndex: 10, endIndex: 16 },
+          match: {
+            output: " world",
+            visibleOutput: " world",
+            startIndex: 10,
+            endIndex: 16,
+          },
           priority: 2,
         },
       ],
@@ -220,12 +281,22 @@ describe("matchComponents", () => {
       expected: [
         {
           component: component1,
-          match: { match: "hello", startIndex: 0, endIndex: 5 },
+          match: {
+            output: "hello",
+            visibleOutput: "hello",
+            startIndex: 0,
+            endIndex: 5,
+          },
           priority: 0,
         },
         {
           component: fallbackComponent,
-          match: { match: "World", startIndex: 5, endIndex: 10 },
+          match: {
+            output: "World",
+            visibleOutput: "World",
+            startIndex: 5,
+            endIndex: 10,
+          },
           priority: 2,
         },
       ],
@@ -251,12 +322,22 @@ describe("matchComponents", () => {
       expected: [
         {
           component: component1,
-          match: { match: "hello", startIndex: 0, endIndex: 5 },
+          match: {
+            output: "hello",
+            visibleOutput: "hello",
+            startIndex: 0,
+            endIndex: 5,
+          },
           priority: 0,
         },
         {
           component: fallbackComponent,
-          match: { match: "World", startIndex: 5, endIndex: 10 },
+          match: {
+            output: "World",
+            visibleOutput: "World",
+            startIndex: 5,
+            endIndex: 10,
+          },
           priority: 2,
         },
       ],
@@ -276,7 +357,12 @@ describe("matchComponents", () => {
       expected: [
         {
           component: component2,
-          match: { match: "helloWorld", startIndex: 0, endIndex: 10 },
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 0,
+            endIndex: 10,
+          },
           priority: 0,
         },
       ],
@@ -296,12 +382,22 @@ describe("matchComponents", () => {
       expected: [
         {
           component: fallbackComponent,
-          match: { match: "hello", startIndex: 0, endIndex: 5 },
+          match: {
+            output: "hello",
+            visibleOutput: "hello",
+            startIndex: 0,
+            endIndex: 5,
+          },
           priority: 1,
         },
         {
           component: component2,
-          match: { match: "World", startIndex: 5, endIndex: 10 },
+          match: {
+            output: "World",
+            visibleOutput: "World",
+            startIndex: 5,
+            endIndex: 10,
+          },
           priority: 0,
         },
       ],
@@ -327,12 +423,22 @@ describe("matchComponents", () => {
       expected: [
         {
           component: component3,
-          match: { match: "hello", startIndex: 0, endIndex: 5 },
+          match: {
+            output: "hello",
+            visibleOutput: "hello",
+            startIndex: 0,
+            endIndex: 5,
+          },
           priority: 1,
         },
         {
           component: component2,
-          match: { match: "World", startIndex: 5, endIndex: 10 },
+          match: {
+            output: "World",
+            visibleOutput: "World",
+            startIndex: 5,
+            endIndex: 10,
+          },
           priority: 0,
         },
       ],

@@ -12,17 +12,32 @@ describe("regexMatcher", () => {
     {
       input: "hello",
       regex: /hello/,
-      expected: { startIndex: 0, endIndex: 5, match: "hello" },
+      expected: {
+        startIndex: 0,
+        endIndex: 5,
+        output: "hello",
+        visibleOutput: "hello",
+      },
     },
     {
       input: "abc hello",
       regex: /hello/,
-      expected: { startIndex: 4, endIndex: 9, match: "hello" },
+      expected: {
+        startIndex: 4,
+        endIndex: 9,
+        output: "hello",
+        visibleOutput: "hello",
+      },
     },
     {
       input: "abc hello def",
       regex: /hello/,
-      expected: { startIndex: 4, endIndex: 9, match: "hello" },
+      expected: {
+        startIndex: 4,
+        endIndex: 9,
+        output: "hello",
+        visibleOutput: "hello",
+      },
     },
     {
       input: "abc yellow def",
@@ -33,7 +48,11 @@ describe("regexMatcher", () => {
 
   testCases.forEach(({ input, regex, expected }) => {
     it(`should match ${input} with ${regex}`, () => {
-      const result = regexMatcher(regex)(input);
+      const result = regexMatcher(regex, (x) => ({
+        code: x,
+        language: undefined,
+        metaString: undefined,
+      }))(input);
       expect(result).toEqual(expected);
     });
   });
@@ -50,17 +69,32 @@ describe("matchCompleteMarkdownCodeBlock", () => {
     {
       name: "single loc",
       input: "```\nhello\n```",
-      expected: { startIndex: 0, endIndex: 13, match: "```\nhello\n```" },
+      expected: {
+        startIndex: 0,
+        endIndex: 13,
+        output: "```\nhello\n```",
+        visibleOutput: "hello",
+      },
     },
     {
       name: "single loc, other text before",
       input: "abc ```\nhello\n```",
-      expected: { startIndex: 4, endIndex: 17, match: "```\nhello\n```" },
+      expected: {
+        startIndex: 4,
+        endIndex: 17,
+        output: "```\nhello\n```",
+        visibleOutput: "hello",
+      },
     },
     {
       name: "single loc, other text before and after",
       input: "abc ```\nhello\n``` def",
-      expected: { startIndex: 4, endIndex: 17, match: "```\nhello\n```" },
+      expected: {
+        startIndex: 4,
+        endIndex: 17,
+        output: "```\nhello\n```",
+        visibleOutput: "hello",
+      },
     },
     {
       name: "single loc with language",
@@ -68,7 +102,8 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 27,
-        match: "```typescript\nhello\n```",
+        output: "```typescript\nhello\n```",
+        visibleOutput: "hello",
       },
     },
     {
@@ -77,7 +112,8 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 32,
-        match: "```typescript meta\nhello\n```",
+        output: "```typescript meta\nhello\n```",
+        visibleOutput: "hello",
       },
     },
     {
@@ -88,7 +124,12 @@ describe("matchCompleteMarkdownCodeBlock", () => {
     {
       name: "custom startEndChars",
       input: "abc ~~~\nhello\n~~~ def",
-      expected: { startIndex: 4, endIndex: 17, match: "~~~\nhello\n~~~" },
+      expected: {
+        startIndex: 4,
+        endIndex: 17,
+        output: "~~~\nhello\n~~~",
+        visibleOutput: "hello",
+      },
       options: { startEndChars: ["~~~", "```"] },
     },
     {
@@ -121,12 +162,22 @@ describe("matchPartialMarkdownCodeBlock", () => {
     {
       name: "single loc",
       input: "```\nhello",
-      expected: { startIndex: 0, endIndex: 9, match: "```\nhello" },
+      expected: {
+        startIndex: 0,
+        endIndex: 9,
+        output: "```\nhello",
+        visibleOutput: "hello",
+      },
     },
     {
       name: "nearly finished block",
       input: "abc ```\nhello\n``",
-      expected: { startIndex: 4, endIndex: 16, match: "```\nhello\n``" },
+      expected: {
+        startIndex: 4,
+        endIndex: 16,
+        output: "```\nhello\n``",
+        visibleOutput: "hello\n``",
+      },
     },
     {
       name: "nearly finished block with language",
@@ -134,7 +185,8 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 26,
-        match: "```typescript\nhello\n``",
+        output: "```typescript\nhello\n``",
+        visibleOutput: "hello\n``",
       },
     },
     {
@@ -143,7 +195,8 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 31,
-        match: "```typescript meta\nhello\n``",
+        output: "```typescript meta\nhello\n``",
+        visibleOutput: "hello\n``",
       },
     },
     {
@@ -159,13 +212,18 @@ describe("matchPartialMarkdownCodeBlock", () => {
     {
       name: "custom startEndChars",
       input: "abc ~~~\nhello",
-      expected: { startIndex: 4, endIndex: 13, match: "~~~\nhello" },
+      expected: {
+        startIndex: 4,
+        endIndex: 13,
+        output: "~~~\nhello",
+        visibleOutput: "hello",
+      },
       options: { startEndChars: ["~~~", "```"] },
     },
   ];
 
-  testCases.forEach(({ input, expected, options }) => {
-    it(`should match ${input}`, () => {
+  testCases.forEach(({ name, input, expected, options }) => {
+    it(name, () => {
       const result = matchPartialMarkdownCodeBlock(options)(input);
       expect(result).toEqual(expected);
     });
