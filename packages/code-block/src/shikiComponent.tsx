@@ -55,14 +55,24 @@ export const ShikiCompleteCodeBlock: ShikiCodeBlockComponent = (props) => (
   <ShikiCodeBlock {...props} parser={parseCompleteMarkdownCodeBlock} />
 );
 
-export const buildShikiCompleteCodeBlock =
-  (shikiProps: ShikiProps): ShikiCodeBlockComponent =>
-  (props) => <ShikiCompleteCodeBlock {...shikiProps} {...props} />;
+export const buildShikiCompleteCodeBlock = (
+  shikiProps: ShikiProps,
+): ShikiCodeBlockComponent => {
+  const BuiltShikiCompleteCodeBlock: ShikiCodeBlockComponent = (props) => (
+    <ShikiCompleteCodeBlock {...shikiProps} {...props} />
+  );
+  return BuiltShikiCompleteCodeBlock;
+};
 
 export const ShikiPartialCodeBlock: ShikiCodeBlockComponent = (props) => (
   <ShikiCodeBlock {...props} parser={parsePartialMarkdownCodeBlock} />
 );
 
-export const buildShikiPartialCodeBlock =
-  (shikiProps: ShikiProps): ShikiCodeBlockComponent =>
-  (props) => <ShikiPartialCodeBlock {...shikiProps} {...props} />;
+export const buildShikiPartialCodeBlock = (
+  shikiProps: ShikiProps,
+): ShikiCodeBlockComponent => {
+  const BuiltShikiPartialCodeBlock: ShikiCodeBlockComponent = (props) => (
+    <ShikiPartialCodeBlock {...shikiProps} {...props} />
+  );
+  return BuiltShikiPartialCodeBlock;
+};
