@@ -4,13 +4,24 @@ import typescriptParser from "@typescript-eslint/parser";
 import eslintPluginAstro from "eslint-plugin-astro";
 import preferArrow from "eslint-plugin-prefer-arrow";
 import reactRecommended from "eslint-plugin-react/configs/recommended.js";
+import fastGlob from "fast-glob";
+import fs from "fs";
 import globals from "globals";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+
 const astroRecommended = eslintPluginAstro.configs["flat/recommended"];
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const appWww = "apps/www";
+
 const packageReact = "packages/react";
 const packageMarkdown = "packages/markdown";
-const packageCodeBlocks = "packages/code-blocks";
+const packageCodeBlocks = "packages/code-block";
+
+const toolingGen = "tooling/gen";
 
 const reactProjects = [
   appWww,
@@ -19,7 +30,20 @@ const reactProjects = [
   packageCodeBlocks,
 ];
 const reactProjectsGlob = `{${reactProjects.join(",")}}`;
-const typescriptProjects = [...reactProjects];
+const typescriptProjects = [...reactProjects, toolingGen];
+
+const foldersToLint = fastGlob.sync([`apps/*`, `packages/*`, `tooling/*`], {
+  onlyDirectories: true,
+  ignore: ["tooling/tsconfig"],
+});
+
+const missingInConfig = foldersToLint.filter(
+  (f) => !typescriptProjects.includes(f),
+);
+
+if (missingInConfig.length > 0) {
+  throw new Error(`Missing in eslint config: ${missingInConfig.join(",")}`);
+}
 
 export default [
   {

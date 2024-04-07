@@ -26,6 +26,9 @@ importers:
       eslint-plugin-react:
         specifier: ^7.34.1
         version: 7.34.1(eslint@8.57.0)
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
       globals:
         specifier: ^15.0.0
         version: 15.0.0
@@ -324,6 +327,9 @@ importers:
 
   tooling/gen:
     devDependencies:
+      '@llm-ui/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       fast-glob:
         specifier: ^3.3.2
         version: 3.3.2
@@ -333,6 +339,9 @@ importers:
       tsx:
         specifier: ^4.7.2
         version: 4.7.2
+      typescript:
+        specifier: ^5.4.3
+        version: 5.4.3
 
   tooling/tsconfig: {}
 
