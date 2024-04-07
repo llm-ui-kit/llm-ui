@@ -37,7 +37,7 @@ describe("parseCompleteMarkdownCodeBlock", () => {
     {
       name: "single line start and end (not valid block)",
       codeBlock: "``````",
-      expected: { code: undefined, language: undefined, metaString: undefined },
+      expected: { code: "", language: undefined, metaString: undefined },
     },
     {
       name: "single loc with language",
@@ -69,7 +69,7 @@ describe("parseCompleteMarkdownCodeBlock", () => {
     {
       name: "custom startEndChars",
       codeBlock: "~~~typescript meta123\nconsole.log('hello')\n~~~",
-      options: { startEndChars: ["~~~", "```"] },
+      options: { startEndChars: ["~", "`"] },
       expected: {
         code: "console.log('hello')",
         language: "typescript",
@@ -106,7 +106,7 @@ describe("parsePartialMarkdownCodeBlock", () => {
     {
       name: "single line complete",
       codeBlock: "``````",
-      expected: { code: undefined, language: undefined, metaString: undefined },
+      expected: { code: "", language: undefined, metaString: undefined },
     },
     {
       name: "partial with language",
@@ -161,6 +161,26 @@ describe("parsePartialMarkdownCodeBlock", () => {
         language: "typescript",
         metaString: "meta123",
       },
+    },
+    {
+      name: "starting block 1 char",
+      codeBlock: "`",
+      expected: { code: "", language: undefined, metaString: undefined },
+    },
+    {
+      name: "starting block 2 char",
+      codeBlock: "``",
+      expected: { code: "", language: undefined, metaString: undefined },
+    },
+    {
+      name: "starting block 3 char",
+      codeBlock: "```",
+      expected: { code: "", language: undefined, metaString: undefined },
+    },
+    {
+      name: "starting then not a block",
+      codeBlock: "`abc",
+      expected: { code: "", language: undefined, metaString: undefined },
     },
   ];
 
