@@ -39,29 +39,31 @@ describe("regexMatcher", () => {
   });
 });
 
+type TestCase = {
+  name: string;
+  input: string;
+  expected: MaybeLLMOutputMatch;
+  options?: MarkdownMatcherOptions;
+};
 describe("matchFullMarkdownCodeBlock", () => {
-  const testCases: {
-    input: string;
-    expected: MaybeLLMOutputMatch;
-    options?: MarkdownMatcherOptions;
-  }[] = [
+  const testCases: TestCase[] = [
     {
+      name: "single loc",
       input: "```\nhello\n```",
       expected: { startIndex: 0, endIndex: 13, match: "```\nhello\n```" },
     },
     {
+      name: "single loc, other text before",
       input: "abc ```\nhello\n```",
       expected: { startIndex: 4, endIndex: 17, match: "```\nhello\n```" },
     },
     {
-      input: "abc ```\nhello\n```",
-      expected: { startIndex: 4, endIndex: 17, match: "```\nhello\n```" },
-    },
-    {
+      name: "single loc, other text before and after",
       input: "abc ```\nhello\n``` def",
       expected: { startIndex: 4, endIndex: 17, match: "```\nhello\n```" },
     },
     {
+      name: "single loc with language",
       input: "abc ```typescript\nhello\n``` def",
       expected: {
         startIndex: 4,
@@ -70,6 +72,7 @@ describe("matchFullMarkdownCodeBlock", () => {
       },
     },
     {
+      name: "single loc with language and meta",
       input: "abc ```typescript meta\nhello\n``` def",
       expected: {
         startIndex: 4,
@@ -78,30 +81,35 @@ describe("matchFullMarkdownCodeBlock", () => {
       },
     },
     {
+      name: "not a code block",
       input: "abc def hij",
       expected: undefined,
     },
     {
+      name: "custom startEndChars",
       input: "abc ~~~\nhello\n~~~ def",
       expected: { startIndex: 4, endIndex: 17, match: "~~~\nhello\n~~~" },
       options: { startEndChars: ["~~~", "```"] },
     },
     {
+      name: "single line start and end (not valid block)",
       input: "```hello```",
       expected: undefined,
     },
     {
+      name: "2 line code block (not valid block) 1",
       input: "```hello\n```",
       expected: undefined,
     },
     {
+      name: "2 line code block (not valid block) 2",
       input: "```\nhello```",
       expected: undefined,
     },
   ];
 
-  testCases.forEach(({ input, expected, options }) => {
-    it(`should match ${input}`, () => {
+  testCases.forEach(({ name, input, expected, options }) => {
+    it(name, () => {
       const result = matchFullMarkdownCodeBlock(options)(input);
       expect(result).toEqual(expected);
     });
@@ -109,20 +117,19 @@ describe("matchFullMarkdownCodeBlock", () => {
 });
 
 describe("matchPartialMarkdownCodeBlock", () => {
-  const testCases: {
-    input: string;
-    expected: MaybeLLMOutputMatch;
-    options?: MarkdownMatcherOptions;
-  }[] = [
+  const testCases: TestCase[] = [
     {
+      name: "single loc",
       input: "```\nhello",
       expected: { startIndex: 0, endIndex: 9, match: "```\nhello" },
     },
     {
+      name: "nearly finished block",
       input: "abc ```\nhello\n``",
       expected: { startIndex: 4, endIndex: 16, match: "```\nhello\n``" },
     },
     {
+      name: "nearly finished block with language",
       input: "abc ```typescript\nhello\n``",
       expected: {
         startIndex: 4,
@@ -131,6 +138,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
       },
     },
     {
+      name: "nearly finished block with language and meta",
       input: "abc ```typescript meta\nhello\n``",
       expected: {
         startIndex: 4,
@@ -139,14 +147,17 @@ describe("matchPartialMarkdownCodeBlock", () => {
       },
     },
     {
+      name: "not a code block",
       input: "abc def hij",
       expected: undefined,
     },
     {
+      name: "single line start (not valid block)",
       input: "```hello",
       expected: undefined,
     },
     {
+      name: "custom startEndChars",
       input: "abc ~~~\nhello",
       expected: { startIndex: 4, endIndex: 13, match: "~~~\nhello" },
       options: { startEndChars: ["~~~", "```"] },
