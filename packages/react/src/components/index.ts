@@ -2,8 +2,8 @@ export { LLMOutput } from "./LLMOutput";
 export type { LLMOutputProps } from "./LLMOutput";
 export type {
   LLMOutputComponent,
+  LLMOutputMatch,
   LLMOutputMatcher,
   LLMOutputReactComponent,
-  LLMOutputMatch as Match,
-  MaybeLLMOutputMatch as MaybeMatch,
+  MaybeLLMOutputMatch,
 } from "./LLMOutput/types";

@@ -1,5 +1,14 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
-import { shikiFull } from "@llm-ui/code-block/shikiFull";
+import {
+  buildShikiCompleteCodeBlock,
+  buildShikiPartialCodeBlock,
+  matchCompleteMarkdownCodeBlock,
+  matchPartialMarkdownCodeBlock,
+} from "@llm-ui/code-block";
+import {
+  allLangs,
+  allLangsAlias,
+} from "@llm-ui/code-block/shikiBundles/allLangs";
 import { MarkdownComponent } from "@llm-ui/markdown";
 import {
   LLMOutput,
@@ -7,6 +16,9 @@ import {
   type LLMOutputReactComponent,
 } from "llm-ui/components";
 import type { ShikiCodeBlockComponent } from "node_modules/@llm-ui/code-block/src/shikiComponent";
+import githubDark from "shiki/themes/github-dark.mjs";
+import githubLight from "shiki/themes/github-light.mjs";
+import getWasm from "shiki/wasm";
 
 const example = `
 # llm-ui
@@ -37,16 +49,30 @@ const Markdown: LLMOutputReactComponent = ({ llmOutput }) => {
   );
 };
 
+const shikiProps = {
+  highlighterOptions: {
+    langs: allLangs,
+    langAlias: allLangsAlias,
+    themes: [githubLight, githubDark],
+    loadWasm: getWasm,
+  },
+  codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
+};
+
+const CompleteCodeBlock = buildShikiCompleteCodeBlock(shikiProps);
+const PartialCodeBlock = buildShikiPartialCodeBlock(shikiProps);
+
 const ShikiComplete: ShikiCodeBlockComponent = (props) => (
-  <shikiFull.completeComponent className="py-4" {...props} />
+  <CompleteCodeBlock className="py-4" {...props} />
 );
 
 const ShikiPartial: ShikiCodeBlockComponent = (props) => (
-  <shikiFull.partialComponent className="py-4" {...props} />
+  <PartialCodeBlock className="py-4" {...props} />
 );
 
-const exampleShikiFull: LLMOutputComponent = {
-  ...shikiFull,
+const codeBlockComponent: LLMOutputComponent = {
+  isCompleteMatch: matchCompleteMarkdownCodeBlock(),
+  isPartialMatch: matchPartialMarkdownCodeBlock(),
   completeComponent: ShikiComplete,
   partialComponent: ShikiPartial,
 };
@@ -60,7 +86,7 @@ export const HomePageExample = () => {
 
   return (
     <LLMOutput
-      components={[exampleShikiFull]}
+      components={[codeBlockComponent]}
       fallbackComponent={Markdown}
       llmOutput={output}
     />
