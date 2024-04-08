@@ -29,7 +29,7 @@ const ShikiCodeBlock: LLMOutputReactComponent<
     parser: ParseFunction;
   }
 > = ({
-  llmOutput,
+  match,
   highlighter: llmuiHighlighter,
   codeToHtmlProps,
   parser,
@@ -41,13 +41,13 @@ const ShikiCodeBlock: LLMOutputReactComponent<
     if (!highlighter) {
       return "";
     }
-    const { code = "\n", language } = parser(llmOutput);
+    const { code = "\n", language } = parser(match.output);
 
     return highlighter.codeToHtml(code, {
       ...codeToHtmlProps,
       lang: codeToHtmlProps.lang ?? language ?? "plain",
     });
-  }, [llmOutput, highlighter]);
+  }, [match.output, highlighter]);
 
   return <div {...props} dangerouslySetInnerHTML={{ __html: getHtml() }} />;
 };

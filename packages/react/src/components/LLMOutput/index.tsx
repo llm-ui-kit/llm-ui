@@ -16,7 +16,7 @@ export const LLMOutput: React.FC<LLMOutputProps> = ({
   return (
     <>
       {matches.map(({ component: Component, match }, index) => {
-        return <Component key={index} llmOutput={match.output} />;
+        return <Component key={index} match={match} />;
       })}
     </>
   );

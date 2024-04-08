@@ -187,4 +187,5 @@ html.dark .shiki span {
 .shiki {
   @apply p-4;
   @apply rounded-md;
+  @apply overflow-auto;
 }

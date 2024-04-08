@@ -8,7 +8,7 @@ export type LLMOutputMatch = {
 export type MaybeLLMOutputMatch = LLMOutputMatch | undefined;
 
 export type LLMOutputReactComponent<Props = any> = React.FC<
-  { llmOutput: string } & Props
+  { match: LLMOutputMatch } & Props
 >;
 
 export type LLMOutputMatcher = (llmOutput: string) => MaybeLLMOutputMatch;
