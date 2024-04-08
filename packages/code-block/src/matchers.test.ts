@@ -147,6 +147,26 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       input: "```\nhello```",
       expected: undefined,
     },
+    {
+      name: "another code block starts",
+      input: "```\nhello\n```\nhello\n```\nworld",
+      expected: {
+        startIndex: 0,
+        endIndex: 13,
+        output: "```\nhello\n```",
+        visibleOutput: "hello",
+      },
+    },
+    {
+      name: "2 code blocks only matches first codeblock",
+      input: "```\nhello\n```\nhello\n```\nworld\n```",
+      expected: {
+        startIndex: 0,
+        endIndex: 13,
+        output: "```\nhello\n```",
+        visibleOutput: "hello",
+      },
+    },
   ];
 
   testCases.forEach(({ name, input, expected, options }) => {
