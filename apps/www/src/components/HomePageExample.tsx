@@ -50,21 +50,11 @@ const example2 = `
 import { LLMOutput } from "llm-ui/components";
 
 console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
 \`\`\`
 
 Hello
 
 \`\`\`ts
-
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
 console.log('Hello llm-ui');
 console.log('Hello llm-ui');
 \`\`\`

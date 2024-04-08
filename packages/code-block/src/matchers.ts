@@ -55,7 +55,9 @@ export const matchCompleteMarkdownCodeBlock = (
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
   const startEndGroup = getStartEndGroup(options.startEndChars);
-  const regex = new RegExp(`${startEndGroup}.*\n[\\s\\S]*\n${startEndGroup}`);
+  const regex = new RegExp(
+    `${startEndGroup}.*\n([\\s\\S]*?)\n${startEndGroup}`,
+  );
   return regexMatcher(
     regex,
     parseComplete({ startEndChars: options.startEndChars }),
