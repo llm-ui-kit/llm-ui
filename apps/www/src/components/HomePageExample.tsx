@@ -2,6 +2,7 @@ import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import {
   buildShikiCompleteCodeBlock,
   buildShikiPartialCodeBlock,
+  loadHighlighter,
   matchCompleteMarkdownCodeBlock,
   matchPartialMarkdownCodeBlock,
 } from "@llm-ui/code-block";
@@ -15,7 +16,11 @@ import {
   type LLMOutputComponent,
   type LLMOutputReactComponent,
 } from "llm-ui/components";
-import type { ShikiCodeBlockComponent } from "node_modules/@llm-ui/code-block/src/shikiComponent";
+import type {
+  ShikiCodeBlockComponent,
+  ShikiProps,
+} from "node_modules/@llm-ui/code-block/src/shikiComponent";
+import { getHighlighterCore } from "shiki/core";
 import githubDark from "shiki/themes/github-dark.mjs";
 import githubLight from "shiki/themes/github-light.mjs";
 import getWasm from "shiki/wasm";
@@ -40,6 +45,31 @@ console.log('Hello llm-ui');
 \`\`\`
 `;
 
+const example2 = `
+\`\`\`ts
+import { LLMOutput } from "llm-ui/components";
+
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+\`\`\`
+
+Hello
+
+\`\`\`ts
+
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+console.log('Hello llm-ui');
+\`\`\`
+`;
+
 const Markdown: LLMOutputReactComponent = ({ llmOutput }) => {
   return (
     <MarkdownComponent
@@ -49,13 +79,15 @@ const Markdown: LLMOutputReactComponent = ({ llmOutput }) => {
   );
 };
 
-const shikiProps = {
-  highlighterOptions: {
-    langs: allLangs,
-    langAlias: allLangsAlias,
-    themes: [githubLight, githubDark],
-    loadWasm: getWasm,
-  },
+const shikiProps: ShikiProps = {
+  highlighter: loadHighlighter(
+    getHighlighterCore({
+      langs: allLangs,
+      langAlias: allLangsAlias,
+      themes: [githubLight, githubDark],
+      loadWasm: getWasm,
+    }),
+  ),
   codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
 };
 
