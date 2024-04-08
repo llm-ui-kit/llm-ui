@@ -26,13 +26,13 @@ import githubLight from "shiki/themes/github-light.mjs";
 import getWasm from "shiki/wasm";
 
 const example = `
-# llm-ui
+### Markdown support ✅
 
-> Markdown support
 
-Links: [llm-ui.com](https://llm-ui.com), ~strikethrough~, *italic*, **bold**
+Supports: [links](https://llm-ui.com), ~strikethrough~, *italic*, **bold**
 
-#### Code block
+#### Code blocks:
+
 \`\`\`typescript
 import { LLMOutput } from "llm-ui/components";
 
