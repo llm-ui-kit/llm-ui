@@ -24,3 +24,6 @@ export type {
   ShikiCodeBlockProps,
   ShikiProps,
 } from "./shikiComponent";
+
+export { loadHighlighter } from "./loadHighlighter";
+export type { LLMUIHighlighter } from "./loadHighlighter";

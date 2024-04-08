@@ -1,4 +1,4 @@
-import { LLMOutputComponent } from "llm-ui/components";
+import { SetOptional } from "type-fest";
 import {
   matchCompleteMarkdownCodeBlock,
   matchPartialMarkdownCodeBlock,
@@ -8,14 +8,14 @@ import {
   buildShikiCompleteCodeBlock,
   buildShikiPartialCodeBlock,
 } from "../shikiComponent";
-import { allHighlighterOptions } from "./allShikiOptions";
 
-export const allShikiDefaultProps: ShikiProps = {
-  highlighterOptions: allHighlighterOptions,
+export const allShikiDefaultProps = {
   codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
 };
 
-export const buildShikiComponent = (userShikiProps: Partial<ShikiProps>) => {
+export const buildShikiComponent = (
+  userShikiProps: SetOptional<ShikiProps, "codeToHtmlProps">,
+) => {
   const shikiProps: ShikiProps = {
     ...allShikiDefaultProps,
     ...userShikiProps,
@@ -27,5 +27,3 @@ export const buildShikiComponent = (userShikiProps: Partial<ShikiProps>) => {
     partialComponent: buildShikiPartialCodeBlock(shikiProps),
   };
 };
-
-export const shikiGithubComponent: LLMOutputComponent = buildShikiComponent({});

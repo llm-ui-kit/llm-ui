@@ -1,11 +1,8 @@
 import { LLMOutputReactComponent } from "llm-ui/components";
-import { useEffect, useRef, useState } from "react";
-import {
-  HighlighterCore,
-  HighlighterCoreOptions,
-  getHighlighterCore,
-} from "shiki/core";
+import { useCallback } from "react";
+import { HighlighterCore } from "shiki/core";
 import { SetOptional } from "type-fest";
+import { LLMUIHighlighter, useLoadHighlighter } from "./loadHighlighter";
 import {
   ParseFunction,
   parseCompleteMarkdownCodeBlock,
@@ -18,7 +15,7 @@ export type CodeToHtmlProps = SetOptional<
 >;
 
 export type ShikiProps = {
-  highlighterOptions: HighlighterCoreOptions;
+  highlighter: LLMUIHighlighter;
   codeToHtmlProps: CodeToHtmlProps;
 };
 
@@ -31,24 +28,28 @@ const ShikiCodeBlock: LLMOutputReactComponent<
   ShikiCodeBlockProps & {
     parser: ParseFunction;
   }
-> = ({ llmOutput, highlighterOptions, codeToHtmlProps, parser, ...props }) => {
-  const highlighterRef = useRef<HighlighterCore | undefined>();
-  const [html, setHtml] = useState("");
-  useEffect(() => {
-    (async () => {
-      if (!highlighterRef.current) {
-        highlighterRef.current = await getHighlighterCore(highlighterOptions);
-      }
-      const { code = "\n", language } = parser(llmOutput);
-      const html = highlighterRef.current.codeToHtml(code, {
-        ...codeToHtmlProps,
-        lang: codeToHtmlProps.lang ?? language ?? "plain",
-      });
-      setHtml(html);
-    })();
-  }, [llmOutput, highlighterOptions, codeToHtmlProps]);
+> = ({
+  llmOutput,
+  highlighter: llmuiHighlighter,
+  codeToHtmlProps,
+  parser,
+  ...props
+}) => {
+  const highlighter = useLoadHighlighter(llmuiHighlighter);
 
-  return <div {...props} dangerouslySetInnerHTML={{ __html: html }} />;
+  const getHtml = useCallback(() => {
+    if (!highlighter) {
+      return "";
+    }
+    const { code = "\n", language } = parser(llmOutput);
+
+    return highlighter.codeToHtml(code, {
+      ...codeToHtmlProps,
+      lang: codeToHtmlProps.lang ?? language ?? "plain",
+    });
+  }, [llmOutput, highlighter]);
+
+  return <div {...props} dangerouslySetInnerHTML={{ __html: getHtml() }} />;
 };
 
 export const ShikiCompleteCodeBlock: ShikiCodeBlockComponent = (props) => (
