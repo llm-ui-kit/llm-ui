@@ -17,7 +17,11 @@ const completeMatchesForComponent = (
     if (nextMatch) {
       matches.push({
         component: component.completeComponent,
-        match: nextMatch,
+        match: {
+          ...nextMatch,
+          startIndex: index + nextMatch.startIndex,
+          endIndex: index + nextMatch.endIndex,
+        },
         priority,
       });
       index += nextMatch.endIndex;

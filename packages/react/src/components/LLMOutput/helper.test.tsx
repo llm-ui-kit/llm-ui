@@ -110,6 +110,86 @@ describe("matchComponents", () => {
       ],
     },
     {
+      name: "first component complete matches input twice",
+      llmOutput: "helloWorldhelloWorld",
+      components: [
+        {
+          completeComponent: component1,
+          isCompleteMatch: (output) => matchString(output, "helloWorld"),
+          isPartialMatch: noMatch,
+          partialComponent: component2,
+        },
+      ],
+      fallbackComponent,
+      expected: [
+        {
+          component: component1,
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 0,
+            endIndex: 10,
+          },
+          priority: 0,
+        },
+        {
+          component: component1,
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 10,
+            endIndex: 20,
+          },
+          priority: 0,
+        },
+      ],
+    },
+    {
+      name: "first component complete matches input twice with fallback in between",
+      llmOutput: "helloWorldfallbackhelloWorld",
+      components: [
+        {
+          completeComponent: component1,
+          isCompleteMatch: (output) => matchString(output, "helloWorld"),
+          isPartialMatch: noMatch,
+          partialComponent: component2,
+        },
+      ],
+      fallbackComponent,
+      expected: [
+        {
+          component: component1,
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 0,
+            endIndex: 10,
+          },
+          priority: 0,
+        },
+        {
+          component: fallbackComponent,
+          match: {
+            output: "fallback",
+            visibleOutput: "fallback",
+            startIndex: 10,
+            endIndex: 18,
+          },
+          priority: 1,
+        },
+        {
+          component: component1,
+          match: {
+            output: "helloWorld",
+            visibleOutput: "helloWorld",
+            startIndex: 18,
+            endIndex: 28,
+          },
+          priority: 0,
+        },
+      ],
+    },
+    {
       name: "first component complete matches begginning of input",
       llmOutput: "helloWorld world",
       components: [
