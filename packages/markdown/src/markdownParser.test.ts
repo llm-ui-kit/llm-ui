@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   markdownRemoveChars,
   markdownToVisibleText,
+  markdownWithVisibleChars,
   removePartialAmbiguousMarkdown,
 } from "./markdownParser";
 
@@ -15,6 +16,7 @@ describe("removePartialAmbiguousMarkdown", () => {
     { markdown: "hello", expected: "hello" },
     { markdown: "*abc*", expected: "*abc*" },
     { markdown: "**abc*", expected: "" },
+    { markdown: "*a*", expected: "*a*" },
     { markdown: "*_abc_*", expected: "*_abc_*" },
     { markdown: "* abc", expected: "* abc" }, // bullet point
     { markdown: "*abc*def", expected: "*abc*def" },
@@ -93,6 +95,8 @@ describe("markdownToVisibleText", () => {
     expected: string;
   }[] = [
     { input: "hello", isFinished: false, expected: "hello" },
+    { input: "~hello~", isFinished: false, expected: "hello" },
+    { input: "_a_", isFinished: false, expected: "a" }, // todo: failing
     { input: "hello *world*", isFinished: false, expected: "hello world" },
     {
       input: "hello *world* *world*",
@@ -178,100 +182,100 @@ describe("markdownRemoveChars", () => {
   });
 });
 
-// describe("markdownWithVisibleChars", () => {
-//   const testCases: {
-//     markdown: string;
-//     visibleChars: number;
-//     isFinished: boolean;
-//     expected: string;
-//   }[] = [
-//     { markdown: "hello", visibleChars: 4, isFinished: false, expected: "hell" },
-//     { markdown: "hello", visibleChars: 2, isFinished: false, expected: "he" },
-//     {
-//       markdown: "hello",
-//       visibleChars: 5,
-//       isFinished: false,
-//       expected: "hello",
-//     },
-//     {
-//       markdown: "hello",
-//       visibleChars: 6,
-//       isFinished: false,
-//       expected: "hello",
-//     },
-//     {
-//       markdown: "hello ",
-//       visibleChars: 5,
-//       isFinished: false,
-//       expected: "hello",
-//     },
+describe("markdownWithVisibleChars", () => {
+  const testCases: {
+    markdown: string;
+    visibleChars: number;
+    isFinished: boolean;
+    expected: string;
+  }[] = [
+    { markdown: "hello", visibleChars: 4, isFinished: false, expected: "hell" },
+    { markdown: "hello", visibleChars: 2, isFinished: false, expected: "he" },
+    {
+      markdown: "hello",
+      visibleChars: 5,
+      isFinished: false,
+      expected: "hello",
+    },
+    {
+      markdown: "hello",
+      visibleChars: 6,
+      isFinished: false,
+      expected: "hello",
+    },
+    {
+      markdown: "hello ",
+      visibleChars: 5,
+      isFinished: false,
+      expected: "hello",
+    },
 
-//     {
-//       markdown: "*abc*",
-//       visibleChars: 3,
-//       isFinished: false,
-//       expected: "*abc*",
-//     },
-//     { markdown: "*abc*", visibleChars: 2, isFinished: false, expected: "*ab*" },
-//     { markdown: "*abc*", visibleChars: 1, isFinished: false, expected: "*a*" },
-//     { markdown: "*abc*", visibleChars: 0, isFinished: false, expected: "" },
+    {
+      markdown: "*abc*",
+      visibleChars: 3,
+      isFinished: false,
+      expected: "*abc*",
+    },
+    { markdown: "*abc*", visibleChars: 2, isFinished: false, expected: "*ab*" },
+    { markdown: "*abc*", visibleChars: 1, isFinished: false, expected: "*a*" },
+    { markdown: "*abc*", visibleChars: 0, isFinished: false, expected: "" },
 
-//     {
-//       markdown: "*abc* ",
-//       visibleChars: 3,
-//       isFinished: false,
-//       expected: "*abc*",
-//     },
+    {
+      markdown: "*abc* ",
+      visibleChars: 3,
+      isFinished: false,
+      expected: "*abc*",
+    },
 
-//     {
-//       markdown: "*abc* *def*",
-//       visibleChars: 7,
-//       isFinished: false,
-//       expected: "*abc* *def*",
-//     },
-//     {
-//       markdown: "*abc* *def*",
-//       visibleChars: 6,
-//       isFinished: false,
-//       expected: "*abc* *de*",
-//     },
-//     {
-//       markdown: "*abc* *def*",
-//       visibleChars: 5,
-//       isFinished: false,
-//       expected: "*abc* *d*",
-//     },
-//     {
-//       markdown: "*abc* *def*",
-//       visibleChars: 4,
-//       isFinished: false,
-//       expected: "*abc* ",
-//     },
-//     {
-//       markdown: "*abc* *def*",
-//       visibleChars: 3,
-//       isFinished: false,
-//       expected: "*abc*",
-//     },
-//     {
-//       markdown: "*abc* *def*",
-//       visibleChars: 2,
-//       isFinished: false,
-//       expected: "*ab*",
-//     },
-//     {
-//       markdown: "*",
-//       visibleChars: 2,
-//       isFinished: false,
-//       expected: "",
-//     },
-//   ]; //todo: add isFinished: true test cases
+    {
+      markdown: "*abc* *def*",
+      visibleChars: 7,
+      isFinished: false,
+      expected: "*abc* *def*",
+    },
+    {
+      markdown: "*abc* *def*",
+      visibleChars: 6,
+      isFinished: false,
+      expected: "*abc* *de*",
+    },
+    {
+      markdown: "*abc* *def*",
+      visibleChars: 5,
+      isFinished: false,
+      expected: "*abc* *d*",
+    },
+    {
+      markdown: "*abc* *def*",
+      visibleChars: 4,
+      isFinished: false,
+      expected: "*abc* ",
+    },
+    {
+      markdown: "*abc* *def*",
+      visibleChars: 3,
+      isFinished: false,
+      expected: "*abc*",
+    },
+    {
+      markdown: "*abc* *def*",
+      visibleChars: 2,
+      isFinished: false,
+      expected: "*ab*",
+    },
+    {
+      markdown: "*",
+      visibleChars: 2,
+      isFinished: false,
+      expected: "",
+    },
+  ]; //todo: add isFinished: true test cases
 
-//   testCases.forEach(({ markdown, visibleChars, isFinished, expected }) => {
-//     it(`should convert "${markdown}" visibleChars:${visibleChars} isFinished:${isFinished} to "${expected}"`, () => {
-//       expect(markdownWithVisibleChars(markdown, visibleChars, isFinished)).toBe(
-//         expected,
-//       );
-//     });
-//   });
-// });
+  testCases.forEach(({ markdown, visibleChars, isFinished, expected }) => {
+    it(`should convert "${markdown}" visibleChars:${visibleChars} isFinished:${isFinished} to "${expected}"`, () => {
+      expect(markdownWithVisibleChars(markdown, visibleChars, isFinished)).toBe(
+        expected,
+      );
+    });
+  });
+});
