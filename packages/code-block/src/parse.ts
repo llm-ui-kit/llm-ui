@@ -1,21 +1,10 @@
+import { CodeBlockOptions, getOptions } from "./options";
 import { getStartEndGroup } from "./shared";
 
 export type CodeBlock = {
   language: string | undefined;
   metaString: string | undefined;
   code: string | undefined;
-};
-
-export type ParseMarkdownCodeBlockOptions = {
-  startEndChars: string[];
-};
-
-export const defaultOptions: ParseMarkdownCodeBlockOptions = {
-  startEndChars: ["`"],
-};
-
-const getOptions = (userOptions?: Partial<ParseMarkdownCodeBlockOptions>) => {
-  return { ...defaultOptions, ...userOptions };
 };
 
 const parseMarkdownCodeBlock = (
@@ -49,7 +38,7 @@ const parseMarkdownCodeBlock = (
 
 export type ParseFunction = (
   codeBlock: string,
-  options?: ParseMarkdownCodeBlockOptions,
+  options?: CodeBlockOptions,
 ) => CodeBlock;
 
 export const parseCompleteMarkdownCodeBlock: ParseFunction = (

@@ -1,16 +1,18 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
+import { delay } from "@/lib/utils";
 import {
   buildShikiCompleteCodeBlock,
   buildShikiPartialCodeBlock,
+  codeBlockLookBack,
   loadHighlighter,
-  matchCompleteMarkdownCodeBlock,
-  matchPartialMarkdownCodeBlock,
+  matchCompleteCodeBlock,
+  matchPartialCodeBlock,
 } from "@llm-ui/code-block";
 import {
   allLangs,
   allLangsAlias,
 } from "@llm-ui/code-block/shikiBundles/allLangs";
-import { MarkdownComponent } from "@llm-ui/markdown";
+import { MarkdownComponent, markdownLookBack } from "@llm-ui/markdown";
 import {
   LLMOutput,
   type LLMOutputComponent,
@@ -20,6 +22,7 @@ import type {
   ShikiCodeBlockComponent,
   ShikiProps,
 } from "node_modules/@llm-ui/code-block/src/shikiComponent";
+import type { ThrottleFunction } from "node_modules/llm-ui/src/components/LLMOutput/types";
 import { getHighlighterCore } from "shiki/core";
 import githubDark from "shiki/themes/github-dark.mjs";
 import githubLight from "shiki/themes/github-light.mjs";
@@ -60,13 +63,19 @@ console.log('Hello llm-ui');
 \`\`\`
 `;
 
-const Markdown: LLMOutputReactComponent = ({ llmOutput }) => {
-  return (
-    <MarkdownComponent
-      llmOutput={llmOutput}
-      className={"prose dark:prose-invert"}
-    />
-  );
+const example3 = `Hello world *abcdefghijklmnopqrstuvwxyz*\n\n World hello.\n# H1 Header 1\n- Finished`;
+const example4 = `[Hello](https://google.com)
+`;
+const example5 = `Hello *italics* 123 456. Stop.`;
+const example6 = `
+\`\`\`ts
+import { LLMOutput } from "llm-ui/components";
+
+console.log('Hello llm-ui');
+\`\`\`
+`;
+const Markdown: LLMOutputReactComponent = (props) => {
+  return <MarkdownComponent {...props} className={"prose dark:prose-invert"} />;
 };
 
 const shikiProps: ShikiProps = {
@@ -93,24 +102,51 @@ const ShikiPartial: ShikiCodeBlockComponent = (props) => (
 );
 
 const codeBlockComponent: LLMOutputComponent = {
-  isCompleteMatch: matchCompleteMarkdownCodeBlock(),
-  isPartialMatch: matchPartialMarkdownCodeBlock(),
-  completeComponent: ShikiComplete,
-  partialComponent: ShikiPartial,
+  isCompleteMatch: matchCompleteCodeBlock(),
+  isPartialMatch: matchPartialCodeBlock(),
+  lookBack: codeBlockLookBack(),
+  component: ShikiComplete,
+};
+
+const throttle: ThrottleFunction = async ({
+  allLLMOutput,
+  currentLLMOutput,
+  rawLLMOutput,
+  visibleChars,
+  allVisibleChars,
+  timeInMsSinceStart,
+  isStreamFinished,
+}) => {
+  // console.log("zzz getVisibleChars", {
+  //   allLLMOutput,
+  //   currentLLMOutput,
+  //   rawLLMOutput,
+  //   visibleChars,
+  //   allVisibleChars,
+  //   timeInMsSinceStart,
+  //   isFinished,
+  // });
+  await delay(200);
+  const bufferSize = allLLMOutput.length - currentLLMOutput.length;
+  return {
+    skip: bufferSize < 1 && !isStreamFinished,
+    targetVisibleCharsLength: visibleChars.length + 1,
+  };
 };
 
 export const HomePageExample = () => {
-  const { output } = useStreamFastSmooth(example, {
+  const { output } = useStreamFastSmooth(example2, {
     loop: false,
     autoStart: true,
     loopDelayMs: 3000,
   });
-
   return (
     <LLMOutput
       components={[codeBlockComponent]}
-      fallbackComponent={Markdown}
+      isFinished={output === example2}
+      fallbackComponent={{ component: Markdown, lookBack: markdownLookBack }}
       llmOutput={output}
+      throttle={throttle}
     />
   );
 };
