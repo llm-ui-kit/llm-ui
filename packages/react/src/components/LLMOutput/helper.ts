@@ -5,7 +5,6 @@ import {
   LLMOutputMatchWithLookBack,
 } from "./types";
 
-// rewrite these types to be shared
 export type ComponentMatch = {
   component: LLMOutputFallbackComponent;
   match: LLMOutputMatchWithLookBack;
@@ -115,7 +114,6 @@ export type FallbacksInGapsParams = {
   fallbackPriority: number;
   fallbackComponent: LLMOutputFallbackComponent;
 };
-
 const fallbacksInGaps = ({
   componentMatches,
   llmOutput,
@@ -168,6 +166,49 @@ const fallbacksInGaps = ({
   return fallbacks;
 };
 
+const matchesWithLookback = ({
+  matches,
+  visibleTextLengthTarget,
+  isStreamFinished,
+}: {
+  matches: ComponentMatchNoLookback[];
+  visibleTextLengthTarget: number;
+  isStreamFinished: boolean;
+}): ComponentMatch[] => {
+  return matches.reduce((acc, match, index) => {
+    const visibleTextSoFar = acc
+      .map((m) => m.match.visibleText.length)
+      .reduce((a, b) => a + b, 0);
+    const localVisibleTextLengthTarget =
+      visibleTextLengthTarget - visibleTextSoFar;
+    if (localVisibleTextLengthTarget <= 0) {
+      return acc;
+    }
+    const isLastMatch = index === matches.length - 1;
+    const { output, visibleText } = match.component.lookBack({
+      isComplete: !isLastMatch || isStreamFinished,
+      visibleTextLengthTarget: localVisibleTextLengthTarget,
+      isStreamFinished: isStreamFinished,
+      output: match.match.outputRaw,
+    });
+    if (visibleText.length > localVisibleTextLengthTarget) {
+      throw new Error(
+        `Visible text length exceeded target for: ${visibleText} target: ${localVisibleTextLengthTarget}`,
+      );
+    }
+    const matchWithLookback: ComponentMatch = {
+      ...match,
+      match: {
+        ...match.match,
+        outputAfterLookback: output,
+        visibleText,
+      },
+    };
+
+    return [...acc, matchWithLookback];
+  }, [] as ComponentMatch[]);
+};
+
 export type MatchComponentParams = {
   llmOutput: string;
   components: LLMOutputComponent[];
@@ -218,37 +259,9 @@ export const matchComponents = ({
     matches.push(fallBack);
   }
   matches.sort(byMatchStartIndex);
-  const matchesWithLookback = matches.reduce((acc, match, index) => {
-    const visibleTextSoFar = acc
-      .map((m) => m.match.visibleText.length)
-      .reduce((a, b) => a + b, 0);
-    const localVisibleTextLengthTarget =
-      visibleTextLengthTarget - visibleTextSoFar;
-    if (localVisibleTextLengthTarget <= 0) {
-      return acc;
-    }
-    const isLastMatch = index === matches.length - 1;
-    const { output, visibleText } = match.component.lookBack({
-      isComplete: !isLastMatch || isStreamFinished,
-      visibleTextLengthTarget: localVisibleTextLengthTarget,
-      isStreamFinished: isStreamFinished,
-      output: match.match.outputRaw,
-    });
-    if (visibleText.length > localVisibleTextLengthTarget) {
-      throw new Error(
-        `Visible text length exceeded target for: ${visibleText} target: ${localVisibleTextLengthTarget}`,
-      );
-    }
-    const matchWithLookback: ComponentMatch = {
-      ...match,
-      match: {
-        ...match.match,
-        outputAfterLookback: output,
-        visibleText,
-      },
-    };
-
-    return [...acc, matchWithLookback];
-  }, [] as ComponentMatch[]);
-  return matchesWithLookback;
+  return matchesWithLookback({
+    matches,
+    isStreamFinished,
+    visibleTextLengthTarget,
+  });
 };
