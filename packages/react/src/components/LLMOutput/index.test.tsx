@@ -1,31 +1,7 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { afterEach, describe, expect, test, vi } from "vitest";
+import { fallbackComponent } from "../../test/utils";
 import { useMatches } from "./index";
-import {
-  LLMOutputFallbackComponent,
-  LLMOutputReactComponent,
-  LookBackFunction,
-} from "./types";
-
-// todo: extract these:
-const returnParamsLookBack: LookBackFunction = ({
-  output,
-  isComplete,
-  isStreamFinished,
-  visibleTextLengthTarget,
-}) => ({
-  output: `${output} isComplete:${isComplete} visibleTextLengthTarget:${visibleTextLengthTarget === Number.MAX_SAFE_INTEGER ? "inf" : visibleTextLengthTarget} isStreamFinished:${isStreamFinished}`,
-  visibleText: output.slice(0, visibleTextLengthTarget),
-});
-
-const fallbackReactComponent: LLMOutputReactComponent = () => (
-  <div>fallback</div>
-);
-
-const fallbackComponent: LLMOutputFallbackComponent = {
-  component: fallbackReactComponent,
-  lookBack: returnParamsLookBack,
-};
 
 const noThrottle = () => ({ visibleTextLengthTarget: 100, skip: false });
 

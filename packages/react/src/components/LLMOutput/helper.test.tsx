@@ -1,26 +1,11 @@
 import { describe, expect, test } from "vitest";
+import { fallbackComponent, returnParamsLookBack } from "../../test/utils";
 import { ComponentMatch, matchComponents } from "./helper";
 import {
   LLMOutputComponent,
   LLMOutputFallbackComponent,
-  LookBackFunction,
   MaybeLLMOutputMatch,
 } from "./types";
-
-const returnParamsLookBack: LookBackFunction = ({
-  output,
-  isComplete,
-  isStreamFinished,
-  visibleTextLengthTarget,
-}) => ({
-  output: `${output} isComplete:${isComplete} visibleTextLengthTarget:${visibleTextLengthTarget === Number.MAX_SAFE_INTEGER ? "inf" : visibleTextLengthTarget} isStreamFinished:${isStreamFinished}`,
-  visibleText: output.slice(0, visibleTextLengthTarget),
-});
-
-const fallbackComponent: LLMOutputFallbackComponent = {
-  component: () => null,
-  lookBack: returnParamsLookBack,
-};
 
 const component1 = () => <div>1</div>;
 const component2 = () => <div>2</div>;
