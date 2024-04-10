@@ -1,4 +1,4 @@
-import { LLMOutputReactComponent } from "llm-ui/components";
+import { LLMOutputComponent } from "llm-ui/components";
 import { useCallback } from "react";
 import { HighlighterCore } from "shiki/core";
 import { SetOptional } from "type-fest";
@@ -17,10 +17,9 @@ export type ShikiProps = {
 
 export type ShikiCodeBlockProps = ShikiProps & React.HTMLProps<HTMLDivElement>;
 
-export type ShikiCodeBlockComponent =
-  LLMOutputReactComponent<ShikiCodeBlockProps>;
+export type ShikiCodeBlockComponent = LLMOutputComponent<ShikiCodeBlockProps>;
 
-export const ShikiCodeBlock: LLMOutputReactComponent<
+export const ShikiCodeBlock: LLMOutputComponent<
   ShikiCodeBlockProps & {
     parser?: ParseFunction;
   }

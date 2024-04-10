@@ -13,7 +13,7 @@ import { MarkdownComponent, markdownLookBack } from "@llm-ui/markdown";
 import {
   LLMOutput,
   type LLMOutputBlock,
-  type LLMOutputReactComponent,
+  type LLMOutputComponent,
 } from "llm-ui/components";
 import { Check, Copy } from "lucide-react";
 import { codeBlockPartialMatcher } from "node_modules/@llm-ui/code-block/src/matchers";
@@ -48,7 +48,7 @@ console.log('Hello llm-ui');
 console.log('Hello llm-ui');
 \`\`\`
 `;
-const Markdown: LLMOutputReactComponent = (props) => {
+const Markdown: LLMOutputComponent = (props) => {
   return <MarkdownComponent {...props} className={"prose dark:prose-invert"} />;
 };
 

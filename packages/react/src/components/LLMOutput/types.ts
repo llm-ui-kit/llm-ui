@@ -11,7 +11,7 @@ export type LLMOutputMatchWithLookBack = LLMOutputMatch & {
 
 export type MaybeLLMOutputMatch = LLMOutputMatch | undefined;
 
-export type LLMOutputReactComponent<Props = any> = React.FC<
+export type LLMOutputComponent<Props = any> = React.FC<
   { llmOutput: string; isComplete: boolean } & Props
 >;
 
@@ -32,7 +32,7 @@ export type LookBackFunctionParams = {
 export type LookBackFunction = (params: LookBackFunctionParams) => LookBack;
 
 export type LLMOutputFallbackBlock = {
-  component: LLMOutputReactComponent;
+  component: LLMOutputComponent;
   lookBack: LookBackFunction;
 };
 
