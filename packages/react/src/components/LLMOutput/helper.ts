@@ -98,7 +98,7 @@ const findPartialMatch = ({
       return {
         component: component,
         match: {
-          outputRaw,
+          outputRaw: partialMatch.outputRaw,
           startIndex: partialMatch.startIndex + currentIndex,
           endIndex: partialMatch.endIndex + currentIndex,
         },
@@ -228,7 +228,6 @@ export const matchComponents = ({
       return acc;
     }
     const isLastMatch = index === matches.length - 1;
-    const isFallback = match.component === fallbackComponent;
     const { output, visibleText } = match.component.lookBack({
       isComplete: !isLastMatch || isStreamFinished,
       visibleTextLengthTarget: localVisibleTextLengthTarget,

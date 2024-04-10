@@ -613,108 +613,81 @@ describe("matchComponents", () => {
         ],
       };
     },
-    () => {},
-    // {
-    //   name: "first component partial matches whole input",
-    //   llmOutput: "helloWorld",
-    //   components: [
-    //     {
-    //       completeComponent: component1,
-    //       isCompleteMatch: noMatch,
-    //       isPartialMatch: (output) => matchString(output, "helloWorld"),
-    //       partialComponent: component2,
-    //     },
-    //   ],
-    //   fallbackComponent,
-    //   expected: [
-    //     {
-    //       component: component2,
-    //       match: {
-    //         output: "helloWorld",
-    //         visibleOutput: "helloWorld",
-    //         startIndex: 0,
-    //         endIndex: 10,
-    //       },
-    //       priority: 0,
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: "first component partial matches end of input",
-    //   llmOutput: "helloWorld",
-    //   components: [
-    //     {
-    //       completeComponent: component1,
-    //       isCompleteMatch: noMatch,
-    //       isPartialMatch: (output) => matchString(output, "World"),
-    //       partialComponent: component2,
-    //     },
-    //   ],
-    //   fallbackComponent,
-    //   expected: [
-    //     {
-    //       component: fallbackComponent,
-    //       match: {
-    //         output: "hello",
-    //         visibleOutput: "hello",
-    //         startIndex: 0,
-    //         endIndex: 5,
-    //       },
-    //       priority: 1,
-    //     },
-    //     {
-    //       component: component2,
-    //       match: {
-    //         output: "World",
-    //         visibleOutput: "World",
-    //         startIndex: 5,
-    //         endIndex: 10,
-    //       },
-    //       priority: 0,
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: "partial match after complete matches",
-    //   llmOutput: "helloWorld",
-    //   components: [
-    //     {
-    //       completeComponent: component1,
-    //       isCompleteMatch: noMatch,
-    //       isPartialMatch: (output) => matchString(output, "World"),
-    //       partialComponent: component2,
-    //     },
-    //     {
-    //       completeComponent: component3,
-    //       isCompleteMatch: (output) => matchString(output, "hello"),
-    //       isPartialMatch: noMatch,
-    //       partialComponent: component4,
-    //     },
-    //   ],
-    //   fallbackComponent,
-    //   expected: [
-    //     {
-    //       component: component3,
-    //       match: {
-    //         output: "hello",
-    //         visibleOutput: "hello",
-    //         startIndex: 0,
-    //         endIndex: 5,
-    //       },
-    //       priority: 1,
-    //     },
-    //     {
-    //       component: component2,
-    //       match: {
-    //         output: "World",
-    //         visibleOutput: "World",
-    //         startIndex: 5,
-    //         endIndex: 10,
-    //       },
-    //       priority: 0,
-    //     },
-    //   ],
-    // },
+    () => {
+      const component = partialMatchesString("World");
+      return {
+        name: "first component partial matches end of input - isStreamFinished: false",
+        llmOutput: "helloWorld",
+        components: [component],
+        fallbackComponent,
+        isStreamFinished: false,
+        visibleTextLengthTarget: 100,
+        expected: [
+          {
+            component: fallbackComponent,
+            match: {
+              outputRaw: "hello",
+              visibleText: "hello",
+              outputAfterLookback:
+                "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:false",
+              startIndex: 0,
+              endIndex: 5,
+            },
+            priority: 1,
+          },
+          {
+            component: component,
+            match: {
+              outputRaw: "World",
+              visibleText: "World",
+              outputAfterLookback:
+                "World isComplete:false visibleTextLengthTarget:95 isStreamFinished:false",
+              startIndex: 5,
+              endIndex: 10,
+            },
+            priority: 0,
+          },
+        ],
+      };
+    },
+    () => {
+      const partialComponent = partialMatchesString("World");
+      const completeComponent = completeMatchesString("hello");
+      return {
+        name: "partial match after complete matches",
+        llmOutput: "helloWorld",
+        components: [partialComponent, completeComponent],
+        fallbackComponent,
+        isStreamFinished: false,
+        visibleTextLengthTarget: 100,
+        expected: [
+          {
+            component: completeComponent,
+            match: {
+              outputRaw: "hello",
+              visibleText: "hello",
+              outputAfterLookback:
+                "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:false",
+              startIndex: 0,
+              endIndex: 5,
+            },
+            priority: 1,
+          },
+          {
+            component: partialComponent,
+            match: {
+              outputRaw: "World",
+              visibleText: "World",
+              outputAfterLookback:
+                "World isComplete:false visibleTextLengthTarget:95 isStreamFinished:false",
+              startIndex: 5,
+              endIndex: 10,
+            },
+            priority: 0,
+          },
+        ],
+      };
+    },
   ];
 
   testCases.forEach((testCase) => {
