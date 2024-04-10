@@ -2,7 +2,7 @@ import { delay } from "../../lib/delay";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-type Probability = {
+export type Probability = {
   prob: number;
 };
 type TokenProbability = { tokenChars: number } & Probability;
