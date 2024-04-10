@@ -1,8 +1,14 @@
 import { omit } from "remeda";
 import { afterEach, describe, expect, it } from "vitest";
-import { cumulativeProbability, stringToTokenArray } from ".";
+import {
+  Probability,
+  UseStreamExampleOptions,
+  cumulativeProbability,
+  stringToTokenArray,
+} from ".";
 
-const withoutProbs = (probs: any) => probs.map((p: any) => omit(p, ["prob"]));
+const withoutProbs = (probs: Probability[]) =>
+  probs.map((p: Probability) => omit(p, ["prob"]));
 
 describe("cumulativeProbability", () => {
   const testCases = [
@@ -42,9 +48,12 @@ describe("stringToTokenArray", () => {
   const testCases: {
     name: string;
     input: string;
-    options: any;
+    options: Pick<
+      UseStreamExampleOptions,
+      "delayMsProbabilities" | "tokenCharsProbabilities"
+    >;
     random: number;
-    expected: any;
+    expected: unknown;
   }[] = [
     {
       name: "token chars 1 delay 1",
@@ -90,7 +99,10 @@ describe("stringToTokenArray", () => {
   testCases.forEach(({ name, input, options, random, expected }) => {
     it(name, () => {
       Math.random = () => random;
-      const result = stringToTokenArray(input, options);
+      const result = stringToTokenArray(
+        input,
+        options as UseStreamExampleOptions,
+      );
       expect(result).toEqual(expected);
     });
   });

@@ -1,5 +1,5 @@
 import js from "@eslint/js";
-import typescriptPlugin from "@typescript-eslint/eslint-plugin";
+import ts from "@typescript-eslint/eslint-plugin";
 import typescriptParser from "@typescript-eslint/parser";
 import eslintPluginAstro from "eslint-plugin-astro";
 import preferArrow from "eslint-plugin-prefer-arrow";
@@ -54,7 +54,7 @@ export default [
   ...typescriptProjects.map((project) => ({
     files: [`${project}/**/*.{ts,tsx}`],
     plugins: {
-      "@typescript-eslint": typescriptPlugin,
+      "@typescript-eslint": ts,
     },
     languageOptions: {
       parser: typescriptParser,
@@ -63,6 +63,10 @@ export default [
         sourceType: "module",
         ecmaVersion: 2020,
       },
+    },
+    rules: {
+      ...ts.configs["eslint-recommended"].rules,
+      ...ts.configs["recommended"].rules,
     },
   })),
   {

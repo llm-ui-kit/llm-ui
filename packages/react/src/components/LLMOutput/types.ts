@@ -11,6 +11,7 @@ export type LLMOutputMatchWithLookBack = LLMOutputMatch & {
 
 export type MaybeLLMOutputMatch = LLMOutputMatch | undefined;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type LLMOutputComponent<Props = any> = React.FC<
   { llmOutput: string; isComplete: boolean } & Props
 >;
