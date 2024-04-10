@@ -50,10 +50,7 @@ describe("useMatches Hook", () => {
     });
     expect(result.current.matches).toEqual([
       {
-        component: {
-          component: fallbackReactComponent,
-          lookBack: returnParamsLookBack,
-        },
+        component: fallbackComponent,
         match: {
           startIndex: 0,
           endIndex: 5,
