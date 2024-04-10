@@ -46,33 +46,6 @@ console.log('Hello llm-ui');
 console.log('Hello llm-ui');
 \`\`\`
 `;
-
-const example2 = `
-\`\`\`ts
-import { LLMOutput } from "llm-ui/components";
-
-console.log('Hello llm-ui');
-\`\`\`
-
-Hello
-
-\`\`\`ts
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-\`\`\`
-`;
-
-const example3 = `Hello world *abcdefghijklmnopqrstuvwxyz*\n\n World hello.\n# H1 Header 1\n- Finished`;
-const example4 = `[Hello](https://google.com)
-`;
-const example5 = `Hello *italics* 123 456. Stop.`;
-const example6 = `
-\`\`\`ts
-import { LLMOutput } from "llm-ui/components";
-
-console.log('Hello llm-ui');
-\`\`\`
-`;
 const Markdown: LLMOutputReactComponent = (props) => {
   return <MarkdownComponent {...props} className={"prose dark:prose-invert"} />;
 };
@@ -123,7 +96,7 @@ const throttle: ThrottleFunction = ({
 };
 
 export const HomePageExample = () => {
-  const { output } = useStreamFastSmooth(example2, {
+  const { output } = useStreamFastSmooth(example, {
     loop: false,
     autoStart: true,
     loopDelayMs: 3000,
@@ -131,7 +104,7 @@ export const HomePageExample = () => {
   return (
     <LLMOutput
       components={[codeBlockComponent]}
-      isFinished={output === example2}
+      isFinished={output === example}
       fallbackComponent={{ component: Markdown, lookBack: markdownLookBack }}
       llmOutput={output}
       throttle={throttle}
