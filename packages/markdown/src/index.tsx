@@ -25,7 +25,6 @@ export const markdownLookBack: LookBackFunction = ({
 
 export const MarkdownComponent: LLMOutputReactComponent<Options> = ({
   llmOutput,
-  isComplete,
   ...props
 }) => {
   return (

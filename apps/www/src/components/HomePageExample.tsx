@@ -17,15 +17,18 @@ import {
   type LLMOutputComponent,
   type LLMOutputReactComponent,
 } from "llm-ui/components";
+import { Check, Copy } from "lucide-react";
 import type {
   ShikiCodeBlockComponent,
   ShikiProps,
 } from "node_modules/@llm-ui/code-block/src/shikiComponent";
 import type { ThrottleFunction } from "node_modules/llm-ui/src/components/LLMOutput/types";
+import { useState, type ReactNode } from "react";
 import { getHighlighterCore } from "shiki/core";
 import githubDark from "shiki/themes/github-dark.mjs";
 import githubLight from "shiki/themes/github-light.mjs";
 import getWasm from "shiki/wasm";
+import { Button } from "./ui/Button";
 
 const example = `
 ### Markdown support ✅
@@ -65,12 +68,48 @@ const shikiProps: ShikiProps = {
 const CompleteCodeBlock = buildShikiCompleteCodeBlock(shikiProps);
 const PartialCodeBlock = buildShikiPartialCodeBlock(shikiProps);
 
-const ShikiComplete: ShikiCodeBlockComponent = (props) => (
-  <CompleteCodeBlock className="py-4" {...props} />
-);
+const CodeBlockContainer: React.FC<{
+  code: string;
+  isComplete: boolean;
+  children: ReactNode;
+}> = ({ code, isComplete, children }) => {
+  const [isCopied, setIsCopied] = useState(false);
+  const Icon = isCopied ? Check : Copy;
+  const text = isCopied ? "Copied" : "Copy";
+  return (
+    <div className="relative group my-4">
+      <Button
+        className="absolute top-2 end-2 min-w-24 !transition-opacity !ease-in !duration-150 group-hover:opacity-100 opacity-0"
+        size={"sm"}
+        variant={"secondary"}
+        onClick={() => {
+          navigator.clipboard.writeText(code);
+          setIsCopied(true);
+          setTimeout(() => {
+            setIsCopied(false);
+          }, 1400);
+        }}
+      >
+        <Icon className="mr-2 h-4 w-4" />
+        {text}
+      </Button>
+      {children}
+    </div>
+  );
+};
+
+const ShikiComplete: ShikiCodeBlockComponent = (props) => {
+  return (
+    <CodeBlockContainer code={props.llmOutput} isComplete>
+      <CompleteCodeBlock {...props} />
+    </CodeBlockContainer>
+  );
+};
 
 const ShikiPartial: ShikiCodeBlockComponent = (props) => (
-  <PartialCodeBlock className="py-4" {...props} />
+  <CodeBlockContainer code={props.llmOutput} isComplete={false}>
+    <PartialCodeBlock {...props} />
+  </CodeBlockContainer>
 );
 
 const codeBlockComponent: LLMOutputComponent = {
