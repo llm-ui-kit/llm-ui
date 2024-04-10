@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test, vi } from "vitest";
 import { useMatches } from "./index";
 import {
   LLMOutputFallbackComponent,
@@ -27,10 +27,27 @@ const fallbackComponent: LLMOutputFallbackComponent = {
   lookBack: returnParamsLookBack,
 };
 
-const noThrottle = () => ({ visibleTextLengthTarget: 0, skip: false });
+const noThrottle = () => ({ visibleTextLengthTarget: 100, skip: false });
+
+const callRenderLoop = ({ times }: { times: number }) => {
+  let count = 0;
+  vi.stubGlobal("requestAnimationFrame", (callback: () => void) => {
+    console.log("count", count, "times", times);
+    count++;
+    if (count < times) {
+      callback();
+    }
+    return 1;
+  });
+};
 
 describe("useMatches Hook", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
   test("should initialize with an empty matches array", () => {
+    callRenderLoop({ times: 1 });
+
     const { result } = renderHook(() =>
       useMatches({
         llmOutput: "",
@@ -43,19 +60,34 @@ describe("useMatches Hook", () => {
 
     expect(result.current.matches).toEqual([]);
   });
-  test("test 2", () => {
-    const { result } = renderHook(() =>
-      useMatches({
-        llmOutput: "h",
+
+  test("matches fallback", () => {
+    const { result } = renderHook(() => {
+      callRenderLoop({ times: 2 });
+      return useMatches({
+        llmOutput: "hello",
         isFinished: false,
         components: [],
         fallbackComponent: fallbackComponent,
         throttle: noThrottle,
-      }),
-    );
-
-    expect(result.current.matches).toEqual([]);
+      });
+    });
+    expect(result.current.matches).toEqual([
+      {
+        component: {
+          component: fallbackReactComponent,
+          lookBack: returnParamsLookBack,
+        },
+        match: {
+          startIndex: 0,
+          endIndex: 5,
+          outputAfterLookback:
+            "hello isComplete:false visibleTextLengthTarget:100 isStreamFinished:false",
+          outputRaw: "hello",
+          visibleText: "hello",
+        },
+        priority: 0,
+      },
+    ]);
   });
-
-  // Add more tests here...
 });
