@@ -79,7 +79,7 @@ const CodeBlockContainer: React.FC<{
     <div className="relative group my-4">
       <Button
         className={cn(
-          "absolute top-2 end-2 min-w-24 !transition-opacity !ease-in !duration-150 group-hover:opacity-100 ",
+          "absolute top-3 end-3 min-w-24 !transition-opacity !ease-in !duration-150 group-hover:opacity-100 ",
           isCopied ? "opacity-100" : "opacity-0",
         )}
         size={"sm"}
