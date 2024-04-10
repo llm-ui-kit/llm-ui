@@ -1,3 +1,4 @@
+import parseHtml from "html-react-parser";
 import { LLMOutputComponent } from "llm-ui/components";
 import { useCallback } from "react";
 import { HighlighterCore } from "shiki/core";
@@ -43,8 +44,7 @@ export const ShikiCodeBlock: LLMOutputComponent<
       lang: codeToHtmlProps.lang ?? language ?? "plain",
     });
   }, [llmOutput, highlighter]);
-
-  return <div {...props} dangerouslySetInnerHTML={{ __html: getHtml() }} />;
+  return <div {...props}>{parseHtml(getHtml())}</div>;
 };
 
 export const buildShikiCodeBlockComponent = (
