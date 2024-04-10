@@ -5,5 +5,10 @@ export type {
   LLMOutputMatch,
   LLMOutputMatcher,
   LLMOutputReactComponent,
+  LookBack,
+  LookBackFunction,
+  LookBackFunctionParams,
   MaybeLLMOutputMatch,
+  ThrottleFunction as ThrottleParams,
+  ThrottleResponse,
 } from "./LLMOutput/types";

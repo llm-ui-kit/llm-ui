@@ -1,8 +1,5 @@
 import { SetOptional } from "type-fest";
-import {
-  matchCompleteMarkdownCodeBlock,
-  matchPartialMarkdownCodeBlock,
-} from "../matchers";
+import { matchCompleteCodeBlock, matchPartialCodeBlock } from "../matchers";
 import {
   ShikiProps,
   buildShikiCompleteCodeBlock,
@@ -21,8 +18,8 @@ export const buildShikiComponent = (
     ...userShikiProps,
   };
   return {
-    isCompleteMatch: matchCompleteMarkdownCodeBlock(),
-    isPartialMatch: matchPartialMarkdownCodeBlock(),
+    isCompleteMatch: matchCompleteCodeBlock(),
+    isPartialMatch: matchPartialCodeBlock(),
     completeComponent: buildShikiCompleteCodeBlock(shikiProps),
     partialComponent: buildShikiPartialCodeBlock(shikiProps),
   };
