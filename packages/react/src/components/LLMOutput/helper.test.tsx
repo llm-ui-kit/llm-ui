@@ -73,6 +73,17 @@ const completeMatchesString = (
   throttle: dummyThottle,
 });
 
+const partialMatchesString = (
+  target: string,
+  lookBack = returnParamsLookBack,
+): LLMOutputComponent => ({
+  component: component2,
+  isCompleteMatch: noMatch,
+  isPartialMatch: (output) => matchString(output, target),
+  lookBack: lookBack,
+  throttle: dummyThottle,
+});
+
 type TestCase = {
   name: string;
   llmOutput: string;
@@ -218,7 +229,7 @@ describe("matchComponents", () => {
             component: component,
             match: {
               outputRaw: "helloWorld",
-              visibleText: "a".repeat(90),
+              visibleText: "helloWorld",
               outputAfterLookback:
                 "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
               startIndex: 0,
@@ -230,7 +241,7 @@ describe("matchComponents", () => {
             component: component,
             match: {
               outputRaw: "helloWorld",
-              visibleText: "a".repeat(90),
+              visibleText: "helloWorld",
               outputAfterLookback:
                 "helloWorld isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
               startIndex: 10,
@@ -256,8 +267,9 @@ describe("matchComponents", () => {
             component: component,
             match: {
               outputRaw: "helloWorld",
-              visibleText: "visibleTextLengthTarget:inf isStreamFinished:true",
-              outputAfterLookback: "helloWorld isComplete:true",
+              visibleText: "helloWorld",
+              outputAfterLookback:
+                "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
               startIndex: 0,
               endIndex: 10,
             },
@@ -267,8 +279,9 @@ describe("matchComponents", () => {
             component: fallbackComponent,
             match: {
               outputRaw: "fallback",
-              visibleText: "visibleTextLengthTarget:100 isStreamFinished:true",
-              outputAfterLookback: "fallback isComplete:true",
+              visibleText: "fallback",
+              outputAfterLookback:
+                "fallback isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
               startIndex: 10,
               endIndex: 18,
             },
@@ -278,8 +291,9 @@ describe("matchComponents", () => {
             component: component,
             match: {
               outputRaw: "helloWorld",
-              visibleText: "visibleTextLengthTarget:inf isStreamFinished:true",
-              outputAfterLookback: "helloWorld isComplete:true",
+              visibleText: "helloWorld",
+              outputAfterLookback:
+                "helloWorld isComplete:true visibleTextLengthTarget:82 isStreamFinished:true",
               startIndex: 18,
               endIndex: 28,
             },
@@ -302,8 +316,9 @@ describe("matchComponents", () => {
             component: component,
             match: {
               outputRaw: "helloWorld",
-              visibleText: "visibleTextLengthTarget:inf isStreamFinished:true",
-              outputAfterLookback: "helloWorld isComplete:true",
+              visibleText: "helloWorld",
+              outputAfterLookback:
+                "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
               startIndex: 0,
               endIndex: 10,
             },
@@ -313,8 +328,9 @@ describe("matchComponents", () => {
             component: fallbackComponent,
             match: {
               outputRaw: " world",
-              visibleText: "visibleTextLengthTarget:100 isStreamFinished:true",
-              outputAfterLookback: " world isComplete:true",
+              visibleText: " world",
+              outputAfterLookback:
+                " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
               startIndex: 10,
               endIndex: 16,
             },
@@ -337,8 +353,9 @@ describe("matchComponents", () => {
             component: fallbackComponent,
             match: {
               outputRaw: "helloWorld",
-              visibleText: "visibleTextLengthTarget:100 isStreamFinished:true",
-              outputAfterLookback: "helloWorld isComplete:true",
+              visibleText: "helloWorld",
+              outputAfterLookback:
+                "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
               startIndex: 0,
               endIndex: 10,
             },
@@ -348,8 +365,9 @@ describe("matchComponents", () => {
             component: component,
             match: {
               outputRaw: " world",
-              visibleText: "visibleTextLengthTarget:inf isStreamFinished:true",
-              outputAfterLookback: " world isComplete:true",
+              visibleText: " world",
+              outputAfterLookback:
+                " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
               startIndex: 10,
               endIndex: 16,
             },
@@ -372,225 +390,230 @@ describe("matchComponents", () => {
             component: fallbackComponent,
             match: {
               outputRaw: "helloWorld",
-              visibleText: "aaa",
-              outputAfterLookback: "helloWorld isComplete:false",
+              visibleText: "hel",
+              outputAfterLookback:
+                "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
               startIndex: 0,
               endIndex: 10,
             },
             priority: 1,
           },
-          // {
-          //   component: component,
-          //   match: {
-          //     outputRaw: " world",
-          //     visibleText: "visibleTextLengthTarget:inf isStreamFinished:true",
-          //     outputAfterLookback: " world isComplete:true",
-          //     startIndex: 10,
-          //     endIndex: 16,
-          //   },
-          //   priority: 0,
-          // },
         ],
       };
     },
-    // {
-    //   name: "first component complete matches end of input",
-    //   llmOutput: "helloWorld world",
-    //   components: [
-    //     {
-    //       completeComponent: component1,
-    //       isCompleteMatch: (output) => matchString(output, " world"),
-    //       isPartialMatch: noMatch,
-    //       partialComponent: component2,
-    //     },
-    //   ],
-    //   fallbackComponent,
-    //   expected: [
-    //     {
-    //       component: fallbackComponent,
-    //       match: {
-    //         output: "helloWorld",
-    //         visibleOutput: "helloWorld",
-    //         startIndex: 0,
-    //         endIndex: 10,
-    //       },
-    //       priority: 1,
-    //     },
-    //     {
-    //       component: component1,
-    //       match: {
-    //         output: " world",
-    //         visibleOutput: " world",
-    //         startIndex: 10,
-    //         endIndex: 16,
-    //       },
-    //       priority: 0,
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: "first component complete matches middle of input",
-    //   llmOutput: "helloWorld world",
-    //   components: [
-    //     {
-    //       completeComponent: component1,
-    //       isCompleteMatch: (output) => matchString(output, "oWo"),
-    //       isPartialMatch: noMatch,
-    //       partialComponent: component2,
-    //     },
-    //   ],
-    //   fallbackComponent,
-    //   expected: [
-    //     {
-    //       component: fallbackComponent,
-    //       match: {
-    //         output: "hell",
-    //         visibleOutput: "hell",
-    //         startIndex: 0,
-    //         endIndex: 4,
-    //       },
-    //       priority: 1,
-    //     },
-    //     {
-    //       component: component1,
-    //       match: {
-    //         output: "oWo",
-    //         visibleOutput: "oWo",
-    //         startIndex: 4,
-    //         endIndex: 7,
-    //       },
-    //       priority: 0,
-    //     },
-    //     {
-    //       component: fallbackComponent,
-    //       match: {
-    //         output: "rld world",
-    //         visibleOutput: "rld world",
-    //         startIndex: 7,
-    //         endIndex: 16,
-    //       },
-    //       priority: 1,
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: "second component complete matches begginning of input",
-    //   llmOutput: "helloWorld world",
-    //   components: [
-    //     neverMatchComponent,
-    //     {
-    //       completeComponent: component3,
-    //       isCompleteMatch: (output) => matchString(output, "helloWorld"),
-    //       isPartialMatch: noMatch,
-    //       partialComponent: component4,
-    //     },
-    //   ],
-    //   fallbackComponent,
-    //   expected: [
-    //     {
-    //       component: component3,
-    //       match: {
-    //         output: "helloWorld",
-    //         visibleOutput: "helloWorld",
-    //         startIndex: 0,
-    //         endIndex: 10,
-    //       },
-    //       priority: 1,
-    //     },
-    //     {
-    //       component: fallbackComponent,
-    //       match: {
-    //         output: " world",
-    //         visibleOutput: " world",
-    //         startIndex: 10,
-    //         endIndex: 16,
-    //       },
-    //       priority: 2,
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: "first complete match takes priority over second identical complete match",
-    //   llmOutput: "helloWorld",
-    //   components: [
-    //     {
-    //       completeComponent: component1,
-    //       isCompleteMatch: (output) => matchString(output, "hello"),
-    //       isPartialMatch: noMatch,
-    //       partialComponent: component2,
-    //     },
-    //     {
-    //       completeComponent: component3,
-    //       isCompleteMatch: (output) => matchString(output, "hello"),
-    //       isPartialMatch: noMatch,
-    //       partialComponent: component4,
-    //     },
-    //   ],
-    //   fallbackComponent,
-    //   expected: [
-    //     {
-    //       component: component1,
-    //       match: {
-    //         output: "hello",
-    //         visibleOutput: "hello",
-    //         startIndex: 0,
-    //         endIndex: 5,
-    //       },
-    //       priority: 0,
-    //     },
-    //     {
-    //       component: fallbackComponent,
-    //       match: {
-    //         output: "World",
-    //         visibleOutput: "World",
-    //         startIndex: 5,
-    //         endIndex: 10,
-    //       },
-    //       priority: 2,
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: "first complete match takes priority over second overlapping complete match",
-    //   llmOutput: "helloWorld",
-    //   components: [
-    //     {
-    //       completeComponent: component1,
-    //       isCompleteMatch: (output) => matchString(output, "hello"),
-    //       isPartialMatch: noMatch,
-    //       partialComponent: component2,
-    //     },
-    //     {
-    //       completeComponent: component3,
-    //       isCompleteMatch: (output) => matchString(output, "ell"),
-    //       isPartialMatch: noMatch,
-    //       partialComponent: component4,
-    //     },
-    //   ],
-    //   fallbackComponent,
-    //   expected: [
-    //     {
-    //       component: component1,
-    //       match: {
-    //         output: "hello",
-    //         visibleOutput: "hello",
-    //         startIndex: 0,
-    //         endIndex: 5,
-    //       },
-    //       priority: 0,
-    //     },
-    //     {
-    //       component: fallbackComponent,
-    //       match: {
-    //         output: "World",
-    //         visibleOutput: "World",
-    //         startIndex: 5,
-    //         endIndex: 10,
-    //       },
-    //       priority: 2,
-    //     },
-    //   ],
-    // },
+    () => {
+      const component = completeMatchesString("oWo");
+      return {
+        name: "first component complete matches middle of input",
+        llmOutput: "helloWorld world",
+        components: [component],
+        fallbackComponent,
+        isStreamFinished: true,
+        visibleTextLengthTarget: 100,
+        expected: [
+          {
+            component: fallbackComponent,
+            match: {
+              outputRaw: "hell",
+              visibleText: "hell",
+              outputAfterLookback:
+                "hell isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+              startIndex: 0,
+              endIndex: 4,
+            },
+            priority: 1,
+          },
+          {
+            component: component,
+            match: {
+              outputRaw: "oWo",
+              visibleText: "oWo",
+              outputAfterLookback:
+                "oWo isComplete:true visibleTextLengthTarget:96 isStreamFinished:true",
+              startIndex: 4,
+              endIndex: 7,
+            },
+            priority: 0,
+          },
+          {
+            component: fallbackComponent,
+            match: {
+              outputRaw: "rld world",
+              visibleText: "rld world",
+              outputAfterLookback:
+                "rld world isComplete:true visibleTextLengthTarget:93 isStreamFinished:true",
+              startIndex: 7,
+              endIndex: 16,
+            },
+            priority: 1,
+          },
+        ],
+      };
+    },
+    () => {
+      const component = completeMatchesString("helloWorld");
+      return {
+        name: "second component complete matches begginning of input",
+        llmOutput: "helloWorld world",
+        components: [neverMatchComponent, component],
+        fallbackComponent,
+        isStreamFinished: true,
+        visibleTextLengthTarget: 100,
+        expected: [
+          {
+            component: component,
+            match: {
+              outputRaw: "helloWorld",
+              visibleText: "helloWorld",
+              outputAfterLookback:
+                "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+              startIndex: 0,
+              endIndex: 10,
+            },
+            priority: 1,
+          },
+          {
+            component: fallbackComponent,
+            match: {
+              outputRaw: " world",
+              visibleText: " world",
+              outputAfterLookback:
+                " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
+              startIndex: 10,
+              endIndex: 16,
+            },
+            priority: 2,
+          },
+        ],
+      };
+    },
+    () => {
+      const component1 = completeMatchesString("hello");
+      const component2 = completeMatchesString("hello");
+      return {
+        name: "first complete match takes priority over second identical complete match",
+        llmOutput: "helloWorld",
+        components: [component1, component2],
+        fallbackComponent,
+        isStreamFinished: true,
+        visibleTextLengthTarget: 100,
+        expected: [
+          {
+            component: component1,
+            match: {
+              outputRaw: "hello",
+              visibleText: "hello",
+              outputAfterLookback:
+                "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+              startIndex: 0,
+              endIndex: 5,
+            },
+            priority: 0,
+          },
+          {
+            component: fallbackComponent,
+            match: {
+              outputRaw: "World",
+              visibleText: "World",
+              outputAfterLookback:
+                "World isComplete:true visibleTextLengthTarget:95 isStreamFinished:true",
+              startIndex: 5,
+              endIndex: 10,
+            },
+            priority: 2,
+          },
+        ],
+      };
+    },
+    () => {
+      const component1 = completeMatchesString("hello");
+      const component2 = completeMatchesString("ell");
+      return {
+        name: "first complete match takes priority over second overlapping complete match",
+        llmOutput: "helloWorld",
+        components: [component1, component2],
+        fallbackComponent,
+        isStreamFinished: true,
+        visibleTextLengthTarget: 100,
+        expected: [
+          {
+            component: component1,
+            match: {
+              outputRaw: "hello",
+              visibleText: "hello",
+              outputAfterLookback:
+                "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+              startIndex: 0,
+              endIndex: 5,
+            },
+            priority: 0,
+          },
+          {
+            component: fallbackComponent,
+            match: {
+              outputRaw: "World",
+              visibleText: "World",
+              outputAfterLookback:
+                "World isComplete:true visibleTextLengthTarget:95 isStreamFinished:true",
+              startIndex: 5,
+              endIndex: 10,
+            },
+            priority: 2,
+          },
+        ],
+      };
+    },
+    () => {
+      const component = partialMatchesString("helloWorld");
+      return {
+        name: "first component partial matches whole input - isStreamFinished: false",
+        llmOutput: "helloWorld",
+        components: [component],
+        fallbackComponent,
+        isStreamFinished: false,
+        visibleTextLengthTarget: 100,
+        expected: [
+          {
+            component: component,
+            match: {
+              outputRaw: "helloWorld",
+              visibleText: "helloWorld",
+              outputAfterLookback:
+                "helloWorld isComplete:false visibleTextLengthTarget:100 isStreamFinished:false",
+              startIndex: 0,
+              endIndex: 10,
+            },
+            priority: 0,
+          },
+        ],
+      };
+    },
+    () => {
+      const component = partialMatchesString("helloWorld");
+      return {
+        name: "first component partial matches whole input - short visibleTarget, isStreamFinished: false",
+        llmOutput: "helloWorld",
+        components: [component],
+        fallbackComponent,
+        isStreamFinished: false,
+        visibleTextLengthTarget: 3,
+        expected: [
+          {
+            component: component,
+            match: {
+              outputRaw: "helloWorld",
+              visibleText: "hel",
+              outputAfterLookback:
+                "helloWorld isComplete:false visibleTextLengthTarget:3 isStreamFinished:false",
+              startIndex: 0,
+              endIndex: 10,
+            },
+            priority: 0,
+          },
+        ],
+      };
+    },
+    () => {},
     // {
     //   name: "first component partial matches whole input",
     //   llmOutput: "helloWorld",
