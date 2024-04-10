@@ -100,14 +100,14 @@ const CodeBlockContainer: React.FC<{
 
 const ShikiComplete: ShikiCodeBlockComponent = (props) => {
   return (
-    <CodeBlockContainer code={props.match.visibleOutput} isComplete>
+    <CodeBlockContainer code={props.llmOutput} isComplete>
       <CompleteCodeBlock {...props} />
     </CodeBlockContainer>
   );
 };
 
 const ShikiPartial: ShikiCodeBlockComponent = (props) => (
-  <CodeBlockContainer code={props.match.visibleOutput} isComplete={false}>
+  <CodeBlockContainer code={props.llmOutput} isComplete={false}>
     <PartialCodeBlock {...props} />
   </CodeBlockContainer>
 );
