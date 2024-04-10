@@ -23,7 +23,7 @@ export type LookBack = {
 };
 
 export type LookBackFunctionParams = {
-  output: string; //todo: wrong name not complete? is it just for block. todo: is block a better name than component? or section?
+  output: string;
   isComplete: boolean;
   visibleTextLengthTarget: number;
   isStreamFinished: boolean;

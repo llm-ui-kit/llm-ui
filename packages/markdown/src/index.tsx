@@ -6,8 +6,6 @@ import {
   markdownWithVisibleChars,
 } from "./markdownParser";
 
-// todo: write tests
-
 export const markdownLookBack: LookBackFunction = ({
   output: completeLlmOutput,
   visibleTextLengthTarget,
