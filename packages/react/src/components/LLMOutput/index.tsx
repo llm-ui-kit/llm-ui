@@ -29,7 +29,6 @@ export const useMatches = ({
   useAnimationFrame((_deltaTime, stop) => {
     // render loop!
     const timeInMsSinceStart = performance.now() - startTime.current;
-    console.log("timeInMsSinceStart", timeInMsSinceStart);
     const timeInMsSinceLastRender = performance.now() - lastRenderTime.current;
     const allMatches = matchComponents({
       llmOutput,

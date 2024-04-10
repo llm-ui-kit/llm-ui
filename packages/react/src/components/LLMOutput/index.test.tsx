@@ -8,7 +8,6 @@ const noThrottle = () => ({ visibleTextLengthTarget: 100, skip: false });
 const callRenderLoop = ({ times }: { times: number }) => {
   let count = 0;
   vi.stubGlobal("requestAnimationFrame", (callback: () => void) => {
-    console.log("count", count, "times", times);
     count++;
     if (count < times) {
       callback();
