@@ -25,14 +25,14 @@ export const LLMOutput: React.FC<LLMOutputProps> = ({
   const startTime = useRef<number>(0);
   const [ticks, setTicks] = useState<number>(0);
   const [matches, setMatches] = useState<ComponentMatch[]>([]);
-  const visibleChars = matches.map((match) => match.match.visibleText).join("");
-  const renderedLLMOutput = matches
+  const visibleText = matches.map((match) => match.match.visibleText).join("");
+  const outputRendered = matches
     .map((match) => match.match.outputAfterLookback)
     .join("");
 
   useEffect(() => {
     (async () => {
-      if (renderedLLMOutput === llmOutput && isFinished) {
+      if (outputRendered === llmOutput && isFinished) {
         return;
       }
       console.log("\n------\n");
@@ -43,38 +43,35 @@ export const LLMOutput: React.FC<LLMOutputProps> = ({
         fallbackComponent,
         isStreamFinished: isFinished,
       });
-      const allVisibleChars = allMatches
+      const visibleTextAll = allMatches
         .map((match) => match.match.visibleText)
         .join("");
-      const allRenderedLLMOutput = allMatches
+      const outputAll = allMatches
         .map((match) => match.match.outputAfterLookback)
         .join("");
 
       const throttleFunc =
         matches[matches.length - 1]?.component?.throttle ?? throttle;
-      const { targetVisibleCharsLength: visibleCharsIndex, skip } =
-        await throttleFunc({
-          rawLLMOutput: llmOutput,
-          currentLLMOutput: renderedLLMOutput,
-          allLLMOutput: allRenderedLLMOutput,
-          visibleChars,
-          allVisibleChars,
-          timeInMsSinceStart,
-          isStreamFinished: isFinished,
-        });
-      console.log({ visibleCharsIndex, skip });
+      const { visibleTextLengthTarget, skip } = await throttleFunc({
+        outputRaw: llmOutput,
+        outputRendered,
+        outputAll,
+        visibleText,
+        visibleTextAll,
+        timeInMsSinceStart,
+        isStreamFinished: isFinished,
+      });
+      console.log({ visibleTextLengthTarget, skip });
       if (!skip) {
         const matches = matchComponents({
           llmOutput,
           components,
           fallbackComponent,
           isStreamFinished: isFinished,
-          visibleCharsIndex,
+          visibleTextLengthTarget,
         });
-        // console.log("zzz matches", matches, llmOutput);
         setMatches(matches);
       }
-
       setTicks((ticks) => ticks + 1); // triggers the next tick
     })();
   }, [ticks]);

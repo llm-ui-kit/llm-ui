@@ -109,28 +109,16 @@ const codeBlockComponent: LLMOutputComponent = {
 };
 
 const throttle: ThrottleFunction = async ({
-  allLLMOutput,
-  currentLLMOutput,
-  rawLLMOutput,
-  visibleChars,
-  allVisibleChars,
-  timeInMsSinceStart,
+  outputAll,
+  outputRendered,
   isStreamFinished,
+  visibleText,
 }) => {
-  // console.log("zzz getVisibleChars", {
-  //   allLLMOutput,
-  //   currentLLMOutput,
-  //   rawLLMOutput,
-  //   visibleChars,
-  //   allVisibleChars,
-  //   timeInMsSinceStart,
-  //   isFinished,
-  // });
   await delay(200);
-  const bufferSize = allLLMOutput.length - currentLLMOutput.length;
+  const bufferSize = outputAll.length - outputRendered.length;
   return {
     skip: bufferSize < 1 && !isStreamFinished,
-    targetVisibleCharsLength: visibleChars.length + 1,
+    visibleTextLengthTarget: visibleText.length + 1,
   };
 };
 

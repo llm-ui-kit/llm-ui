@@ -109,7 +109,7 @@ export type FallbacksInGapsParams = {
   llmOutput: string;
   fallbackPriority: number;
   fallbackComponent: LLMOutputFallbackComponent;
-  visibleCharsIndex: number;
+  visibleTextLengthTarget: number;
   isStreamFinished: boolean;
 };
 
@@ -118,7 +118,7 @@ const fallbacksInGaps = ({
   llmOutput,
   fallbackPriority,
   fallbackComponent,
-  visibleCharsIndex, // todo: rename 'target' ish?
+  visibleTextLengthTarget,
   isStreamFinished,
 }: FallbacksInGapsParams): ComponentMatch[] => {
   const fallbacks = componentMatches
@@ -127,7 +127,7 @@ const fallbacksInGaps = ({
         index === 0 ? 0 : componentMatches[index - 1].match.endIndex;
       if (
         previousMatchEndIndex < match.match.startIndex &&
-        visibleCharsIndex > 0
+        visibleTextLengthTarget > 0
       ) {
         const outputRaw = llmOutput.slice(
           previousMatchEndIndex,
@@ -135,14 +135,15 @@ const fallbacksInGaps = ({
         );
         const lookBack = fallbackComponent.lookBack({
           output: outputRaw,
-          visibleTextLengthTarget: visibleCharsIndex,
+          visibleTextLengthTarget: visibleTextLengthTarget,
           isStreamFinished,
           isComplete: true,
         });
-        if (lookBack.visibleText.length > visibleCharsIndex) {
+        if (lookBack.visibleText.length > visibleTextLengthTarget) {
           throw new Error("lookBack visible output is longer than requested");
         }
-        visibleCharsIndex = visibleCharsIndex - lookBack.visibleText.length;
+        visibleTextLengthTarget =
+          visibleTextLengthTarget - lookBack.visibleText.length;
         return {
           component: fallbackComponent,
           match: {
@@ -165,18 +166,19 @@ const fallbacksInGaps = ({
       ? componentMatches[componentMatches.length - 1].match.endIndex
       : 0;
 
-  if (lastMatchEndIndex < llmOutput.length && visibleCharsIndex > 0) {
+  if (lastMatchEndIndex < llmOutput.length && visibleTextLengthTarget > 0) {
     const outputRaw = llmOutput.slice(lastMatchEndIndex, llmOutput.length);
     const lookBack = fallbackComponent.lookBack({
       output: outputRaw,
-      visibleTextLengthTarget: visibleCharsIndex,
+      visibleTextLengthTarget,
       isStreamFinished,
       isComplete: false,
     });
-    if (lookBack.visibleText.length > visibleCharsIndex) {
+    if (lookBack.visibleText.length > visibleTextLengthTarget) {
       throw new Error("lookback visible output is longer than requested");
     }
-    visibleCharsIndex = visibleCharsIndex - lookBack.visibleText.length;
+    visibleTextLengthTarget =
+      visibleTextLengthTarget - lookBack.visibleText.length;
     fallbacks.push({
       component: fallbackComponent,
       match: {
@@ -197,7 +199,7 @@ export type MatchComponentParams = {
   components: LLMOutputComponent[];
   fallbackComponent: LLMOutputFallbackComponent;
   isStreamFinished: boolean;
-  visibleCharsIndex?: number;
+  visibleTextLengthTarget?: number;
 };
 
 export const matchComponents = ({
@@ -205,7 +207,7 @@ export const matchComponents = ({
   components,
   fallbackComponent,
   isStreamFinished,
-  visibleCharsIndex = Number.MAX_SAFE_INTEGER,
+  visibleTextLengthTarget = Number.MAX_SAFE_INTEGER,
 }: MatchComponentParams): ComponentMatch[] => {
   const allCompleteMatches = components.flatMap((component, priority) =>
     completeMatchesForComponent(llmOutput, component, priority),
@@ -228,7 +230,7 @@ export const matchComponents = ({
     llmOutput,
     fallbackPriority: components.length,
     fallbackComponent,
-    visibleCharsIndex,
+    visibleTextLengthTarget,
     isStreamFinished,
   });
 

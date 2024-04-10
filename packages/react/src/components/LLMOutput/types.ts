@@ -49,17 +49,17 @@ export type ComponentMatch = {
 };
 
 export type ThrottleParams = {
-  rawLLMOutput: string;
-  currentLLMOutput: string;
-  allLLMOutput: string;
-  visibleChars: string;
-  allVisibleChars: string;
+  outputRaw: string;
+  outputRendered: string;
+  outputAll: string;
+  visibleText: string;
+  visibleTextAll: string;
   timeInMsSinceStart: number;
   isStreamFinished: boolean;
 };
 
 export type ThrottleResponse = {
-  targetVisibleCharsLength: number;
+  visibleTextLengthTarget: number;
   skip: boolean;
 };
 
