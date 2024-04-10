@@ -1,11 +1,9 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import {
-  buildShikiCompleteCodeBlock,
-  buildShikiPartialCodeBlock,
+  buildShikiCodeBlock,
+  codeBlockCompleteMatcher,
   codeBlockLookBack,
   loadHighlighter,
-  matchCompleteCodeBlock,
-  matchPartialCodeBlock,
 } from "@llm-ui/code-block";
 import {
   allLangs,
@@ -18,6 +16,7 @@ import {
   type LLMOutputReactComponent,
 } from "llm-ui/components";
 import { Check, Copy } from "lucide-react";
+import { codeBlockPartialMatcher } from "node_modules/@llm-ui/code-block/src/matchers";
 import type {
   ShikiCodeBlockComponent,
   ShikiProps,
@@ -65,8 +64,7 @@ const shikiProps: ShikiProps = {
   codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
 };
 
-const CompleteCodeBlock = buildShikiCompleteCodeBlock(shikiProps);
-const PartialCodeBlock = buildShikiPartialCodeBlock(shikiProps);
+const CodeBlock = buildShikiCodeBlock(shikiProps);
 
 const CodeBlockContainer: React.FC<{
   code: string;
@@ -101,20 +99,14 @@ const CodeBlockContainer: React.FC<{
 const ShikiComplete: ShikiCodeBlockComponent = (props) => {
   return (
     <CodeBlockContainer code={props.llmOutput} isComplete>
-      <CompleteCodeBlock {...props} />
+      <CodeBlock {...props} />
     </CodeBlockContainer>
   );
 };
 
-const ShikiPartial: ShikiCodeBlockComponent = (props) => (
-  <CodeBlockContainer code={props.llmOutput} isComplete={false}>
-    <PartialCodeBlock {...props} />
-  </CodeBlockContainer>
-);
-
 const codeBlockComponent: LLMOutputComponent = {
-  isCompleteMatch: matchCompleteCodeBlock(),
-  isPartialMatch: matchPartialCodeBlock(),
+  isCompleteMatch: codeBlockCompleteMatcher(),
+  isPartialMatch: codeBlockPartialMatcher(),
   lookBack: codeBlockLookBack(),
   component: ShikiComplete,
 };
@@ -129,7 +121,7 @@ const throttle: ThrottleFunction = ({
   const bufferSize = outputAll.length - outputRendered.length;
   return {
     skip:
-      (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 250,
+      (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 50,
     visibleTextLengthTarget: visibleText.length + 1,
   };
 };

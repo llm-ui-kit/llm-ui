@@ -20,7 +20,7 @@ export const regexMatcher =
     return undefined;
   };
 
-export const matchCompleteCodeBlock = (
+export const codeBlockCompleteMatcher = (
   userOptions?: Partial<CodeBlockOptions>,
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
@@ -31,7 +31,7 @@ export const matchCompleteCodeBlock = (
   return regexMatcher(regex);
 };
 
-export const matchPartialCodeBlock = (
+export const codeBlockPartialMatcher = (
   userOptions?: Partial<CodeBlockOptions>,
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
