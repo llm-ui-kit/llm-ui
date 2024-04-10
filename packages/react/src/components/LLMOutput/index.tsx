@@ -10,7 +10,7 @@ import {
 export type LLMOutputProps = {
   llmOutput: string;
   isFinished: boolean;
-  blocks: LLMOutputBlock[];
+  blocks?: LLMOutputBlock[];
   fallbackComponent: LLMOutputFallbackBlock;
   throttle: ThrottleFunction;
 };
@@ -18,7 +18,7 @@ export type LLMOutputProps = {
 export const useMatches = ({
   llmOutput,
   isFinished,
-  blocks,
+  blocks = [],
   fallbackComponent,
   throttle,
 }: LLMOutputProps): { matches: BlockMatch[] } => {
