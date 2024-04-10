@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { fallbackComponent, returnParamsLookBack } from "../../test/utils";
-import { ComponentMatch, matchComponents } from "./helper";
+import { fallbackBlock, returnParamsLookBack } from "../../test/utils";
+import { BlockMatch, matchBlocks } from "./helper";
 import {
-  LLMOutputComponent,
-  LLMOutputFallbackComponent,
+  LLMOutputBlock,
+  LLMOutputFallbackBlock,
   MaybeLLMOutputMatch,
 } from "./types";
 
@@ -12,7 +12,7 @@ const component2 = () => <div>2</div>;
 
 const noMatch = () => undefined;
 
-const neverMatchComponent: LLMOutputComponent = {
+const neverMatchBlock: LLMOutputBlock = {
   component: component1,
   isCompleteMatch: noMatch,
   isPartialMatch: noMatch,
@@ -37,7 +37,7 @@ const matchString = (
 const completeMatchesString = (
   target: string,
   lookBack = returnParamsLookBack,
-): LLMOutputComponent => ({
+): LLMOutputBlock => ({
   component: component1,
   isCompleteMatch: (output) => matchString(output, target),
   isPartialMatch: noMatch,
@@ -47,7 +47,7 @@ const completeMatchesString = (
 const partialMatchesString = (
   target: string,
   lookBack = returnParamsLookBack,
-): LLMOutputComponent => ({
+): LLMOutputBlock => ({
   component: component2,
   isCompleteMatch: noMatch,
   isPartialMatch: (output) => matchString(output, target),
@@ -57,25 +57,25 @@ const partialMatchesString = (
 type TestCase = {
   name: string;
   llmOutput: string;
-  components: LLMOutputComponent[];
-  fallbackComponent: LLMOutputFallbackComponent;
+  blocks: LLMOutputBlock[];
+  fallbackBlock: LLMOutputFallbackBlock;
   isStreamFinished: boolean;
   visibleTextLengthTarget: number;
-  expected: ComponentMatch[];
+  expected: BlockMatch[];
 };
 
-describe("matchComponents", () => {
+describe("matchBlocks", () => {
   const testCases: (TestCase | (() => TestCase))[] = [
     {
-      name: "no components is complete fallback match",
+      name: "no blocks is complete fallback match",
       llmOutput: "helloWorld",
-      components: [],
-      fallbackComponent,
+      blocks: [],
+      fallbackBlock: fallbackBlock,
       isStreamFinished: true,
       visibleTextLengthTarget: 100,
       expected: [
         {
-          component: fallbackComponent,
+          block: fallbackBlock,
           match: {
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
@@ -89,15 +89,15 @@ describe("matchComponents", () => {
       ],
     },
     {
-      name: "no matching components is complete fallback match",
+      name: "no matching blocks is complete fallback match",
       llmOutput: "helloWorld",
-      components: [neverMatchComponent],
-      fallbackComponent,
+      blocks: [neverMatchBlock],
+      fallbackBlock: fallbackBlock,
       isStreamFinished: true,
       visibleTextLengthTarget: 100,
       expected: [
         {
-          component: fallbackComponent,
+          block: fallbackBlock,
           match: {
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
@@ -111,17 +111,17 @@ describe("matchComponents", () => {
       ],
     },
     () => {
-      const component = completeMatchesString("helloWorld");
+      const block = completeMatchesString("helloWorld");
       return {
-        name: "first component complete matches whole input",
+        name: "first block complete matches whole input",
         llmOutput: "helloWorld",
-        components: [component],
+        blocks: [block],
         isStreamFinished: true,
         visibleTextLengthTarget: 99,
-        fallbackComponent,
+        fallbackBlock: fallbackBlock,
         expected: [
           {
-            component: component,
+            block: block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "helloWorld",
@@ -136,17 +136,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = completeMatchesString("helloWorld");
+      const block = completeMatchesString("helloWorld");
       return {
-        name: "first component complete matches whole input - short visibleTarget",
+        name: "first block complete matches whole input - short visibleTarget",
         llmOutput: "helloWorld",
-        components: [component],
+        blocks: [block],
         isStreamFinished: true,
         visibleTextLengthTarget: 3,
-        fallbackComponent,
+        fallbackBlock: fallbackBlock,
         expected: [
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "hel",
@@ -161,17 +161,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = completeMatchesString("helloWorld");
+      const block = completeMatchesString("helloWorld");
       return {
-        name: "first component complete matches input twice - but short visibleTarget",
+        name: "first block complete matches input twice - but short visibleTarget",
         llmOutput: "helloWorldhelloWorld",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 3,
         expected: [
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "hel",
@@ -186,17 +186,17 @@ describe("matchComponents", () => {
       } satisfies TestCase;
     },
     () => {
-      const component = completeMatchesString("helloWorld");
+      const block = completeMatchesString("helloWorld");
       return {
-        name: "first component complete matches input twice",
+        name: "first block complete matches input twice",
         llmOutput: "helloWorldhelloWorld",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "helloWorld",
@@ -208,7 +208,7 @@ describe("matchComponents", () => {
             priority: 0,
           },
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "helloWorld",
@@ -224,17 +224,17 @@ describe("matchComponents", () => {
     },
 
     () => {
-      const component = completeMatchesString("helloWorld");
+      const block = completeMatchesString("helloWorld");
       return {
-        name: "first component complete matches input twice with fallback in between",
+        name: "first block complete matches input twice with fallback in between",
         llmOutput: "helloWorldfallbackhelloWorld",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "helloWorld",
@@ -246,7 +246,7 @@ describe("matchComponents", () => {
             priority: 0,
           },
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: "fallback",
               visibleText: "fallback",
@@ -258,7 +258,7 @@ describe("matchComponents", () => {
             priority: 1,
           },
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "helloWorld",
@@ -273,17 +273,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = completeMatchesString("helloWorld");
+      const block = completeMatchesString("helloWorld");
       return {
-        name: "first component complete matches beginning of input",
+        name: "first block complete matches beginning of input",
         llmOutput: "helloWorld world",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "helloWorld",
@@ -295,7 +295,7 @@ describe("matchComponents", () => {
             priority: 0,
           },
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: " world",
               visibleText: " world",
@@ -310,17 +310,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = completeMatchesString(" world");
+      const block = completeMatchesString(" world");
       return {
-        name: "first component complete matches end of input",
+        name: "first block complete matches end of input",
         llmOutput: "helloWorld world",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: "helloWorld",
               visibleText: "helloWorld",
@@ -332,7 +332,7 @@ describe("matchComponents", () => {
             priority: 1,
           },
           {
-            component: component,
+            block,
             match: {
               outputRaw: " world",
               visibleText: " world",
@@ -347,17 +347,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = completeMatchesString(" world");
+      const block = completeMatchesString(" world");
       return {
-        name: "first component complete matches end of input - short visibleTarget",
+        name: "first block complete matches end of input - short visibleTarget",
         llmOutput: "helloWorld world",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 3,
         expected: [
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: "helloWorld",
               visibleText: "hel",
@@ -372,17 +372,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = completeMatchesString("oWo");
+      const block = completeMatchesString("oWo");
       return {
-        name: "first component complete matches middle of input",
+        name: "first block complete matches middle of input",
         llmOutput: "helloWorld world",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: "hell",
               visibleText: "hell",
@@ -394,7 +394,7 @@ describe("matchComponents", () => {
             priority: 1,
           },
           {
-            component: component,
+            block,
             match: {
               outputRaw: "oWo",
               visibleText: "oWo",
@@ -406,7 +406,7 @@ describe("matchComponents", () => {
             priority: 0,
           },
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: "rld world",
               visibleText: "rld world",
@@ -421,17 +421,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = completeMatchesString("helloWorld");
+      const block = completeMatchesString("helloWorld");
       return {
-        name: "second component complete matches begginning of input",
+        name: "second block complete matches begginning of input",
         llmOutput: "helloWorld world",
-        components: [neverMatchComponent, component],
-        fallbackComponent,
+        blocks: [neverMatchBlock, block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "helloWorld",
@@ -443,7 +443,7 @@ describe("matchComponents", () => {
             priority: 1,
           },
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: " world",
               visibleText: " world",
@@ -458,18 +458,18 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component1 = completeMatchesString("hello");
-      const component2 = completeMatchesString("hello");
+      const block1 = completeMatchesString("hello");
+      const block2 = completeMatchesString("hello");
       return {
         name: "first complete match takes priority over second identical complete match",
         llmOutput: "helloWorld",
-        components: [component1, component2],
-        fallbackComponent,
+        blocks: [block1, block2],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: component1,
+            block: block1,
             match: {
               outputRaw: "hello",
               visibleText: "hello",
@@ -481,7 +481,7 @@ describe("matchComponents", () => {
             priority: 0,
           },
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: "World",
               visibleText: "World",
@@ -496,18 +496,18 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component1 = completeMatchesString("hello");
-      const component2 = completeMatchesString("ell");
+      const block1 = completeMatchesString("hello");
+      const block2 = completeMatchesString("ell");
       return {
         name: "first complete match takes priority over second overlapping complete match",
         llmOutput: "helloWorld",
-        components: [component1, component2],
-        fallbackComponent,
+        blocks: [block1, block2],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: true,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: component1,
+            block: block1,
             match: {
               outputRaw: "hello",
               visibleText: "hello",
@@ -519,7 +519,7 @@ describe("matchComponents", () => {
             priority: 0,
           },
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: "World",
               visibleText: "World",
@@ -534,17 +534,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = partialMatchesString("helloWorld");
+      const block = partialMatchesString("helloWorld");
       return {
-        name: "first component partial matches whole input - isStreamFinished: false",
+        name: "first block partial matches whole input - isStreamFinished: false",
         llmOutput: "helloWorld",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: false,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "helloWorld",
@@ -559,17 +559,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = partialMatchesString("helloWorld");
+      const block = partialMatchesString("helloWorld");
       return {
-        name: "first component partial matches whole input - short visibleTarget, isStreamFinished: false",
+        name: "first block partial matches whole input - short visibleTarget, isStreamFinished: false",
         llmOutput: "helloWorld",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: false,
         visibleTextLengthTarget: 3,
         expected: [
           {
-            component: component,
+            block,
             match: {
               outputRaw: "helloWorld",
               visibleText: "hel",
@@ -584,17 +584,17 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = partialMatchesString("World");
+      const block = partialMatchesString("World");
       return {
-        name: "first component partial matches end of input - isStreamFinished: false",
+        name: "first block partial matches end of input - isStreamFinished: false",
         llmOutput: "helloWorld",
-        components: [component],
-        fallbackComponent,
+        blocks: [block],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: false,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: fallbackComponent,
+            block: fallbackBlock,
             match: {
               outputRaw: "hello",
               visibleText: "hello",
@@ -606,7 +606,7 @@ describe("matchComponents", () => {
             priority: 1,
           },
           {
-            component: component,
+            block,
             match: {
               outputRaw: "World",
               visibleText: "World",
@@ -621,18 +621,18 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const partialComponent = partialMatchesString("World");
-      const completeComponent = completeMatchesString("hello");
+      const partialBlock = partialMatchesString("World");
+      const completeBlock = completeMatchesString("hello");
       return {
         name: "partial match after complete matches",
         llmOutput: "helloWorld",
-        components: [partialComponent, completeComponent],
-        fallbackComponent,
+        blocks: [partialBlock, completeBlock],
+        fallbackBlock: fallbackBlock,
         isStreamFinished: false,
         visibleTextLengthTarget: 100,
         expected: [
           {
-            component: completeComponent,
+            block: completeBlock,
             match: {
               outputRaw: "hello",
               visibleText: "hello",
@@ -644,7 +644,7 @@ describe("matchComponents", () => {
             priority: 1,
           },
           {
-            component: partialComponent,
+            block: partialBlock,
             match: {
               outputRaw: "World",
               visibleText: "World",
@@ -667,19 +667,19 @@ describe("matchComponents", () => {
     const {
       name,
       llmOutput,
-      components,
-      fallbackComponent,
+      blocks,
+      fallbackBlock,
       isStreamFinished,
       visibleTextLengthTarget,
       expected,
     } = testCase;
     test(name, () => {
-      const matches = matchComponents({
+      const matches = matchBlocks({
         isStreamFinished,
         visibleTextLengthTarget,
         llmOutput,
-        components,
-        fallbackComponent,
+        blocks,
+        fallbackBlock,
       });
       expect(matches).toEqual(expected);
     });

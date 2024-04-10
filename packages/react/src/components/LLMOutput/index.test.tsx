@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { afterEach, describe, expect, test, vi } from "vitest";
-import { fallbackComponent } from "../../test/utils";
+import { fallbackBlock } from "../../test/utils";
 import { useMatches } from "./index";
 
 const noThrottle = () => ({ visibleTextLengthTarget: 100, skip: false });
@@ -27,8 +27,8 @@ describe("useMatches Hook", () => {
       useMatches({
         llmOutput: "",
         isFinished: false,
-        components: [],
-        fallbackComponent: fallbackComponent,
+        blocks: [],
+        fallbackComponent: fallbackBlock,
         throttle: noThrottle,
       }),
     );
@@ -42,14 +42,14 @@ describe("useMatches Hook", () => {
       return useMatches({
         llmOutput: "hello",
         isFinished: false,
-        components: [],
-        fallbackComponent: fallbackComponent,
+        blocks: [],
+        fallbackComponent: fallbackBlock,
         throttle: noThrottle,
       });
     });
     expect(result.current.matches).toEqual([
       {
-        component: fallbackComponent,
+        block: fallbackBlock,
         match: {
           startIndex: 0,
           endIndex: 5,

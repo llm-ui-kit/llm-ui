@@ -1,6 +1,6 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import {
-  buildShikiCodeBlock,
+  buildShikiCodeBlockComponent,
   codeBlockCompleteMatcher,
   codeBlockLookBack,
   loadHighlighter,
@@ -12,8 +12,8 @@ import {
 import { MarkdownComponent, markdownLookBack } from "@llm-ui/markdown";
 import {
   LLMOutput,
+  type LLMOutputBlock,
   type LLMOutputComponent,
-  type LLMOutputReactComponent,
 } from "llm-ui/components";
 import { Check, Copy } from "lucide-react";
 import { codeBlockPartialMatcher } from "node_modules/@llm-ui/code-block/src/matchers";
@@ -48,7 +48,7 @@ console.log('Hello llm-ui');
 console.log('Hello llm-ui');
 \`\`\`
 `;
-const Markdown: LLMOutputReactComponent = (props) => {
+const Markdown: LLMOutputComponent = (props) => {
   return <MarkdownComponent {...props} className={"prose dark:prose-invert"} />;
 };
 
@@ -64,7 +64,7 @@ const shikiProps: ShikiProps = {
   codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
 };
 
-const CodeBlock = buildShikiCodeBlock(shikiProps);
+const CodeBlock = buildShikiCodeBlockComponent(shikiProps);
 
 const CodeBlockContainer: React.FC<{
   code: string;
@@ -104,7 +104,7 @@ const ShikiComplete: ShikiCodeBlockComponent = (props) => {
   );
 };
 
-const codeBlockComponent: LLMOutputComponent = {
+const codeBlockBlock: LLMOutputBlock = {
   isCompleteMatch: codeBlockCompleteMatcher(),
   isPartialMatch: codeBlockPartialMatcher(),
   lookBack: codeBlockLookBack(),
@@ -134,7 +134,7 @@ export const HomePageExample = () => {
   });
   return (
     <LLMOutput
-      components={[codeBlockComponent]}
+      blocks={[codeBlockBlock]}
       isFinished={output === example}
       fallbackComponent={{ component: Markdown, lookBack: markdownLookBack }}
       llmOutput={output}

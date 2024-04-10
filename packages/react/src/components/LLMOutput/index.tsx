@@ -1,39 +1,39 @@
 import { useRef, useState } from "react";
 import { useAnimationFrame } from "./animationFrame";
-import { ComponentMatch, matchComponents } from "./helper";
+import { BlockMatch, matchBlocks } from "./helper";
 import {
-  LLMOutputComponent,
-  LLMOutputFallbackComponent,
+  LLMOutputBlock,
+  LLMOutputFallbackBlock,
   ThrottleFunction,
 } from "./types";
 
 export type LLMOutputProps = {
   llmOutput: string;
   isFinished: boolean;
-  components: LLMOutputComponent[];
-  fallbackComponent: LLMOutputFallbackComponent;
+  blocks: LLMOutputBlock[];
+  fallbackComponent: LLMOutputFallbackBlock;
   throttle: ThrottleFunction;
 };
 
 export const useMatches = ({
   llmOutput,
   isFinished,
-  components,
+  blocks,
   fallbackComponent,
   throttle,
-}: LLMOutputProps): { matches: ComponentMatch[] } => {
+}: LLMOutputProps): { matches: BlockMatch[] } => {
   const startTime = useRef(performance.now());
   const lastRenderTime = useRef(performance.now());
-  const [matches, setMatches] = useState<ComponentMatch[]>([]);
+  const [matches, setMatches] = useState<BlockMatch[]>([]);
 
   useAnimationFrame((_deltaTime, stop) => {
     // render loop!
     const timeInMsSinceStart = performance.now() - startTime.current;
     const timeInMsSinceLastRender = performance.now() - lastRenderTime.current;
-    const allMatches = matchComponents({
+    const allMatches = matchBlocks({
       llmOutput,
-      components,
-      fallbackComponent,
+      blocks,
+      fallbackBlock: fallbackComponent,
       isStreamFinished: isFinished,
     });
     const visibleText = matches
@@ -65,10 +65,10 @@ export const useMatches = ({
       isStreamFinished: isFinished,
     });
     if (!skip) {
-      const matches = matchComponents({
+      const matches = matchBlocks({
         llmOutput,
-        components,
-        fallbackComponent,
+        blocks,
+        fallbackBlock: fallbackComponent,
         isStreamFinished: isFinished,
         visibleTextLengthTarget,
       });
@@ -84,8 +84,8 @@ export const LLMOutput: React.FC<LLMOutputProps> = (props) => {
   const { matches } = useMatches({ ...props });
   return (
     <>
-      {matches.map(({ component, match }, index) => {
-        const Component = component.component;
+      {matches.map(({ block, match }, index) => {
+        const Component = block.component;
         return <Component key={index} llmOutput={match.outputAfterLookback} />;
       })}
     </>

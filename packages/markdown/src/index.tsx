@@ -1,4 +1,4 @@
-import { LLMOutputReactComponent, LookBackFunction } from "llm-ui/components";
+import { LLMOutputComponent, LookBackFunction } from "llm-ui/components";
 import Markdown, { Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -23,7 +23,7 @@ export const markdownLookBack: LookBackFunction = ({
   };
 };
 
-export const MarkdownComponent: LLMOutputReactComponent<Options> = ({
+export const MarkdownComponent: LLMOutputComponent<Options> = ({
   llmOutput,
   ...props
 }) => {
