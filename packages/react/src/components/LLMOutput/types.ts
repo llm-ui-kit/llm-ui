@@ -42,12 +42,6 @@ export type LLMOutputComponent = {
   isCompleteMatch: LLMOutputMatcher;
 } & LLMOutputFallbackComponent;
 
-export type ComponentMatch = {
-  component: LLMOutputFallbackComponent;
-  match: LLMOutputMatchWithLookBack;
-  priority: number;
-};
-
 export type ThrottleParams = {
   outputRaw: string;
   outputRendered: string;

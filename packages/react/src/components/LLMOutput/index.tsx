@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { matchComponents } from "./helper";
+import { ComponentMatch, matchComponents } from "./helper";
 import {
-  ComponentMatch,
   LLMOutputComponent,
   LLMOutputFallbackComponent,
   ThrottleFunction,
@@ -70,6 +69,9 @@ export const LLMOutput: React.FC<LLMOutputProps> = ({
           isStreamFinished: isFinished,
           visibleTextLengthTarget,
         });
+        console.log("matches", matches);
+        console.log("llmOutput", llmOutput);
+
         setMatches(matches);
       }
       setTicks((ticks) => ticks + 1); // triggers the next tick

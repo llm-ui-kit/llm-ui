@@ -47,7 +47,6 @@ const lastCharIsUnmatchedStar = (markdown: string) => {
 
 const removePartialAmbiguousEnclosingSymbols = (markdown: string): string => {
   const lastCharsUnmatched = lastCharIsUnmatchedStar(markdown);
-  console.log({ lastCharsUnmatched });
   if (lastCharsUnmatched) {
     return removePartialAmbiguousEnclosingSymbols(
       markdown.slice(0, -1 * lastCharsUnmatched.length),
@@ -55,7 +54,6 @@ const removePartialAmbiguousEnclosingSymbols = (markdown: string): string => {
   }
   if (ENCLOSING_STARTED_END_MATCH.test(markdown)) {
     const { before, after } = splitStringByLastEnclosingSymbol(markdown);
-    console.log({ before, after });
     return `${before}${after.replace(ENCLOSING_STARTED_END_MATCH, "")}`;
   }
   return markdown;
@@ -69,7 +67,6 @@ export const removePartialAmbiguousMarkdown = (markdown: string): string => {
     ...beginningLines,
     removePartialAmbiguousEnclosingSymbols(lastLine),
   ];
-  console.log("lines", { lines, beginningLines, lastLine, newLines });
   return newLines.join("\n");
 };
 
