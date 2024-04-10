@@ -60,3 +60,5 @@ web_modules/
 .nx
 
 packages/*/dist
+
+.husky/post-commit

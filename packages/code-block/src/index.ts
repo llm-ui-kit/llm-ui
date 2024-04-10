@@ -1,16 +1,12 @@
-export {
-  defaultOptions as markdownDefaultOptions,
-  matchCompleteMarkdownCodeBlock,
-  matchPartialMarkdownCodeBlock,
-} from "./matchers";
-export type { MarkdownMatcherOptions } from "./matchers";
+export { matchCompleteCodeBlock, matchPartialCodeBlock } from "./matchers";
+export { defaultOptions as defaultCodeBlockOptions } from "./options";
+export type { CodeBlockOptions } from "./options";
 
 export {
   parseCompleteMarkdownCodeBlock,
-  defaultOptions as parseDefaultOptions,
   parsePartialMarkdownCodeBlock,
 } from "./parse";
-export type { ParseFunction, ParseMarkdownCodeBlockOptions } from "./parse";
+export type { ParseFunction } from "./parse";
 
 export {
   ShikiCompleteCodeBlock,
@@ -27,3 +23,4 @@ export type {
 
 export { loadHighlighter } from "./loadHighlighter";
 export type { LLMUIHighlighter } from "./loadHighlighter";
+export { codeBlockLookBack } from "./lookBack";

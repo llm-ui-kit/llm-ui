@@ -1,24 +1,40 @@
 import {
-  ComponentMatch,
   LLMOutputComponent,
+  LLMOutputFallbackComponent,
   LLMOutputMatch,
-  LLMOutputReactComponent,
+  LLMOutputMatchWithLookBack,
 } from "./types";
 
-const completeMatchesForComponent = (
-  llmOutput: string,
-  component: LLMOutputComponent,
-  priority: number,
-): ComponentMatch[] => {
-  const matches: ComponentMatch[] = [];
+export type ComponentMatch = {
+  component: LLMOutputFallbackComponent;
+  match: LLMOutputMatchWithLookBack;
+  priority: number;
+};
+
+type ComponentMatchNoLookback = {
+  component: LLMOutputFallbackComponent;
+  match: LLMOutputMatch;
+  priority: number;
+};
+
+const completeMatchesForComponent = ({
+  llmOutput,
+  component,
+  priority,
+}: {
+  llmOutput: string;
+  component: LLMOutputComponent;
+  priority: number;
+}): ComponentMatchNoLookback[] => {
+  const matches: ComponentMatchNoLookback[] = [];
   let index = 0;
   while (index < llmOutput.length) {
     const nextMatch = component.isCompleteMatch(llmOutput.slice(index));
     if (nextMatch) {
       matches.push({
-        component: component.completeComponent,
+        component: component,
         match: {
-          ...nextMatch,
+          outputRaw: nextMatch.outputRaw,
           startIndex: index + nextMatch.startIndex,
           endIndex: index + nextMatch.endIndex,
         },
@@ -33,8 +49,8 @@ const completeMatchesForComponent = (
 };
 
 const highestPriorityNonOverlappingMatches = (
-  matches: ComponentMatch[],
-): ComponentMatch[] => {
+  matches: ComponentMatchNoLookback[],
+): ComponentMatchNoLookback[] => {
   return matches.filter((match) => {
     const higherPriorityMatches = matches.filter(
       (m) => m.priority < match.priority,
@@ -46,8 +62,8 @@ const highestPriorityNonOverlappingMatches = (
 };
 
 const byMatchStartIndex = (
-  match1: ComponentMatch,
-  match2: ComponentMatch,
+  match1: ComponentMatchNoLookback,
+  match2: ComponentMatchNoLookback,
 ): number => match1.match.startIndex - match2.match.startIndex;
 
 const isOverlapping = (
@@ -65,21 +81,23 @@ const isOverlapping = (
   );
 };
 
-const findPartialMatch = (
-  llmOutput: string,
-  currentIndex: number,
-  components: LLMOutputComponent[],
-): ComponentMatch | undefined => {
+const findPartialMatch = ({
+  llmOutput,
+  components,
+  currentIndex,
+}: {
+  llmOutput: string;
+  currentIndex: number;
+  components: LLMOutputComponent[];
+}): ComponentMatchNoLookback | undefined => {
   for (const [priority, component] of components.entries()) {
-    const partialMatch = component.isPartialMatch(
-      llmOutput.slice(currentIndex),
-    );
+    const outputRaw = llmOutput.slice(currentIndex);
+    const partialMatch = component.isPartialMatch(outputRaw);
     if (partialMatch) {
       return {
-        component: component.partialComponent,
+        component: component,
         match: {
-          output: partialMatch.output,
-          visibleOutput: partialMatch.visibleOutput,
+          outputRaw: partialMatch.outputRaw,
           startIndex: partialMatch.startIndex + currentIndex,
           endIndex: partialMatch.endIndex + currentIndex,
         },
@@ -90,35 +108,41 @@ const findPartialMatch = (
   return undefined;
 };
 
-const fallbacksInGaps = (
-  componentMatches: ComponentMatch[],
-  llmOutput: string,
-  fallbackPriority: number,
-  fallbackComponent: LLMOutputReactComponent,
-): ComponentMatch[] => {
+export type FallbacksInGapsParams = {
+  componentMatches: ComponentMatchNoLookback[];
+  llmOutput: string;
+  fallbackPriority: number;
+  fallbackComponent: LLMOutputFallbackComponent;
+};
+const fallbacksInGaps = ({
+  componentMatches,
+  llmOutput,
+  fallbackPriority,
+  fallbackComponent,
+}: FallbacksInGapsParams): ComponentMatchNoLookback[] => {
   const fallbacks = componentMatches
     .map((match, index) => {
       const previousMatchEndIndex =
         index === 0 ? 0 : componentMatches[index - 1].match.endIndex;
       if (previousMatchEndIndex < match.match.startIndex) {
-        const output = llmOutput.slice(
+        const outputRaw = llmOutput.slice(
           previousMatchEndIndex,
           match.match.startIndex,
         );
+
         return {
           component: fallbackComponent,
           match: {
             startIndex: previousMatchEndIndex,
             endIndex: match.match.startIndex,
-            output,
-            visibleOutput: output,
+            outputRaw,
           },
           priority: fallbackPriority,
-        };
+        } satisfies ComponentMatchNoLookback;
       }
       return undefined;
     })
-    .filter((match) => match !== undefined) as ComponentMatch[];
+    .filter((match) => match !== undefined) as ComponentMatchNoLookback[];
 
   // Add last fallback that reaches to end of output
   const lastMatchEndIndex =
@@ -127,14 +151,14 @@ const fallbacksInGaps = (
       : 0;
 
   if (lastMatchEndIndex < llmOutput.length) {
-    const output = llmOutput.slice(lastMatchEndIndex, llmOutput.length);
+    const outputRaw = llmOutput.slice(lastMatchEndIndex, llmOutput.length);
+
     fallbacks.push({
       component: fallbackComponent,
       match: {
         startIndex: lastMatchEndIndex,
         endIndex: llmOutput.length,
-        output,
-        visibleOutput: output,
+        outputRaw,
       },
       priority: fallbackPriority,
     });
@@ -142,13 +166,70 @@ const fallbacksInGaps = (
   return fallbacks;
 };
 
-export const matchComponents = (
-  llmOutput: string,
-  components: LLMOutputComponent[],
-  fallbackComponent: LLMOutputReactComponent,
-): ComponentMatch[] => {
+const matchesWithLookback = ({
+  matches,
+  visibleTextLengthTarget,
+  isStreamFinished,
+}: {
+  matches: ComponentMatchNoLookback[];
+  visibleTextLengthTarget: number;
+  isStreamFinished: boolean;
+}): ComponentMatch[] => {
+  return matches.reduce((acc, match, index) => {
+    const visibleTextSoFar = acc
+      .map((m) => m.match.visibleText.length)
+      .reduce((a, b) => a + b, 0);
+    const localVisibleTextLengthTarget =
+      visibleTextLengthTarget - visibleTextSoFar;
+    if (localVisibleTextLengthTarget <= 0) {
+      return acc;
+    }
+    const isLastMatch = index === matches.length - 1;
+    const { output, visibleText } = match.component.lookBack({
+      isComplete: !isLastMatch || isStreamFinished,
+      visibleTextLengthTarget: localVisibleTextLengthTarget,
+      isStreamFinished: isStreamFinished,
+      output: match.match.outputRaw,
+    });
+    if (visibleText.length > localVisibleTextLengthTarget) {
+      throw new Error(
+        `Visible text length exceeded target for: ${visibleText} target: ${localVisibleTextLengthTarget}`,
+      );
+    }
+    const matchWithLookback: ComponentMatch = {
+      ...match,
+      match: {
+        ...match.match,
+        outputAfterLookback: output,
+        visibleText,
+      },
+    };
+
+    return [...acc, matchWithLookback];
+  }, [] as ComponentMatch[]);
+};
+
+export type MatchComponentParams = {
+  llmOutput: string;
+  components: LLMOutputComponent[];
+  fallbackComponent: LLMOutputFallbackComponent;
+  isStreamFinished: boolean;
+  visibleTextLengthTarget?: number;
+};
+
+export const matchComponents = ({
+  llmOutput,
+  components,
+  fallbackComponent,
+  isStreamFinished,
+  visibleTextLengthTarget = Number.MAX_SAFE_INTEGER,
+}: MatchComponentParams): ComponentMatch[] => {
   const allCompleteMatches = components.flatMap((component, priority) =>
-    completeMatchesForComponent(llmOutput, component, priority),
+    completeMatchesForComponent({
+      llmOutput,
+      component,
+      priority,
+    }),
   );
   const matches = highestPriorityNonOverlappingMatches(allCompleteMatches);
   matches.sort(byMatchStartIndex);
@@ -156,25 +237,31 @@ export const matchComponents = (
   const lastMatchEndIndex =
     matches.length > 0 ? matches[matches.length - 1].match.endIndex : 0;
 
-  const partialMatch = findPartialMatch(
-    llmOutput,
-    lastMatchEndIndex,
-    components,
-  );
+  const partialMatch = !isStreamFinished
+    ? findPartialMatch({
+        llmOutput,
+        currentIndex: lastMatchEndIndex,
+        components,
+      })
+    : undefined;
 
   if (partialMatch) {
     matches.push(partialMatch);
   }
-  const fallBacks = fallbacksInGaps(
-    matches,
+  const fallBacks = fallbacksInGaps({
+    componentMatches: matches,
     llmOutput,
-    components.length,
+    fallbackPriority: components.length,
     fallbackComponent,
-  );
+  });
 
   for (const fallBack of fallBacks) {
     matches.push(fallBack);
   }
   matches.sort(byMatchStartIndex);
-  return matches;
+  return matchesWithLookback({
+    matches,
+    isStreamFinished,
+    visibleTextLengthTarget,
+  });
 };

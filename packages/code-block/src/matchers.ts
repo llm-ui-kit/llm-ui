@@ -1,14 +1,10 @@
 import { LLMOutputMatcher, MaybeLLMOutputMatch } from "llm-ui/components";
-import {
-  ParseFunction,
-  ParseMarkdownCodeBlockOptions,
-  parseCompleteMarkdownCodeBlock,
-  parsePartialMarkdownCodeBlock,
-} from "./parse";
+import { CodeBlockOptions, getOptions } from "./options";
+
 import { getStartEndGroup } from "./shared";
 
 export const regexMatcher =
-  (regex: RegExp, parser: ParseFunction) =>
+  (regex: RegExp) =>
   (llmOutput: string): MaybeLLMOutputMatch => {
     const regexMatch = llmOutput.match(regex);
     if (regexMatch) {
@@ -18,61 +14,29 @@ export const regexMatcher =
       return {
         startIndex,
         endIndex,
-        output: matchString,
-        visibleOutput: parser(matchString).code ?? matchString,
+        outputRaw: matchString,
       };
     }
     return undefined;
   };
 
-export type MarkdownMatcherOptions = {
-  startEndChars: string[];
-};
-
-export const defaultOptions: MarkdownMatcherOptions = {
-  startEndChars: ["`"],
-};
-
-const getOptions = (userOptions?: Partial<MarkdownMatcherOptions>) => {
-  return { ...defaultOptions, ...userOptions };
-};
-
-const parseComplete = (
-  userOptions: ParseMarkdownCodeBlockOptions,
-): ParseFunction => {
-  return (output: string) =>
-    parseCompleteMarkdownCodeBlock(output, userOptions);
-};
-
-const parsePartial = (
-  userOptions: ParseMarkdownCodeBlockOptions,
-): ParseFunction => {
-  return (output: string) => parsePartialMarkdownCodeBlock(output, userOptions);
-};
-
-export const matchCompleteMarkdownCodeBlock = (
-  userOptions?: Partial<MarkdownMatcherOptions>,
+export const matchCompleteCodeBlock = (
+  userOptions?: Partial<CodeBlockOptions>,
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
   const startEndGroup = getStartEndGroup(options.startEndChars);
   const regex = new RegExp(
     `${startEndGroup}.*\n([\\s\\S]*?)\n${startEndGroup}`,
   );
-  return regexMatcher(
-    regex,
-    parseComplete({ startEndChars: options.startEndChars }),
-  );
+  return regexMatcher(regex);
 };
 
-export const matchPartialMarkdownCodeBlock = (
-  userOptions?: Partial<MarkdownMatcherOptions>,
+export const matchPartialCodeBlock = (
+  userOptions?: Partial<CodeBlockOptions>,
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
   const regex = new RegExp(
     `(${options.startEndChars.map((char) => `${char}{1,2}$|${char}{3}`).join("|")})[\\s\\S]*`,
   );
-  return regexMatcher(
-    regex,
-    parsePartial({ startEndChars: options.startEndChars }),
-  );
+  return regexMatcher(regex);
 };

@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { MaybeLLMOutputMatch } from "../../react/src/components/LLMOutput/types";
 import {
-  MarkdownMatcherOptions,
-  matchCompleteMarkdownCodeBlock,
-  matchPartialMarkdownCodeBlock,
+  matchCompleteCodeBlock,
+  matchPartialCodeBlock,
   regexMatcher,
 } from "./matchers";
+import { CodeBlockOptions } from "./options";
 
 describe("regexMatcher", () => {
   const testCases = [
@@ -15,8 +15,7 @@ describe("regexMatcher", () => {
       expected: {
         startIndex: 0,
         endIndex: 5,
-        output: "hello",
-        visibleOutput: "hello",
+        outputRaw: "hello",
       },
     },
     {
@@ -25,8 +24,7 @@ describe("regexMatcher", () => {
       expected: {
         startIndex: 4,
         endIndex: 9,
-        output: "hello",
-        visibleOutput: "hello",
+        outputRaw: "hello",
       },
     },
     {
@@ -35,8 +33,7 @@ describe("regexMatcher", () => {
       expected: {
         startIndex: 4,
         endIndex: 9,
-        output: "hello",
-        visibleOutput: "hello",
+        outputRaw: "hello",
       },
     },
     {
@@ -48,11 +45,7 @@ describe("regexMatcher", () => {
 
   testCases.forEach(({ input, regex, expected }) => {
     it(`should match ${input} with ${regex}`, () => {
-      const result = regexMatcher(regex, (x) => ({
-        code: x,
-        language: undefined,
-        metaString: undefined,
-      }))(input);
+      const result = regexMatcher(regex)(input);
       expect(result).toEqual(expected);
     });
   });
@@ -62,7 +55,7 @@ type TestCase = {
   name: string;
   input: string;
   expected: MaybeLLMOutputMatch;
-  options?: MarkdownMatcherOptions;
+  options?: CodeBlockOptions;
 };
 describe("matchCompleteMarkdownCodeBlock", () => {
   const testCases: TestCase[] = [
@@ -72,8 +65,7 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 0,
         endIndex: 13,
-        output: "```\nhello\n```",
-        visibleOutput: "hello",
+        outputRaw: "```\nhello\n```",
       },
     },
     {
@@ -82,8 +74,7 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 17,
-        output: "```\nhello\n```",
-        visibleOutput: "hello",
+        outputRaw: "```\nhello\n```",
       },
     },
     {
@@ -92,8 +83,7 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 17,
-        output: "```\nhello\n```",
-        visibleOutput: "hello",
+        outputRaw: "```\nhello\n```",
       },
     },
     {
@@ -102,8 +92,7 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 27,
-        output: "```typescript\nhello\n```",
-        visibleOutput: "hello",
+        outputRaw: "```typescript\nhello\n```",
       },
     },
     {
@@ -112,8 +101,7 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 32,
-        output: "```typescript meta\nhello\n```",
-        visibleOutput: "hello",
+        outputRaw: "```typescript meta\nhello\n```",
       },
     },
     {
@@ -127,8 +115,7 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 17,
-        output: "~~~\nhello\n~~~",
-        visibleOutput: "hello",
+        outputRaw: "~~~\nhello\n~~~",
       },
       options: { startEndChars: ["~", "`"] },
     },
@@ -153,8 +140,7 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 0,
         endIndex: 13,
-        output: "```\nhello\n```",
-        visibleOutput: "hello",
+        outputRaw: "```\nhello\n```",
       },
     },
     {
@@ -163,15 +149,14 @@ describe("matchCompleteMarkdownCodeBlock", () => {
       expected: {
         startIndex: 0,
         endIndex: 13,
-        output: "```\nhello\n```",
-        visibleOutput: "hello",
+        outputRaw: "```\nhello\n```",
       },
     },
   ];
 
   testCases.forEach(({ name, input, expected, options }) => {
     it(name, () => {
-      const result = matchCompleteMarkdownCodeBlock(options)(input);
+      const result = matchCompleteCodeBlock(options)(input);
       expect(result).toEqual(expected);
     });
   });
@@ -185,8 +170,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 0,
         endIndex: 9,
-        output: "```\nhello",
-        visibleOutput: "hello",
+        outputRaw: "```\nhello",
       },
     },
     {
@@ -195,8 +179,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 16,
-        output: "```\nhello\n``",
-        visibleOutput: "hello",
+        outputRaw: "```\nhello\n``",
       },
     },
     {
@@ -205,8 +188,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 26,
-        output: "```typescript\nhello\n``",
-        visibleOutput: "hello",
+        outputRaw: "```typescript\nhello\n``",
       },
     },
     {
@@ -215,8 +197,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 31,
-        output: "```typescript meta\nhello\n``",
-        visibleOutput: "hello",
+        outputRaw: "```typescript meta\nhello\n``",
       },
     },
     {
@@ -229,9 +210,8 @@ describe("matchPartialMarkdownCodeBlock", () => {
       input: "```hello",
       expected: {
         endIndex: 8,
-        output: "```hello",
+        outputRaw: "```hello",
         startIndex: 0,
-        visibleOutput: "",
       },
     },
     {
@@ -240,8 +220,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 4,
         endIndex: 13,
-        output: "~~~\nhello",
-        visibleOutput: "hello",
+        outputRaw: "~~~\nhello",
       },
       options: { startEndChars: ["~", "`"] },
     },
@@ -251,8 +230,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 0,
         endIndex: 1,
-        output: "`",
-        visibleOutput: "",
+        outputRaw: "`",
       },
     },
     {
@@ -261,8 +239,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 0,
         endIndex: 2,
-        output: "``",
-        visibleOutput: "",
+        outputRaw: "``",
       },
     },
     {
@@ -271,8 +248,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
       expected: {
         startIndex: 0,
         endIndex: 3,
-        output: "```",
-        visibleOutput: "",
+        outputRaw: "```",
       },
     },
     {
@@ -284,7 +260,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
 
   testCases.forEach(({ name, input, expected, options }) => {
     it(name, () => {
-      const result = matchPartialMarkdownCodeBlock(options)(input);
+      const result = matchPartialCodeBlock(options)(input);
       expect(result).toEqual(expected);
     });
   });

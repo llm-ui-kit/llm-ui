@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { CodeBlockOptions } from "./options";
 import {
   CodeBlock,
-  ParseMarkdownCodeBlockOptions,
   parseCompleteMarkdownCodeBlock,
   parsePartialMarkdownCodeBlock,
 } from "./parse";
@@ -9,7 +9,7 @@ import {
 type TestCase = {
   name: string;
   codeBlock: string;
-  options?: ParseMarkdownCodeBlockOptions;
+  options?: CodeBlockOptions;
   expected: CodeBlock;
 };
 
