@@ -1,5 +1,4 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
-import { delay } from "@/lib/utils";
 import {
   buildShikiCompleteCodeBlock,
   buildShikiPartialCodeBlock,
@@ -108,16 +107,17 @@ const codeBlockComponent: LLMOutputComponent = {
   component: ShikiComplete,
 };
 
-const throttle: ThrottleFunction = async ({
+const throttle: ThrottleFunction = ({
   outputAll,
   outputRendered,
+  timeInMsSinceLastRender,
   isStreamFinished,
   visibleText,
 }) => {
-  await delay(200);
   const bufferSize = outputAll.length - outputRendered.length;
   return {
-    skip: bufferSize < 1 && !isStreamFinished,
+    skip:
+      (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 250,
     visibleTextLengthTarget: visibleText.length + 1,
   };
 };

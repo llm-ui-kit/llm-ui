@@ -34,7 +34,6 @@ export type LookBackFunction = (params: LookBackFunctionParams) => LookBack;
 export type LLMOutputFallbackComponent = {
   component: LLMOutputReactComponent;
   lookBack: LookBackFunction;
-  throttle?: ThrottleFunction;
 };
 
 export type LLMOutputComponent = {
@@ -49,6 +48,7 @@ export type ThrottleParams = {
   visibleText: string;
   visibleTextAll: string;
   timeInMsSinceStart: number;
+  timeInMsSinceLastRender: number;
   isStreamFinished: boolean;
 };
 
@@ -57,6 +57,4 @@ export type ThrottleResponse = {
   skip: boolean;
 };
 
-export type ThrottleFunction = (
-  params: ThrottleParams,
-) => Promise<ThrottleResponse>;
+export type ThrottleFunction = (params: ThrottleParams) => ThrottleResponse;

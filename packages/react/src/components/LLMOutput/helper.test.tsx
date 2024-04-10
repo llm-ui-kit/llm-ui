@@ -7,8 +7,6 @@ import {
   MaybeLLMOutputMatch,
 } from "./types";
 
-const dummyThottle = async () => ({ visibleTextLengthTarget: 0, skip: false });
-
 const returnParamsLookBack: LookBackFunction = ({
   output,
   isComplete,
@@ -19,24 +17,13 @@ const returnParamsLookBack: LookBackFunction = ({
   visibleText: output.slice(0, visibleTextLengthTarget),
 });
 
-const visibleTextLookBack: LookBackFunction = ({
-  output,
-  visibleTextLengthTarget,
-}) => ({
-  output,
-  visibleText: "a".repeat(Math.min(visibleTextLengthTarget, 1000)),
-});
-
 const fallbackComponent: LLMOutputFallbackComponent = {
   component: () => null,
   lookBack: returnParamsLookBack,
-  throttle: dummyThottle,
 };
 
 const component1 = () => <div>1</div>;
 const component2 = () => <div>2</div>;
-const component3 = () => <div>3</div>;
-const component4 = () => <div>4</div>;
 
 const noMatch = () => undefined;
 
@@ -70,7 +57,6 @@ const completeMatchesString = (
   isCompleteMatch: (output) => matchString(output, target),
   isPartialMatch: noMatch,
   lookBack: lookBack,
-  throttle: dummyThottle,
 });
 
 const partialMatchesString = (
@@ -81,7 +67,6 @@ const partialMatchesString = (
   isCompleteMatch: noMatch,
   isPartialMatch: (output) => matchString(output, target),
   lookBack: lookBack,
-  throttle: dummyThottle,
 });
 
 type TestCase = {
@@ -377,7 +362,7 @@ describe("matchComponents", () => {
       };
     },
     () => {
-      const component = completeMatchesString(" world", visibleTextLookBack);
+      const component = completeMatchesString(" world");
       return {
         name: "first component complete matches end of input - short visibleTarget",
         llmOutput: "helloWorld world",
