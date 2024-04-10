@@ -1,5 +1,5 @@
 import { LLMOutputReactComponent, LookBackFunction } from "../components";
-import { LLMOutputFallbackComponent } from "../components/LLMOutput/types";
+import { LLMOutputFallbackBlock } from "../components/LLMOutput/types";
 
 export const returnParamsLookBack: LookBackFunction = ({
   output,
@@ -11,11 +11,9 @@ export const returnParamsLookBack: LookBackFunction = ({
   visibleText: output.slice(0, visibleTextLengthTarget),
 });
 
-const fallbackReactComponent: LLMOutputReactComponent = () => (
-  <div>fallback</div>
-);
+const fallbackComponent: LLMOutputReactComponent = () => <div>fallback</div>;
 
-export const fallbackComponent: LLMOutputFallbackComponent = {
-  component: fallbackReactComponent,
+export const fallbackBlock: LLMOutputFallbackBlock = {
+  component: fallbackComponent,
   lookBack: returnParamsLookBack,
 };

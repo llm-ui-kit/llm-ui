@@ -1,7 +1,8 @@
 export { LLMOutput } from "./LLMOutput";
 export type { LLMOutputProps } from "./LLMOutput";
 export type {
-  LLMOutputComponent,
+  LLMOutputBlock,
+  LLMOutputFallbackBlock,
   LLMOutputMatch,
   LLMOutputMatcher,
   LLMOutputReactComponent,

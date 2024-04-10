@@ -31,15 +31,15 @@ export type LookBackFunctionParams = {
 
 export type LookBackFunction = (params: LookBackFunctionParams) => LookBack;
 
-export type LLMOutputFallbackComponent = {
+export type LLMOutputFallbackBlock = {
   component: LLMOutputReactComponent;
   lookBack: LookBackFunction;
 };
 
-export type LLMOutputComponent = {
+export type LLMOutputBlock = {
   isPartialMatch: LLMOutputMatcher;
   isCompleteMatch: LLMOutputMatcher;
-} & LLMOutputFallbackComponent;
+} & LLMOutputFallbackBlock;
 
 export type ThrottleParams = {
   outputRaw: string;

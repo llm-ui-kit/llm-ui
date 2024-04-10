@@ -48,7 +48,7 @@ export const ShikiCodeBlock: LLMOutputReactComponent<
   return <div {...props} dangerouslySetInnerHTML={{ __html: getHtml() }} />;
 };
 
-export const buildShikiCodeBlock = (
+export const buildShikiCodeBlockComponent = (
   shikiProps: ShikiProps,
 ): ShikiCodeBlockComponent => {
   const BuiltShikiCodeBlock: ShikiCodeBlockComponent = (props) => (

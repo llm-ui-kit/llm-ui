@@ -1,6 +1,6 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import {
-  buildShikiCodeBlock,
+  buildShikiCodeBlockComponent,
   codeBlockCompleteMatcher,
   codeBlockLookBack,
   loadHighlighter,
@@ -12,7 +12,7 @@ import {
 import { MarkdownComponent, markdownLookBack } from "@llm-ui/markdown";
 import {
   LLMOutput,
-  type LLMOutputComponent,
+  type LLMOutputBlock,
   type LLMOutputReactComponent,
 } from "llm-ui/components";
 import { Check, Copy } from "lucide-react";
@@ -64,7 +64,7 @@ const shikiProps: ShikiProps = {
   codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
 };
 
-const CodeBlock = buildShikiCodeBlock(shikiProps);
+const CodeBlock = buildShikiCodeBlockComponent(shikiProps);
 
 const CodeBlockContainer: React.FC<{
   code: string;
@@ -104,7 +104,7 @@ const ShikiComplete: ShikiCodeBlockComponent = (props) => {
   );
 };
 
-const codeBlockComponent: LLMOutputComponent = {
+const codeBlockBlock: LLMOutputBlock = {
   isCompleteMatch: codeBlockCompleteMatcher(),
   isPartialMatch: codeBlockPartialMatcher(),
   lookBack: codeBlockLookBack(),
@@ -134,7 +134,7 @@ export const HomePageExample = () => {
   });
   return (
     <LLMOutput
-      components={[codeBlockComponent]}
+      blocks={[codeBlockBlock]}
       isFinished={output === example}
       fallbackComponent={{ component: Markdown, lookBack: markdownLookBack }}
       llmOutput={output}

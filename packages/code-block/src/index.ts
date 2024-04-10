@@ -11,7 +11,7 @@ export {
 } from "./parse";
 export type { ParseFunction } from "./parse";
 
-export { ShikiCodeBlock, buildShikiCodeBlock } from "./shikiComponent";
+export { ShikiCodeBlock, buildShikiCodeBlockComponent } from "./shikiComponent";
 export type {
   CodeToHtmlProps,
   ShikiCodeBlockComponent,
