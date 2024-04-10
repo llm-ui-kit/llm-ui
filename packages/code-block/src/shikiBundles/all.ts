@@ -1,10 +1,9 @@
+import { LLMOutputComponent } from "llm-ui/components";
 import { SetOptional } from "type-fest";
-import { matchCompleteCodeBlock, matchPartialCodeBlock } from "../matchers";
-import {
-  ShikiProps,
-  buildShikiCompleteCodeBlock,
-  buildShikiPartialCodeBlock,
-} from "../shikiComponent";
+import { codeBlockLookBack } from "../lookBack";
+import { codeBlockCompleteMatcher, codeBlockPartialMatcher } from "../matchers";
+import { CodeBlockOptions, getOptions } from "../options";
+import { ShikiProps, buildShikiCodeBlock } from "../shikiComponent";
 
 export const allShikiDefaultProps = {
   codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
@@ -12,15 +11,17 @@ export const allShikiDefaultProps = {
 
 export const buildShikiComponent = (
   userShikiProps: SetOptional<ShikiProps, "codeToHtmlProps">,
-) => {
+  userOptions?: Partial<CodeBlockOptions>,
+): LLMOutputComponent => {
   const shikiProps: ShikiProps = {
     ...allShikiDefaultProps,
     ...userShikiProps,
   };
+  const options = getOptions(userOptions);
   return {
-    isCompleteMatch: matchCompleteCodeBlock(),
-    isPartialMatch: matchPartialCodeBlock(),
-    completeComponent: buildShikiCompleteCodeBlock(shikiProps),
-    partialComponent: buildShikiPartialCodeBlock(shikiProps),
+    isCompleteMatch: codeBlockCompleteMatcher(options),
+    isPartialMatch: codeBlockPartialMatcher(options),
+    component: buildShikiCodeBlock(shikiProps),
+    lookBack: codeBlockLookBack(options),
   };
 };

@@ -1,4 +1,7 @@
-export { matchCompleteCodeBlock, matchPartialCodeBlock } from "./matchers";
+export {
+  codeBlockCompleteMatcher,
+  codeBlockPartialMatcher as matchPartialCodeBlock,
+} from "./matchers";
 export { defaultOptions as defaultCodeBlockOptions } from "./options";
 export type { CodeBlockOptions } from "./options";
 
@@ -8,12 +11,7 @@ export {
 } from "./parse";
 export type { ParseFunction } from "./parse";
 
-export {
-  ShikiCompleteCodeBlock,
-  ShikiPartialCodeBlock,
-  buildShikiCompleteCodeBlock,
-  buildShikiPartialCodeBlock,
-} from "./shikiComponent";
+export { ShikiCodeBlock, buildShikiCodeBlock } from "./shikiComponent";
 export type {
   CodeToHtmlProps,
   ShikiCodeBlockComponent,

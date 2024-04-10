@@ -3,11 +3,7 @@ import { useCallback } from "react";
 import { HighlighterCore } from "shiki/core";
 import { SetOptional } from "type-fest";
 import { LLMUIHighlighter, useLoadHighlighter } from "./loadHighlighter";
-import {
-  ParseFunction,
-  parseCompleteMarkdownCodeBlock,
-  parsePartialMarkdownCodeBlock,
-} from "./parse";
+import { ParseFunction, parseCompleteMarkdownCodeBlock } from "./parse";
 
 export type CodeToHtmlProps = SetOptional<
   Parameters<HighlighterCore["codeToHtml"]>[1],
@@ -24,15 +20,15 @@ export type ShikiCodeBlockProps = ShikiProps & React.HTMLProps<HTMLDivElement>;
 export type ShikiCodeBlockComponent =
   LLMOutputReactComponent<ShikiCodeBlockProps>;
 
-const ShikiCodeBlock: LLMOutputReactComponent<
+export const ShikiCodeBlock: LLMOutputReactComponent<
   ShikiCodeBlockProps & {
-    parser: ParseFunction;
+    parser?: ParseFunction;
   }
 > = ({
   llmOutput,
   highlighter: llmuiHighlighter,
   codeToHtmlProps,
-  parser,
+  parser = parseCompleteMarkdownCodeBlock,
   ...props
 }) => {
   const highlighter = useLoadHighlighter(llmuiHighlighter);
@@ -52,28 +48,11 @@ const ShikiCodeBlock: LLMOutputReactComponent<
   return <div {...props} dangerouslySetInnerHTML={{ __html: getHtml() }} />;
 };
 
-export const ShikiCompleteCodeBlock: ShikiCodeBlockComponent = (props) => (
-  <ShikiCodeBlock {...props} parser={parseCompleteMarkdownCodeBlock} />
-);
-
-export const buildShikiCompleteCodeBlock = (
+export const buildShikiCodeBlock = (
   shikiProps: ShikiProps,
 ): ShikiCodeBlockComponent => {
-  const BuiltShikiCompleteCodeBlock: ShikiCodeBlockComponent = (props) => (
-    <ShikiCompleteCodeBlock {...shikiProps} {...props} />
+  const BuiltShikiCodeBlock: ShikiCodeBlockComponent = (props) => (
+    <ShikiCodeBlock {...shikiProps} {...props} />
   );
-  return BuiltShikiCompleteCodeBlock;
-};
-
-export const ShikiPartialCodeBlock: ShikiCodeBlockComponent = (props) => (
-  <ShikiCodeBlock {...props} parser={parsePartialMarkdownCodeBlock} />
-);
-
-export const buildShikiPartialCodeBlock = (
-  shikiProps: ShikiProps,
-): ShikiCodeBlockComponent => {
-  const BuiltShikiPartialCodeBlock: ShikiCodeBlockComponent = (props) => (
-    <ShikiPartialCodeBlock {...shikiProps} {...props} />
-  );
-  return BuiltShikiPartialCodeBlock;
+  return BuiltShikiCodeBlock;
 };
