@@ -1,4 +1,5 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
+import { cn } from "@/lib/utils";
 import {
   buildShikiCodeBlockComponent,
   codeBlockCompleteMatcher,
@@ -70,14 +71,17 @@ const CodeBlockContainer: React.FC<{
   code: string;
   isComplete: boolean;
   children: ReactNode;
-}> = ({ code, isComplete, children }) => {
+}> = ({ code, children }) => {
   const [isCopied, setIsCopied] = useState(false);
   const Icon = isCopied ? Check : Copy;
   const text = isCopied ? "Copied" : "Copy";
   return (
     <div className="relative group my-4">
       <Button
-        className="absolute top-2 end-2 min-w-24 !transition-opacity !ease-in !duration-150 group-hover:opacity-100 opacity-0"
+        className={cn(
+          "absolute top-2 end-2 min-w-24 !transition-opacity !ease-in !duration-150 group-hover:opacity-100 ",
+          isCopied ? "opacity-100" : "opacity-0",
+        )}
         size={"sm"}
         variant={"secondary"}
         onClick={() => {
