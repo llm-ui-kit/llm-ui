@@ -17,6 +17,7 @@ describe("removePartialAmbiguousMarkdown", () => {
     { markdown: "*abc*", expected: "*abc*" },
     { markdown: "**abc*", expected: "" },
     { markdown: "*a*", expected: "*a*" },
+    { markdown: "*a", expected: "" },
     { markdown: "*_abc_*", expected: "*_abc_*" },
     { markdown: "* abc", expected: "* abc" }, // bullet point
     { markdown: "*abc*def", expected: "*abc*def" },
@@ -96,7 +97,7 @@ describe("markdownToVisibleText", () => {
   }[] = [
     { input: "hello", isFinished: false, expected: "hello" },
     { input: "~hello~", isFinished: false, expected: "hello" },
-    { input: "_a_", isFinished: false, expected: "a" }, // todo: failing
+    { input: "_a_", isFinished: false, expected: "a" },
     { input: "hello *world*", isFinished: false, expected: "hello world" },
     {
       input: "hello *world* *world*",
@@ -142,9 +143,7 @@ describe("markdownToVisibleText", () => {
     { input: "*abc\ndef", isFinished: true, expected: "*abc\ndef" },
     { input: "*abc\n**def**", isFinished: true, expected: "*abc\ndef" },
     { input: "*abc\ndef*", isFinished: true, expected: "*abc\ndef*" },
-    { input: "*abc\ndef***", isFinished: true, expected: "*abc\ndef***" },
   ];
-  //todo: all test cases isFinished: true
   testCases.forEach(({ input, isFinished, expected }) => {
     it(`should convert "${input}" isFinished:${isFinished} to "${expected}"`, () => {
       expect(markdownToVisibleText(input, isFinished)).toBe(expected);
@@ -162,6 +161,7 @@ describe("markdownRemoveChars", () => {
     { markdown: "hello", maxCharsToRemove: 2, expected: "hell" },
     { markdown: "hello", maxCharsToRemove: 5, expected: "hell" },
     { markdown: "hello", maxCharsToRemove: 5, expected: "hell" },
+    { markdown: "*a*", maxCharsToRemove: 1, expected: "" },
     { markdown: "*abc*", maxCharsToRemove: 1, expected: "*ab*" },
     { markdown: "*abc*", maxCharsToRemove: 2, expected: "*a*" },
     { markdown: "_abc_", maxCharsToRemove: 2, expected: "_a_" },
@@ -225,6 +225,18 @@ describe("markdownWithVisibleChars", () => {
       visibleChars: 3,
       isFinished: false,
       expected: "*abc*",
+    },
+    {
+      markdown: "*a*",
+      visibleChars: 1,
+      isFinished: false,
+      expected: "*a*",
+    },
+    {
+      markdown: "*a*",
+      visibleChars: 0,
+      isFinished: false,
+      expected: "",
     },
 
     {

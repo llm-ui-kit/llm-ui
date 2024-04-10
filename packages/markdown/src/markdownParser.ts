@@ -1,20 +1,20 @@
 // enclosing symbols: _a_ __a__ *a* **a** ~a~ ~~a~~
 
 // matches: *abc$, _abc$, __abc$, ~~~abc$ etc.
-const ENCLOSING_STARTED_END_MATCH = /[\*_~]{1,3}(\S.*?\S)$/gm;
+// \S{0,1} handles single char case e.g. *a*
+const ENCLOSING_STARTED_END_MATCH = /[\*_~]{1,3}(\S.*?\S{0,1})$/gm;
 
 // matches: *abc*, __abc__, etc.
-const ENCLOSING_MATCH = /([\*_~]{1,3})(\S.*?\S)\1/g;
+const ENCLOSING_MATCH = /([\*_~]{1,3})(\S.*?\S{0,1})\1/g;
 
 // matches: *abc*$, __abc__$, etc. where $ is end of line
-const ENCLOSING_MATCH_END = /([\*_~]{1,3})(\S.*?\S)\1$/g;
+const ENCLOSING_MATCH_END = /([\*_~]{1,3})(\S.*?\S{0,1})\1$/g;
 
 // matches: *$, _$, __$, ~~~$ (where $ is end of line)
 const ENCLOSING_START_END_MATCH = /[\*_~]{1,3}$/;
 
 const findLastEnclosingMatchIndex = (markdown: string): number => {
-  const start = markdown.match(/([*_~]{1,3})\S/);
-  console.log("start", start);
+  const start = markdown.match(/([*_~]{1,3})\S{0,1}/);
   if (!start) {
     return 0;
   }
@@ -29,7 +29,6 @@ const findLastEnclosingMatchIndex = (markdown: string): number => {
   const endEnclosingString = end[1];
   const endIndex =
     startEnclosingEndIndex + end.index! + endEnclosingString.length + 1;
-  console.log({ endIndex, again: markdown.slice(endIndex) });
   return findLastEnclosingMatchIndex(markdown.slice(endIndex)) + endIndex;
 };
 
@@ -37,14 +36,12 @@ const splitStringByLastEnclosingSymbol = (markdown: string) => {
   const lastEnclosingMatchIndex = findLastEnclosingMatchIndex(markdown);
   const before = markdown.slice(0, lastEnclosingMatchIndex);
   const after = markdown.slice(lastEnclosingMatchIndex);
-  console.log({ markdown, before, after });
   return { before, after };
 };
 
 const lastCharIsUnmatchedStar = (markdown: string) => {
   const { after } = splitStringByLastEnclosingSymbol(markdown);
   const match = after.match(ENCLOSING_START_END_MATCH);
-  console.log({ match, after });
   return match ? match[0] : undefined;
 };
 
@@ -120,18 +117,17 @@ export const markdownWithVisibleChars = (
   visibleChars: number,
   isFinished: boolean,
 ): string => {
-  let counter = 0;
   markdown = isFinished ? markdown : removePartialAmbiguousMarkdown(markdown);
   let charsToRemove =
     markdownToVisibleText(markdown, isFinished).length - visibleChars;
-  while (charsToRemove > 0 && counter < 10000) {
+  let prevMarkdown;
+  while (charsToRemove > 0 && prevMarkdown != markdown) {
+    prevMarkdown = markdown;
     markdown = markdownRemoveChars(markdown, charsToRemove);
     charsToRemove =
       markdownToVisibleText(markdown, isFinished).length - visibleChars;
-    counter++;
   }
-  // switch to 'no change' detection?
-  if (counter >= 1000000) {
+  if (prevMarkdown === markdown) {
     console.error("markdownWithVisibleChars: infinite loop detected");
   }
   return markdown;
