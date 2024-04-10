@@ -25,6 +25,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "html-react-parser": "^5.1.10",
     "llm-ui": "workspace:*",
     "shiki": "^1.2.4"
   },
