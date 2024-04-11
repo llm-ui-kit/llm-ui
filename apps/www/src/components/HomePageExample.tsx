@@ -30,7 +30,7 @@ import githubLight from "shiki/themes/github-light.mjs";
 import getWasm from "shiki/wasm";
 import { Button } from "./ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/Tabs";
-import { H2, H3 } from "./ui/Text";
+import { H2 } from "./ui/Text";
 
 const example = `### Markdown support ✅
 
@@ -132,19 +132,22 @@ const throttle: ThrottleFunction = ({
 
 const SideBySideContainer: React.FC<{
   className?: string;
+  header: ReactNode;
   children: ReactNode;
-}> = ({ className, children }) => {
+}> = ({ className, header, children }) => {
   return (
-    <div
-      className={cn(
-        className,
-        "overflow-x-hidden flex-1 p-6 rounded-lg bg-background",
-      )}
-    >
+    <div className={cn(className, "overflow-x-hidden flex-1 ")}>
+      {header}
       {children}
     </div>
   );
 };
+
+const CodeWithBackground: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => (
+  <div className="rounded-lg bg-background p-6 min-h-[500px]">{children}</div>
+);
 
 type SideBySideTabsProps = {
   output: string;
@@ -163,8 +166,18 @@ const SideBySideTabs: React.FC<
 > = ({ className, output, llmUi, isMobile = false }) => {
   return (
     <Tabs defaultValue={isMobile ? "llm-ui" : "markdown"} className={className}>
-      <div className="flex flex-row items-center mb-6">
-        <H3 className="text-muted-foreground flex-1">LLM Output</H3>
+      {isMobile && <TabsContent value="llm-ui">{llmUi}</TabsContent>}
+      <TabsContent value="markdown">
+        <CodeWithBackground>
+          <Markdown isComplete={false} llmOutput={output} />
+        </CodeWithBackground>
+      </TabsContent>
+      <TabsContent value="raw">
+        <CodeWithBackground>
+          <pre className="overflow-x-auto">{output}</pre>
+        </CodeWithBackground>
+      </TabsContent>
+      <div className="flex flex-row items-center mt-6">
         <TabsList>
           {isMobile && (
             <TabsTrigger value="llm-ui" className="md:hidden">
@@ -175,22 +188,6 @@ const SideBySideTabs: React.FC<
           <TabsTrigger value="raw">Raw</TabsTrigger>
         </TabsList>
       </div>
-      {isMobile && (
-        <TabsContent
-          // keepMounted so we keep streaming the content
-          className="data-[state=active]:block hidden"
-          forceMount
-          value="llm-ui"
-        >
-          {llmUi}
-        </TabsContent>
-      )}
-      <TabsContent value="markdown">
-        <Markdown isComplete={false} llmOutput={output} />
-      </TabsContent>
-      <TabsContent value="raw">
-        <pre className="overflow-x-auto">{output}</pre>
-      </TabsContent>
     </Tabs>
   );
 };
@@ -199,24 +196,30 @@ export const HomePageExample = () => {
   const { output, isFinished } = useStreamFastSmooth(example, {
     loop: true,
     autoStart: true,
-    loopDelayMs: 3000,
+    loopDelayMs: 5000,
   });
-  // todo: not looping, controls
+  // todo:  controls, buttons for markdown and raw?
   const llmUi = (
-    <LLMOutput
-      blocks={[codeBlockBlock]}
-      isFinished={isFinished}
-      fallbackComponent={{
-        component: Markdown,
-        lookBack: markdownLookBack,
-      }}
-      llmOutput={output}
-      throttle={throttle}
-    />
+    <CodeWithBackground>
+      <LLMOutput
+        blocks={[codeBlockBlock]}
+        isFinished={isFinished}
+        fallbackComponent={{
+          component: Markdown,
+          lookBack: markdownLookBack,
+        }}
+        llmOutput={output}
+        throttle={throttle}
+      />
+    </CodeWithBackground>
   );
   return (
-    <div className="flex flex-row gap-8 h-[580px]">
-      <SideBySideContainer>
+    <div className="flex flex-row gap-8 h-[640px]">
+      <SideBySideContainer
+        header={
+          <H2 className="mb-8 text-muted-foreground text-center">LLM Output</H2>
+        }
+      >
         <SideBySideTabs
           className="hidden md:block"
           output={output}
@@ -228,10 +231,14 @@ export const HomePageExample = () => {
           llmUi={llmUi}
         />
       </SideBySideContainer>
-      <SideBySideContainer className="hidden md:block">
-        <H2 className="mb-8">
-          <span className="text-gradient_indigo-purple">llm-ui</span> ✨
-        </H2>
+      <SideBySideContainer
+        className="hidden md:block"
+        header={
+          <H2 className="mb-8 text-center">
+            <span className="text-gradient_indigo-purple">llm-ui</span> ✨
+          </H2>
+        }
+      >
         {llmUi}
       </SideBySideContainer>
     </div>

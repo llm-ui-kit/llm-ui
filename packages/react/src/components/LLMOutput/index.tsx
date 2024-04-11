@@ -9,10 +9,19 @@ import {
 
 export type LLMOutputProps = {
   llmOutput: string;
-  isFinished: boolean;
   blocks?: LLMOutputBlock[];
   fallbackComponent: LLMOutputFallbackBlock;
+  isFinished: boolean;
+  stopWhenFinished?: boolean;
   throttle: ThrottleFunction;
+};
+
+const matchesToVisibleText = (matches: BlockMatch[]): string => {
+  return matches.map((match) => match.match.visibleText).join("");
+};
+
+const matchesToOutput = (matches: BlockMatch[]): string => {
+  return matches.map((match) => match.match.outputAfterLookback).join("");
 };
 
 export const useMatches = ({
@@ -21,12 +30,20 @@ export const useMatches = ({
   blocks = [],
   fallbackComponent,
   throttle,
+  stopWhenFinished = true,
 }: LLMOutputProps): { matches: BlockMatch[] } => {
   const startTime = useRef(performance.now());
   const lastRenderTime = useRef(performance.now());
-  const [matches, setMatches] = useState<BlockMatch[]>([]);
+  const [matches, setMatches] = useState<BlockMatch[]>(
+    matchBlocks({
+      llmOutput,
+      blocks,
+      fallbackBlock: fallbackComponent,
+      isStreamFinished: isFinished,
+    }),
+  );
 
-  useAnimationFrame((_deltaTime, stop) => {
+  useAnimationFrame(() => {
     // render loop!
     const timeInMsSinceStart = performance.now() - startTime.current;
     const timeInMsSinceLastRender = performance.now() - lastRenderTime.current;
@@ -36,22 +53,21 @@ export const useMatches = ({
       fallbackBlock: fallbackComponent,
       isStreamFinished: isFinished,
     });
-    const visibleText = matches
-      .map((match) => match.match.visibleText)
-      .join("");
-    const outputRendered = matches
-      .map((match) => match.match.outputAfterLookback)
-      .join("");
-    const visibleTextAll = allMatches
-      .map((match) => match.match.visibleText)
-      .join("");
-    const outputAll = allMatches
-      .map((match) => match.match.outputAfterLookback)
-      .join("");
+    const visibleText = matchesToVisibleText(matches);
+    const outputRendered = matchesToOutput(matches);
+
+    const visibleTextAll = matchesToVisibleText(allMatches);
+    const outputAll = matchesToOutput(allMatches);
 
     const shouldStop = visibleText === visibleTextAll && isFinished;
-    if (shouldStop) {
+    if (stopWhenFinished && shouldStop) {
       stop();
+    }
+
+    // allow looping
+    if (llmOutput.length === 1 && matches.length > 0) {
+      setMatches([]);
+      return;
     }
 
     const { visibleTextLengthTarget, skip } = throttle({
