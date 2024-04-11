@@ -186,12 +186,9 @@ export const useStreamWithProbabilities = (
     () => ({ ...defaultUseStreamExampleOptions, ...(userOptions ?? {}) }),
     [userOptions],
   );
-  // console.log("options", options);
   const tokenArray = useMemo(
     () => stringToTokenArray(output, options),
     [output, options],
   );
-  // console.log("tokenArray", tokenArray);
-
   return useStreamTokenArray(tokenArray, options);
 };
