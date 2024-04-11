@@ -3,7 +3,11 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 import { fallbackBlock } from "../../test/utils";
 import { useMatches } from "./index";
 
-const noThrottle = () => ({ visibleTextLengthTarget: 100, skip: false });
+const noThrottle = () => ({
+  visibleTextLengthTarget: 100,
+  skip: false,
+  delayMs: 0,
+});
 
 const callRenderLoop = ({ times }: { times: number }) => {
   let count = 0;

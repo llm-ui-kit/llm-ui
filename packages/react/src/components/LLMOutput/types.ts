@@ -56,6 +56,7 @@ export type ThrottleParams = {
 export type ThrottleResponse = {
   visibleTextLengthTarget: number;
   skip: boolean;
+  delayMs: number;
 };
 
 export type ThrottleFunction = (params: ThrottleParams) => ThrottleResponse;

@@ -22,6 +22,7 @@ export type UseStreamResponse = {
   start: () => void;
   isStarted: boolean;
   isFinished: boolean;
+  loopIndex: number;
 };
 
 export type UseStreamTokenArrayOptions = {

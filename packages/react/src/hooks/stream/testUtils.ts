@@ -5,6 +5,7 @@ export type ResultArray = {
   output: string[];
   isStarted: boolean[];
   isFinished: boolean[];
+  loopIndex: number[];
 };
 
 export const resultToArrays = (
@@ -18,12 +19,14 @@ export const resultToArrays = (
       acc.output.push(r.output);
       acc.isStarted.push(r.isStarted);
       acc.isFinished.push(r.isFinished);
+      acc.loopIndex.push(r.loopIndex);
       return acc;
     },
     {
       output: [],
       isStarted: [],
       isFinished: [],
+      loopIndex: [],
     } as ResultArray,
   );
 };
