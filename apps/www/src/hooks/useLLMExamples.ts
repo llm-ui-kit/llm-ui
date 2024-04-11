@@ -8,7 +8,7 @@ export const useStreamFastSmooth = (
   options: Partial<UseStreamWithProbabilitiesOptions>,
 ) => {
   return useStreamWithProbabilities(output, {
-    delayMsProbabilities: [{ delayMs: 14, prob: 1 }],
+    delayMsProbabilities: [{ delayMs: 30, prob: 1 }],
     tokenCharsProbabilities: [{ tokenChars: 1, prob: 1 }],
     ...options,
   });

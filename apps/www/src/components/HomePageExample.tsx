@@ -29,12 +29,14 @@ import githubDark from "shiki/themes/github-dark.mjs";
 import githubLight from "shiki/themes/github-light.mjs";
 import getWasm from "shiki/wasm";
 import { Button } from "./ui/Button";
+import { Slider } from "./ui/Slider";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/Tabs";
+import { H2, Text } from "./ui/Text";
 
-const example = `
-### Markdown support ✅
+const example = `### Markdown support ✅
 
-
-Supports: [links](https://llm-ui.com), ~strikethrough~, *italic*, **bold**
+- [links](https://llm-ui.com)
+- ~strikethrough~, *italic*, **bold**
 
 #### Code blocks:
 
@@ -124,25 +126,160 @@ const throttle: ThrottleFunction = ({
 }) => {
   const bufferSize = outputAll.length - outputRendered.length;
   return {
-    skip:
-      (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 30,
+    skip: (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 4,
     visibleTextLengthTarget: visibleText.length + 1,
   };
 };
 
-export const HomePageExample = () => {
-  const { output } = useStreamFastSmooth(example, {
-    loop: false,
-    autoStart: true,
-    loopDelayMs: 3000,
-  });
+const SideBySideContainer: React.FC<{
+  className?: string;
+  header: ReactNode;
+  children: ReactNode;
+}> = ({ className, header, children }) => {
   return (
-    <LLMOutput
-      blocks={[codeBlockBlock]}
-      isFinished={output === example}
-      fallbackComponent={{ component: Markdown, lookBack: markdownLookBack }}
-      llmOutput={output}
-      throttle={throttle}
-    />
+    <div className={cn(className, "overflow-x-hidden flex-1")}>
+      {header}
+      {children}
+    </div>
+  );
+};
+
+const CodeWithBackground: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => (
+  <div className="rounded-lg bg-background p-6 min-h-[500px]">{children}</div>
+);
+
+type SideBySideTabsProps = {
+  output: string;
+  llmUi: ReactNode;
+  className?: string;
+};
+
+const MobileSideBySideTabs: React.FC<SideBySideTabsProps> = (props) => (
+  <SideBySideTabs {...props} isMobile />
+);
+
+const SideBySideTabs: React.FC<
+  SideBySideTabsProps & {
+    isMobile?: boolean;
+  }
+> = ({ className, output, llmUi, isMobile = false }) => {
+  return (
+    <Tabs defaultValue={isMobile ? "llm-ui" : "markdown"} className={className}>
+      {isMobile && <TabsContent value="llm-ui">{llmUi}</TabsContent>}
+      <TabsContent value="markdown">
+        <CodeWithBackground>
+          <Markdown isComplete={false} llmOutput={output} />
+        </CodeWithBackground>
+      </TabsContent>
+      <TabsContent value="raw">
+        <CodeWithBackground>
+          <pre className="overflow-x-auto">{output}</pre>
+        </CodeWithBackground>
+      </TabsContent>
+      <div className="flex flex-row items-center mt-2">
+        <TabsList>
+          {isMobile && (
+            <TabsTrigger value="llm-ui" className="md:hidden">
+              llm-ui
+            </TabsTrigger>
+          )}
+          <TabsTrigger value="markdown">Markdown</TabsTrigger>
+          <TabsTrigger value="raw">Raw</TabsTrigger>
+        </TabsList>
+      </div>
+    </Tabs>
+  );
+};
+
+// Transforms the value of the slider to a delay multiplier
+const transformSliderValue = (x: number): number => {
+  if (x >= 0 && x <= 5) {
+    return -1.8 * x + 10;
+  } else if (x > 5 && x <= 10) {
+    return -0.2 * x + 2;
+  }
+  // shouldn't happen
+  return 1;
+};
+
+const Controls: React.FC<{
+  className: string;
+  onDelayMultiplier: (delayMultiplier: number) => void;
+}> = ({ className, onDelayMultiplier }) => {
+  return (
+    <div className={cn(className, "flex flex-col items-center gap-2")}>
+      <Text>Speed</Text>
+      <Slider
+        className="w-52"
+        defaultValue={[5]}
+        min={0}
+        max={10}
+        step={0.5}
+        onValueChange={(newValue) => {
+          onDelayMultiplier(transformSliderValue(newValue[0]));
+        }}
+      />
+    </div>
+  );
+};
+
+export const HomePageExample = () => {
+  const [delayMultiplier, setDelayMultiplier] = useState(1);
+  const { output, isFinished } = useStreamFastSmooth(example, {
+    loop: true,
+    autoStart: true,
+    loopDelayMs: 5000,
+    delayMultiplier,
+  });
+  const llmUi = (
+    <CodeWithBackground>
+      <LLMOutput
+        blocks={[codeBlockBlock]}
+        isFinished={isFinished}
+        fallbackComponent={{
+          component: Markdown,
+          lookBack: markdownLookBack,
+        }}
+        llmOutput={output}
+        throttle={throttle}
+      />
+    </CodeWithBackground>
+  );
+  return (
+    <div>
+      <div className="flex flex-row gap-8 h-[640px]">
+        <SideBySideContainer
+          header={
+            <H2 className="mb-8 text-muted-foreground text-center">
+              LLM Output
+            </H2>
+          }
+        >
+          <SideBySideTabs
+            className="hidden md:block"
+            output={output}
+            llmUi={llmUi}
+          />
+          <MobileSideBySideTabs
+            className="md:hidden"
+            output={output}
+            llmUi={llmUi}
+          />
+        </SideBySideContainer>
+        <SideBySideContainer
+          className="hidden md:block"
+          header={
+            <H2 className="mb-8 text-center">
+              <span className="text-gradient_indigo-purple">llm-ui</span>✨
+            </H2>
+          }
+        >
+          {llmUi}
+        </SideBySideContainer>
+      </div>
+      <Controls className="md:-mt-12" onDelayMultiplier={setDelayMultiplier} />
+    </div>
   );
 };

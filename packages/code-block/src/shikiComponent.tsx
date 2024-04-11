@@ -16,20 +16,12 @@ export type ShikiProps = {
   codeToHtmlProps: CodeToHtmlProps;
 };
 
-export type ShikiCodeBlockProps = ShikiProps & React.HTMLProps<HTMLDivElement>;
+export type ShikiCodeBlockComponent = LLMOutputComponent<ShikiProps>;
 
-export type ShikiCodeBlockComponent = LLMOutputComponent<ShikiCodeBlockProps>;
-
-export const ShikiCodeBlock: LLMOutputComponent<
-  ShikiCodeBlockProps & {
-    parser?: ParseFunction;
-  }
-> = ({
-  llmOutput,
+export const ShikiCode: React.FC<ShikiProps & { code: string }> = ({
   highlighter: llmuiHighlighter,
   codeToHtmlProps,
-  parser = parseCompleteMarkdownCodeBlock,
-  ...props
+  code,
 }) => {
   const highlighter = useLoadHighlighter(llmuiHighlighter);
 
@@ -37,14 +29,36 @@ export const ShikiCodeBlock: LLMOutputComponent<
     if (!highlighter) {
       return "";
     }
-    const { code = "\n", language } = parser(llmOutput);
-
     return highlighter.codeToHtml(code, {
       ...codeToHtmlProps,
-      lang: codeToHtmlProps.lang ?? language ?? "plain",
+      lang: codeToHtmlProps.lang ?? "plain",
     });
-  }, [llmOutput, highlighter]);
-  return <div {...props}>{parseHtml(getHtml())}</div>;
+  }, [code, highlighter]);
+  return <>{parseHtml(getHtml())}</>;
+};
+
+// Shiki Markdown code block component
+export const ShikiCodeBlock: LLMOutputComponent<
+  ShikiProps & {
+    parser?: ParseFunction;
+  }
+> = ({
+  llmOutput: markdownCodeBlock,
+  parser = parseCompleteMarkdownCodeBlock,
+  ...props
+}) => {
+  const { code = "\n", language } = parser(markdownCodeBlock);
+  const lang = props.codeToHtmlProps.lang ?? language ?? "plain";
+  return (
+    <ShikiCode
+      {...props}
+      codeToHtmlProps={{
+        ...props.codeToHtmlProps,
+        lang,
+      }}
+      code={code}
+    />
+  );
 };
 
 export const buildShikiCodeBlockComponent = (
