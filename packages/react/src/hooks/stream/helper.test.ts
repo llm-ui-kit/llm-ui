@@ -1,11 +1,7 @@
 import { omit } from "remeda";
 import { afterEach, describe, expect, it } from "vitest";
-import {
-  Probability,
-  UseStreamWithProbabilitiesOptions,
-  cumulativeProbability,
-  stringToTokenArray,
-} from ".";
+import { cumulativeProbability, stringToTokenArray } from "./helper";
+import { Probability, UseStreamWithProbabilitiesOptions } from "./types";
 
 const withoutProbs = (probs: Probability[]) =>
   probs.map((p: Probability) => omit(p, ["prob"]));

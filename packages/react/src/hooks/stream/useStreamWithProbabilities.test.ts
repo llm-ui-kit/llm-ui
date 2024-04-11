@@ -1,7 +1,8 @@
 import { RenderResult, act, renderHook } from "@testing-library/react-hooks";
 import { describe, expect, test } from "vitest";
-import { UseStreamResponse, useStreamWithProbabilities } from ".";
 import { delay } from "../../lib/delay";
+import { UseStreamResponse } from "./types";
+import { useStreamWithProbabilities } from "./useStreamWithProbabilities";
 
 const options = {
   autoStart: true,

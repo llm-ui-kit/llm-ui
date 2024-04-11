@@ -1,9 +1,18 @@
 export {
   useStreamTokenArray,
+  useStreamTokenArrayOptionsDefaultOptions,
+} from "./stream/useStreamTokenArray";
+export {
   useStreamWithProbabilities,
-} from "./useStreamExample";
+  useStreamWithProbabilitiesDefaultOptions,
+} from "./stream/useStreamWithProbabilities";
+
 export type {
+  DelayProbability,
+  Probability,
+  TokenProbability,
+  TokenWithDelay,
   UseStreamResponse,
   UseStreamTokenArrayOptions,
   UseStreamWithProbabilitiesOptions,
-} from "./useStreamExample";
+} from "./stream/types";
