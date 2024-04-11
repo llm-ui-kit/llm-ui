@@ -233,7 +233,6 @@ export const HomePageExample = () => {
     loopDelayMs: 5000,
     delayMultiplier,
   });
-  // todo:  controls, buttons for markdown and raw?
   const llmUi = (
     <CodeWithBackground>
       <LLMOutput
