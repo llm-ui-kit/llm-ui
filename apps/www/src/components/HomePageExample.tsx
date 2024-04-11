@@ -1,7 +1,6 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import { cn } from "@/lib/utils";
 import {
-  ShikiCode,
   buildShikiCodeBlockComponent,
   codeBlockCompleteMatcher,
   codeBlockLookBack,
@@ -189,7 +188,7 @@ const SideBySideTabs: React.FC<
         <Markdown isComplete={false} llmOutput={output} />
       </TabsContent>
       <TabsContent value="raw">
-        <ShikiCode {...shikiProps} code={output} />
+        <pre>{output}</pre>
       </TabsContent>
     </Tabs>
   );
@@ -229,7 +228,9 @@ export const HomePageExample = () => {
         />
       </SideBySideContainer>
       <SideBySideContainer className="hidden md:block">
-        <H2 className="text-center text-gradient_indigo-purple mb-8">llm-ui</H2>
+        <H2 className="mb-8">
+          <span className="text-gradient_indigo-purple">llm-ui</span> ✨
+        </H2>
         {llmUi}
       </SideBySideContainer>
     </div>
