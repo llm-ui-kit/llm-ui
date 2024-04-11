@@ -1,2 +1,9 @@
-export { useStreamExample } from "./useStreamExample";
-export type { UseStreamExampleOptions } from "./useStreamExample";
+export {
+  useStreamTokenArray,
+  useStreamWithProbabilities,
+} from "./useStreamExample";
+export type {
+  UseStreamResponse,
+  UseStreamTokenArrayOptions,
+  UseStreamWithProbabilitiesOptions,
+} from "./useStreamExample";

@@ -1,10 +1,13 @@
-import { useStreamExample, type UseStreamExampleOptions } from "llm-ui/hooks";
+import {
+  useStreamWithProbabilities,
+  type UseStreamWithProbabilitiesOptions,
+} from "llm-ui/hooks";
 
 export const useStreamFastSmooth = (
-  completeOutput: string,
-  options: Partial<UseStreamExampleOptions>,
+  output: string,
+  options: Partial<UseStreamWithProbabilitiesOptions>,
 ) => {
-  return useStreamExample(completeOutput, {
+  return useStreamWithProbabilities(output, {
     delayMsProbabilities: [{ delayMs: 14, prob: 1 }],
     tokenCharsProbabilities: [{ tokenChars: 1, prob: 1 }],
     ...options,

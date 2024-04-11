@@ -2,16 +2,112 @@ import { delay } from "../../lib/delay";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-export type Probability = {
-  prob: number;
+export type UseStreamTokenArrayOptions = {
+  autoStart: boolean;
+  autoStartDelayMs: number;
+  loop: boolean;
+  loopDelayMs: number;
+  delayMultiplier: number;
 };
-type TokenProbability = { tokenChars: number } & Probability;
-type DelayProbability = { delayMs: number } & Probability;
+
+const defaultUseStreamTokenArrayOptions: UseStreamTokenArrayOptions = {
+  autoStartDelayMs: 0,
+  autoStart: true,
+  loop: false,
+  loopDelayMs: 1000,
+  delayMultiplier: 1,
+};
+
+export type UseStreamResponse = {
+  output: string;
+  reset: () => void;
+  pause: () => void;
+  start: () => void;
+  isStarted: boolean;
+  isFinished: boolean;
+};
 
 type TokenWithDelay = {
   token: string;
   delayMs: number;
 };
+
+export const useStreamTokenArray = (
+  tokenArray: TokenWithDelay[],
+  userOptions?: Partial<UseStreamTokenArrayOptions>,
+): UseStreamResponse => {
+  const options: UseStreamTokenArrayOptions = useMemo(
+    () => ({ ...defaultUseStreamTokenArrayOptions, ...(userOptions ?? {}) }),
+    [userOptions],
+  );
+  const [output, setOutput] = useState<string>("");
+
+  const clearTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const currentIndex = useRef<number>(0);
+
+  const pause = useCallback(() => {
+    if (clearTimeoutRef.current) {
+      clearTimeout(clearTimeoutRef.current);
+      clearTimeoutRef.current = null;
+    }
+  }, []);
+
+  const reset = useCallback(() => {
+    setOutput("");
+    pause();
+    currentIndex.current = 0;
+  }, []);
+
+  const nextToken = useCallback(async () => {
+    const index = currentIndex.current;
+    const isFinished = index >= tokenArray.length;
+    if (isFinished) {
+      if (options.loop) {
+        await delay(options.loopDelayMs);
+        reset();
+        nextToken();
+      }
+    } else {
+      const { token, delayMs } = tokenArray[index];
+      setOutput((prevOutput) => `${prevOutput}${token}`);
+      currentIndex.current = index + 1;
+      clearTimeoutRef.current = setTimeout(
+        nextToken,
+        delayMs * options.delayMultiplier,
+      );
+    }
+  }, []);
+
+  const start = useCallback(() => {
+    if (clearTimeoutRef.current) {
+      return;
+    }
+    nextToken();
+  }, []);
+
+  useEffect(() => {
+    if (options.autoStart) {
+      setTimeout(start, options.autoStartDelayMs);
+    }
+    return () => reset();
+  }, []);
+  const finishedOutput = tokenArray.map((t) => t.token).join("");
+  const isFinished = output.length === finishedOutput.length;
+  return {
+    output,
+    reset,
+    pause,
+    start,
+    isStarted: output.length > 0,
+    isFinished,
+  };
+};
+
+export type Probability = {
+  prob: number;
+};
+type TokenProbability = { tokenChars: number } & Probability;
+type DelayProbability = { delayMs: number } & Probability;
 
 export const cumulativeProbability = <T extends Probability>(
   probs: T[],
@@ -30,7 +126,10 @@ export const cumulativeProbability = <T extends Probability>(
 
 export const stringToTokenArray = (
   llmOutput: string,
-  { tokenCharsProbabilities, delayMsProbabilities }: UseStreamExampleOptions,
+  {
+    tokenCharsProbabilities,
+    delayMsProbabilities,
+  }: UseStreamWithProbabilitiesOptions,
 ): TokenWithDelay[] => {
   const tokenCharsProbabilitiesCum = cumulativeProbability(
     tokenCharsProbabilities,
@@ -59,15 +158,12 @@ export const stringToTokenArray = (
   return tokensWithDelay;
 };
 
-export type UseStreamExampleOptions = {
+export type UseStreamWithProbabilitiesOptions = UseStreamTokenArrayOptions & {
   tokenCharsProbabilities: TokenProbability[];
   delayMsProbabilities: DelayProbability[];
-  autoStart: boolean;
-  loop: boolean;
-  loopDelayMs: number;
 };
 
-const defaultUseStreamExampleOptions: UseStreamExampleOptions = {
+const defaultUseStreamExampleOptions: UseStreamWithProbabilitiesOptions = {
   delayMsProbabilities: [
     { delayMs: 10, prob: 0.4 },
     { delayMs: 200, prob: 0.3 },
@@ -79,81 +175,23 @@ const defaultUseStreamExampleOptions: UseStreamExampleOptions = {
     { tokenChars: 2, prob: 0.3 },
     { tokenChars: 3, prob: 0.2 },
   ],
-  autoStart: true,
-  loop: false,
-  loopDelayMs: 1000,
+  ...defaultUseStreamTokenArrayOptions,
 };
 
-export type UseStreamExampleResponse = {
-  output: string;
-  reset: () => void;
-  pause: () => void;
-  start: () => void;
-};
-
-export const useStreamExample = (
-  completeOutput: string,
-  userOptions?: Partial<UseStreamExampleOptions>,
-): UseStreamExampleResponse => {
-  const options: UseStreamExampleOptions = useMemo(
+export const useStreamWithProbabilities = (
+  output: string,
+  userOptions?: Partial<UseStreamWithProbabilitiesOptions>,
+): UseStreamResponse => {
+  const options: UseStreamWithProbabilitiesOptions = useMemo(
     () => ({ ...defaultUseStreamExampleOptions, ...(userOptions ?? {}) }),
     [userOptions],
   );
-  const [output, setOutput] = useState<string>("");
-  const tokens = useMemo(
-    () => stringToTokenArray(completeOutput, options),
-    [completeOutput, options],
+  // console.log("options", options);
+  const tokenArray = useMemo(
+    () => stringToTokenArray(output, options),
+    [output, options],
   );
-  const clearTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const currentIndex = useRef<number>(0);
+  // console.log("tokenArray", tokenArray);
 
-  const pause = useCallback(() => {
-    if (clearTimeoutRef.current) {
-      clearTimeout(clearTimeoutRef.current);
-      clearTimeoutRef.current = null;
-    }
-  }, []);
-
-  const reset = useCallback(() => {
-    setOutput("");
-    pause();
-    currentIndex.current = 0;
-  }, []);
-
-  const nextToken = useCallback(async () => {
-    const index = currentIndex.current;
-    if (index < tokens.length) {
-      const { token, delayMs } = tokens[index];
-      setOutput((prevOutput) => `${prevOutput}${token}`);
-      currentIndex.current = index + 1;
-      clearTimeoutRef.current = setTimeout(nextToken, delayMs);
-    } else {
-      if (options.loop) {
-        await delay(options.loopDelayMs);
-        reset();
-        nextToken();
-      }
-    }
-  }, []);
-
-  const start = useCallback(() => {
-    if (clearTimeoutRef.current) {
-      return;
-    }
-    nextToken();
-  }, []);
-
-  useEffect(() => {
-    if (options.autoStart) {
-      start();
-    }
-    return () => reset();
-  }, []);
-
-  return {
-    output,
-    reset,
-    pause,
-    start,
-  };
+  return useStreamTokenArray(tokenArray, options);
 };
