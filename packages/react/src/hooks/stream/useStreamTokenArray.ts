@@ -29,6 +29,7 @@ export const useStreamTokenArray = (
     [userOptions],
   );
   const [output, setOutput] = useState<string>("");
+  const [loopIndex, setLoopIndex] = useState<number>(0);
 
   const clearTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const currentIndex = useRef<number>(0);
@@ -42,6 +43,7 @@ export const useStreamTokenArray = (
 
   const reset = useCallback(() => {
     setOutput("");
+    setLoopIndex((prev) => prev + 1);
     pause();
     currentIndex.current = 0;
   }, []);
@@ -84,7 +86,6 @@ export const useStreamTokenArray = (
     if (options.autoStart) {
       setTimeout(start, options.autoStartDelayMs);
     }
-    return () => reset();
   }, []);
   const finishedOutput = tokenArray.map((t) => t.token).join("");
   const isFinished = output.length === finishedOutput.length;
@@ -95,5 +96,6 @@ export const useStreamTokenArray = (
     start,
     isStarted: output.length > 0,
     isFinished,
+    loopIndex,
   };
 };

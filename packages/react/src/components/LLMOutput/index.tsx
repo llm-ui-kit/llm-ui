@@ -1,5 +1,4 @@
-import { useRef, useState } from "react";
-import { useAnimationFrame } from "./animationFrame";
+import { useEffect, useRef, useState } from "react";
 import { BlockMatch, matchBlocks } from "./helper";
 import {
   LLMOutputBlock,
@@ -12,8 +11,8 @@ export type LLMOutputProps = {
   blocks?: LLMOutputBlock[];
   fallbackComponent: LLMOutputFallbackBlock;
   isFinished: boolean;
-  stopWhenFinished?: boolean;
   throttle: ThrottleFunction;
+  loopIndex?: number;
 };
 
 const matchesToVisibleText = (matches: BlockMatch[]): string => {
@@ -30,10 +29,14 @@ export const useMatches = ({
   blocks = [],
   fallbackComponent,
   throttle,
-  stopWhenFinished = true,
+  loopIndex = 0,
 }: LLMOutputProps): { matches: BlockMatch[] } => {
   const startTime = useRef(performance.now());
   const lastRenderTime = useRef(performance.now());
+  const renderLoopRef = useRef<() => void>();
+  const timeoutRef = useRef<NodeJS.Timeout>();
+  const restartRef = useRef<boolean>(false);
+
   const [matches, setMatches] = useState<BlockMatch[]>(
     matchBlocks({
       llmOutput,
@@ -43,8 +46,19 @@ export const useMatches = ({
     }),
   );
 
-  useAnimationFrame(() => {
+  const renderLoop = () => {
     // render loop!
+    if (!renderLoopRef.current) {
+      return;
+    }
+    if (restartRef.current) {
+      startTime.current = performance.now();
+      restartRef.current = false;
+      setMatches([]);
+      setTimeout(renderLoopRef.current, 0);
+      return;
+    }
+
     const timeInMsSinceStart = performance.now() - startTime.current;
     const timeInMsSinceLastRender = performance.now() - lastRenderTime.current;
     const allMatches = matchBlocks({
@@ -60,17 +74,12 @@ export const useMatches = ({
     const outputAll = matchesToOutput(allMatches);
 
     const shouldStop = visibleText === visibleTextAll && isFinished;
-    if (stopWhenFinished && shouldStop) {
-      stop();
-    }
-
-    // allow looping
-    if (llmOutput.length === 1 && matches.length > 0) {
-      setMatches([]);
+    if (shouldStop) {
+      timeoutRef.current = undefined;
       return;
     }
 
-    const { visibleTextLengthTarget, skip } = throttle({
+    const { visibleTextLengthTarget, skip, delayMs } = throttle({
       outputRaw: llmOutput,
       outputRendered,
       outputAll,
@@ -91,13 +100,31 @@ export const useMatches = ({
       lastRenderTime.current = performance.now();
       setMatches(matches);
     }
+    timeoutRef.current = setTimeout(renderLoopRef.current, delayMs);
+  };
+
+  useEffect(() => {
+    renderLoopRef.current = renderLoop;
   });
+
+  useEffect(() => {
+    renderLoop();
+  }, []);
+
+  useEffect(() => {
+    if (loopIndex > 0) {
+      restartRef.current = true;
+      if (!timeoutRef.current) {
+        renderLoop();
+      }
+    }
+  }, [loopIndex]);
 
   return { matches };
 };
 
 export const LLMOutput: React.FC<LLMOutputProps> = (props) => {
-  const { matches } = useMatches({ ...props });
+  const { matches } = useMatches(props);
   return (
     <>
       {matches.map(({ block, match }, index) => {

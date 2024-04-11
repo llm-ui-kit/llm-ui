@@ -1,3 +1,4 @@
+"use client";
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import { cn } from "@/lib/utils";
 import {
@@ -120,15 +121,14 @@ const codeBlockBlock: LLMOutputBlock = {
 const throttle: ThrottleFunction = ({
   outputAll,
   outputRendered,
-  timeInMsSinceLastRender,
   isStreamFinished,
   visibleText,
 }) => {
   const bufferSize = outputAll.length - outputRendered.length;
   return {
-    skip:
-      (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 15,
+    skip: !isStreamFinished && bufferSize < 10,
     visibleTextLengthTarget: visibleText.length + 1,
+    delayMs: 1000 / 60,
   };
 };
 
@@ -228,7 +228,7 @@ const Controls: React.FC<{
 
 export const HomePageExample = () => {
   const [delayMultiplier, setDelayMultiplier] = useState(1);
-  const { output, isFinished } = useStreamFastSmooth(example, {
+  const { output, isFinished, loopIndex } = useStreamFastSmooth(example, {
     loop: true,
     autoStart: true,
     loopDelayMs: 5000,
@@ -245,6 +245,7 @@ export const HomePageExample = () => {
         }}
         llmOutput={output}
         throttle={throttle}
+        loopIndex={loopIndex}
       />
     </CodeWithBackground>
   );
