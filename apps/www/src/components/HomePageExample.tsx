@@ -34,7 +34,8 @@ import { H2, H3 } from "./ui/Text";
 
 const example = `### Markdown support ✅
 
-Supports: [links](https://llm-ui.com), ~strikethrough~, *italic*, **bold**
+- [links](https://llm-ui.com)
+- ~strikethrough~, *italic*, **bold**
 
 #### Code blocks:
 
@@ -188,7 +189,7 @@ const SideBySideTabs: React.FC<
         <Markdown isComplete={false} llmOutput={output} />
       </TabsContent>
       <TabsContent value="raw">
-        <pre>{output}</pre>
+        <pre className="overflow-x-auto">{output}</pre>
       </TabsContent>
     </Tabs>
   );
