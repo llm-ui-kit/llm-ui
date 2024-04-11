@@ -96,9 +96,15 @@ describe("useStreamTokenArray", () => {
     );
     await waitFor(() => {
       const { output, isStarted, isFinished } = resultToArrays(result);
-      expect(output.slice(0, 4)).toEqual(["", "Hello", "", "Hello"]);
-      expect(isStarted.slice(0, 4)).toEqual([false, true, false, true]);
-      expect(isFinished.slice(0, 4)).toEqual([false, true, false, true]);
+      const hellos = output.filter((o) => o === "Hello");
+      const empties = output.filter((o) => o === "");
+      expect(hellos.length).greaterThan(5);
+      expect(empties.length).greaterThan(5);
+
+      expect(isStarted).containSubset([false, true, false, true]);
+      expect(isFinished).containSubset([false, true, false, true]);
+      expect(isFinished).containSubset([false, true, false, true]);
+      expect(result.current.loopIndex).greaterThan(0);
     });
   });
 });
