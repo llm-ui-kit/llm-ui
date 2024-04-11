@@ -126,7 +126,8 @@ const throttle: ThrottleFunction = ({
 }) => {
   const bufferSize = outputAll.length - outputRendered.length;
   return {
-    skip: (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 4,
+    skip:
+      (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 15,
     visibleTextLengthTarget: visibleText.length + 1,
   };
 };
@@ -178,7 +179,7 @@ const SideBySideTabs: React.FC<
           <pre className="overflow-x-auto">{output}</pre>
         </CodeWithBackground>
       </TabsContent>
-      <div className="flex flex-row items-center mt-2">
+      <div className="flex flex-row items-center mt-2 justify-center md:justify-start">
         <TabsList>
           {isMobile && (
             <TabsTrigger value="llm-ui" className="md:hidden">
@@ -209,7 +210,7 @@ const Controls: React.FC<{
   onDelayMultiplier: (delayMultiplier: number) => void;
 }> = ({ className, onDelayMultiplier }) => {
   return (
-    <div className={cn(className, "flex flex-col items-center gap-2")}>
+    <div className={cn(className, "flex flex-col items-center gap-4")}>
       <Text>Speed</Text>
       <Slider
         className="w-52"
