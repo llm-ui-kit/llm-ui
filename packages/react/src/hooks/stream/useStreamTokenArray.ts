@@ -13,13 +13,14 @@ export const useStreamTokenArrayOptionsDefaultOptions: UseStreamTokenArrayOption
     autoStart: true,
     loop: false,
     loopDelayMs: 1000,
-    delayMultiplier: 0,
+    delayMultiplier: 1,
   };
 
 export const useStreamTokenArray = (
   tokenArray: TokenWithDelay[],
   userOptions?: Partial<UseStreamTokenArrayOptions>,
 ): UseStreamResponse => {
+  const nextTokenRef = useRef<() => void>();
   const options: UseStreamTokenArrayOptions = useMemo(
     () => ({
       ...useStreamTokenArrayOptionsDefaultOptions,
@@ -46,24 +47,31 @@ export const useStreamTokenArray = (
   }, []);
 
   const nextToken = useCallback(async () => {
+    if (!nextTokenRef.current) {
+      return;
+    }
     const index = currentIndex.current;
     const isFinished = index >= tokenArray.length;
     if (isFinished) {
       if (options.loop) {
         await delay(options.loopDelayMs);
         reset();
-        nextToken();
+        nextTokenRef.current();
       }
     } else {
       const { token, delayMs } = tokenArray[index];
       setOutput((prevOutput) => `${prevOutput}${token}`);
       currentIndex.current = index + 1;
       clearTimeoutRef.current = setTimeout(
-        nextToken,
+        nextTokenRef.current,
         delayMs * options.delayMultiplier,
       );
     }
-  }, []);
+  }, [options, setOutput, reset, tokenArray]);
+
+  useEffect(() => {
+    nextTokenRef.current = nextToken;
+  });
 
   const start = useCallback(() => {
     if (clearTimeoutRef.current) {
