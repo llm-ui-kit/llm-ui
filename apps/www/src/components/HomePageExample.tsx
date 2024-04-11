@@ -136,7 +136,7 @@ const SideBySideContainer: React.FC<{
   children: ReactNode;
 }> = ({ className, header, children }) => {
   return (
-    <div className={cn(className, "overflow-x-hidden flex-1 ")}>
+    <div className={cn(className, "overflow-x-hidden flex-1")}>
       {header}
       {children}
     </div>
@@ -235,7 +235,7 @@ export const HomePageExample = () => {
         className="hidden md:block"
         header={
           <H2 className="mb-8 text-center">
-            <span className="text-gradient_indigo-purple">llm-ui</span> ✨
+            <span className="text-gradient_indigo-purple">llm-ui</span>✨
           </H2>
         }
       >
