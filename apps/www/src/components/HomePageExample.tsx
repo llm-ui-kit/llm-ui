@@ -125,7 +125,7 @@ const throttle: ThrottleFunction = ({
   const bufferSize = outputAll.length - outputRendered.length;
   return {
     skip:
-      (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 50,
+      (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 30,
     visibleTextLengthTarget: visibleText.length + 1,
   };
 };
