@@ -1,6 +1,7 @@
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import { cn } from "@/lib/utils";
 import {
+  ShikiCode,
   buildShikiCodeBlockComponent,
   codeBlockCompleteMatcher,
   codeBlockLookBack,
@@ -29,10 +30,10 @@ import githubDark from "shiki/themes/github-dark.mjs";
 import githubLight from "shiki/themes/github-light.mjs";
 import getWasm from "shiki/wasm";
 import { Button } from "./ui/Button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/Tabs";
+import { H2, H3 } from "./ui/Text";
 
-const example = `
-### Markdown support ✅
-
+const example = `### Markdown support ✅
 
 Supports: [links](https://llm-ui.com), ~strikethrough~, *italic*, **bold**
 
@@ -124,25 +125,104 @@ const throttle: ThrottleFunction = ({
 }) => {
   const bufferSize = outputAll.length - outputRendered.length;
   return {
-    skip:
-      (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 30,
+    skip: (!isStreamFinished && bufferSize < 10) || timeInMsSinceLastRender < 4,
     visibleTextLengthTarget: visibleText.length + 1,
   };
 };
 
+const SideBySideContainer: React.FC<{
+  className?: string;
+  children: ReactNode;
+}> = ({ className, children }) => {
+  return (
+    <div
+      className={cn(
+        className,
+        "overflow-x-hidden flex-1 p-6 rounded-lg bg-background",
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
+type SideBySideTabsProps = {
+  output: string;
+  llmUi: ReactNode;
+  className?: string;
+};
+
+const MobileSideBySideTabs: React.FC<SideBySideTabsProps> = (props) => (
+  <SideBySideTabs {...props} isMobile />
+);
+
+const SideBySideTabs: React.FC<
+  SideBySideTabsProps & {
+    isMobile?: boolean;
+  }
+> = ({ className, output, llmUi, isMobile = false }) => {
+  return (
+    <Tabs defaultValue={isMobile ? "llm-ui" : "markdown"} className={className}>
+      <div className="flex flex-row items-center mb-6">
+        <H3 className="text-muted-foreground flex-1">LLM Output</H3>
+        <TabsList>
+          {isMobile && (
+            <TabsTrigger value="llm-ui" className="md:hidden">
+              llm-ui
+            </TabsTrigger>
+          )}
+          <TabsTrigger value="markdown">Markdown</TabsTrigger>
+          <TabsTrigger value="raw">Raw</TabsTrigger>
+        </TabsList>
+      </div>
+      <TabsContent value="llm-ui">{llmUi}</TabsContent>
+      <TabsContent value="markdown">
+        <Markdown isComplete={false} llmOutput={output} />
+      </TabsContent>
+      <TabsContent value="raw">
+        <ShikiCode {...shikiProps} code={output} />
+      </TabsContent>
+    </Tabs>
+  );
+};
+
 export const HomePageExample = () => {
-  const { output } = useStreamFastSmooth(example, {
+  const { output, isFinished } = useStreamFastSmooth(example, {
     loop: false,
     autoStart: true,
     loopDelayMs: 3000,
   });
-  return (
+  // todo: not looping, controls
+  const llmUi = (
     <LLMOutput
       blocks={[codeBlockBlock]}
-      isFinished={output === example}
-      fallbackComponent={{ component: Markdown, lookBack: markdownLookBack }}
+      isFinished={isFinished}
+      fallbackComponent={{
+        component: Markdown,
+        lookBack: markdownLookBack,
+      }}
       llmOutput={output}
       throttle={throttle}
     />
+  );
+  return (
+    <div className="flex flex-row gap-8 h-[580px]">
+      <SideBySideContainer>
+        <SideBySideTabs
+          className="hidden md:block"
+          output={output}
+          llmUi={llmUi}
+        />
+        <MobileSideBySideTabs
+          className="md:hidden"
+          output={output}
+          llmUi={llmUi}
+        />
+      </SideBySideContainer>
+      <SideBySideContainer className="hidden md:block">
+        <H2 className="text-center text-gradient_indigo-purple mb-8">llm-ui</H2>
+        {llmUi}
+      </SideBySideContainer>
+    </div>
   );
 };
