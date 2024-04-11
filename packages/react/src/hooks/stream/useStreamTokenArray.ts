@@ -13,7 +13,7 @@ export const useStreamTokenArrayOptionsDefaultOptions: UseStreamTokenArrayOption
     autoStart: true,
     loop: false,
     loopDelayMs: 1000,
-    delayMultiplier: 1,
+    delayMultiplier: 0,
   };
 
 export const useStreamTokenArray = (

@@ -1,25 +1,28 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import { describe, expect, test } from "vitest";
-import { delay } from "../../lib/delay";
 import { resultToArrays } from "./testUtils";
-import { useStreamWithProbabilities } from "./useStreamWithProbabilities";
+import { TokenWithDelay, UseStreamTokenArrayOptions } from "./types";
+import { useStreamTokenArray } from "./useStreamTokenArray";
 
-const options = {
+const options: UseStreamTokenArrayOptions = {
   autoStart: true,
   loop: false,
-  delayMsProbabilities: [{ delayMs: 0, prob: 1 }],
-  tokenCharsProbabilities: [
-    {
-      tokenChars: 100,
-      prob: 1,
-    },
-  ],
+  autoStartDelayMs: 0,
+  delayMultiplier: 0,
+  loopDelayMs: 0,
 };
 
-describe("useStreamWithProbabilities", () => {
+const allAtOnce: TokenWithDelay[] = [
+  {
+    token: "Hello",
+    delayMs: 0,
+  },
+];
+
+describe("useStreamTokenArray", () => {
   test("all at once", async () => {
     const { result, waitFor } = renderHook(() =>
-      useStreamWithProbabilities("Hello", options),
+      useStreamTokenArray(allAtOnce, options),
     );
     await waitFor(() => {
       expect(result.current.output).toEqual("Hello");
@@ -30,15 +33,23 @@ describe("useStreamWithProbabilities", () => {
 
   test("2 chars at a time", async () => {
     const { result, waitFor } = renderHook(() =>
-      useStreamWithProbabilities("Hello", {
-        ...options,
-        tokenCharsProbabilities: [
+      useStreamTokenArray(
+        [
           {
-            tokenChars: 2,
-            prob: 1,
+            token: "He",
+            delayMs: 0,
+          },
+          {
+            token: "ll",
+            delayMs: 0,
+          },
+          {
+            token: "o",
+            delayMs: 0,
           },
         ],
-      }),
+        options,
+      ),
     );
     await waitFor(() => {
       const { output, isStarted, isFinished } = resultToArrays(result);
@@ -51,7 +62,7 @@ describe("useStreamWithProbabilities", () => {
 
   test("autoStart: false", () => {
     const { result } = renderHook(() =>
-      useStreamWithProbabilities("Hello", { ...options, autoStart: false }),
+      useStreamTokenArray(allAtOnce, { ...options, autoStart: false }),
     );
 
     expect(result.current.output).toBe("");
@@ -61,7 +72,7 @@ describe("useStreamWithProbabilities", () => {
 
   test("start()", () => {
     const { result } = renderHook(() =>
-      useStreamWithProbabilities("Hello", { ...options, autoStart: false }),
+      useStreamTokenArray(allAtOnce, { ...options, autoStart: false }),
     );
     act(() => result.current.start());
     expect(result.current.output).toBe("Hello");
@@ -71,7 +82,7 @@ describe("useStreamWithProbabilities", () => {
 
   test("reset()", () => {
     const { result } = renderHook(() =>
-      useStreamWithProbabilities("Hello", options),
+      useStreamTokenArray(allAtOnce, options),
     );
     act(() => result.current.reset());
     expect(result.current.output).toBe("");
@@ -81,15 +92,13 @@ describe("useStreamWithProbabilities", () => {
 
   test("loop: true", async () => {
     const { result, waitFor } = renderHook(() =>
-      useStreamWithProbabilities("Hello", { ...options, loop: true }),
+      useStreamTokenArray(allAtOnce, { ...options, loop: true }),
     );
-    await delay(10);
-    // act(() => result.current.pause());
     await waitFor(() => {
       const { output, isStarted, isFinished } = resultToArrays(result);
       expect(output.slice(0, 4)).toEqual(["", "Hello", "", "Hello"]);
-      expect(isStarted).toEqual([false, true, false, true]);
-      expect(isFinished).toEqual([false, true, false, true]);
+      expect(isStarted.slice(0, 4)).toEqual([false, true, false, true]);
+      expect(isFinished.slice(0, 4)).toEqual([false, true, false, true]);
     });
   });
 });
