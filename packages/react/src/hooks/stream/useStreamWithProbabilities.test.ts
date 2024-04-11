@@ -1,13 +1,16 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import { describe, expect, test } from "vitest";
-import { delay } from "../../lib/delay";
 import { resultToArrays } from "./testUtils";
+import { UseStreamWithProbabilitiesOptions } from "./types";
 import { useStreamWithProbabilities } from "./useStreamWithProbabilities";
 
-const options = {
+const options: UseStreamWithProbabilitiesOptions = {
   autoStart: true,
   loop: false,
   delayMsProbabilities: [{ delayMs: 0, prob: 1 }],
+  delayMultiplier: 0,
+  loopDelayMs: 0,
+  autoStartDelayMs: 0,
   tokenCharsProbabilities: [
     {
       tokenChars: 100,
@@ -83,8 +86,6 @@ describe("useStreamWithProbabilities", () => {
     const { result, waitFor } = renderHook(() =>
       useStreamWithProbabilities("Hello", { ...options, loop: true }),
     );
-    await delay(10);
-    // act(() => result.current.pause());
     await waitFor(() => {
       const { output, isStarted, isFinished } = resultToArrays(result);
       expect(output.slice(0, 4)).toEqual(["", "Hello", "", "Hello"]);
