@@ -175,7 +175,16 @@ const SideBySideTabs: React.FC<
           <TabsTrigger value="raw">Raw</TabsTrigger>
         </TabsList>
       </div>
-      <TabsContent value="llm-ui">{llmUi}</TabsContent>
+      {isMobile && (
+        <TabsContent
+          // keepMounted so we keep streaming the content
+          className="data-[state=active]:block hidden"
+          forceMount
+          value="llm-ui"
+        >
+          {llmUi}
+        </TabsContent>
+      )}
       <TabsContent value="markdown">
         <Markdown isComplete={false} llmOutput={output} />
       </TabsContent>
@@ -188,7 +197,7 @@ const SideBySideTabs: React.FC<
 
 export const HomePageExample = () => {
   const { output, isFinished } = useStreamFastSmooth(example, {
-    loop: false,
+    loop: true,
     autoStart: true,
     loopDelayMs: 3000,
   });
