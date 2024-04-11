@@ -20,7 +20,6 @@ export type UseStreamResponse = {
   reset: () => void;
   pause: () => void;
   start: () => void;
-  // todo: seperate out for spread props
   isStarted: boolean;
   isFinished: boolean;
   loopIndex: number;
