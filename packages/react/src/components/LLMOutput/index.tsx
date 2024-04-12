@@ -33,9 +33,13 @@ export const useMatches = ({
 }: LLMOutputProps): { matches: BlockMatch[] } => {
   const startTime = useRef(performance.now());
   const lastRenderTime = useRef(performance.now());
-  const renderLoopRef = useRef<() => void>();
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const renderLoopRef = useRef<(frameTime: DOMHighResTimeStamp) => void>();
+  const frameRef = useRef<number>();
+  const finishTimeRef = useRef<DOMHighResTimeStamp>();
   const restartRef = useRef<boolean>(false);
+  const previousFrameTimeRef = useRef<DOMHighResTimeStamp>();
+  const visibleTextLengths = useRef<number[]>([]);
+  const outputLengths = useRef<number[]>([]);
 
   const [matches, setMatches] = useState<BlockMatch[]>(
     matchBlocks({
@@ -46,7 +50,7 @@ export const useMatches = ({
     }),
   );
 
-  const renderLoop = () => {
+  const renderLoop = (frameTime: DOMHighResTimeStamp) => {
     // render loop!
     if (!renderLoopRef.current) {
       return;
@@ -55,12 +59,14 @@ export const useMatches = ({
       startTime.current = performance.now();
       restartRef.current = false;
       setMatches([]);
-      setTimeout(renderLoopRef.current, 0);
+      finishTimeRef.current = undefined;
+      previousFrameTimeRef.current = undefined;
+      visibleTextLengths.current = [];
+      outputLengths.current = [];
+      requestAnimationFrame(renderLoopRef.current);
       return;
     }
 
-    const timeInMsSinceStart = performance.now() - startTime.current;
-    const timeInMsSinceLastRender = performance.now() - lastRenderTime.current;
     const allMatches = matchBlocks({
       llmOutput,
       blocks,
@@ -72,22 +78,29 @@ export const useMatches = ({
 
     const visibleTextAll = matchesToVisibleText(allMatches);
     const outputAll = matchesToOutput(allMatches);
-
+    if (!isFinished) {
+      visibleTextLengths.current.push(visibleTextAll.length);
+      outputLengths.current.push(outputAll.length);
+    }
     const shouldStop = visibleText === visibleTextAll && isFinished;
     if (shouldStop) {
-      timeoutRef.current = undefined;
+      frameRef.current = undefined;
       return;
     }
 
-    const { visibleTextLengthTarget, skip, delayMs } = throttle({
+    const { visibleTextLengthTarget, skip } = throttle({
       outputRaw: llmOutput,
       outputRendered,
       outputAll,
       visibleText,
       visibleTextAll,
-      timeInMsSinceStart,
-      timeInMsSinceLastRender,
+      startStreamTime: startTime.current,
       isStreamFinished: isFinished,
+      frameTime,
+      frameTimePrevious: previousFrameTimeRef.current,
+      finishStreamTime: finishTimeRef.current,
+      visibleTextLengths: visibleTextLengths.current,
+      outputLengths: outputLengths.current,
     });
     if (!skip) {
       const matches = matchBlocks({
@@ -100,7 +113,8 @@ export const useMatches = ({
       lastRenderTime.current = performance.now();
       setMatches(matches);
     }
-    timeoutRef.current = setTimeout(renderLoopRef.current, delayMs);
+    frameRef.current = requestAnimationFrame(renderLoopRef.current);
+    previousFrameTimeRef.current = frameTime;
   };
 
   useEffect(() => {
@@ -108,17 +122,25 @@ export const useMatches = ({
   });
 
   useEffect(() => {
-    renderLoop();
+    renderLoopRef.current = renderLoop;
+    frameRef.current = requestAnimationFrame(renderLoopRef.current);
   }, []);
 
   useEffect(() => {
     if (loopIndex > 0) {
       restartRef.current = true;
-      if (!timeoutRef.current) {
-        renderLoop();
+      if (!frameRef.current) {
+        renderLoopRef.current = renderLoop;
+        frameRef.current = requestAnimationFrame(renderLoopRef.current);
       }
     }
   }, [loopIndex]);
+
+  useEffect(() => {
+    if (!finishTimeRef.current && isFinished) {
+      finishTimeRef.current = performance.now();
+    }
+  }, [isFinished]);
 
   return { matches };
 };
