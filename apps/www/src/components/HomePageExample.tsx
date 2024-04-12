@@ -269,7 +269,7 @@ const Controls: React.FC<{
 
 export const HomePageExample = () => {
   const [delayMultiplier, setDelayMultiplier] = useState(1);
-  const { output, isFinished, loopIndex } = useStreamFastSmooth(example, {
+  const { output, isStreamFinished, loopIndex } = useStreamFastSmooth(example, {
     loop: true,
     autoStart: true,
     loopDelayMs: 3000,
@@ -279,8 +279,8 @@ export const HomePageExample = () => {
     <CodeWithBackground>
       <LLMOutput
         blocks={[codeBlockBlock]}
-        isFinished={isFinished}
-        fallbackComponent={{
+        isStreamFinished={isStreamFinished}
+        fallbackBlock={{
           component: Markdown,
           lookBack: markdownLookBack,
         }}

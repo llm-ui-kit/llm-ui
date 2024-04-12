@@ -94,8 +94,8 @@ export const useStreamTokenArray = (
     reset,
     pause,
     start,
-    isStarted: output.length > 0,
-    isFinished,
+    isStreamStarted: output.length > 0,
+    isStreamFinished: isFinished,
     loopIndex,
   };
 };

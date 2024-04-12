@@ -26,8 +26,8 @@ describe("useStreamWithProbabilities", () => {
     );
     await waitFor(() => {
       expect(result.current.output).toEqual("Hello");
-      expect(result.current.isStarted).toBe(true);
-      expect(result.current.isFinished).toBe(true);
+      expect(result.current.isStreamStarted).toBe(true);
+      expect(result.current.isStreamFinished).toBe(true);
     });
   });
 
@@ -58,8 +58,8 @@ describe("useStreamWithProbabilities", () => {
     );
 
     expect(result.current.output).toBe("");
-    expect(result.current.isStarted).toBe(false);
-    expect(result.current.isFinished).toBe(false);
+    expect(result.current.isStreamStarted).toBe(false);
+    expect(result.current.isStreamFinished).toBe(false);
   });
 
   test("start()", () => {
@@ -68,8 +68,8 @@ describe("useStreamWithProbabilities", () => {
     );
     act(() => result.current.start());
     expect(result.current.output).toBe("Hello");
-    expect(result.current.isStarted).toBe(true);
-    expect(result.current.isFinished).toBe(true);
+    expect(result.current.isStreamStarted).toBe(true);
+    expect(result.current.isStreamFinished).toBe(true);
   });
 
   test("reset()", () => {
@@ -78,8 +78,8 @@ describe("useStreamWithProbabilities", () => {
     );
     act(() => result.current.reset());
     expect(result.current.output).toBe("");
-    expect(result.current.isStarted).toBe(false);
-    expect(result.current.isFinished).toBe(false);
+    expect(result.current.isStreamStarted).toBe(false);
+    expect(result.current.isStreamFinished).toBe(false);
   });
 
   test("loop: true", async () => {
