@@ -53,14 +53,13 @@ export type ThrottleParams = {
   frameTimePrevious: DOMHighResTimeStamp | undefined;
   startStreamTime: DOMHighResTimeStamp;
   finishStreamTime: DOMHighResTimeStamp | undefined;
-  visibleTextLengths: number[];
+  visibleTextLengthsAll: number[];
   outputLengths: number[];
+  visibleTextIncrements: number[];
 };
 
 export type ThrottleResponse = {
-  visibleTextLengthTarget: number;
-  skip: boolean;
-  delayMs: number;
+  visibleTextIncrement: number;
 };
 
 export type ThrottleFunction = (params: ThrottleParams) => ThrottleResponse;

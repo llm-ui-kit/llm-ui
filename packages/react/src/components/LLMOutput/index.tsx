@@ -38,8 +38,9 @@ export const useMatches = ({
   const finishTimeRef = useRef<DOMHighResTimeStamp>();
   const restartRef = useRef<boolean>(false);
   const previousFrameTimeRef = useRef<DOMHighResTimeStamp>();
-  const visibleTextLengths = useRef<number[]>([]);
-  const outputLengths = useRef<number[]>([]);
+  const visibleTextAllLengthsRef = useRef<number[]>([]);
+  const outputLengthsRef = useRef<number[]>([]);
+  const visibleTextIncrementsRef = useRef<number[]>([]);
 
   const [matches, setMatches] = useState<BlockMatch[]>(
     matchBlocks({
@@ -61,8 +62,9 @@ export const useMatches = ({
       setMatches([]);
       finishTimeRef.current = undefined;
       previousFrameTimeRef.current = undefined;
-      visibleTextLengths.current = [];
-      outputLengths.current = [];
+      visibleTextAllLengthsRef.current = [];
+      outputLengthsRef.current = [];
+      visibleTextIncrementsRef.current = [];
       requestAnimationFrame(renderLoopRef.current);
       return;
     }
@@ -79,8 +81,8 @@ export const useMatches = ({
     const visibleTextAll = matchesToVisibleText(allMatches);
     const outputAll = matchesToOutput(allMatches);
     if (!isFinished) {
-      visibleTextLengths.current.push(visibleTextAll.length);
-      outputLengths.current.push(outputAll.length);
+      visibleTextAllLengthsRef.current.push(visibleTextAll.length);
+      outputLengthsRef.current.push(outputAll.length);
     }
     const shouldStop = visibleText === visibleTextAll && isFinished;
     if (shouldStop) {
@@ -88,7 +90,7 @@ export const useMatches = ({
       return;
     }
 
-    const { visibleTextLengthTarget, skip } = throttle({
+    const { visibleTextIncrement } = throttle({
       outputRaw: llmOutput,
       outputRendered,
       outputAll,
@@ -99,10 +101,13 @@ export const useMatches = ({
       frameTime,
       frameTimePrevious: previousFrameTimeRef.current,
       finishStreamTime: finishTimeRef.current,
-      visibleTextLengths: visibleTextLengths.current,
-      outputLengths: outputLengths.current,
+      visibleTextLengthsAll: visibleTextAllLengthsRef.current,
+      outputLengths: outputLengthsRef.current,
+      visibleTextIncrements: visibleTextIncrementsRef.current,
     });
-    if (!skip) {
+    visibleTextIncrementsRef.current.push(visibleTextIncrement);
+    const visibleTextLengthTarget = visibleText.length + visibleTextIncrement;
+    if (visibleTextLengthTarget > visibleText.length) {
       const matches = matchBlocks({
         llmOutput,
         blocks,
