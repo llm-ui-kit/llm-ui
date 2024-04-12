@@ -11,7 +11,7 @@ import { ModelCards } from "@/components/ModelCards";
 import { marketingConfig } from "@/config/marketing";
 ---
 
-<MainLayout title="llm-ui | React components for LLMs">
+<MainLayout title="llm-ui | React library for LLMs">
   <section class="bg-background-200 space-y-6 pb-12 pt-16 lg:py-28">
     <div
       class="container flex max-w-[64rem] flex-col items-center gap-6 text-center"
@@ -19,14 +19,15 @@ import { marketingConfig } from "@/config/marketing";
       <h1
         class="font-heading text-balance text-4xl font-bold !leading-[1.1] sm:text-5xl md:text-6xl lg:text-7xl"
       >
-        <span class="text-gradient_indigo-purple">React components</span><br /> for
+        The <span class="text-gradient_indigo-purple">React</span> library<br />
+        for
         <span class="text-gradient_indigo-purple">LLMs</span>
       </h1>
 
       <p
         class="text-muted-foreground mb-3 max-w-[42rem] text-balance leading-normal sm:text-xl sm:leading-8"
       >
-        {"Customizable React components to help render your LLM's outputs."}
+        {"Display language model outputs in your React project"}
       </p>
 
       <div class="flex justify-center space-x-2 md:space-x-4">
@@ -71,13 +72,13 @@ import { marketingConfig } from "@/config/marketing";
     class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
   >
     <div class="container space-y-6">
-      <HeaderSection title="Code blocks">
+      <HeaderSection title="Codeblocks">
         <Fragment slot="subtitle">
-          Beautiful syntax highlighting with <a
+          Beautiful syntax highlighting for every language with <a
             class="text-primary"
             target="_blank"
             href="https://shiki.style/">Shiki</a
-          >. Backticks are never visible.</Fragment
+          >.</Fragment
         >
       </HeaderSection>
     </div>
@@ -88,8 +89,8 @@ import { marketingConfig } from "@/config/marketing";
   >
     <div class="container space-y-6">
       <HeaderSection
-        title="Custom components"
-        subtitle="Render your own custom 'blocks' based on the model's output"
+        title="Custom Components"
+        subtitle="Render the model's output using your own custom 'blocks'"
       />
     </div>
   </section>
@@ -100,16 +101,18 @@ import { marketingConfig } from "@/config/marketing";
   >
     <div class="container space-y-6">
       <HeaderSection
-        title="Works with any model"
-        subtitle="llm-ui operates on LLM output strings, so it works with any LLM model."
+        title="Universal LLM support"
+        subtitle="llm-ui operates on the model's output string, so it works with any LLM model."
       />
-      <ModelCards models={marketingConfig.models} />
-      <Button variant="secondary" size="lg" className="px-4">
-        <a href="/" class="flex items-center gap-2">
-          <span>Read the docs</span>
-          <Icon name="lucide:arrow-up-right" class="size-4" />
-        </a>
-      </Button>
+      <div class="mt-6">
+        <ModelCards models={marketingConfig.models} />
+        <Button variant="secondary" size="lg" className="mt-10 px-4">
+          <a href="/docs" class="flex items-center gap-2">
+            <span>Read the docs</span>
+            <Icon name="lucide:arrow-up-right" class="size-4" />
+          </a>
+        </Button>
+      </div>
     </div>
   </section>
 

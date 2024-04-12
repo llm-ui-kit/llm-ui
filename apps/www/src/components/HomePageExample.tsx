@@ -35,23 +35,14 @@ import { Slider } from "./ui/Slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/Tabs";
 import { H2, Text } from "./ui/Text";
 
-const example = `### Markdown block:
+const example = `### [Docs](https://llm-ui.com/docs)
 
-- [links](https://llm-ui.com)
-- ~strikethrough~, *italic*, **bold**
-
-### Codeblock block:
-
-\`\`\`typescript
-import { LLMOutput } from "llm-ui/components";
-
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
+**Install**:
+\`\`\`bash
+pnpm add llm-ui @llm-ui/markdown @llm-ui/code-block
 \`\`\`
+
+- *italic*, **bold**, ~strikethrough~,
 `;
 const Markdown: LLMOutputComponent = (props) => {
   return (
@@ -345,7 +336,7 @@ export const HomePageExample = () => {
           className="hidden md:block"
           header={
             <H2 className="mb-8 text-center">
-              <span className="text-gradient_indigo-purple">llm-ui</span>✨
+              <span className="text-gradient_indigo-purple">llm-ui</span> ✨
             </H2>
           }
         >
