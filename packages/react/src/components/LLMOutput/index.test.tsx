@@ -2,11 +2,10 @@ import { renderHook } from "@testing-library/react-hooks";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { fallbackBlock } from "../../test/utils";
 import { useMatches } from "./index";
+import { ThrottleFunction } from "./types";
 
-const noThrottle = () => ({
-  visibleTextLengthTarget: 100,
-  skip: false,
-  delayMs: 0,
+const noThrottle: ThrottleFunction = () => ({
+  visibleTextIncrement: 100,
 });
 
 const callRenderLoop = ({ times }: { times: number }) => {
@@ -58,7 +57,7 @@ describe("useMatches Hook", () => {
           startIndex: 0,
           endIndex: 5,
           outputAfterLookback:
-            "hello isComplete:false visibleTextLengthTarget:100 isStreamFinished:false",
+            "hello isComplete:false visibleTextLengthTarget:105 isStreamFinished:false",
           outputRaw: "hello",
           visibleText: "hello",
         },

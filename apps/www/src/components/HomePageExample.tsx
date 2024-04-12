@@ -272,7 +272,7 @@ export const HomePageExample = () => {
   const { output, isFinished, loopIndex } = useStreamFastSmooth(example, {
     loop: true,
     autoStart: true,
-    loopDelayMs: 5000,
+    loopDelayMs: 3000,
     delayMultiplier,
   });
   const llmUi = (
