@@ -48,9 +48,13 @@ export type ThrottleParams = {
   outputAll: string;
   visibleText: string;
   visibleTextAll: string;
-  timeInMsSinceStart: number;
-  timeInMsSinceLastRender: number;
   isStreamFinished: boolean;
+  frameTime: DOMHighResTimeStamp;
+  frameTimePrevious: DOMHighResTimeStamp | undefined;
+  startStreamTime: DOMHighResTimeStamp;
+  finishStreamTime: DOMHighResTimeStamp | undefined;
+  visibleTextLengths: number[];
+  outputLengths: number[];
 };
 
 export type ThrottleResponse = {

@@ -25,6 +25,7 @@ import type {
 } from "node_modules/@llm-ui/code-block/src/shikiComponent";
 import type { ThrottleFunction } from "node_modules/llm-ui/src/components/LLMOutput/types";
 import { useState, type ReactNode } from "react";
+import { sum } from "remeda";
 import { getHighlighterCore } from "shiki/core";
 import githubDark from "shiki/themes/github-dark.mjs";
 import githubLight from "shiki/themes/github-light.mjs";
@@ -118,18 +119,113 @@ const codeBlockBlock: LLMOutputBlock = {
   component: ShikiComplete,
 };
 
+const readAhead = 10;
+const lagBuffer = 20;
 const throttle: ThrottleFunction = ({
   outputAll,
   outputRendered,
   isStreamFinished,
   visibleText,
+  visibleTextAll,
+  visibleTextLengths,
 }) => {
+  // const endTime = finishTime ?? performance.now();
+
+  // const runningTimeMs = endTime - startTime;
+  // console.log("frameTime", frameTime);
+  // console.log("previousFrameTime", previousFrameTime);
+  // const fps = 1000 / (frameTime - frameTimePrevious);
+  // console.log("fps", fps);
   const bufferSize = outputAll.length - outputRendered.length;
+
+  // const visibleTextPerSecond = (visibleTextAll.length / runningTimeMs) * 1000;
+  // const expectedVisibleTextLength =
+  //   (visibleTextPerSecond * runningTimeMs) / 1000;
+  // const visibleTextPerFrame =
+  //   visibleText.length / (frameTime - previousFrameTime);
+  // const visibleTextPerFrame = visibleTextPerSecond / fps;
+  const last30 = visibleTextLengths.slice(-30);
+  const visibleTextLengthDifferences = last30.map((length, index, array) =>
+    index === 0 ? 0 : Math.max(0, length - array[index - 1]),
+  );
+  console.log("visibleTextLengthDifferences", visibleTextLengthDifferences);
+  const visibleTextPerRender =
+    visibleTextLengthDifferences.length < 30
+      ? 1
+      : sum(visibleTextLengthDifferences) / 30;
+  console.log("----");
+  // console.log("expectedVisibleText", expectedVisibleTextLength);
+  // console.log("runningTimeMs", runningTimeMs);
+  // console.log("startTime", startTime);
+  // console.log("finishTime", finishTime);
+  // console.log("endTime", endTime);
+  // console.log("visibleTextPerSecond", visibleTextPerSecond);
+  // console.log("visibleText.length", visibleText.length);
+  // console.log("visibleTextPerFrame", visibleTextPerFrame);
+  // console.log("bufferSize", bufferSize);
+  console.log("visibleTextLengths", visibleTextLengths.slice(-5));
+  console.log(
+    "visibleTextLengths last",
+    visibleTextLengths[visibleTextLengths.length - 1],
+  );
+  console.log("visibleTextPerRender", visibleTextPerRender);
+  // const visibleTextLengthTarget = visibleTextPerSecond;
+
+  if (isStreamFinished) {
+    return {
+      skip: false,
+      delayMs: 0,
+      visibleTextLengthTarget: Math.min(
+        visibleText.length + Math.max(1, Math.ceil(visibleTextPerRender)),
+        visibleTextAll.length,
+      ),
+    };
+  }
+  if (!isStreamFinished && bufferSize < readAhead) {
+    return {
+      skip: false,
+      delayMs: 0,
+      visibleTextLengthTarget: visibleText.length,
+    };
+  }
+  // behind, go faster
+  if (bufferSize > lagBuffer) {
+    return {
+      skip: false,
+      delayMs: 0,
+      visibleTextLengthTarget:
+        visibleText.length + Math.ceil(visibleTextPerRender),
+    };
+  }
+  // ahead, go slower
   return {
-    skip: !isStreamFinished && bufferSize < 10,
-    visibleTextLengthTarget: visibleText.length + 1,
-    delayMs: 1000 / 60,
+    skip: false,
+    delayMs: 0,
+    visibleTextLengthTarget:
+      visibleText.length + Math.floor(visibleTextPerRender),
   };
+  // if (expectedVisibleTextLength > visibleText.length) {
+  //   console.log("+1");
+  //   return {
+  //     skip: false,
+  //     delayMs: 0,
+  //     visibleTextLengthTarget: visibleText.length + visibleTextPerFrame,
+  //   };
+  // }
+  // return {
+  //   skip: false,
+  //   delayMs: 0,
+  //   visibleTextLengthTarget: visibleText.length,
+  // };
+  // return {
+  //   skip: false,
+  //   visibleTextLengthTarget:
+  //     (!isStreamFinished && bufferSize < 10) ||
+  //     expectedVisibleTextLength < visibleText.length
+  //       ? visibleText.length
+  //       : visibleText.length + 1,
+  //   delayMs: 0,
+  // };
 };
 
 const SideBySideContainer: React.FC<{
@@ -228,6 +324,7 @@ const Controls: React.FC<{
 
 export const HomePageExample = () => {
   const [delayMultiplier, setDelayMultiplier] = useState(1);
+  console.log("delayMultiplier", delayMultiplier);
   const { output, isFinished, loopIndex } = useStreamFastSmooth(example, {
     loop: true,
     autoStart: true,
