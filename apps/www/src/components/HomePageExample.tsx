@@ -231,7 +231,6 @@ const Controls: React.FC<{
 
 export const HomePageExample = () => {
   const [delayMultiplier, setDelayMultiplier] = useState(1);
-  console.log("delayMultiplier", delayMultiplier);
   const { output, isFinished, loopIndex } = useStreamFastSmooth(example, {
     loop: true,
     autoStart: true,
