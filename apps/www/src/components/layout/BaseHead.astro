@@ -66,10 +66,7 @@ const fullTitle = calcFullTitle(title);
       ) {
         return localStorage.getItem("theme");
       }
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
-      }
-      return "light";
+      return "dark";
     })();
     if (theme === "light") {
       document.documentElement.classList.remove("dark");
