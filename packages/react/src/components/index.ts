@@ -10,6 +10,7 @@ export type {
   LookBackFunction,
   LookBackFunctionParams,
   MaybeLLMOutputMatch,
-  ThrottleFunction as ThrottleParams,
+  ThrottleFunction,
+  ThrottleParams,
   ThrottleResponse,
 } from "./LLMOutput/types";

@@ -3,7 +3,7 @@ import { Button, buttonVariants } from "@/components/ui/Button";
 import { siteConfig } from "@/config/site";
 import MainLayout from "@/layouts/MainLayout.astro";
 import WaitList from "@/components/WaitList.astro";
-import { HomePageExample } from "@/components/HomePageExample";
+import { Example } from "@/components/examples/Example";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import HeaderSection from "@/components/HeaderSection.astro";
@@ -52,7 +52,7 @@ import { marketingConfig } from "@/config/marketing";
 
   <section id="example" class="bg-background-200">
     <div class="container flex min-h-[500px] max-w-[80rem] flex-col space-y-6">
-      <HomePageExample client:only />
+      <Example client:only />
     </div>
   </section>
 
@@ -122,3 +122,4 @@ import { marketingConfig } from "@/config/marketing";
     </div>
   </section>
 </MainLayout>
+@/components/examples/HomePageExample @/components/examples/Example
