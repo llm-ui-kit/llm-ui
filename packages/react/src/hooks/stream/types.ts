@@ -20,8 +20,8 @@ export type UseStreamResponse = {
   reset: () => void;
   pause: () => void;
   start: () => void;
-  isStarted: boolean;
-  isFinished: boolean;
+  isStreamStarted: boolean;
+  isStreamFinished: boolean;
   loopIndex: number;
 };
 

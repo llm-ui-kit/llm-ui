@@ -1,12 +1,11 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { fallbackBlock } from "../../test/utils";
-import { useMatches } from "./index";
+import { useLLMOutput } from "./index";
+import { ThrottleFunction } from "./types";
 
-const noThrottle = () => ({
-  visibleTextLengthTarget: 100,
-  skip: false,
-  delayMs: 0,
+const noThrottle: ThrottleFunction = () => ({
+  visibleTextIncrement: 100,
 });
 
 const callRenderLoop = ({ times }: { times: number }) => {
@@ -20,7 +19,7 @@ const callRenderLoop = ({ times }: { times: number }) => {
   });
 };
 
-describe("useMatches Hook", () => {
+describe("useLLMOutput Hook", () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -28,30 +27,30 @@ describe("useMatches Hook", () => {
     callRenderLoop({ times: 1 });
 
     const { result } = renderHook(() =>
-      useMatches({
+      useLLMOutput({
         llmOutput: "",
-        isFinished: false,
+        isStreamFinished: false,
         blocks: [],
-        fallbackComponent: fallbackBlock,
+        fallbackBlock: fallbackBlock,
         throttle: noThrottle,
       }),
     );
 
-    expect(result.current.matches).toEqual([]);
+    expect(result.current.blockMatches).toEqual([]);
   });
 
   test("matches fallback", () => {
     const { result } = renderHook(() => {
       callRenderLoop({ times: 2 });
-      return useMatches({
+      return useLLMOutput({
         llmOutput: "hello",
-        isFinished: false,
+        isStreamFinished: false,
         blocks: [],
-        fallbackComponent: fallbackBlock,
+        fallbackBlock: fallbackBlock,
         throttle: noThrottle,
       });
     });
-    expect(result.current.matches).toEqual([
+    expect(result.current.blockMatches).toEqual([
       {
         block: fallbackBlock,
         match: {
