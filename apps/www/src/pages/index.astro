@@ -1,11 +1,14 @@
 ---
-import { buttonVariants } from "@/components/ui/Button";
+import { Button, buttonVariants } from "@/components/ui/Button";
 import { siteConfig } from "@/config/site";
 import MainLayout from "@/layouts/MainLayout.astro";
 import WaitList from "@/components/WaitList.astro";
 import { HomePageExample } from "@/components/HomePageExample";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
+import HeaderSection from "@/components/HeaderSection.astro";
+import { ModelCards } from "@/components/ModelCards";
+import { marketingConfig } from "@/config/marketing";
 ---
 
 <MainLayout title="llm-ui | React components for LLMs">
@@ -48,13 +51,71 @@ import { Icon } from "astro-icon/components";
 
   <section id="example" class="bg-background-200">
     <div class="container flex min-h-[500px] max-w-[80rem] flex-col space-y-6">
-      <HomePageExample client:load />
+      <HomePageExample client:only />
     </div>
   </section>
 
-  <section id="waitlist" class="bg-background-200 py-8 md:py-12 lg:py-24">
+  <section
+    id="markdown"
+    class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
+  >
     <div class="container space-y-6">
-      <WaitList />
+      <HeaderSection
+        title="Advanced Markdown"
+        subtitle="Markdown is rendered from left to right, markdown syntax is never visible"
+      />
+    </div>
+  </section>
+  <section
+    id="codeblock"
+    class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
+  >
+    <div class="container space-y-6">
+      <HeaderSection title="Code blocks">
+        <Fragment slot="subtitle">
+          Beautiful syntax highlighting with <a
+            class="text-primary"
+            target="_blank"
+            href="https://shiki.style/">Shiki</a
+          >. Backticks are never visible.</Fragment
+        >
+      </HeaderSection>
     </div>
   </section>
 </MainLayout>
+<section
+  id="codeblock"
+  class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
+>
+  <div class="container space-y-6">
+    <HeaderSection
+      title="Custom components"
+      subtitle="Render your own custom 'blocks' based on the model's output"
+    />
+  </div>
+</section>
+
+<section
+  id="all-llms"
+  class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
+>
+  <div class="container space-y-6">
+    <HeaderSection
+      title="Works with any model"
+      subtitle="llm-ui operates on LLM output strings, so it works with any LLM model."
+    />
+    <ModelCards models={marketingConfig.models} />
+    <Button variant="secondary" size="lg" className="px-4">
+      <a href="/" class="flex items-center gap-2">
+        <span>Read the docs</span>
+        <Icon name="lucide:arrow-up-right" class="size-4" />
+      </a>
+    </Button>
+  </div>
+</section>
+
+<section id="waitlist" class="bg-background-200 py-8 md:py-12 lg:py-24">
+  <div class="container space-y-6">
+    <WaitList />
+  </div>
+</section>
