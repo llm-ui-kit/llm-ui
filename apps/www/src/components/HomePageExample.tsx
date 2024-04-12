@@ -118,114 +118,20 @@ const codeBlockBlock: LLMOutputBlock = {
   component: ShikiComplete,
 };
 
-const readAhead = 10;
-const lagBufferMs = 200;
-
 const throttle: ThrottleFunction = ({
+  outputAll,
+  outputRendered,
   isStreamFinished,
   visibleText,
-  visibleTextAll,
-  visibleTextLengths,
-  frameTime,
-  frameTimePrevious,
 }) => {
-  // const endTime = finishTime ?? performance.now();
-
-  // const runningTimeMs = endTime - startTime;
-  // console.log("frameTime", frameTime);
-  // console.log("previousFrameTime", previousFrameTime);
-  const fps = 1000 / (frameTime - (frameTimePrevious ?? frameTime - 1000 / 30));
-  console.log("fps", fps);
-
-  const bufferSize = visibleTextAll.length - visibleText.length;
-
-  // const visibleTextPerSecond = (visibleTextAll.length / runningTimeMs) * 1000;
-  // const expectedVisibleTextLength =
-  //   (visibleTextPerSecond * runningTimeMs) / 1000;
-  // const visibleTextPerFrame =
-  //   visibleText.length / (frameTime - previousFrameTime);
-  // const visibleTextPerFrame = visibleTextPerSecond / fps;
-  const recentVisibleTextLengths = visibleTextLengths.slice(-1000);
-  const textAddedCount =
-    recentVisibleTextLengths[recentVisibleTextLengths.length - 1] -
-    recentVisibleTextLengths[0];
-  console.log("textAdded", textAddedCount);
-  // const visibleTextLengthDifferences = recentVisibleTextLengths.map(
-  //   (length, index, array) =>
-  //     index === 0 ? 0 : Math.max(0, length - array[index - 1]),
-  // );
-  // console.log("visibleTextLengthDifferences", visibleTextLengthDifferences);
-  // console.log(
-  //   "visibleTextLengthDifferences sum",
-  //   sum(visibleTextLengthDifferences),
-  // );
-  const visibleTextPerRender = textAddedCount / recentVisibleTextLengths.length;
-  console.log("----");
-  const visibleTextPerMs = visibleTextPerRender / (1000 / fps);
-  const lagBufferChars = lagBufferMs * visibleTextPerMs;
-  // console.log("expectedVisibleText", expectedVisibleTextLength);
-  // console.log("runningTimeMs", runningTimeMs);
-  // console.log("startTime", startTime);
-  // console.log("finishTime", finishTime);
-  // console.log("endTime", endTime);
-  // console.log("visibleTextPerSecond", visibleTextPerSecond);
-  // console.log("visibleText.length", visibleText.length);
-  // console.log("visibleTextPerFrame", visibleTextPerFrame);
-  // console.log("bufferSize", bufferSize);
-  console.log("visibleTextPerRender", visibleTextPerRender);
-  // console.log("visibleTextPerMs", visibleTextPerMs);
-  console.log("lagBufferChars", lagBufferChars);
-  console.log("bufferSize", bufferSize);
-  // console.log("visibleTextLengths", visibleTextLengths.slice(-5));
-  // console.log(
-  //   "visibleTextLengths last",
-  //   visibleTextLengths[visibleTextLengths.length - 1],
-  // );
-  // console.log("visibleTextPerRender", visibleTextPerRender);
-  // const visibleTextLengthTarget = visibleTextPerSecond;
-
-  // if (isStreamFinished) {
-  //   return {
-  //     skip: false,
-  //     delayMs: 0,
-  //     visibleTextLengthTarget: Math.min(
-  //       visibleText.length + Math.max(1, Math.ceil(visibleTextPerRender)),
-  //       visibleTextAll.length,
-  //     ),
-  //   };
-  // }
-  let visibleTextIncrement = 0;
-  const previousIncrements = visibleTextLengths
-    .slice(-21)
-    .map((length, index, array) => {
-      return length - (index === 0 ? 0 : array[index - 1]);
-    })
-    .slice(1);
-  const recentAverageIncrement =
-    previousIncrements.reduce((a, b) => a + b, 0) / previousIncrements.length;
-  if (isStreamFinished) {
-    visibleTextIncrement = Math.max(1, Math.ceil(visibleTextPerRender));
-  } else if (!isStreamFinished && bufferSize < readAhead) {
-    visibleTextIncrement = 0;
-  } else if (bufferSize > readAhead + lagBufferChars) {
-    // behind, go faster
-    const targetIncrement = visibleTextPerRender + 0.5;
-    console.log({
-      previousIncrements,
-      recentAverageIncrement,
-      targetIncrement,
-    });
-    visibleTextIncrement =
-      recentAverageIncrement > targetIncrement ? 0 : Math.ceil(targetIncrement);
-  } else {
-    // where we want to be
-    visibleTextIncrement = Math.round(visibleTextPerRender);
-  }
-  console.log("visibleTextIncrement", visibleTextIncrement);
+  const bufferSize = outputAll.length - outputRendered.length;
   return {
     skip: false,
+    visibleTextLengthTarget:
+      isStreamFinished || bufferSize > 15
+        ? visibleText.length + 1
+        : visibleText.length,
     delayMs: 0,
-    visibleTextLengthTarget: visibleText.length + visibleTextIncrement,
   };
 };
 
