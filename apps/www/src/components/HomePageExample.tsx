@@ -13,7 +13,7 @@ import {
 } from "@llm-ui/code-block/shikiBundles/allLangs";
 import { MarkdownComponent, markdownLookBack } from "@llm-ui/markdown";
 import {
-  LLMOutput,
+  useLLMOutput,
   type LLMOutputBlock,
   type LLMOutputComponent,
 } from "llm-ui/components";
@@ -30,27 +30,19 @@ import githubDark from "shiki/themes/github-dark.mjs";
 import githubLight from "shiki/themes/github-light.mjs";
 import getWasm from "shiki/wasm";
 import { Button } from "./ui/Button";
+import { Loader } from "./ui/Loader";
 import { Slider } from "./ui/Slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/Tabs";
 import { H2, Text } from "./ui/Text";
 
-const example = `### Markdown support ✅
+const example = `### [Docs](https://llm-ui.com/docs)
 
-- [links](https://llm-ui.com)
-- ~strikethrough~, *italic*, **bold**
-
-#### Code blocks:
-
-\`\`\`typescript
-import { LLMOutput } from "llm-ui/components";
-
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
-console.log('Hello llm-ui');
+**Install**:
+\`\`\`bash
+pnpm add llm-ui @llm-ui/markdown @llm-ui/code-block
 \`\`\`
+
+- *italic*, **bold**, ~strikethrough~,
 `;
 const Markdown: LLMOutputComponent = (props) => {
   return (
@@ -199,7 +191,9 @@ const SideBySideContainer: React.FC<{
 const CodeWithBackground: React.FC<{ children: ReactNode }> = ({
   children,
 }) => (
-  <div className="rounded-lg bg-background p-6 min-h-[500px]">{children}</div>
+  <div className="flex flex-col rounded-lg bg-background p-6 min-h-[500px]">
+    {children}
+  </div>
 );
 
 type SideBySideTabsProps = {
@@ -285,19 +279,36 @@ export const HomePageExample = () => {
     loopDelayMs: 3000,
     delayMultiplier,
   });
+  const { blockMatches, visibleText } = useLLMOutput({
+    blocks: [codeBlockBlock],
+    isStreamFinished,
+    fallbackBlock: {
+      component: Markdown,
+      lookBack: markdownLookBack,
+    },
+    llmOutput: output,
+    throttle,
+    loopIndex,
+  });
+  const blocks = blockMatches.map((blockMatch, index) => {
+    const Component = blockMatch.block.component;
+    return (
+      <Component
+        key={index}
+        llmOutput={blockMatch.match.outputAfterLookback}
+        isComplete={isStreamFinished}
+      />
+    );
+  });
   const llmUi = (
     <CodeWithBackground>
-      <LLMOutput
-        blocks={[codeBlockBlock]}
-        isStreamFinished={isStreamFinished}
-        fallbackBlock={{
-          component: Markdown,
-          lookBack: markdownLookBack,
-        }}
-        llmOutput={output}
-        throttle={throttle}
-        loopIndex={loopIndex}
-      />
+      {visibleText.length === 0 ? (
+        <div className="flex flex-1 justify-center items-center">
+          <Loader />
+        </div>
+      ) : (
+        blocks
+      )}
     </CodeWithBackground>
   );
   return (
@@ -325,7 +336,7 @@ export const HomePageExample = () => {
           className="hidden md:block"
           header={
             <H2 className="mb-8 text-center">
-              <span className="text-gradient_indigo-purple">llm-ui</span>✨
+              <span className="text-gradient_indigo-purple">llm-ui</span> ✨
             </H2>
           }
         >

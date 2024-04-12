@@ -92,7 +92,7 @@ export const useLLMOutput = ({
     const isFinished = visibleText === visibleTextAll && isStreamFinished;
     if (isFinished) {
       frameRef.current = undefined;
-
+      setState({ blockMatches, isFinished, visibleText });
       return;
     }
 
