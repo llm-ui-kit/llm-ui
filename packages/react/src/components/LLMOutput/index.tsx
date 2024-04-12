@@ -9,8 +9,8 @@ import {
 export type LLMOutputProps = {
   llmOutput: string;
   blocks?: LLMOutputBlock[];
-  fallbackComponent: LLMOutputFallbackBlock;
-  isFinished: boolean;
+  fallbackBlock: LLMOutputFallbackBlock;
+  isStreamFinished: boolean;
   throttle: ThrottleFunction;
   loopIndex?: number;
 };
@@ -23,14 +23,26 @@ const matchesToOutput = (matches: BlockMatch[]): string => {
   return matches.map((match) => match.match.outputAfterLookback).join("");
 };
 
-export const useMatches = ({
+export type UseLLMOutputReturn = {
+  blockMatches: BlockMatch[];
+  isFinished: boolean;
+  visibleText: string;
+};
+
+const initialState = {
+  blockMatches: [],
+  isFinished: false,
+  visibleText: "",
+};
+
+export const useLLMOutput = ({
   llmOutput,
-  isFinished,
+  isStreamFinished,
   blocks = [],
-  fallbackComponent,
+  fallbackBlock,
   throttle,
   loopIndex = 0,
-}: LLMOutputProps): { matches: BlockMatch[] } => {
+}: LLMOutputProps): UseLLMOutputReturn => {
   const startTime = useRef(performance.now());
   const lastRenderTime = useRef(performance.now());
   const renderLoopRef = useRef<(frameTime: DOMHighResTimeStamp) => void>();
@@ -38,31 +50,26 @@ export const useMatches = ({
   const finishTimeRef = useRef<DOMHighResTimeStamp>();
   const restartRef = useRef<boolean>(false);
   const previousFrameTimeRef = useRef<DOMHighResTimeStamp>();
-  const visibleTextLengths = useRef<number[]>([]);
-  const outputLengths = useRef<number[]>([]);
+  const visibleTextAllLengthsRef = useRef<number[]>([]);
+  const outputLengthsRef = useRef<number[]>([]);
+  const visibleTextIncrementsRef = useRef<number[]>([]);
 
-  const [matches, setMatches] = useState<BlockMatch[]>(
-    matchBlocks({
-      llmOutput,
-      blocks,
-      fallbackBlock: fallbackComponent,
-      isStreamFinished: isFinished,
-    }),
-  );
+  const [{ blockMatches, ...state }, setState] =
+    useState<UseLLMOutputReturn>(initialState);
 
   const renderLoop = (frameTime: DOMHighResTimeStamp) => {
-    // render loop!
     if (!renderLoopRef.current) {
       return;
     }
     if (restartRef.current) {
       startTime.current = performance.now();
       restartRef.current = false;
-      setMatches([]);
+      setState(initialState);
       finishTimeRef.current = undefined;
       previousFrameTimeRef.current = undefined;
-      visibleTextLengths.current = [];
-      outputLengths.current = [];
+      visibleTextAllLengthsRef.current = [];
+      outputLengthsRef.current = [];
+      visibleTextIncrementsRef.current = [];
       requestAnimationFrame(renderLoopRef.current);
       return;
     }
@@ -70,48 +77,52 @@ export const useMatches = ({
     const allMatches = matchBlocks({
       llmOutput,
       blocks,
-      fallbackBlock: fallbackComponent,
-      isStreamFinished: isFinished,
+      fallbackBlock,
+      isStreamFinished,
     });
-    const visibleText = matchesToVisibleText(matches);
-    const outputRendered = matchesToOutput(matches);
+    const visibleText = matchesToVisibleText(blockMatches);
+    const outputRendered = matchesToOutput(blockMatches);
 
     const visibleTextAll = matchesToVisibleText(allMatches);
     const outputAll = matchesToOutput(allMatches);
-    if (!isFinished) {
-      visibleTextLengths.current.push(visibleTextAll.length);
-      outputLengths.current.push(outputAll.length);
+    if (!isStreamFinished) {
+      visibleTextAllLengthsRef.current.push(visibleTextAll.length);
+      outputLengthsRef.current.push(outputAll.length);
     }
-    const shouldStop = visibleText === visibleTextAll && isFinished;
-    if (shouldStop) {
+    const isFinished = visibleText === visibleTextAll && isStreamFinished;
+    if (isFinished) {
       frameRef.current = undefined;
+
       return;
     }
 
-    const { visibleTextLengthTarget, skip } = throttle({
+    const { visibleTextIncrement } = throttle({
       outputRaw: llmOutput,
       outputRendered,
       outputAll,
       visibleText,
       visibleTextAll,
       startStreamTime: startTime.current,
-      isStreamFinished: isFinished,
+      isStreamFinished,
       frameTime,
       frameTimePrevious: previousFrameTimeRef.current,
       finishStreamTime: finishTimeRef.current,
-      visibleTextLengths: visibleTextLengths.current,
-      outputLengths: outputLengths.current,
+      visibleTextLengthsAll: visibleTextAllLengthsRef.current,
+      outputLengths: outputLengthsRef.current,
+      visibleTextIncrements: visibleTextIncrementsRef.current,
     });
-    if (!skip) {
+    visibleTextIncrementsRef.current.push(visibleTextIncrement);
+    const visibleTextLengthTarget = visibleText.length + visibleTextIncrement;
+    if (visibleTextLengthTarget > visibleText.length) {
       const matches = matchBlocks({
         llmOutput,
         blocks,
-        fallbackBlock: fallbackComponent,
-        isStreamFinished: isFinished,
+        fallbackBlock,
+        isStreamFinished,
         visibleTextLengthTarget,
       });
       lastRenderTime.current = performance.now();
-      setMatches(matches);
+      setState({ blockMatches: matches, isFinished, visibleText });
     }
     frameRef.current = requestAnimationFrame(renderLoopRef.current);
     previousFrameTimeRef.current = frameTime;
@@ -137,19 +148,19 @@ export const useMatches = ({
   }, [loopIndex]);
 
   useEffect(() => {
-    if (!finishTimeRef.current && isFinished) {
+    if (!finishTimeRef.current && isStreamFinished) {
       finishTimeRef.current = performance.now();
     }
-  }, [isFinished]);
+  }, [isStreamFinished]);
 
-  return { matches };
+  return { blockMatches, ...state };
 };
 
 export const LLMOutput: React.FC<LLMOutputProps> = (props) => {
-  const { matches } = useMatches(props);
+  const { blockMatches } = useLLMOutput(props);
   return (
     <>
-      {matches.map(({ block, match }, index) => {
+      {blockMatches.map(({ block, match }, index) => {
         const Component = block.component;
         return <Component key={index} llmOutput={match.outputAfterLookback} />;
       })}

@@ -17,8 +17,8 @@ export const resultToArrays = (
         throw r;
       }
       acc.output.push(r.output);
-      acc.isStarted.push(r.isStarted);
-      acc.isFinished.push(r.isFinished);
+      acc.isStarted.push(r.isStreamStarted);
+      acc.isFinished.push(r.isStreamFinished);
       acc.loopIndex.push(r.loopIndex);
       return acc;
     },
