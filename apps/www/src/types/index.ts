@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export type NavItem = {
   title: string;
   href: string;
@@ -12,6 +14,10 @@ export type MenuItem = NavItem & {
 };
 
 export type MainNavItem = NavItem;
+export type Model = {
+  title: string;
+  logo: ReactNode;
+};
 
 export type SidebarNavItem = {
   title: string;
@@ -45,6 +51,7 @@ export type DocsConfig = {
 
 export type MarketingConfig = {
   mainNav: MainNavItem[];
+  models: Model[];
 };
 
 export type NavMenuConfig = {
