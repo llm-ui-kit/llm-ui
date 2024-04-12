@@ -61,4 +61,4 @@ web_modules/
 
 packages/*/dist
 
-.husky/post-commit
+.husky/post*
