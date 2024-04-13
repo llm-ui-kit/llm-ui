@@ -170,10 +170,6 @@
   display: none;
 }
 
-.anime-grid {
-  @apply grid grid-cols-[repeat(auto-fill,minmax(max(var(--min-column-width),var(--max-column-width)),1fr))] content-start gap-x-[--column-gap] gap-y-8 [--column-gap:12px] [--max-column-count:7] [--max-column-width:calc((100%-var(--total-gap-width))/var(--max-column-count))] [--min-column-width:150px] [--total-gap-width:calc((var(--max-column-count)-1)*var(--column-gap))] sm:[--column-gap:14px] md:gap-y-10 md:[--column-gap:18px];
-}
-
 html.dark .shiki,
 html.dark .shiki span {
   color: var(--shiki-dark) !important;
