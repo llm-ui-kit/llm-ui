@@ -1,4 +1,3 @@
-"use client";
 import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import { cn } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
@@ -31,7 +30,10 @@ const CodeWithBackground: React.FC<{ children: ReactNode; height: number }> = ({
   height,
   children,
 }) => (
-  <div style={{ height }} className="rounded-lg bg-background text-left p-6">
+  <div
+    style={{ height }}
+    className="rounded-lg bg-background text-left p-6 flex flex- flex-col"
+  >
     {children}
   </div>
 );
@@ -57,11 +59,11 @@ const OutputTabs: React.FC<
 }) => {
   const showMarkdown = tabs.includes("markdown");
   const showRaw = tabs.includes("raw");
-  const showLlmUi = tabs.includes("llm-ui");
+  const showLlmUi = tabs.includes("llm-ui") && llmUi;
   const defaultValue = tabs[0];
   return (
     <Tabs defaultValue={defaultValue} className={className}>
-      {showLlmUi && llmUi && (
+      {showLlmUi && (
         <TabsContent value="llm-ui">
           <div style={{ height }}>{llmUi}</div>
         </TabsContent>
@@ -80,24 +82,24 @@ const OutputTabs: React.FC<
           </CodeWithBackground>
         </TabsContent>
       )}
-      <div className="flex flex-row items-center mt-2 justify-center md:justify-start">
-        <TabsList>
-          {showLlmUi && llmUi && (
-            <TabsTrigger value="llm-ui" className="md:hidden">
-              llm-ui
-            </TabsTrigger>
-          )}
-          {showMarkdown && <TabsTrigger value="markdown">Markdown</TabsTrigger>}
-          {showRaw && <TabsTrigger value="raw">Raw</TabsTrigger>}
-        </TabsList>
-      </div>
+      {tabs.length > 1 && (
+        <div className="flex flex-row items-center mt-2 justify-center md:justify-start">
+          <TabsList>
+            {showLlmUi && <TabsTrigger value="llm-ui">llm-ui</TabsTrigger>}
+            {showMarkdown && (
+              <TabsTrigger value="markdown">markdown</TabsTrigger>
+            )}
+            {showRaw && <TabsTrigger value="raw">raw</TabsTrigger>}
+          </TabsList>
+        </div>
+      )}
     </Tabs>
   );
 };
 
 type ExampleProps = {
   outputHeight: number;
-  tabs?: Tab[];
+  tabs: Tab[];
 } & UseExampleProps;
 
 const LLMUI = ({
@@ -154,7 +156,7 @@ const useExample = ({ example, options = {} }: UseExampleProps) => {
     ...options,
     delayMultiplier,
   });
-  return { ...result, setDelayMultiplier };
+  return { ...result, setDelayMultiplier, delayMultiplier };
 };
 
 export const ExampleTabs = ({
@@ -163,8 +165,13 @@ export const ExampleTabs = ({
   tabs,
   options,
 }: ExampleProps) => {
-  const { output, isStreamFinished, loopIndex, setDelayMultiplier } =
-    useExample({ example, options });
+  const {
+    output,
+    isStreamFinished,
+    loopIndex,
+    setDelayMultiplier,
+    delayMultiplier,
+  } = useExample({ example, options });
   const llmUi = (
     <LLMUI
       isStreamFinished={isStreamFinished}
@@ -182,7 +189,13 @@ export const ExampleTabs = ({
         tabs={tabs}
         height={outputHeight}
       />
-      <Controls className="md:-mt-12" onDelayMultiplier={setDelayMultiplier} />
+      <div className="flex flex-col items-center">
+        <Controls
+          className="md:-mt-6"
+          initialDelayMultiplier={delayMultiplier}
+          onDelayMultiplier={setDelayMultiplier}
+        />
+      </div>
     </div>
   );
 };
@@ -194,8 +207,13 @@ export const ExampleSideBySide = ({
   outputHeight,
   ...props
 }: ExampleProps & { className?: string; showHeaders?: boolean }) => {
-  const { output, isStreamFinished, loopIndex, setDelayMultiplier } =
-    useExample(props);
+  const {
+    output,
+    isStreamFinished,
+    loopIndex,
+    setDelayMultiplier,
+    delayMultiplier,
+  } = useExample(props);
   const llmUi = (
     <LLMUI
       isStreamFinished={isStreamFinished}
@@ -244,7 +262,8 @@ export const ExampleSideBySide = ({
         </SideBySideContainer>
       </div>
       <Controls
-        className={cn(tabs.length > 1 && "md:-mt-4")}
+        className={tabs.length > 1 ? "md:-mt-4" : "mt-4"}
+        initialDelayMultiplier={delayMultiplier}
         onDelayMultiplier={setDelayMultiplier}
       />
     </div>

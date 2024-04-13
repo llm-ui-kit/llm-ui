@@ -1,4 +1,3 @@
-"use client";
 import { cn } from "@/lib/utils";
 import { Slider } from "../ui/Slider";
 import { Text } from "../ui/Text";
@@ -14,16 +13,26 @@ const transformSliderValue = (x: number): number => {
   return 1;
 };
 
+const inverseTransformSliderValue = (y: number): number => {
+  if (y > 1 && y <= 10) {
+    return (10 - y) / 1.8;
+  } else if (y > 0 && y <= 1) {
+    return (2 - y) / 0.2;
+  }
+  return 5;
+};
+
 export const Controls: React.FC<{
   className: string;
+  initialDelayMultiplier?: number;
   onDelayMultiplier: (delayMultiplier: number) => void;
-}> = ({ className, onDelayMultiplier }) => {
+}> = ({ className, initialDelayMultiplier = 1, onDelayMultiplier }) => {
   return (
     <div className={cn(className, "flex flex-col items-center gap-4")}>
       <Text>Speed</Text>
       <Slider
         className="w-52"
-        defaultValue={[5]}
+        defaultValue={[inverseTransformSliderValue(initialDelayMultiplier)]}
         min={0}
         max={10}
         step={0.5}

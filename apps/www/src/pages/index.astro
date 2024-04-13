@@ -54,7 +54,7 @@ import { marketingConfig } from "@/config/marketing";
   <section id="example" class="bg-background-200">
     <div class="container flex min-h-[500px] max-w-[80rem] flex-col space-y-6">
       <ExampleSideBySide
-        client:only
+        client:load
         example={ctaExample}
         showHeaders
         outputHeight={260}
@@ -73,7 +73,7 @@ import { marketingConfig } from "@/config/marketing";
         subtitle="Markdown is rendered from left to right, markdown syntax is never visible"
       />
       <ExampleSideBySide
-        client:only
+        client:load
         example={ctaExample}
         outputHeight={300}
         tabs={["raw"]}
@@ -97,7 +97,7 @@ import { marketingConfig } from "@/config/marketing";
       </HeaderSection>
       <div class="container max-w-[600px]">
         <ExampleTabs
-          client:only
+          client:load
           example={codeBlockExample}
           tabs={["llm-ui", "raw"]}
           outputHeight={300}
@@ -115,7 +115,7 @@ import { marketingConfig } from "@/config/marketing";
         subtitle="Render the model's output using your own custom 'blocks'"
       />
       <ExampleSideBySide
-        client:only
+        client:load
         example={ctaExample}
         outputHeight={300}
         tabs={["raw"]}
