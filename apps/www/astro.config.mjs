@@ -17,8 +17,9 @@ export default defineConfig({
   integrations: [
     mdx({
       syntaxHighlight: "shiki",
-      shikiConfig: {
-        theme: "github-dark-dimmed",
+      themes: {
+        light: "github-light",
+        dark: "github-dark",
       },
       gfm: true,
     }),

@@ -1,0 +1,31 @@
+---
+title: Examples
+description: ""
+---
+
+import {
+  ExampleSideBySide,
+  ExampleTabs,
+} from "@/components/examples/ExampleMdx";
+
+llm-ui is a work in progress.
+
+Examples
+
+```tsx
+<Example prop1={1} prop2={2} />
+```
+
+<ExampleSideBySide
+  client:load
+  example={"# H1\nHi Docs"}
+  outputHeight={300}
+  tabs={["markdown", "raw"]}
+/>
+
+<ExampleTabs
+  client:load
+  example={"# H1\nHi Docs"}
+  outputHeight={300}
+  tabs={["markdown", "raw"]}
+/>

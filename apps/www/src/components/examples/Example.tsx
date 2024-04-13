@@ -26,13 +26,14 @@ const SideBySideContainer: React.FC<{
   );
 };
 
-const CodeWithBackground: React.FC<{ children: ReactNode; height: number }> = ({
-  height,
-  children,
-}) => (
+const OutputBackground: React.FC<{
+  className?: string;
+  children: ReactNode;
+  height: number;
+}> = ({ className, height, children }) => (
   <div
     style={{ height }}
-    className="rounded-lg bg-background text-left p-6 flex flex- flex-col"
+    className={cn("bg-background text-left p-6 flex flex- flex-col", className)}
   >
     {children}
   </div>
@@ -42,6 +43,7 @@ type OutputTabsProps = {
   output: string;
   llmUi?: ReactNode;
   className?: string;
+  backgroundClassName?: string;
   height: number;
 };
 
@@ -52,6 +54,7 @@ const OutputTabs: React.FC<
   }
 > = ({
   className,
+  backgroundClassName,
   height,
   output,
   llmUi,
@@ -74,16 +77,16 @@ const OutputTabs: React.FC<
       )}
       {showMarkdown && (
         <TabsContent value="markdown">
-          <CodeWithBackground height={height}>
+          <OutputBackground className={backgroundClassName} height={height}>
             <Markdown isComplete={false} llmOutput={output} />
-          </CodeWithBackground>
+          </OutputBackground>
         </TabsContent>
       )}
       {showRaw && (
         <TabsContent value="raw">
-          <CodeWithBackground height={height}>
+          <OutputBackground className={backgroundClassName} height={height}>
             <pre className="overflow-x-auto">{output}</pre>
-          </CodeWithBackground>
+          </OutputBackground>
         </TabsContent>
       )}
       {tabs.length > 1 && (
@@ -101,17 +104,21 @@ const OutputTabs: React.FC<
   );
 };
 
-type ExampleProps = {
+export type ExampleProps = {
+  className?: string;
   outputHeight: number;
   tabs: Tab[];
+  backgroundClassName?: string;
 } & UseExampleProps;
 
 const LLMUI = ({
   isStreamFinished,
   height,
+  backgroundClassName,
   ...props
 }: SetRequired<Partial<LLMOutputProps>, "isStreamFinished" | "llmOutput"> & {
   height: number;
+  backgroundClassName?: string;
 }) => {
   const { blockMatches, visibleText } = useLLMOutput({
     blocks: [codeBlockBlock],
@@ -134,7 +141,7 @@ const LLMUI = ({
     );
   });
   return (
-    <CodeWithBackground height={height}>
+    <OutputBackground className={backgroundClassName} height={height}>
       {visibleText.length === 0 ? (
         <div className="flex flex-1 justify-center items-center">
           <Loader />
@@ -142,7 +149,7 @@ const LLMUI = ({
       ) : (
         blocks
       )}
-    </CodeWithBackground>
+    </OutputBackground>
   );
 };
 type UseExampleProps = {
@@ -164,12 +171,14 @@ const useExample = ({ example, options = {} }: UseExampleProps) => {
   return { ...result, setDelayMultiplier, delayMultiplier };
 };
 
-export const ExampleTabs = ({
+export const ExampleTabs: React.FC<ExampleProps> = ({
   example,
   outputHeight,
   tabs,
+  className,
+  backgroundClassName,
   options,
-}: ExampleProps) => {
+}) => {
   const {
     output,
     isStreamFinished,
@@ -183,16 +192,18 @@ export const ExampleTabs = ({
       llmOutput={output}
       loopIndex={loopIndex}
       height={outputHeight}
+      backgroundClassName={backgroundClassName}
     />
   );
   return (
-    <div className="grid grid-cols-1">
+    <div className={cn("grid grid-cols-1", className)}>
       <OutputTabs
         className="hidden md:block"
         output={output}
         llmUi={llmUi}
         tabs={tabs}
         height={outputHeight}
+        backgroundClassName={backgroundClassName}
       />
       <div className="flex flex-col items-center">
         <Controls
@@ -205,13 +216,18 @@ export const ExampleTabs = ({
   );
 };
 
-export const ExampleSideBySide = ({
+export type ExampleSideBySideProps = ExampleProps & {
+  showHeaders?: boolean;
+};
+
+export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
   className,
   showHeaders = false,
   tabs = ["markdown", "raw"],
   outputHeight,
+  backgroundClassName,
   ...props
-}: ExampleProps & { className?: string; showHeaders?: boolean }) => {
+}) => {
   const {
     output,
     isStreamFinished,
@@ -225,6 +241,7 @@ export const ExampleSideBySide = ({
       llmOutput={output}
       loopIndex={loopIndex}
       height={outputHeight}
+      backgroundClassName={backgroundClassName}
     />
   );
   return (
@@ -244,6 +261,7 @@ export const ExampleSideBySide = ({
             output={output}
             tabs={tabs}
             height={outputHeight}
+            backgroundClassName={backgroundClassName}
           />
           <OutputTabs
             className="md:hidden"
@@ -251,6 +269,7 @@ export const ExampleSideBySide = ({
             llmUi={llmUi}
             tabs={["llm-ui", ...tabs]}
             height={outputHeight}
+            backgroundClassName={backgroundClassName}
           />
         </SideBySideContainer>
         <SideBySideContainer
