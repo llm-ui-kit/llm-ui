@@ -8,15 +8,20 @@ pnpm add llm-ui @llm-ui/markdown @llm-ui/code-block more more more how do you li
 - *italic*, **bold**, ~strikethrough~,
 `;
 
-export const codeBlockExample = `
+export const codeBlockExample = `#### Python
 \`\`\`python
-def hello_world():
-    print("Hello, World!")
+def hello_llm_ui():
+    print("Hello llm-ui")
 \`\`\`
 
-\`\`\`bash
-echo "Hello, World!"
+#### Typescript
+\`\`\`ts
+const helloLlmUi = () => {
+  console.log("Hello llm-ui")
+}
 \`\`\`
 
-
-`;
+#### Haskell
+\`\`\`haskell
+main = putStrLn "Hello llm-ui"
+\`\`\``;
