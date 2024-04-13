@@ -64,7 +64,11 @@ const OutputTabs: React.FC<
   return (
     <Tabs defaultValue={defaultValue} className={className}>
       {showLlmUi && (
-        <TabsContent value="llm-ui">
+        <TabsContent
+          value="llm-ui"
+          forceMount // keepMounted so we keep streaming the content
+          className="data-[state=active]:block hidden"
+        >
           <div style={{ height }}>{llmUi}</div>
         </TabsContent>
       )}
@@ -150,8 +154,9 @@ const useExample = ({ example, options = {} }: UseExampleProps) => {
     options.delayMultiplier,
   );
   const result = useStreamFastSmooth(example, {
-    loop: false,
+    loop: true,
     autoStart: true,
+    autoStartDelayMs: 0,
     loopDelayMs: 3000,
     ...options,
     delayMultiplier,
