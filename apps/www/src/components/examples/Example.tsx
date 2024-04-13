@@ -85,7 +85,7 @@ const OutputTabs: React.FC<
       {showRaw && (
         <TabsContent value="raw">
           <OutputBackground className={backgroundClassName} height={height}>
-            <pre className="overflow-x-auto">{output}</pre>
+            <pre className="overflow-x-auto not-shiki">{output}</pre>
           </OutputBackground>
         </TabsContent>
       )}
@@ -223,11 +223,14 @@ export type ExampleSideBySideProps = ExampleProps & {
 export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
   className,
   showHeaders = false,
-  tabs = ["markdown", "raw"],
+  tabs = ["llm-ui", "markdown", "raw"],
   outputHeight,
   backgroundClassName,
   ...props
 }) => {
+  if (!tabs.includes("llm-ui")) {
+    throw new Error("llm-ui tab is required for ExampleSideBySide");
+  }
   const {
     output,
     isStreamFinished,
@@ -259,7 +262,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
           <OutputTabs
             className="hidden md:block"
             output={output}
-            tabs={tabs}
+            tabs={tabs.filter((tab) => tab !== "llm-ui")}
             height={outputHeight}
             backgroundClassName={backgroundClassName}
           />
@@ -267,7 +270,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
             className="md:hidden"
             output={output}
             llmUi={llmUi}
-            tabs={["llm-ui", ...tabs]}
+            tabs={tabs}
             height={outputHeight}
             backgroundClassName={backgroundClassName}
           />
@@ -289,7 +292,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
         </SideBySideContainer>
       </div>
       <Controls
-        className={tabs.length > 1 ? "md:-mt-4" : "mt-4"}
+        className={tabs.length > 2 ? "md:-mt-4" : "mt-4"}
         initialDelayMultiplier={delayMultiplier}
         onDelayMultiplier={setDelayMultiplier}
       />

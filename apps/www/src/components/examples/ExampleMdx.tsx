@@ -12,11 +12,13 @@ const defaultClassName = "my-8";
 export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
   backgroundClassName = defaultBackgroundClassName,
   className,
+  tabs = ["raw", "llm-ui"],
   ...props
 }) => (
   <ExampleSideBySideOriginal
     className={cn(defaultClassName, className)}
     backgroundClassName={backgroundClassName}
+    tabs={tabs}
     {...props}
   />
 );
@@ -24,11 +26,13 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
 export const ExampleTabs: React.FC<ExampleProps> = ({
   backgroundClassName = defaultBackgroundClassName,
   className,
+  tabs = ["raw", "llm-ui"],
   ...props
 }) => (
   <ExampleTabsOriginal
     className={cn(defaultClassName, className)}
     backgroundClassName={backgroundClassName}
+    tabs={tabs}
     {...props}
   />
 );

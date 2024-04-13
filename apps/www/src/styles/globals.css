@@ -184,7 +184,7 @@ html.dark .shiki span {
   color: var(--shiki-dark) !important;
 }
 
-pre {
+pre:not(.not-shiki) {
   @apply p-4;
   @apply rounded-lg;
   @apply overflow-x-auto;
