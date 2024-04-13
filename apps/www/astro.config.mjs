@@ -11,6 +11,9 @@ import simpleStackForm from "simple-stack-form";
 // https://astro.build/config
 export default defineConfig({
   site: "https://llm-ui.com",
+  redirects: {
+    "/docs": "/docs/getting-started",
+  },
   integrations: [
     mdx({
       syntaxHighlight: "shiki",
