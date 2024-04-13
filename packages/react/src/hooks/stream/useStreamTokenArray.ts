@@ -1,5 +1,3 @@
-import { delay } from "../../lib/delay";
-
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   TokenWithDelay,
@@ -30,6 +28,7 @@ export const useStreamTokenArray = (
   );
   const [output, setOutput] = useState<string>("");
   const [loopIndex, setLoopIndex] = useState<number>(0);
+  const [isPlaying, setIsPlaying] = useState<boolean>(options.autoStart);
 
   const clearTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const currentIndex = useRef<number>(0);
@@ -39,6 +38,7 @@ export const useStreamTokenArray = (
       clearTimeout(clearTimeoutRef.current);
       clearTimeoutRef.current = null;
     }
+    setIsPlaying(false);
   }, []);
 
   const reset = useCallback(() => {
@@ -56,9 +56,12 @@ export const useStreamTokenArray = (
     const isFinished = index >= tokenArray.length;
     if (isFinished) {
       if (options.loop) {
-        await delay(options.loopDelayMs);
-        reset();
-        nextTokenRef.current();
+        clearTimeoutRef.current = setTimeout(() => {
+          reset();
+          start();
+        }, options.loopDelayMs);
+      } else {
+        setIsPlaying(false);
       }
     } else {
       const { token, delayMs } = tokenArray[index];
@@ -79,6 +82,7 @@ export const useStreamTokenArray = (
     if (clearTimeoutRef.current) {
       return;
     }
+    setIsPlaying(true);
     nextToken();
   }, []);
 
@@ -87,6 +91,7 @@ export const useStreamTokenArray = (
       setTimeout(start, options.autoStartDelayMs);
     }
   }, []);
+
   const finishedOutput = tokenArray.map((t) => t.token).join("");
   const isFinished = output.length === finishedOutput.length;
   return {
@@ -94,6 +99,7 @@ export const useStreamTokenArray = (
     reset,
     pause,
     start,
+    isPlaying,
     isStreamStarted: output.length > 0,
     isStreamFinished: isFinished,
     loopIndex,

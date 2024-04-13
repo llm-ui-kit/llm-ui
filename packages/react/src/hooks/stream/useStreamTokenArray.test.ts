@@ -28,6 +28,7 @@ describe("useStreamTokenArray", () => {
       expect(result.current.output).toEqual("Hello");
       expect(result.current.isStreamStarted).toBe(true);
       expect(result.current.isStreamFinished).toBe(true);
+      expect(result.current.isPlaying).toBe(false);
     });
   });
 
@@ -57,6 +58,7 @@ describe("useStreamTokenArray", () => {
       expect(output).toEqual(["", "He", "Hell", "Hello"]);
       expect(isStarted).toEqual([false, true, true, true]);
       expect(isFinished).toEqual([false, false, false, true]);
+      expect(result.current.isPlaying).toBe(false);
     });
   });
 
@@ -68,6 +70,7 @@ describe("useStreamTokenArray", () => {
     expect(result.current.output).toBe("");
     expect(result.current.isStreamStarted).toBe(false);
     expect(result.current.isStreamFinished).toBe(false);
+    expect(result.current.isPlaying).toBe(false);
   });
 
   test("start()", () => {
@@ -78,6 +81,7 @@ describe("useStreamTokenArray", () => {
     expect(result.current.output).toBe("Hello");
     expect(result.current.isStreamStarted).toBe(true);
     expect(result.current.isStreamFinished).toBe(true);
+    expect(result.current.isPlaying).toBe(false);
   });
 
   test("reset()", () => {
@@ -88,6 +92,7 @@ describe("useStreamTokenArray", () => {
     expect(result.current.output).toBe("");
     expect(result.current.isStreamStarted).toBe(false);
     expect(result.current.isStreamFinished).toBe(false);
+    expect(result.current.isPlaying).toBe(false);
   });
 
   test("loop: true", async () => {
@@ -103,8 +108,8 @@ describe("useStreamTokenArray", () => {
 
       expect(isStarted).containSubset([false, true, false, true]);
       expect(isFinished).containSubset([false, true, false, true]);
-      expect(isFinished).containSubset([false, true, false, true]);
       expect(result.current.loopIndex).greaterThan(0);
+      expect(result.current.isPlaying).toBe(true);
     });
   });
 });

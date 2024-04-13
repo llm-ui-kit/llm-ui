@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
+import { PauseIcon, PlayIcon } from "@radix-ui/react-icons";
+import { Button } from "../ui/Button";
 import { Slider } from "../ui/Slider";
-import { Text } from "../ui/Text";
 
 // Transforms the value of the slider to a delay multiplier
 const transformSliderValue = (x: number): number => {
@@ -24,22 +25,60 @@ const inverseTransformSliderValue = (y: number): number => {
 
 export const Controls: React.FC<{
   className: string;
-  initialDelayMultiplier?: number;
+  delayMultiplier: number;
   onDelayMultiplier: (delayMultiplier: number) => void;
-}> = ({ className, initialDelayMultiplier = 1, onDelayMultiplier }) => {
+  isPlaying: boolean;
+  showPlayPause: boolean;
+  onPause: () => void;
+  onStart: () => void;
+}> = ({
+  className,
+  delayMultiplier,
+  onDelayMultiplier,
+  isPlaying,
+  showPlayPause,
+  onPause,
+  onStart,
+}) => {
   return (
-    <div className={cn(className, "flex flex-col items-center gap-4")}>
-      <Text>Speed</Text>
-      <Slider
-        className="w-52"
-        defaultValue={[inverseTransformSliderValue(initialDelayMultiplier)]}
-        min={0}
-        max={10}
-        step={0.5}
-        onValueChange={(newValue) => {
-          onDelayMultiplier(transformSliderValue(newValue[0]));
-        }}
-      />
+    <div
+      className={cn(
+        className,
+        "flex flex-row justify-center items-start gap-4",
+      )}
+    >
+      <div className="flex flex-col items-center">
+        <Slider
+          className="w-52 mt-4"
+          value={[inverseTransformSliderValue(delayMultiplier)]}
+          min={0}
+          max={10}
+          step={0.5}
+          onValueChange={(newValue) => {
+            onDelayMultiplier(transformSliderValue(newValue[0]));
+          }}
+        />
+        <p className="mt-4">{(1 / delayMultiplier).toFixed(1)}x</p>
+      </div>
+      {showPlayPause && (
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => {
+            if (isPlaying) {
+              onPause();
+            } else {
+              onStart();
+            }
+          }}
+        >
+          {isPlaying ? (
+            <PauseIcon className="h-4 w-4" />
+          ) : (
+            <PlayIcon className="h-4 w-4" />
+          )}
+        </Button>
+      )}
     </div>
   );
 };
