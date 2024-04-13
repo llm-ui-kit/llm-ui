@@ -172,12 +172,10 @@
 
 html.dark pre {
   background-color: theme("colors.background.200") !important;
-  /* Optional, if you also want font styles */
 }
 
 html pre {
   background-color: theme("colors.background.DEFAULT") !important;
-  /* Optional, if you also want font styles */
 }
 
 /* not applied to docs */
