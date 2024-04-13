@@ -8,9 +8,7 @@ export const Markdown: LLMOutputComponent = (props) => {
       {...props}
       className={"prose dark:prose-invert"}
       components={{
-        pre: ({ children }) => (
-          <pre className="not-prose shiki">{children}</pre>
-        ),
+        pre: ({ children }) => <pre className="not-prose">{children}</pre>,
       }}
     />
   );
