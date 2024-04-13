@@ -258,7 +258,10 @@ export const ExampleSideBySide = ({
           header={
             showHeaders && (
               <H2 className="mb-8 text-center">
-                <span className="text-gradient_indigo-purple">llm-ui</span> ✨
+                <span className="font-black text-gradient_indigo-purple">
+                  llm-ui
+                </span>{" "}
+                ✨
               </H2>
             )
           }

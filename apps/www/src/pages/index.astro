@@ -4,7 +4,12 @@ import { siteConfig } from "@/config/site";
 import MainLayout from "@/layouts/MainLayout.astro";
 import WaitList from "@/components/WaitList.astro";
 import { ExampleSideBySide, ExampleTabs } from "@/components/examples/Example";
-import { ctaExample, codeBlockExample } from "@/components/examples/examples";
+import {
+  ctaExample,
+  codeBlockExample,
+  markdownExample,
+  customComponentExample,
+} from "@/components/examples/examples";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import HeaderSection from "@/components/HeaderSection.astro";
@@ -74,8 +79,8 @@ import { marketingConfig } from "@/config/marketing";
       />
       <ExampleSideBySide
         client:load
-        example={ctaExample}
-        outputHeight={300}
+        example={markdownExample}
+        outputHeight={450}
         tabs={["raw"]}
         options={{ delayMultiplier: 4 }}
       />
@@ -116,7 +121,7 @@ import { marketingConfig } from "@/config/marketing";
       />
       <ExampleSideBySide
         client:load
-        example={ctaExample}
+        example={customComponentExample}
         outputHeight={300}
         tabs={["raw"]}
       />
