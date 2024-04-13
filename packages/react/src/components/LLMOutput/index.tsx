@@ -54,8 +54,15 @@ export const useLLMOutput = ({
   const outputLengthsRef = useRef<number[]>([]);
   const visibleTextIncrementsRef = useRef<number[]>([]);
 
-  const [{ blockMatches, ...state }, setState] =
-    useState<UseLLMOutputReturn>(initialState);
+  const [{ blockMatches, ...state }, setState] = useState<UseLLMOutputReturn>({
+    ...initialState,
+    blockMatches: matchBlocks({
+      llmOutput,
+      blocks,
+      fallbackBlock,
+      isStreamFinished,
+    }),
+  });
 
   const renderLoop = (frameTime: DOMHighResTimeStamp) => {
     if (!renderLoopRef.current) {

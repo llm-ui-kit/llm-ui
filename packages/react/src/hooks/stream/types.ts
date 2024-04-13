@@ -31,5 +31,6 @@ export type UseStreamTokenArrayOptions = {
   autoStartDelayMs: number;
   loop: boolean;
   loopDelayMs: number;
+  loopStartIndex: number;
   delayMultiplier: number;
 };

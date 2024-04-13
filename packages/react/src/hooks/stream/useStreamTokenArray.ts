@@ -12,6 +12,7 @@ export const useStreamTokenArrayOptionsDefaultOptions: UseStreamTokenArrayOption
     loop: false,
     loopDelayMs: 1000,
     delayMultiplier: 1,
+    loopStartIndex: 0,
   };
 
 export const useStreamTokenArray = (
@@ -26,12 +27,19 @@ export const useStreamTokenArray = (
     }),
     [userOptions],
   );
-  const [output, setOutput] = useState<string>("");
+  const currentIndex = useRef<number>(
+    Math.min(options.loopStartIndex, tokenArray.length),
+  );
+  const [output, setOutput] = useState<string>(
+    tokenArray
+      .slice(0, currentIndex.current)
+      .map((t) => t.token)
+      .join(""),
+  );
   const [loopIndex, setLoopIndex] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(options.autoStart);
 
   const clearTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const currentIndex = useRef<number>(0);
 
   const pause = useCallback(() => {
     if (clearTimeoutRef.current) {
@@ -62,6 +70,7 @@ export const useStreamTokenArray = (
         }, options.loopDelayMs);
       } else {
         setIsPlaying(false);
+        clearTimeoutRef.current = null;
       }
     } else {
       const { token, delayMs } = tokenArray[index];
@@ -81,6 +90,9 @@ export const useStreamTokenArray = (
   const start = useCallback(() => {
     if (clearTimeoutRef.current) {
       return;
+    }
+    if (isFinished) {
+      reset();
     }
     setIsPlaying(true);
     nextToken();
