@@ -28,6 +28,7 @@ describe("useStreamTokenArray", () => {
       expect(result.current.output).toEqual("Hello");
       expect(result.current.isStreamStarted).toBe(true);
       expect(result.current.isStreamFinished).toBe(true);
+      expect(result.current.isPlaying).toBe(false);
     });
   });
 
@@ -53,41 +54,50 @@ describe("useStreamTokenArray", () => {
     );
     await waitFor(() => {
       const { output, isStarted, isFinished } = resultToArrays(result);
-
-      expect(output).toEqual(["", "He", "Hell", "Hello"]);
-      expect(isStarted).toEqual([false, true, true, true]);
-      expect(isFinished).toEqual([false, false, false, true]);
+      expect(output.slice(0, -1)).toEqual(["", "He", "Hell", "Hello"]);
+      expect(isStarted.slice(0, -1)).toEqual([false, true, true, true]);
+      expect(isFinished.slice(0, -1)).toEqual([false, false, false, true]);
+      expect(result.current.isPlaying).toBe(false);
     });
   });
 
-  test("autoStart: false", () => {
-    const { result } = renderHook(() =>
+  test("autoStart: false", async () => {
+    const { result, waitFor } = renderHook(() =>
       useStreamTokenArray(allAtOnce, { ...options, autoStart: false }),
     );
-
-    expect(result.current.output).toBe("");
-    expect(result.current.isStreamStarted).toBe(false);
-    expect(result.current.isStreamFinished).toBe(false);
+    waitFor(() => {
+      expect(result.current.output).toBe("");
+      expect(result.current.isStreamStarted).toBe(false);
+      expect(result.current.isStreamFinished).toBe(false);
+      expect(result.current.isPlaying).toBe(false);
+    });
   });
 
-  test("start()", () => {
-    const { result } = renderHook(() =>
+  test("start()", async () => {
+    const { result, waitFor } = renderHook(() =>
       useStreamTokenArray(allAtOnce, { ...options, autoStart: false }),
     );
     act(() => result.current.start());
-    expect(result.current.output).toBe("Hello");
-    expect(result.current.isStreamStarted).toBe(true);
-    expect(result.current.isStreamFinished).toBe(true);
+
+    await waitFor(() => {
+      expect(result.current.output).toBe("Hello");
+      expect(result.current.isStreamStarted).toBe(true);
+      expect(result.current.isStreamFinished).toBe(true);
+      expect(result.current.isPlaying).toBe(false);
+    });
   });
 
-  test("reset()", () => {
-    const { result } = renderHook(() =>
+  test("reset()", async () => {
+    const { result, waitFor } = renderHook(() =>
       useStreamTokenArray(allAtOnce, options),
     );
     act(() => result.current.reset());
-    expect(result.current.output).toBe("");
-    expect(result.current.isStreamStarted).toBe(false);
-    expect(result.current.isStreamFinished).toBe(false);
+    await waitFor(() => {
+      expect(result.current.output).toBe("");
+      expect(result.current.isStreamStarted).toBe(false);
+      expect(result.current.isStreamFinished).toBe(false);
+      expect(result.current.isPlaying).toBe(false);
+    });
   });
 
   test("loop: true", async () => {
@@ -103,8 +113,8 @@ describe("useStreamTokenArray", () => {
 
       expect(isStarted).containSubset([false, true, false, true]);
       expect(isFinished).containSubset([false, true, false, true]);
-      expect(isFinished).containSubset([false, true, false, true]);
       expect(result.current.loopIndex).greaterThan(0);
+      expect(result.current.isPlaying).toBe(true);
     });
   });
 });

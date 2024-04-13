@@ -85,7 +85,7 @@ const OutputTabs: React.FC<
       {showRaw && (
         <TabsContent value="raw">
           <OutputBackground className={backgroundClassName} height={height}>
-            <pre className="overflow-x-auto">{output}</pre>
+            <pre className="overflow-x-auto not-shiki">{output}</pre>
           </OutputBackground>
         </TabsContent>
       )}
@@ -109,16 +109,19 @@ export type ExampleProps = {
   outputHeight: number;
   tabs: Tab[];
   backgroundClassName?: string;
+  showPlayPause?: boolean;
 } & UseExampleProps;
 
 const LLMUI = ({
   isStreamFinished,
   height,
+  isPlaying,
   backgroundClassName,
   ...props
 }: SetRequired<Partial<LLMOutputProps>, "isStreamFinished" | "llmOutput"> & {
   height: number;
   backgroundClassName?: string;
+  isPlaying: boolean;
 }) => {
   const { blockMatches, visibleText } = useLLMOutput({
     blocks: [codeBlockBlock],
@@ -142,7 +145,7 @@ const LLMUI = ({
   });
   return (
     <OutputBackground className={backgroundClassName} height={height}>
-      {visibleText.length === 0 ? (
+      {visibleText.length === 0 && isPlaying ? (
         <div className="flex flex-1 justify-center items-center">
           <Loader />
         </div>
@@ -158,7 +161,7 @@ type UseExampleProps = {
 };
 const useExample = ({ example, options = {} }: UseExampleProps) => {
   const [delayMultiplier, setDelayMultiplier] = useState(
-    options.delayMultiplier,
+    options.delayMultiplier ?? 1,
   );
   const result = useStreamFastSmooth(example, {
     loop: true,
@@ -178,13 +181,17 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
   className,
   backgroundClassName,
   options,
+  showPlayPause = true,
 }) => {
   const {
     output,
     isStreamFinished,
+    isPlaying,
     loopIndex,
     setDelayMultiplier,
     delayMultiplier,
+    pause,
+    start,
   } = useExample({ example, options });
   const llmUi = (
     <LLMUI
@@ -193,6 +200,7 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
       loopIndex={loopIndex}
       height={outputHeight}
       backgroundClassName={backgroundClassName}
+      isPlaying={isPlaying}
     />
   );
   return (
@@ -208,8 +216,12 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
       <div className="flex flex-col items-center">
         <Controls
           className="md:-mt-6"
-          initialDelayMultiplier={delayMultiplier}
+          delayMultiplier={delayMultiplier}
           onDelayMultiplier={setDelayMultiplier}
+          onPause={pause}
+          onStart={start}
+          showPlayPause={showPlayPause}
+          isPlaying={isPlaying}
         />
       </div>
     </div>
@@ -223,14 +235,21 @@ export type ExampleSideBySideProps = ExampleProps & {
 export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
   className,
   showHeaders = false,
-  tabs = ["markdown", "raw"],
+  tabs = ["llm-ui", "markdown", "raw"],
   outputHeight,
   backgroundClassName,
+  showPlayPause = true,
   ...props
 }) => {
+  if (!tabs.includes("llm-ui")) {
+    throw new Error("llm-ui tab is required for ExampleSideBySide");
+  }
   const {
     output,
     isStreamFinished,
+    pause,
+    start,
+    isPlaying,
     loopIndex,
     setDelayMultiplier,
     delayMultiplier,
@@ -242,6 +261,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
       loopIndex={loopIndex}
       height={outputHeight}
       backgroundClassName={backgroundClassName}
+      isPlaying={isPlaying}
     />
   );
   return (
@@ -259,7 +279,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
           <OutputTabs
             className="hidden md:block"
             output={output}
-            tabs={tabs}
+            tabs={tabs.filter((tab) => tab !== "llm-ui")}
             height={outputHeight}
             backgroundClassName={backgroundClassName}
           />
@@ -267,7 +287,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
             className="md:hidden"
             output={output}
             llmUi={llmUi}
-            tabs={["llm-ui", ...tabs]}
+            tabs={tabs}
             height={outputHeight}
             backgroundClassName={backgroundClassName}
           />
@@ -289,9 +309,13 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
         </SideBySideContainer>
       </div>
       <Controls
-        className={tabs.length > 1 ? "md:-mt-4" : "mt-4"}
-        initialDelayMultiplier={delayMultiplier}
+        className={tabs.length > 2 ? "md:-mt-8" : "mt-4"}
+        delayMultiplier={delayMultiplier}
         onDelayMultiplier={setDelayMultiplier}
+        isPlaying={isPlaying}
+        showPlayPause={showPlayPause}
+        onPause={pause}
+        onStart={start}
       />
     </div>
   );

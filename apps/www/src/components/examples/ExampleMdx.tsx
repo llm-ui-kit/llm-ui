@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import type { UseStreamWithProbabilitiesOptions } from "llm-ui/hooks";
 import {
   ExampleSideBySide as ExampleSideBySideOriginal,
   ExampleTabs as ExampleTabsOriginal,
@@ -9,26 +10,48 @@ import {
 const defaultBackgroundClassName = "bg-background-200";
 const defaultClassName = "my-8";
 
+const defaultOptions: Partial<UseStreamWithProbabilitiesOptions> = {
+  autoStart: false,
+  loop: false,
+};
+
 export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
   backgroundClassName = defaultBackgroundClassName,
   className,
+  showPlayPause = true,
+  tabs = ["raw", "llm-ui"],
   ...props
-}) => (
-  <ExampleSideBySideOriginal
-    className={cn(defaultClassName, className)}
-    backgroundClassName={backgroundClassName}
-    {...props}
-  />
-);
+}) => {
+  const options = { ...defaultOptions, ...props.options };
+  return (
+    <ExampleSideBySideOriginal
+      className={cn(defaultClassName, className)}
+      options={options}
+      backgroundClassName={backgroundClassName}
+      tabs={tabs}
+      showPlayPause={showPlayPause}
+      {...props}
+    />
+  );
+};
 
 export const ExampleTabs: React.FC<ExampleProps> = ({
   backgroundClassName = defaultBackgroundClassName,
   className,
+  showPlayPause = true,
+
+  tabs = ["raw", "llm-ui"],
   ...props
-}) => (
-  <ExampleTabsOriginal
-    className={cn(defaultClassName, className)}
-    backgroundClassName={backgroundClassName}
-    {...props}
-  />
-);
+}) => {
+  const options = { ...defaultOptions, ...props.options };
+  return (
+    <ExampleTabsOriginal
+      className={cn(defaultClassName, className)}
+      options={options}
+      backgroundClassName={backgroundClassName}
+      tabs={tabs}
+      showPlayPause={showPlayPause}
+      {...props}
+    />
+  );
+};

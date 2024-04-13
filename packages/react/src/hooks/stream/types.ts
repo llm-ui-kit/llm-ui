@@ -22,6 +22,7 @@ export type UseStreamResponse = {
   start: () => void;
   isStreamStarted: boolean;
   isStreamFinished: boolean;
+  isPlaying: boolean;
   loopIndex: number;
 };
 
