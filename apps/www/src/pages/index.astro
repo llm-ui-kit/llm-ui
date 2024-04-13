@@ -3,7 +3,8 @@ import { Button, buttonVariants } from "@/components/ui/Button";
 import { siteConfig } from "@/config/site";
 import MainLayout from "@/layouts/MainLayout.astro";
 import WaitList from "@/components/WaitList.astro";
-import { Example } from "@/components/examples/Example";
+import { ExampleSideBySide, ExampleTabs } from "@/components/examples/Example";
+import { ctaExample, codeBlockExample } from "@/components/examples/examples";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import HeaderSection from "@/components/HeaderSection.astro";
@@ -52,7 +53,13 @@ import { marketingConfig } from "@/config/marketing";
 
   <section id="example" class="bg-background-200">
     <div class="container flex min-h-[500px] max-w-[80rem] flex-col space-y-6">
-      <Example client:only />
+      <ExampleSideBySide
+        client:only
+        example={ctaExample}
+        showHeaders
+        outputHeight={260}
+        tabs={["markdown", "raw"]}
+      />
     </div>
   </section>
 
@@ -64,6 +71,13 @@ import { marketingConfig } from "@/config/marketing";
       <HeaderSection
         title="Advanced Markdown"
         subtitle="Markdown is rendered from left to right, markdown syntax is never visible"
+      />
+      <ExampleSideBySide
+        client:only
+        example={ctaExample}
+        outputHeight={300}
+        tabs={["raw"]}
+        options={{ delayMultiplier: 4 }}
       />
     </div>
   </section>
@@ -81,16 +95,30 @@ import { marketingConfig } from "@/config/marketing";
           >.</Fragment
         >
       </HeaderSection>
+      <div class="container max-w-[600px]">
+        <ExampleTabs
+          client:only
+          example={codeBlockExample}
+          tabs={["llm-ui", "raw"]}
+          outputHeight={300}
+        />
+      </div>
     </div>
   </section>
   <section
-    id="codeblock"
+    id="custom"
     class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
   >
     <div class="container space-y-6">
       <HeaderSection
         title="Custom Components"
         subtitle="Render the model's output using your own custom 'blocks'"
+      />
+      <ExampleSideBySide
+        client:only
+        example={ctaExample}
+        outputHeight={300}
+        tabs={["raw"]}
       />
     </div>
   </section>
@@ -122,4 +150,3 @@ import { marketingConfig } from "@/config/marketing";
     </div>
   </section>
 </MainLayout>
-@/components/examples/HomePageExample @/components/examples/Example

@@ -225,6 +225,9 @@ importers:
       remark:
         specifier: ^15.0.1
         version: 15.0.1
+      type-fest:
+        specifier: ^4.15.0
+        version: 4.15.0
       typescript:
         specifier: ^5.4.3
         version: 5.4.3
