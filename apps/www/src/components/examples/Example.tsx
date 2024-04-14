@@ -273,10 +273,6 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
       isStreamFinished={isStreamFinished}
       llmOutput={output}
       loopIndex={loopIndex}
-      backgroundClassName={cn(
-        "rounded-tr-lg overflow-clip",
-        backgroundClassName,
-      )}
       isPlaying={isPlaying}
       hideFirstLoop={hideFirstLoop}
     />
