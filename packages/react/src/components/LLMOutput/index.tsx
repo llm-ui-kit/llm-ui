@@ -73,7 +73,6 @@ export const useLLMOutput = ({
     if (restartRef.current) {
       startTime.current = performance.now();
       restartRef.current = false;
-      setState({ ...initialState, loopIndex });
       finishTimeRef.current = undefined;
       previousFrameTimeRef.current = undefined;
       visibleTextAllLengthsRef.current = [];
@@ -158,6 +157,8 @@ export const useLLMOutput = ({
 
   useEffect(() => {
     if (loopIndex > 0) {
+      // set the state here so we have latest loopIndex
+      setState({ ...initialState, loopIndex });
       restartRef.current = true;
       if (!frameRef.current) {
         renderLoopRef.current = renderLoop;
