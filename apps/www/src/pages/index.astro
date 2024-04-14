@@ -60,7 +60,7 @@ import { marketingConfig } from "@/config/marketing";
         example={ctaExample}
         tabs={["llm-ui", "markdown", "raw"]}
         showHeaders
-        outputHeight={260}
+        hideFirstLoop
       />
     </div>
   </section>
@@ -77,9 +77,9 @@ import { marketingConfig } from "@/config/marketing";
       <ExampleSideBySide
         client:load
         example={markdownExample}
-        outputHeight={450}
         tabs={["llm-ui", "raw"]}
         options={{ delayMultiplier: 4 }}
+        hideFirstLoop
       />
     </div>
   </section>
@@ -102,7 +102,7 @@ import { marketingConfig } from "@/config/marketing";
           client:load
           example={codeBlockExample}
           tabs={["llm-ui", "raw"]}
-          outputHeight={450}
+          hideFirstLoop
         />
       </div>
     </div>
@@ -119,8 +119,8 @@ import { marketingConfig } from "@/config/marketing";
       <ExampleSideBySide
         client:load
         example={customComponentExample}
-        outputHeight={300}
         tabs={["llm-ui", "raw"]}
+        hideFirstLoop
       />
     </div>
   </section>

@@ -6,12 +6,13 @@ import type { UseStreamWithProbabilitiesOptions } from "llm-ui/hooks";
 import { useState, type ReactNode } from "react";
 import type { SetRequired } from "type-fest";
 import { Loader } from "../ui/Loader";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/Tabs";
 import { H2 } from "../ui/Text";
 import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
+import { NeverShrinkContainer } from "./NeverShrinkContainer";
 import { throttle } from "./throttle";
+import type { Tab } from "./types";
 
 const SideBySideContainer: React.FC<{
   className?: string;
@@ -19,7 +20,7 @@ const SideBySideContainer: React.FC<{
   children: ReactNode;
 }> = ({ className, header, children }) => {
   return (
-    <div className={cn(className, "flex-1 ")}>
+    <div className={cn("flex flex-1 flex-col items-stretch", className)}>
       {header}
       {children}
     </div>
@@ -29,11 +30,12 @@ const SideBySideContainer: React.FC<{
 const OutputBackground: React.FC<{
   className?: string;
   children: ReactNode;
-  height: number;
-}> = ({ className, height, children }) => (
+}> = ({ className, children }) => (
   <div
-    style={{ height }}
-    className={cn("bg-background text-left p-6 flex flex- flex-col", className)}
+    className={cn(
+      "bg-background text-left p-6 flex flex-col flex-1 overflow-x-auto",
+      className,
+    )}
   >
     {children}
   </div>
@@ -43,85 +45,68 @@ type OutputTabsProps = {
   output: string;
   llmUi?: ReactNode;
   className?: string;
-  backgroundClassName?: string;
-  height: number;
+  tabs?: Tab[];
+  tabIndex: number;
 };
 
-type Tab = "markdown" | "raw" | "llm-ui";
-const OutputTabs: React.FC<
-  OutputTabsProps & {
-    tabs?: Tab[];
-  }
-> = ({
-  className,
-  backgroundClassName,
-  height,
+const OutputTabs: React.FC<OutputTabsProps> = ({
   output,
   llmUi,
   tabs = ["llm-ui", "markdown", "raw"],
+  className,
+  tabIndex,
 }) => {
-  const showMarkdown = tabs.includes("markdown");
-  const showRaw = tabs.includes("raw");
-  const showLlmUi = tabs.includes("llm-ui") && llmUi;
-  const defaultValue = tabs[0];
   return (
-    <Tabs defaultValue={defaultValue} className={className}>
-      {showLlmUi && (
-        <TabsContent
-          value="llm-ui"
-          forceMount // keepMounted so we keep streaming the content
-          className="data-[state=active]:block hidden"
-        >
-          <div style={{ height }}>{llmUi}</div>
-        </TabsContent>
-      )}
-      {showMarkdown && (
-        <TabsContent value="markdown">
-          <OutputBackground className={backgroundClassName} height={height}>
-            <Markdown isComplete={false} llmOutput={output} />
-          </OutputBackground>
-        </TabsContent>
-      )}
-      {showRaw && (
-        <TabsContent value="raw">
-          <OutputBackground className={backgroundClassName} height={height}>
-            <pre className="overflow-x-auto not-shiki">{output}</pre>
-          </OutputBackground>
-        </TabsContent>
-      )}
-      {tabs.length > 1 && (
-        <div className="flex flex-row items-center mt-2 justify-center md:justify-start">
-          <TabsList>
-            {showLlmUi && <TabsTrigger value="llm-ui">llm-ui</TabsTrigger>}
-            {showMarkdown && (
-              <TabsTrigger value="markdown">markdown</TabsTrigger>
+    <OutputBackground className={className}>
+      {tabs.map((tab, index) => {
+        const isActive = index === tabIndex;
+        return (
+          <>
+            {tab === "markdown" && isActive && (
+              <Markdown isComplete={false} llmOutput={output} />
             )}
-            {showRaw && <TabsTrigger value="raw">raw</TabsTrigger>}
-          </TabsList>
-        </div>
-      )}
-    </Tabs>
+            {tab === "raw" && isActive && (
+              <pre
+                className="not-shiki raw-example "
+                style={{ backgroundColor: "inherit" }}
+              >
+                {output}
+              </pre>
+            )}
+            {tab === "llm-ui" && (
+              // Always render llm-ui so we keep streaming the content and don't restart
+              <div
+                className={cn("flex flex-1", index !== tabIndex && "hidden")}
+              >
+                {llmUi}
+              </div>
+            )}
+          </>
+        );
+      })}
+    </OutputBackground>
   );
 };
 
 export type ExampleProps = {
   className?: string;
-  outputHeight: number;
   tabs: Tab[];
   backgroundClassName?: string;
   showPlayPause?: boolean;
+  hideFirstLoop?: boolean;
 } & UseExampleProps;
 
 const LLMUI = ({
   isStreamFinished,
-  height,
   isPlaying,
+  loopIndex,
   backgroundClassName,
+  hideFirstLoop = false,
   ...props
 }: SetRequired<Partial<LLMOutputProps>, "isStreamFinished" | "llmOutput"> & {
-  height: number;
   backgroundClassName?: string;
   isPlaying: boolean;
+  hideFirstLoop?: boolean;
 }) => {
   const { blockMatches, visibleText } = useLLMOutput({
     blocks: [codeBlockBlock],
@@ -131,6 +116,7 @@ const LLMUI = ({
     },
     throttle,
     isStreamFinished,
+    loopIndex,
     ...props,
   });
   const blocks = blockMatches.map((blockMatch, index) => {
@@ -144,21 +130,30 @@ const LLMUI = ({
     );
   });
   return (
-    <OutputBackground className={backgroundClassName} height={height}>
-      {visibleText.length === 0 && isPlaying ? (
-        <div className="flex flex-1 justify-center items-center">
-          <Loader />
-        </div>
-      ) : (
-        blocks
-      )}
+    <OutputBackground className={backgroundClassName}>
+      <div
+        className={cn(
+          "flex flex-1 flex-col",
+          hideFirstLoop && loopIndex === 0 && "invisible",
+        )}
+      >
+        {visibleText.length === 0 && isPlaying && loopIndex !== 0 ? (
+          <div className="flex flex-1 justify-center items-center">
+            <Loader />
+          </div>
+        ) : (
+          blocks
+        )}
+      </div>
     </OutputBackground>
   );
 };
+
 type UseExampleProps = {
   example: string;
   options?: Partial<UseStreamWithProbabilitiesOptions>;
 };
+
 const useExample = ({ example, options = {} }: UseExampleProps) => {
   const [delayMultiplier, setDelayMultiplier] = useState(
     options.delayMultiplier ?? 1,
@@ -168,6 +163,7 @@ const useExample = ({ example, options = {} }: UseExampleProps) => {
     autoStart: true,
     autoStartDelayMs: 0,
     loopDelayMs: 3000,
+    loopStartIndex: Number.MAX_SAFE_INTEGER,
     ...options,
     delayMultiplier,
   });
@@ -176,13 +172,15 @@ const useExample = ({ example, options = {} }: UseExampleProps) => {
 
 export const ExampleTabs: React.FC<ExampleProps> = ({
   example,
-  outputHeight,
   tabs,
   className,
   backgroundClassName,
   options,
   showPlayPause = true,
+  hideFirstLoop,
 }) => {
+  const [tabIndex, setTabIndex] = useState(0);
+
   const {
     output,
     isStreamFinished,
@@ -198,32 +196,35 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
       isStreamFinished={isStreamFinished}
       llmOutput={output}
       loopIndex={loopIndex}
-      height={outputHeight}
       backgroundClassName={backgroundClassName}
       isPlaying={isPlaying}
+      hideFirstLoop={hideFirstLoop}
     />
   );
   return (
     <div className={cn("grid grid-cols-1", className)}>
-      <OutputTabs
-        className="hidden md:block"
-        output={output}
-        llmUi={llmUi}
-        tabs={tabs}
-        height={outputHeight}
-        backgroundClassName={backgroundClassName}
-      />
-      <div className="flex flex-col items-center">
-        <Controls
-          className="md:-mt-6"
-          delayMultiplier={delayMultiplier}
-          onDelayMultiplier={setDelayMultiplier}
-          onPause={pause}
-          onStart={start}
-          showPlayPause={showPlayPause}
-          isPlaying={isPlaying}
+      <NeverShrinkContainer className="flex flex-1">
+        <OutputTabs
+          className={cn(backgroundClassName, "flex flex-1 rounded-t-lg")}
+          output={output}
+          llmUi={llmUi}
+          tabs={tabs}
+          tabIndex={tabIndex}
         />
-      </div>
+      </NeverShrinkContainer>
+      <Controls
+        className={""}
+        delayMultiplier={delayMultiplier}
+        onDelayMultiplier={setDelayMultiplier}
+        onPause={pause}
+        onStart={start}
+        showPlayPause={showPlayPause}
+        isPlaying={isPlaying}
+        desktopTabs={tabs}
+        onDesktopTabIndexChange={setTabIndex}
+        mobileTabs={tabs}
+        onMobileTabIndexChange={setTabIndex}
+      />
     </div>
   );
 };
@@ -236,14 +237,19 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
   className,
   showHeaders = false,
   tabs = ["llm-ui", "markdown", "raw"],
-  outputHeight,
   backgroundClassName,
   showPlayPause = true,
+  hideFirstLoop,
   ...props
 }) => {
   if (!tabs.includes("llm-ui")) {
     throw new Error("llm-ui tab is required for ExampleSideBySide");
   }
+  const mobileTabs = tabs;
+  const desktopTabs = tabs.filter((tab) => tab !== "llm-ui");
+
+  const [mobileTabIndex, setMobileTabIndex] = useState(0);
+  const [desktopTabIndex, setDesktopTabIndex] = useState(0);
   const {
     output,
     isStreamFinished,
@@ -259,14 +265,17 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
       isStreamFinished={isStreamFinished}
       llmOutput={output}
       loopIndex={loopIndex}
-      height={outputHeight}
-      backgroundClassName={backgroundClassName}
+      backgroundClassName={cn(
+        "rounded-tr-lg overflow-clip",
+        backgroundClassName,
+      )}
       isPlaying={isPlaying}
+      hideFirstLoop={hideFirstLoop}
     />
   );
   return (
     <div className={className}>
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-8">
+      <NeverShrinkContainer className="grid md:grid-cols-2 grid-cols-1 ">
         <SideBySideContainer
           header={
             showHeaders && (
@@ -277,23 +286,27 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
           }
         >
           <OutputTabs
-            className="hidden md:block"
+            className={cn(
+              backgroundClassName,
+              "hidden md:flex border-r-2 border-background-200 rounded-tl-lg overflow-clip",
+            )}
             output={output}
-            tabs={tabs.filter((tab) => tab !== "llm-ui")}
-            height={outputHeight}
-            backgroundClassName={backgroundClassName}
+            tabs={desktopTabs}
+            tabIndex={desktopTabIndex}
           />
           <OutputTabs
-            className="md:hidden"
+            className={cn(
+              backgroundClassName,
+              "md:hidden rounded-t-lg overflow-clip",
+            )}
             output={output}
             llmUi={llmUi}
-            tabs={tabs}
-            height={outputHeight}
-            backgroundClassName={backgroundClassName}
+            tabs={mobileTabs}
+            tabIndex={mobileTabIndex}
           />
         </SideBySideContainer>
         <SideBySideContainer
-          className="hidden md:block"
+          className="hidden md:flex"
           header={
             showHeaders && (
               <H2 className="mb-8 text-center">
@@ -307,15 +320,18 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
         >
           {llmUi}
         </SideBySideContainer>
-      </div>
+      </NeverShrinkContainer>
       <Controls
-        className={tabs.length > 2 ? "md:-mt-8" : "mt-4"}
         delayMultiplier={delayMultiplier}
         onDelayMultiplier={setDelayMultiplier}
         isPlaying={isPlaying}
         showPlayPause={showPlayPause}
         onPause={pause}
         onStart={start}
+        desktopTabs={desktopTabs}
+        mobileTabs={mobileTabs}
+        onDesktopTabIndexChange={setDesktopTabIndex}
+        onMobileTabIndexChange={setMobileTabIndex}
       />
     </div>
   );

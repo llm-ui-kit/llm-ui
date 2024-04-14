@@ -57,7 +57,7 @@ describe("useLLMOutput Hook", () => {
           startIndex: 0,
           endIndex: 5,
           outputAfterLookback:
-            "hello isComplete:false visibleTextLengthTarget:100 isStreamFinished:false",
+            "hello isComplete:false visibleTextLengthTarget:105 isStreamFinished:false",
           outputRaw: "hello",
           visibleText: "hello",
         },
