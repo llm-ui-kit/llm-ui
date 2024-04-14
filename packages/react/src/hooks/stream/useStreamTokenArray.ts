@@ -88,6 +88,7 @@ export const useStreamTokenArray = (
   });
 
   const start = useCallback(() => {
+    const isFinished = currentIndex.current >= tokenArray.length;
     if (clearTimeoutRef.current) {
       return;
     }
@@ -96,7 +97,7 @@ export const useStreamTokenArray = (
     }
     setIsPlaying(true);
     nextToken();
-  }, []);
+  }, [tokenArray, currentIndex]);
 
   useEffect(() => {
     if (options.autoStart) {
