@@ -10,8 +10,6 @@ const max = 10;
 
 // Transforms the value of the slider to a delay multiplier
 const transformSliderValue = (x: number): number => {
-  console.log("x", x);
-
   if (x >= min && x <= 5) {
     return -1.8 * x + max;
   } else if (x > 5 && x <= max) {
@@ -22,7 +20,6 @@ const transformSliderValue = (x: number): number => {
 };
 
 const inverseTransformSliderValue = (y: number): number => {
-  console.log("y", y);
   if (y === 0) {
     return max;
   } else if (y > 1 && y <= max) {
@@ -94,7 +91,6 @@ export const Controls: React.FC<{
           max={max}
           step={0.5}
           onValueChange={(newValue) => {
-            console.log(newValue[0]);
             const delayMultiplier = transformSliderValue(newValue[0]);
             onDelayMultiplier(Math.min(Math.max(delayMultiplier, min), max));
           }}
