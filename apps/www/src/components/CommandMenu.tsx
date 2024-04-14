@@ -65,6 +65,7 @@ export const CommandMenu = ({ ...props }: CommandMenuProps) => {
       <CommandDialog
         open={isOpen}
         onOpenChange={setIsOpen}
+        // We do our own filtering with pagefind
         commandProps={{ shouldFilter: false }}
       >
         <CommandInput
