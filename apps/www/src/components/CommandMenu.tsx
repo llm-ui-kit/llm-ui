@@ -62,7 +62,11 @@ export const CommandMenu = ({ ...props }: CommandMenuProps) => {
           <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
-      <CommandDialog open={isOpen} onOpenChange={setIsOpen}>
+      <CommandDialog
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        commandProps={{ shouldFilter: false }}
+      >
         <CommandInput
           placeholder="Search docs..."
           onValueChange={async (searchQuery) => {
