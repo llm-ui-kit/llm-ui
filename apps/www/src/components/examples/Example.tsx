@@ -77,7 +77,6 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
                   "not-shiki raw-example",
                   !isVisible && "invisible",
                 )}
-                style={{ backgroundColor: "inherit" }}
               >
                 {output}
               </pre>
@@ -109,11 +108,9 @@ const LLMUI = ({
   isStreamFinished,
   isPlaying,
   loopIndex,
-  backgroundClassName,
   hideFirstLoop = false,
   ...props
 }: SetRequired<Partial<LLMOutputProps>, "isStreamFinished" | "llmOutput"> & {
-  backgroundClassName?: string;
   isPlaying: boolean;
   hideFirstLoop?: boolean;
 }) => {
@@ -143,22 +140,20 @@ const LLMUI = ({
     );
   });
   return (
-    <OutputBackground className={backgroundClassName}>
-      <div
-        className={cn(
-          "flex flex-1 flex-col",
-          hideFirstLoop && outputLoopIndex === 0 && "invisible",
-        )}
-      >
-        {visibleText.length === 0 && isPlaying && outputLoopIndex !== 0 ? (
-          <div className="flex flex-1 justify-center items-center">
-            <Loader />
-          </div>
-        ) : (
-          blocks
-        )}
-      </div>
-    </OutputBackground>
+    <div
+      className={cn(
+        "flex flex-1 flex-col overflow-x-auto",
+        hideFirstLoop && outputLoopIndex === 0 && "invisible",
+      )}
+    >
+      {visibleText.length === 0 && isPlaying && outputLoopIndex !== 0 ? (
+        <div className="flex flex-1 justify-center items-center">
+          <Loader />
+        </div>
+      ) : (
+        blocks
+      )}
+    </div>
   );
 };
 
@@ -209,7 +204,6 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
       isStreamFinished={isStreamFinished}
       llmOutput={output}
       loopIndex={loopIndex}
-      backgroundClassName={backgroundClassName}
       isPlaying={isPlaying}
       hideFirstLoop={hideFirstLoop}
     />
@@ -304,7 +298,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
             isVisible={isVisible}
             className={cn(
               backgroundClassName,
-              "hidden md:flex border-r-2 border-background-200 rounded-tl-lg overflow-clip",
+              "hidden md:flex border-r-2 border-background-200 rounded-tl-lg",
             )}
             output={output}
             tabs={desktopTabs}
@@ -312,10 +306,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
           />
           <OutputTabs
             isVisible={isVisible}
-            className={cn(
-              backgroundClassName,
-              "md:hidden rounded-t-lg overflow-clip",
-            )}
+            className={cn(backgroundClassName, "flex md:hidden rounded-t-lg")}
             output={output}
             llmUi={llmUi}
             tabs={mobileTabs}
@@ -335,7 +326,9 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
             )
           }
         >
-          {llmUi}
+          <OutputBackground className={backgroundClassName}>
+            {llmUi}
+          </OutputBackground>
         </SideBySideContainer>
       </NeverShrinkContainer>
       <Controls
