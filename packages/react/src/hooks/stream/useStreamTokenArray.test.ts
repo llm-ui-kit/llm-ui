@@ -10,6 +10,7 @@ const options: UseStreamTokenArrayOptions = {
   autoStartDelayMs: 0,
   delayMultiplier: 0,
   loopDelayMs: 0,
+  loopStartIndex: 0,
 };
 
 const allAtOnce: TokenWithDelay[] = [
@@ -115,6 +116,17 @@ describe("useStreamTokenArray", () => {
       expect(isFinished).containSubset([false, true, false, true]);
       expect(result.current.loopIndex).greaterThan(0);
       expect(result.current.isPlaying).toBe(true);
+    });
+  });
+
+  test("loopStartIndex: 20", async () => {
+    const { result, waitFor } = renderHook(() =>
+      useStreamTokenArray(allAtOnce, { ...options, loopStartIndex: 20 }),
+    );
+    waitFor(() => {
+      const { output } = resultToArrays(result);
+
+      expect(output[0]).toBe("Hello");
     });
   });
 });
