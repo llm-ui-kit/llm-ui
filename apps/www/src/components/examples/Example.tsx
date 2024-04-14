@@ -47,6 +47,7 @@ type OutputTabsProps = {
   className?: string;
   tabs?: Tab[];
   tabIndex: number;
+  isVisible: boolean;
 };
 
 const OutputTabs: React.FC<OutputTabsProps> = ({
@@ -55,6 +56,7 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
   tabs = ["llm-ui", "markdown", "raw"],
   className,
   tabIndex,
+  isVisible,
 }) => {
   return (
     <OutputBackground className={className}>
@@ -63,11 +65,18 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
         return (
           <>
             {tab === "markdown" && isActive && (
-              <Markdown isComplete={false} llmOutput={output} />
+              <Markdown
+                className={cn(!isVisible && "invisible")}
+                isComplete={false}
+                llmOutput={output}
+              />
             )}
             {tab === "raw" && isActive && (
               <pre
-                className="not-shiki raw-example "
+                className={cn(
+                  "not-shiki raw-example",
+                  !isVisible && "invisible",
+                )}
                 style={{ backgroundColor: "inherit" }}
               >
                 {output}
@@ -209,6 +218,7 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
     <div className={cn("grid grid-cols-1", className)}>
       <NeverShrinkContainer className="flex flex-1">
         <OutputTabs
+          isVisible={!hideFirstLoop || loopIndex !== 0}
           className={cn(backgroundClassName, "flex flex-1 rounded-t-lg")}
           output={output}
           llmUi={llmUi}
@@ -277,6 +287,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
       hideFirstLoop={hideFirstLoop}
     />
   );
+  const isVisible = !hideFirstLoop || loopIndex !== 0;
   return (
     <div className={className}>
       <NeverShrinkContainer className="grid md:grid-cols-2 grid-cols-1 ">
@@ -290,6 +301,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
           }
         >
           <OutputTabs
+            isVisible={isVisible}
             className={cn(
               backgroundClassName,
               "hidden md:flex border-r-2 border-background-200 rounded-tl-lg overflow-clip",
@@ -299,6 +311,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
             tabIndex={desktopTabIndex}
           />
           <OutputTabs
+            isVisible={isVisible}
             className={cn(
               backgroundClassName,
               "md:hidden rounded-t-lg overflow-clip",
