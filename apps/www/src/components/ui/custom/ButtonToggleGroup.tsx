@@ -20,7 +20,7 @@ export const ButtonToggleGroup: React.FC<ButtonGroupProps> = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultActiveIndex);
   return (
-    <div className={cn("flex flex-row bg-muted p-1 rounded-md", className)}>
+    <div className={cn("flex flex-row", className)}>
       {buttons.map(({ text, props = {} }, index) => (
         <Button
           key={index}

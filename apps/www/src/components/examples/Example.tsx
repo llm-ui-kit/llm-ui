@@ -7,12 +7,12 @@ import { useState, type ReactNode } from "react";
 import type { SetRequired } from "type-fest";
 import { Loader } from "../ui/Loader";
 import { H2 } from "../ui/Text";
-import { ButtonToggleGroup } from "../ui/custom/ButtonToggleGroup";
 import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
 import { NeverShrinkContainer } from "./NeverShrinkContainer";
 import { throttle } from "./throttle";
+import type { Tab } from "./types";
 
 const SideBySideContainer: React.FC<{
   className?: string;
@@ -20,8 +20,7 @@ const SideBySideContainer: React.FC<{
   children: ReactNode;
 }> = ({ className, header, children }) => {
   return (
-    // todo: flex flex-1 flex-col items-stretch
-    <div className={cn(className, "flex flex-1 flex-col items-stretch")}>
+    <div className={cn("flex flex-1 flex-col items-stretch", className)}>
       {header}
       {children}
     </div>
@@ -32,7 +31,12 @@ const OutputBackground: React.FC<{
   className?: string;
   children: ReactNode;
 }> = ({ className, children }) => (
-  <div className={cn("bg-background text-left p-6 flex flex-col", className)}>
+  <div
+    className={cn(
+      "bg-background text-left p-6 flex flex-col flex-1 overflow-x-auto",
+      className,
+    )}
+  >
     {children}
   </div>
 );
@@ -44,8 +48,6 @@ type OutputTabsProps = {
   tabs?: Tab[];
   tabIndex: number;
 };
-
-type Tab = "markdown" | "raw" | "llm-ui";
 
 const OutputTabs: React.FC<OutputTabsProps> = ({
   output,
@@ -64,11 +66,18 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
               <Markdown isComplete={false} llmOutput={output} />
             )}
             {tab === "raw" && isActive && (
-              <pre className="overflow-x-auto not-shiki">{output}</pre>
+              <pre
+                className="not-shiki raw-example "
+                style={{ backgroundColor: "inherit" }}
+              >
+                {output}
+              </pre>
             )}
             {tab === "llm-ui" && (
               // Always render llm-ui so we keep streaming the content and don't restart
-              <div className={cn(index === tabIndex ? "block" : "hidden")}>
+              <div
+                className={cn("flex flex-1", index !== tabIndex && "hidden")}
+              >
                 {llmUi}
               </div>
             )}
@@ -121,19 +130,22 @@ const LLMUI = ({
     );
   });
   return (
-    <NeverShrinkContainer>
-      <OutputBackground className={backgroundClassName}>
-        <div className={cn(hideFirstLoop && loopIndex === 0 && "invisible")}>
-          {visibleText.length === 0 && isPlaying && loopIndex !== 0 ? (
-            <div className="flex flex-1 justify-center items-center">
-              <Loader />
-            </div>
-          ) : (
-            blocks
-          )}
-        </div>
-      </OutputBackground>
-    </NeverShrinkContainer>
+    <OutputBackground className={backgroundClassName}>
+      <div
+        className={cn(
+          "flex flex-1 flex-col",
+          hideFirstLoop && loopIndex === 0 && "invisible",
+        )}
+      >
+        {visibleText.length === 0 && isPlaying && loopIndex !== 0 ? (
+          <div className="flex flex-1 justify-center items-center">
+            <Loader />
+          </div>
+        ) : (
+          blocks
+        )}
+      </div>
+    </OutputBackground>
   );
 };
 
@@ -191,29 +203,28 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
   );
   return (
     <div className={cn("grid grid-cols-1", className)}>
-      <OutputTabs
-        // todo: md:flex flex-grow
-        className={cn(backgroundClassName, "hidden md:block")}
-        output={output}
-        llmUi={llmUi}
-        tabs={tabs}
-        tabIndex={tabIndex}
-      />
-      <ButtonToggleGroup
-        buttons={tabs.map((tab) => ({ text: tab }))}
-        onIndexChange={setTabIndex}
-      />
-      <div className="flex flex-col items-center">
-        <Controls
-          className={"md:-mt-6"}
-          delayMultiplier={delayMultiplier}
-          onDelayMultiplier={setDelayMultiplier}
-          onPause={pause}
-          onStart={start}
-          showPlayPause={showPlayPause}
-          isPlaying={isPlaying}
+      <NeverShrinkContainer className="flex flex-1">
+        <OutputTabs
+          className={cn(backgroundClassName, "flex flex-1")}
+          output={output}
+          llmUi={llmUi}
+          tabs={tabs}
+          tabIndex={tabIndex}
         />
-      </div>
+      </NeverShrinkContainer>
+      <Controls
+        className={""}
+        delayMultiplier={delayMultiplier}
+        onDelayMultiplier={setDelayMultiplier}
+        onPause={pause}
+        onStart={start}
+        showPlayPause={showPlayPause}
+        isPlaying={isPlaying}
+        desktopTabs={tabs}
+        onDesktopTabIndexChange={setTabIndex}
+        mobileTabs={tabs}
+        onMobileTabIndexChange={setTabIndex}
+      />
     </div>
   );
 };
@@ -234,6 +245,9 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
   if (!tabs.includes("llm-ui")) {
     throw new Error("llm-ui tab is required for ExampleSideBySide");
   }
+  const mobileTabs = tabs;
+  const desktopTabs = tabs.filter((tab) => tab !== "llm-ui");
+
   const [mobileTabIndex, setMobileTabIndex] = useState(0);
   const [desktopTabIndex, setDesktopTabIndex] = useState(0);
   const {
@@ -256,7 +270,6 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
       hideFirstLoop={hideFirstLoop}
     />
   );
-  const desktopTabs = tabs.filter((tab) => tab !== "llm-ui");
   return (
     <div className={className}>
       <NeverShrinkContainer className="grid md:grid-cols-2 grid-cols-1 gap-8">
@@ -270,8 +283,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
           }
         >
           <OutputTabs
-            // todo:             className="hidden md:flex flex-1"
-            className={cn(backgroundClassName, "hidden md:block")}
+            className={cn(backgroundClassName, "hidden md:flex")}
             output={output}
             tabs={desktopTabs}
             tabIndex={desktopTabIndex}
@@ -280,30 +292,12 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
             className={cn(backgroundClassName, "md:hidden")}
             output={output}
             llmUi={llmUi}
-            tabs={tabs}
+            tabs={mobileTabs}
             tabIndex={mobileTabIndex}
           />
-          {tabs.length > 1 && (
-            <ButtonToggleGroup
-              className="md:hidden"
-              buttons={tabs.map((tab) => ({
-                text: tab,
-              }))}
-              onIndexChange={setMobileTabIndex}
-            />
-          )}
-          {desktopTabs.length > 1 && (
-            <ButtonToggleGroup
-              className="hidden md:block"
-              buttons={desktopTabs.map((tab) => ({
-                text: tab,
-              }))}
-              onIndexChange={setDesktopTabIndex}
-            />
-          )}
         </SideBySideContainer>
         <SideBySideContainer
-          className="hidden md:block"
+          className="hidden md:flex"
           header={
             showHeaders && (
               <H2 className="mb-8 text-center">
@@ -319,13 +313,16 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
         </SideBySideContainer>
       </NeverShrinkContainer>
       <Controls
-        className={tabs.length > 2 ? "md:-mt-8" : "mt-4"}
         delayMultiplier={delayMultiplier}
         onDelayMultiplier={setDelayMultiplier}
         isPlaying={isPlaying}
         showPlayPause={showPlayPause}
         onPause={pause}
         onStart={start}
+        desktopTabs={desktopTabs}
+        mobileTabs={mobileTabs}
+        onDesktopTabIndexChange={setDesktopTabIndex}
+        onMobileTabIndexChange={setMobileTabIndex}
       />
     </div>
   );

@@ -191,3 +191,8 @@ pre:not(.not-shiki) {
   @apply border;
   @apply border-2;
 }
+
+html pre.raw-example,
+html.dark pre.raw-example {
+  background-color: inherit !important;
+}

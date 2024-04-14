@@ -2,12 +2,19 @@ import { cn } from "@/lib/utils";
 import { PauseIcon, PlayIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/Button";
 import { Slider } from "../ui/Slider";
+import { ButtonToggleGroup } from "../ui/custom/ButtonToggleGroup";
+import type { Tab } from "./types";
+
+const min = 0;
+const max = 10;
 
 // Transforms the value of the slider to a delay multiplier
 const transformSliderValue = (x: number): number => {
-  if (x >= 0 && x <= 5) {
-    return -1.8 * x + 10;
-  } else if (x > 5 && x <= 10) {
+  console.log("x", x);
+
+  if (x >= min && x <= 5) {
+    return -1.8 * x + max;
+  } else if (x > 5 && x <= max) {
     return -0.2 * x + 2;
   }
   // shouldn't happen
@@ -15,22 +22,29 @@ const transformSliderValue = (x: number): number => {
 };
 
 const inverseTransformSliderValue = (y: number): number => {
-  if (y > 1 && y <= 10) {
-    return (10 - y) / 1.8;
-  } else if (y > 0 && y <= 1) {
+  console.log("y", y);
+  if (y === 0) {
+    return max;
+  } else if (y > 1 && y <= max) {
+    return (max - y) / 1.8;
+  } else if (y > min && y <= 1) {
     return (2 - y) / 0.2;
   }
   return 5;
 };
 
 export const Controls: React.FC<{
-  className: string;
+  className?: string;
   delayMultiplier: number;
   onDelayMultiplier: (delayMultiplier: number) => void;
   isPlaying: boolean;
   showPlayPause: boolean;
   onPause: () => void;
   onStart: () => void;
+  desktopTabs: Tab[];
+  mobileTabs: Tab[];
+  onDesktopTabIndexChange: (index: number) => void;
+  onMobileTabIndexChange: (index: number) => void;
 }> = ({
   className,
   delayMultiplier,
@@ -39,45 +53,83 @@ export const Controls: React.FC<{
   showPlayPause,
   onPause,
   onStart,
+  desktopTabs,
+  mobileTabs,
+  onDesktopTabIndexChange,
+  onMobileTabIndexChange,
 }) => {
   return (
     <div
       className={cn(
         className,
-        "flex flex-row justify-center items-start gap-4",
+        `flex flex-row max-sm:justify-between sm:grid sm:grid-cols-3 items-center gap-4 bg-muted p-1 rounded-b-lg`,
       )}
     >
-      <div className="flex flex-col items-center">
+      <div className="sm:justify-self-start justify-self-auto">
+        {mobileTabs.length > 1 && (
+          <ButtonToggleGroup
+            className="md:hidden "
+            buttons={mobileTabs.map((tab) => ({
+              text: tab,
+            }))}
+            onIndexChange={onMobileTabIndexChange}
+          />
+        )}
+        {desktopTabs.length > 1 && (
+          <ButtonToggleGroup
+            className="hidden md:block"
+            buttons={desktopTabs.map((tab) => ({
+              text: tab,
+            }))}
+            onIndexChange={onDesktopTabIndexChange}
+          />
+        )}
+      </div>
+      <div className="flex flex-row sm:flex-1 items-center gap-2 sm:justify-self-center justify-self-auto sm:ml-12">
         <Slider
-          className="w-52 mt-4"
+          className="md:w-52 sm:w-36 w-24"
+          variant={"secondary"}
           value={[inverseTransformSliderValue(delayMultiplier)]}
-          min={0}
-          max={10}
+          min={min}
+          max={max}
           step={0.5}
           onValueChange={(newValue) => {
-            onDelayMultiplier(transformSliderValue(newValue[0]));
+            console.log(newValue[0]);
+            const delayMultiplier = transformSliderValue(newValue[0]);
+            onDelayMultiplier(Math.min(Math.max(delayMultiplier, min), max));
           }}
         />
-        <p className="mt-4">{(1 / delayMultiplier).toFixed(1)}x</p>
+        <p className="text-foreground text-sm w-10 max-sm:hidden">
+          {delayMultiplier === 0 ? max : (1 / delayMultiplier).toFixed(1)}x
+        </p>
       </div>
       {showPlayPause && (
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => {
-            if (isPlaying) {
-              onPause();
-            } else {
-              onStart();
-            }
-          }}
-        >
-          {isPlaying ? (
-            <PauseIcon className="h-4 w-4" />
-          ) : (
-            <PlayIcon className="h-4 w-4" />
-          )}
-        </Button>
+        <div className="sm:justify-self-end justify-self-auto flex justify-end">
+          <Button
+            className="w-20 md:h-8 md:px-2 max-md:size-8 "
+            variant="outline"
+            size={"xs"}
+            onClick={() => {
+              if (isPlaying) {
+                onPause();
+              } else {
+                onStart();
+              }
+            }}
+          >
+            {isPlaying ? (
+              <>
+                <PauseIcon className="h-4 md:w-4 md:mr-2" />
+                <span className="md:block hidden">Pause</span>
+              </>
+            ) : (
+              <>
+                <PlayIcon className="h-4 md:w-4 md:mr-2" />
+                <span className="md:block hidden">Play</span>
+              </>
+            )}
+          </Button>
+        </div>
       )}
     </div>
   );
