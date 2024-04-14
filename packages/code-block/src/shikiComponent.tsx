@@ -18,6 +18,12 @@ export type ShikiProps = {
 
 export type ShikiCodeBlockComponent = LLMOutputComponent<ShikiProps>;
 
+const PreFallback: React.FC<{ code: string }> = ({ code }) => (
+  <pre className="shiki">
+    <code>{code}</code>
+  </pre>
+);
+
 export const ShikiCode: React.FC<ShikiProps & { code: string }> = ({
   highlighter: llmuiHighlighter,
   codeToHtmlProps,
@@ -25,7 +31,7 @@ export const ShikiCode: React.FC<ShikiProps & { code: string }> = ({
 }) => {
   const highlighter = useLoadHighlighter(llmuiHighlighter);
 
-  const getHtml = useCallback(() => {
+  const getHtml: () => string | undefined = useCallback(() => {
     if (!highlighter) {
       return "";
     }
@@ -34,7 +40,15 @@ export const ShikiCode: React.FC<ShikiProps & { code: string }> = ({
       lang: codeToHtmlProps.lang ?? "plain",
     });
   }, [code, highlighter]);
-  return <>{parseHtml(getHtml())}</>;
+  const html = getHtml();
+  if (!html) {
+    return (
+      <pre className="shiki">
+        <code>{code}</code>
+      </pre>
+    );
+  }
+  return html ? <>{parseHtml(html)}</> : <PreFallback code={code} />;
 };
 
 // Shiki Markdown code block component
