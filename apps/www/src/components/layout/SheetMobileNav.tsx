@@ -13,12 +13,15 @@ interface SheetMobileProps {
 }
 
 export const SheetMobileNav = ({
-  mainNavItems,
+  mainNavItems = [],
   sidebarNavItems,
 }: SheetMobileProps) => {
   const [open, setOpen] = React.useState(false);
 
-  const mergedMainNavItems = mainNavItems?.filter(
+  const mergedMainNavItems = [
+    { href: "/", title: "Home" },
+    ...mainNavItems,
+  ].filter(
     (item, index, self) =>
       index ===
       self.findIndex((t) => t.href === item.href && t.title === item.title),
