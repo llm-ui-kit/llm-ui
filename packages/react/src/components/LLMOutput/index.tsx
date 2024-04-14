@@ -27,6 +27,7 @@ export type UseLLMOutputReturn = {
   blockMatches: BlockMatch[];
   isFinished: boolean;
   visibleText: string;
+  loopIndex: number;
 };
 
 const initialState = {
@@ -56,6 +57,7 @@ export const useLLMOutput = ({
 
   const [{ blockMatches, ...state }, setState] = useState<UseLLMOutputReturn>({
     ...initialState,
+    loopIndex,
     blockMatches: matchBlocks({
       llmOutput,
       blocks,
@@ -71,7 +73,7 @@ export const useLLMOutput = ({
     if (restartRef.current) {
       startTime.current = performance.now();
       restartRef.current = false;
-      setState(initialState);
+      setState({ ...initialState, loopIndex });
       finishTimeRef.current = undefined;
       previousFrameTimeRef.current = undefined;
       visibleTextAllLengthsRef.current = [];
@@ -99,7 +101,12 @@ export const useLLMOutput = ({
     const isFinished = visibleText === visibleTextAll && isStreamFinished;
     if (isFinished) {
       frameRef.current = undefined;
-      setState({ blockMatches, isFinished, visibleText });
+      setState((state) => ({
+        ...state,
+        blockMatches,
+        isFinished,
+        visibleText,
+      }));
       return;
     }
 
@@ -129,7 +136,12 @@ export const useLLMOutput = ({
         visibleTextLengthTarget,
       });
       lastRenderTime.current = performance.now();
-      setState({ blockMatches: matches, isFinished, visibleText });
+      setState((state) => ({
+        ...state,
+        blockMatches: matches,
+        isFinished,
+        visibleText,
+      }));
     }
     frameRef.current = requestAnimationFrame(renderLoopRef.current);
     previousFrameTimeRef.current = frameTime;

@@ -108,7 +108,11 @@ const LLMUI = ({
   isPlaying: boolean;
   hideFirstLoop?: boolean;
 }) => {
-  const { blockMatches, visibleText } = useLLMOutput({
+  const {
+    blockMatches,
+    visibleText,
+    loopIndex: outputLoopIndex,
+  } = useLLMOutput({
     blocks: [codeBlockBlock],
     fallbackBlock: {
       component: Markdown,
@@ -134,10 +138,10 @@ const LLMUI = ({
       <div
         className={cn(
           "flex flex-1 flex-col",
-          hideFirstLoop && loopIndex === 0 && "invisible",
+          hideFirstLoop && outputLoopIndex === 0 && "invisible",
         )}
       >
-        {visibleText.length === 0 && isPlaying && loopIndex !== 0 ? (
+        {visibleText.length === 0 && isPlaying && outputLoopIndex !== 0 ? (
           <div className="flex flex-1 justify-center items-center">
             <Loader />
           </div>
@@ -161,7 +165,7 @@ const useExample = ({ example, options = {} }: UseExampleProps) => {
   const result = useStreamFastSmooth(example, {
     loop: true,
     autoStart: true,
-    autoStartDelayMs: 0,
+    autoStartDelayMs: 500,
     loopDelayMs: 3000,
     loopStartIndex: Number.MAX_SAFE_INTEGER,
     ...options,
