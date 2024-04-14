@@ -174,7 +174,7 @@ const useExample = ({ example, options = {} }: UseExampleProps) => {
   const result = useStreamFastSmooth(example, {
     loop: true,
     autoStart: true,
-    autoStartDelayMs: 500,
+    autoStartDelayMs: 0,
     loopDelayMs: 3000,
     loopStartIndex: Number.MAX_SAFE_INTEGER,
     ...options,
