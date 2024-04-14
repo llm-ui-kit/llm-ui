@@ -205,7 +205,7 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
     <div className={cn("grid grid-cols-1", className)}>
       <NeverShrinkContainer className="flex flex-1">
         <OutputTabs
-          className={cn(backgroundClassName, "flex flex-1")}
+          className={cn(backgroundClassName, "flex flex-1 rounded-t-lg")}
           output={output}
           llmUi={llmUi}
           tabs={tabs}
@@ -265,14 +265,17 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
       isStreamFinished={isStreamFinished}
       llmOutput={output}
       loopIndex={loopIndex}
-      backgroundClassName={backgroundClassName}
+      backgroundClassName={cn(
+        "rounded-tr-lg overflow-clip",
+        backgroundClassName,
+      )}
       isPlaying={isPlaying}
       hideFirstLoop={hideFirstLoop}
     />
   );
   return (
     <div className={className}>
-      <NeverShrinkContainer className="grid md:grid-cols-2 grid-cols-1 gap-8">
+      <NeverShrinkContainer className="grid md:grid-cols-2 grid-cols-1 ">
         <SideBySideContainer
           header={
             showHeaders && (
@@ -283,13 +286,19 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
           }
         >
           <OutputTabs
-            className={cn(backgroundClassName, "hidden md:flex")}
+            className={cn(
+              backgroundClassName,
+              "hidden md:flex border-r-2 border-background-200 rounded-tl-lg overflow-clip",
+            )}
             output={output}
             tabs={desktopTabs}
             tabIndex={desktopTabIndex}
           />
           <OutputTabs
-            className={cn(backgroundClassName, "md:hidden")}
+            className={cn(
+              backgroundClassName,
+              "md:hidden rounded-t-lg overflow-clip",
+            )}
             output={output}
             llmUi={llmUi}
             tabs={mobileTabs}
