@@ -1,24 +1,8 @@
-import { LLMOutputMatcher, MaybeLLMOutputMatch } from "llm-ui/components";
+import { LLMOutputMatcher } from "llm-ui/components";
 import { CodeBlockOptions, getOptions } from "./options";
 
+import { regexMatcher } from "@llm-ui/shared";
 import { getStartEndGroup } from "./shared";
-
-export const regexMatcher =
-  (regex: RegExp) =>
-  (llmOutput: string): MaybeLLMOutputMatch => {
-    const regexMatch = llmOutput.match(regex);
-    if (regexMatch) {
-      const matchString = regexMatch[0];
-      const startIndex = regexMatch.index!;
-      const endIndex = startIndex + matchString.length;
-      return {
-        startIndex,
-        endIndex,
-        outputRaw: matchString,
-      };
-    }
-    return undefined;
-  };
 
 export const codeBlockCompleteMatcher = (
   userOptions?: Partial<CodeBlockOptions>,

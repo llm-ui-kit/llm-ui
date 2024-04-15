@@ -1,22 +1,5 @@
-import { LLMOutputMatcher, MaybeLLMOutputMatch } from "llm-ui/components";
-
-// todo: shared package
-export const regexMatcher =
-  (regex: RegExp) =>
-  (llmOutput: string): MaybeLLMOutputMatch => {
-    const regexMatch = llmOutput.match(regex);
-    if (regexMatch) {
-      const matchString = regexMatch[0];
-      const startIndex = regexMatch.index!;
-      const endIndex = startIndex + matchString.length;
-      return {
-        startIndex,
-        endIndex,
-        outputRaw: matchString,
-      };
-    }
-    return undefined;
-  };
+import { regexMatcher } from "@llm-ui/shared";
+import { LLMOutputMatcher } from "llm-ui/components";
 
 export const buttonsCompleteMatcher = (): LLMOutputMatcher => {
   const regex = /<buttons>[\s\S]*<\/buttons>/;

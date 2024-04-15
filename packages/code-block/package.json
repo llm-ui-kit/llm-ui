@@ -27,7 +27,8 @@
   "dependencies": {
     "html-react-parser": "^5.1.10",
     "llm-ui": "workspace:*",
-    "shiki": "^1.2.4"
+    "shiki": "^1.2.4",
+    "@llm-ui/shared": "workspace:*"
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",

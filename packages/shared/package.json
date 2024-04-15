@@ -1,5 +1,5 @@
 {
-  "name": "@llm-ui/buttons",
+  "name": "@llm-ui/shared",
   "version": "0.0.1",
   "type": "module",
   "license": "ISC",
@@ -21,19 +21,12 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest"
   },
+  "dependencies": {
+    "llm-ui": "workspace:*"
+  },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",
     "tsup": "^8.0.2",
-    "typescript": "^5.4.3",
-    "@types/react": "18.2.60",
-    "@types/react-dom": "18.2.19"
-  },
-  "peerDependencies": {
-    "react": "^18.0.0"
-  },
-  "dependencies": {
-    "fast-xml-parser": "^4.3.6",
-    "llm-ui": "workspace:*",
-    "@llm-ui/shared": "workspace:*"
+    "typescript": "^5.4.3"
   }
 }

@@ -1,0 +1,1 @@
+export { regexMatcher } from "./regexMatcher";
