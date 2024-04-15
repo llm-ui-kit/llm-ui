@@ -19,6 +19,8 @@ const appWww = "apps/www";
 const packageReact = "packages/react";
 const packageMarkdown = "packages/markdown";
 const packageCodeBlocks = "packages/code-block";
+const packageButtons = "packages/buttons";
+const packageShared = "packages/shared";
 
 const toolingGen = "tooling/gen";
 
@@ -27,6 +29,8 @@ const reactProjects = [
   packageReact,
   packageMarkdown,
   packageCodeBlocks,
+  packageButtons,
+  packageShared,
 ];
 const reactProjectsGlob = `{${reactProjects.join(",")}}`;
 const typescriptProjects = [...reactProjects, toolingGen];
