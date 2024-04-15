@@ -1,3 +1,6 @@
+import { stringToTokenArray, type TokenWithDelay } from "llm-ui/hooks";
+import { defaultExampleProbs } from "./contants";
+
 export const ctaExample = `### [Docs](https://llm-ui.com/docs)
 
 **Install**:
@@ -46,3 +49,18 @@ Quick actions:
   <button>Option 2</button>
 </buttons>
 `;
+
+const throttleBeforePause = `### Throttling
+
+Sometimes models outputs stop for a couple of seconds. llm-ui can throttle the output to make it look more natural.
+
+
+Pausing in 3...2...1`;
+
+const throttleAfterPause = `and now we resume smoothly 🚀`;
+
+export const throttleExample: TokenWithDelay[] = [
+  ...stringToTokenArray(throttleBeforePause, defaultExampleProbs),
+  { token: " ", delayMs: 1500 },
+  ...stringToTokenArray(throttleAfterPause, defaultExampleProbs),
+];

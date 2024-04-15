@@ -10,10 +10,12 @@ export type Probability = {
 export type TokenProbability = { tokenChars: number } & Probability;
 export type DelayProbability = { delayMs: number } & Probability;
 
-export type UseStreamWithProbabilitiesOptions = UseStreamTokenArrayOptions & {
+export type ProbabilityOptions = {
   tokenCharsProbabilities: TokenProbability[];
   delayMsProbabilities: DelayProbability[];
 };
+export type UseStreamWithProbabilitiesOptions = UseStreamTokenArrayOptions &
+  ProbabilityOptions;
 
 export type UseStreamResponse = {
   output: string;

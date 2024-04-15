@@ -3,12 +3,17 @@ import { Button, buttonVariants } from "@/components/ui/Button";
 import { siteConfig } from "@/config/site";
 import MainLayout from "@/layouts/MainLayout.astro";
 import WaitList from "@/components/WaitList.astro";
-import { ExampleSideBySide, ExampleTabs } from "@/components/examples/Example";
+import {
+  ExampleSideBySide,
+  ExampleSideBySideTokenArray,
+  ExampleTabs,
+} from "@/components/examples/Example";
 import {
   ctaExample,
   codeBlockExample,
   markdownExample,
   customComponentExample,
+  throttleExample,
 } from "@/components/examples/examples";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
@@ -125,7 +130,24 @@ import { marketingConfig } from "@/config/marketing";
       />
     </div>
   </section>
-
+  <section
+    id="throttling"
+    class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
+  >
+    <div class="container space-y-6">
+      <HeaderSection
+        title="Throttling"
+        subtitle="Smooth out pauses in the model's output"
+      />
+      <ExampleSideBySideTokenArray
+        client:only
+        tokenArray={throttleExample}
+        throttle={"buffer"}
+        tabs={["llm-ui", "raw"]}
+        hideFirstLoop
+      />
+    </div>
+  </section>
   <section
     id="all-llms"
     class="bg-background-200 py-8 text-center md:py-12 lg:py-24"

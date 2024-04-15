@@ -1,8 +1,4 @@
-import {
-  Probability,
-  TokenWithDelay,
-  UseStreamWithProbabilitiesOptions,
-} from "./types";
+import { Probability, ProbabilityOptions, TokenWithDelay } from "./types";
 
 export const cumulativeProbability = <T extends Probability>(
   probs: T[],
@@ -21,10 +17,7 @@ export const cumulativeProbability = <T extends Probability>(
 
 export const stringToTokenArray = (
   llmOutput: string,
-  {
-    tokenCharsProbabilities,
-    delayMsProbabilities,
-  }: UseStreamWithProbabilitiesOptions,
+  { tokenCharsProbabilities, delayMsProbabilities }: ProbabilityOptions,
 ): TokenWithDelay[] => {
   const tokenCharsProbabilitiesCum = cumulativeProbability(
     tokenCharsProbabilities,
