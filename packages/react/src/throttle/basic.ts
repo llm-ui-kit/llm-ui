@@ -1,8 +1,5 @@
 import type { ThrottleFunction } from "llm-ui/components";
 
-const readAhead = 10;
-const lagBufferMs = 200;
-
 export type ThrottleBasicOptions = {
   readAheadChars: number;
   lagBufferMs: number;
@@ -22,7 +19,13 @@ export const defaultOptions: ThrottleBasicOptions = {
 export const throttleBasic = (
   userOptions: Partial<ThrottleBasicOptions> = {},
 ): ThrottleFunction => {
-  const options = { ...defaultOptions, ...userOptions };
+  const {
+    aheadIncrementFactor,
+    behindIncrementFactor,
+    frameLookbackMs,
+    lagBufferMs,
+    readAheadChars,
+  } = { ...defaultOptions, ...userOptions };
   return ({
     isStreamFinished,
     visibleText,
@@ -36,9 +39,7 @@ export const throttleBasic = (
       1000 / (frameTime - (frameTimePrevious ?? frameTime - 1000 / 30));
 
     const bufferSize = visibleTextAll.length - visibleText.length;
-    const lookbackFrameCount = Math.ceil(
-      options.frameLookbackMs / (1000 / fps),
-    );
+    const lookbackFrameCount = Math.ceil(frameLookbackMs / (1000 / fps));
     const lookbackFrames = Math.min(
       lookbackFrameCount,
       visibleTextLengthsAll.length,
@@ -53,7 +54,6 @@ export const throttleBasic = (
     const visibleTextPerRender = textAddedCount / lookbackFrames;
     const visibleTextPerMs = visibleTextPerRender / (1000 / fps);
     const lagBufferChars = lagBufferMs * visibleTextPerMs;
-
     let visibleTextIncrement = 0;
     const recentIncrements = visibleTextIncrements.slice(-20);
 
@@ -61,16 +61,16 @@ export const throttleBasic = (
       recentIncrements.reduce((a, b) => a + b, 0) / recentIncrements.length;
     if (isStreamFinished) {
       visibleTextIncrement = Math.max(1, Math.ceil(visibleTextPerRender));
-    } else if (!isStreamFinished && bufferSize < readAhead) {
+    } else if (!isStreamFinished && bufferSize < readAheadChars) {
       visibleTextIncrement = 0;
     } else {
       const targetBufferSize = isStreamFinished
         ? 0
-        : readAhead + lagBufferChars;
+        : readAheadChars + lagBufferChars;
       const isBehindTarget = bufferSize > targetBufferSize;
       const targetIncrement = isBehindTarget
-        ? visibleTextPerRender * 3
-        : (visibleTextPerRender * 1) / 3;
+        ? visibleTextPerRender * behindIncrementFactor
+        : visibleTextPerRender * aheadIncrementFactor;
 
       visibleTextIncrement =
         recentAverageIncrement > targetIncrement

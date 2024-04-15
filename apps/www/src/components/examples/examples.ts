@@ -52,12 +52,15 @@ Quick actions:
 
 const throttleBeforePause = `### Throttling
 
-A pause is coming in 3...2...1`;
+Sometimes models outputs stop for a couple of seconds. llm-ui can throttle the output to make it look more natural.
+
+
+Pausing in 3...2...1`;
 
 const throttleAfterPause = `and now we resume smoothly 🚀`;
 
 export const throttleExample: TokenWithDelay[] = [
   ...stringToTokenArray(throttleBeforePause, defaultExampleProbs),
-  { token: " ", delayMs: 5000 },
+  { token: " ", delayMs: 1500 },
   ...stringToTokenArray(throttleAfterPause, defaultExampleProbs),
 ];

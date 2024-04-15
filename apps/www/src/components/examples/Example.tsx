@@ -1,6 +1,10 @@
 import { cn } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type LLMOutputProps } from "llm-ui/components";
+import {
+  useLLMOutput,
+  type LLMOutputProps,
+  type ThrottleFunction,
+} from "llm-ui/components";
 import {
   stringToTokenArray,
   useStreamTokenArray,
@@ -8,6 +12,7 @@ import {
   type UseStreamTokenArrayOptions,
   type UseStreamWithProbabilitiesOptions,
 } from "llm-ui/hooks";
+import { throttleBasic } from "llm-ui/throttle";
 import React, { useState, type ReactNode } from "react";
 import type { SetRequired } from "type-fest";
 import { Loader } from "../ui/custom/Loader";
@@ -18,7 +23,6 @@ import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
 import { NeverShrinkContainer } from "./NeverShrinkContainer";
 import { defaultExampleProbs } from "./contants";
-import { throttle } from "./throttle";
 import type { Tab } from "./types";
 
 const SideBySideContainer: React.FC<{
@@ -81,7 +85,7 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
             {tab === "raw" && isActive && (
               <pre
                 className={cn(
-                  "not-shiki raw-example",
+                  "not-shiki raw-example whitespace-pre-wrap",
                   !isVisible && "invisible",
                 )}
               >
@@ -109,6 +113,7 @@ type ExampleCommonProps = {
   backgroundClassName?: string;
   showPlayPause?: boolean;
   hideFirstLoop?: boolean;
+  throttle?: ThrottleFunction;
 };
 
 export type ExampleTokenArrayProps = ExampleCommonProps &
@@ -120,6 +125,7 @@ const LLMUI = ({
   isPlaying,
   loopIndex,
   hideFirstLoop = false,
+  throttle = throttleBasic(),
   ...props
 }: SetRequired<Partial<LLMOutputProps>, "isStreamFinished" | "llmOutput"> & {
   isPlaying: boolean;
@@ -203,6 +209,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   className,
   backgroundClassName,
   options,
+  throttle,
   showPlayPause = true,
   hideFirstLoop,
 }) => {
@@ -225,6 +232,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
       loopIndex={loopIndex}
       isPlaying={isPlaying}
       hideFirstLoop={hideFirstLoop}
+      throttle={throttle}
     />
   );
   return (
@@ -272,6 +280,7 @@ export const ExampleSideBySideTokenArray: React.FC<
   backgroundClassName,
   showPlayPause = true,
   hideFirstLoop,
+  throttle,
   ...props
 }) => {
   if (!tabs.includes("llm-ui")) {
@@ -299,6 +308,7 @@ export const ExampleSideBySideTokenArray: React.FC<
       loopIndex={loopIndex}
       isPlaying={isPlaying}
       hideFirstLoop={hideFirstLoop}
+      throttle={throttle}
     />
   );
   const isVisible = !hideFirstLoop || loopIndex !== 0;

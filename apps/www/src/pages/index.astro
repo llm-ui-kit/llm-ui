@@ -15,6 +15,7 @@ import {
   customComponentExample,
   throttleExample,
 } from "@/components/examples/examples";
+import { bufferThrottle } from "@/components/examples/throttle";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import HeaderSection from "@/components/HeaderSection.astro";
@@ -135,10 +136,14 @@ import { marketingConfig } from "@/config/marketing";
     class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
   >
     <div class="container space-y-6">
-      <HeaderSection title="Throttling" subtitle="copy" />
+      <HeaderSection
+        title="Throttling"
+        subtitle="Smooth out pauses in the model's output"
+      />
       <ExampleSideBySideTokenArray
         client:load
         tokenArray={throttleExample}
+        throttle={bufferThrottle}
         tabs={["llm-ui", "raw"]}
         hideFirstLoop
       />
