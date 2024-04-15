@@ -1,10 +1,6 @@
 import { cn } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
-import {
-  useLLMOutput,
-  type LLMOutputProps,
-  type ThrottleFunction,
-} from "llm-ui/components";
+import { useLLMOutput, type LLMOutputProps } from "llm-ui/components";
 import {
   stringToTokenArray,
   useStreamTokenArray,
@@ -23,6 +19,7 @@ import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
 import { NeverShrinkContainer } from "./NeverShrinkContainer";
 import { defaultExampleProbs } from "./contants";
+import { getThrottle } from "./throttle";
 import type { Tab } from "./types";
 
 const SideBySideContainer: React.FC<{
@@ -113,7 +110,7 @@ type ExampleCommonProps = {
   backgroundClassName?: string;
   showPlayPause?: boolean;
   hideFirstLoop?: boolean;
-  throttle?: ThrottleFunction;
+  throttle?: "basic" | "buffer";
 };
 
 export type ExampleTokenArrayProps = ExampleCommonProps &
@@ -232,7 +229,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
       loopIndex={loopIndex}
       isPlaying={isPlaying}
       hideFirstLoop={hideFirstLoop}
-      throttle={throttle}
+      throttle={getThrottle(throttle)}
     />
   );
   return (
@@ -308,7 +305,7 @@ export const ExampleSideBySideTokenArray: React.FC<
       loopIndex={loopIndex}
       isPlaying={isPlaying}
       hideFirstLoop={hideFirstLoop}
-      throttle={throttle}
+      throttle={getThrottle(throttle)}
     />
   );
   const isVisible = !hideFirstLoop || loopIndex !== 0;

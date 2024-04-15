@@ -15,7 +15,6 @@ import {
   customComponentExample,
   throttleExample,
 } from "@/components/examples/examples";
-import { bufferThrottle } from "@/components/examples/throttle";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import HeaderSection from "@/components/HeaderSection.astro";
@@ -141,9 +140,9 @@ import { marketingConfig } from "@/config/marketing";
         subtitle="Smooth out pauses in the model's output"
       />
       <ExampleSideBySideTokenArray
-        client:load
+        client:only
         tokenArray={throttleExample}
-        throttle={bufferThrottle}
+        throttle={"buffer"}
         tabs={["llm-ui", "raw"]}
         hideFirstLoop
       />
