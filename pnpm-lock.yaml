@@ -98,6 +98,9 @@ importers:
       '@iconify-json/ri':
         specifier: ^1.1.20
         version: 1.1.20
+      '@llm-ui/buttons':
+        specifier: workspace:*
+        version: link:../../packages/buttons
       '@llm-ui/code-block':
         specifier: workspace:*
         version: link:../../packages/code-block
@@ -237,6 +240,34 @@ importers:
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
+
+  packages/buttons:
+    dependencies:
+      fast-xml-parser:
+        specifier: ^4.3.6
+        version: 4.3.6
+      llm-ui:
+        specifier: workspace:*
+        version: link:../react
+      react:
+        specifier: ^18.0.0
+        version: 18.2.0
+    devDependencies:
+      '@llm-ui/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/tsconfig
+      '@types/react':
+        specifier: 18.2.60
+        version: 18.2.60
+      '@types/react-dom':
+        specifier: 18.2.19
+        version: 18.2.19
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(typescript@5.4.3)
+      typescript:
+        specifier: ^5.4.3
+        version: 5.4.3
 
   packages/code-block:
     dependencies:

@@ -7,6 +7,7 @@ import { useState, type ReactNode } from "react";
 import type { SetRequired } from "type-fest";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
+import { buttonsBlock } from "./Buttons";
 import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
@@ -119,7 +120,7 @@ const LLMUI = ({
     visibleText,
     loopIndex: outputLoopIndex,
   } = useLLMOutput({
-    blocks: [codeBlockBlock],
+    blocks: [codeBlockBlock, buttonsBlock],
     fallbackBlock: {
       component: Markdown,
       lookBack: markdownLookBack,
