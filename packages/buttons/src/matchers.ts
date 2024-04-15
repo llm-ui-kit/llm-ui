@@ -7,6 +7,7 @@ export const buttonsCompleteMatcher = (): LLMOutputMatcher => {
 };
 
 export const buttonsPartialMatcher = (): LLMOutputMatcher => {
-  const regex = /<?b?u?t?t?o?n?s?>?[\s\S]*<?\/?b?u?t?t?o?n?s?>?/;
+  const regex =
+    /(<b$|<bu$|<but$|<butt$|<butto$|<button$|<buttons$|<buttons>$|<buttons>[\s\S]*)/;
   return regexMatcher(regex);
 };
