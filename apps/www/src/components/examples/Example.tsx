@@ -1,9 +1,14 @@
-import { useStreamFastSmooth } from "@/hooks/useLLMExamples";
 import { cn } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputProps } from "llm-ui/components";
-import type { UseStreamWithProbabilitiesOptions } from "llm-ui/hooks";
-import { useState, type ReactNode } from "react";
+import {
+  stringToTokenArray,
+  useStreamTokenArray,
+  type TokenWithDelay,
+  type UseStreamTokenArrayOptions,
+  type UseStreamWithProbabilitiesOptions,
+} from "llm-ui/hooks";
+import React, { useState, type ReactNode } from "react";
 import type { SetRequired } from "type-fest";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
@@ -12,6 +17,7 @@ import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
 import { NeverShrinkContainer } from "./NeverShrinkContainer";
+import { defaultExampleProbs } from "./contants";
 import { throttle } from "./throttle";
 import type { Tab } from "./types";
 
@@ -97,13 +103,17 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
   );
 };
 
-export type ExampleProps = {
+type ExampleCommonProps = {
   className?: string;
   tabs: Tab[];
   backgroundClassName?: string;
   showPlayPause?: boolean;
   hideFirstLoop?: boolean;
-} & UseExampleProps;
+};
+
+export type ExampleTokenArrayProps = ExampleCommonProps &
+  UseExampleTokenArrayProps;
+export type ExampleProps = ExampleCommonProps & UseExampleProbsProps;
 
 const LLMUI = ({
   isStreamFinished,
@@ -158,16 +168,24 @@ const LLMUI = ({
   );
 };
 
-type UseExampleProps = {
+type UseExampleProbsProps = {
   example: string;
   options?: Partial<UseStreamWithProbabilitiesOptions>;
 };
 
-const useExample = ({ example, options = {} }: UseExampleProps) => {
+type UseExampleTokenArrayProps = {
+  tokenArray: TokenWithDelay[];
+  options?: Partial<UseStreamTokenArrayOptions>;
+};
+
+const useExampleTokenArray = ({
+  tokenArray,
+  options = {},
+}: UseExampleTokenArrayProps) => {
   const [delayMultiplier, setDelayMultiplier] = useState(
     options.delayMultiplier ?? 1,
   );
-  const result = useStreamFastSmooth(example, {
+  const result = useStreamTokenArray(tokenArray, {
     loop: true,
     autoStart: true,
     autoStartDelayMs: 0,
@@ -179,8 +197,8 @@ const useExample = ({ example, options = {} }: UseExampleProps) => {
   return { ...result, setDelayMultiplier, delayMultiplier };
 };
 
-export const ExampleTabs: React.FC<ExampleProps> = ({
-  example,
+export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
+  tokenArray,
   tabs,
   className,
   backgroundClassName,
@@ -199,7 +217,7 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
     delayMultiplier,
     pause,
     start,
-  } = useExample({ example, options });
+  } = useExampleTokenArray({ tokenArray, options });
   const llmUi = (
     <LLMUI
       isStreamFinished={isStreamFinished}
@@ -237,12 +255,17 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
     </div>
   );
 };
-
-export type ExampleSideBySideProps = ExampleProps & {
+type SideBySideProps = {
   showHeaders?: boolean;
 };
+export type ExampleSideBySideTokenArrayProps = ExampleTokenArrayProps &
+  SideBySideProps;
 
-export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
+export type ExampleSideBySideProps = ExampleProps & SideBySideProps;
+
+export const ExampleSideBySideTokenArray: React.FC<
+  ExampleSideBySideTokenArrayProps
+> = ({
   className,
   showHeaders = false,
   tabs = ["llm-ui", "markdown", "raw"],
@@ -268,7 +291,7 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
     loopIndex,
     setDelayMultiplier,
     delayMultiplier,
-  } = useExample(props);
+  } = useExampleTokenArray(props);
   const llmUi = (
     <LLMUI
       isStreamFinished={isStreamFinished}
@@ -341,5 +364,37 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
         onMobileTabIndexChange={setMobileTabIndex}
       />
     </div>
+  );
+};
+
+const getProbOptions = (
+  options: Partial<UseStreamWithProbabilitiesOptions> | undefined,
+) => ({
+  ...defaultExampleProbs,
+  ...(options ?? {}),
+});
+
+export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
+  example,
+  ...props
+}) => {
+  const options = getProbOptions(props.options);
+  return (
+    <ExampleSideBySideTokenArray
+      tokenArray={stringToTokenArray(example, options)}
+      {...props}
+      options={options}
+    />
+  );
+};
+
+export const ExampleTabs: React.FC<ExampleProps> = ({ example, ...props }) => {
+  const options = getProbOptions(props.options);
+  return (
+    <ExampleTabsTokenArray
+      tokenArray={stringToTokenArray(example, options)}
+      {...props}
+      options={options}
+    />
   );
 };
