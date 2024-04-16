@@ -2,10 +2,12 @@
 import { cn } from "@/lib/utils";
 import type { ShikiCodeBlockComponent, ShikiProps } from "@llm-ui/code-block";
 import {
-  buildShikiCodeBlockComponent,
+  ShikiOrFallback,
   codeBlockCompleteMatcher,
   codeBlockLookBack,
   loadHighlighter,
+  parseCompleteMarkdownCodeBlock,
+  useCodeBlockToHtml,
 } from "@llm-ui/code-block";
 import {
   allLangs,
@@ -33,11 +35,8 @@ const shikiProps: ShikiProps = {
   codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
 };
 
-const CodeBlock = buildShikiCodeBlockComponent(shikiProps);
-
 const CodeBlockContainer: React.FC<{
   code: string;
-  isComplete: boolean;
   children: ReactNode;
 }> = ({ code, children }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -68,10 +67,17 @@ const CodeBlockContainer: React.FC<{
   );
 };
 
-const ShikiComplete: ShikiCodeBlockComponent = (props) => {
+const ShikiComplete: ShikiCodeBlockComponent = ({
+  llmOutput: markdownCodeBlock,
+}) => {
+  const { html, code } = useCodeBlockToHtml({
+    markdownCodeBlock,
+    parser: parseCompleteMarkdownCodeBlock,
+    ...shikiProps,
+  });
   return (
-    <CodeBlockContainer code={props.llmOutput} isComplete>
-      <CodeBlock {...props} />
+    <CodeBlockContainer code={code}>
+      <ShikiOrFallback html={html} code={code} />
     </CodeBlockContainer>
   );
 };
