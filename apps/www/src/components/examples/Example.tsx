@@ -324,8 +324,8 @@ export const ExampleSideBySideTokenArray: React.FC<
           <OutputTabs
             isVisible={isVisible}
             className={cn(
-              backgroundClassName,
               "hidden md:flex border-r-2 border-background-200 rounded-tl-lg",
+              backgroundClassName,
             )}
             output={output}
             tabs={desktopTabs}
