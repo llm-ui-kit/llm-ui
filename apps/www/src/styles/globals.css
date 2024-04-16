@@ -101,7 +101,7 @@
       "calt" 1;
   }
 
-  a {
+  .link {
     @apply underline underline-offset-4;
   }
 
