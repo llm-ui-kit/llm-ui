@@ -22,6 +22,6 @@ export type {
   ShikiProps,
 } from "./components/shikiComponent";
 
-export { loadHighlighter } from "./loadHighlighter";
-export type { LLMUIHighlighter } from "./loadHighlighter";
+export { loadHighlighter } from "./hooks/loadHighlighter";
+export type { LLMUIHighlighter } from "./hooks/loadHighlighter";
 export { codeBlockLookBack } from "./lookBack";
