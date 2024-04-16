@@ -1,5 +1,6 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
+import { siteConfig } from "@/config/site";
 ---
 
 <MainLayout title="About">
@@ -14,8 +15,9 @@ import MainLayout from "@/layouts/MainLayout.astro";
           >. If you have any questions or just want to chat
           <br />
           <br />
-          You can reach me via email richard@rgill.co.uk or <a href="/discord"
-            >discord</a
+          You can reach me via email richard@rgill.co.uk or <a
+            class="link"
+            href={siteConfig.links.discord}>discord</a
           >.
         </p>
       </div>
