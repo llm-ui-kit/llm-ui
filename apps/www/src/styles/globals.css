@@ -200,3 +200,8 @@ html pre.raw-example,
 html.dark pre.raw-example {
   background-color: inherit !important;
 }
+
+.link {
+  @apply underline;
+  @apply underline-offset-4;
+}
