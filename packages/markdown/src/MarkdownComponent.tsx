@@ -1,4 +1,4 @@
-import { LLMOutputComponent } from "llm-ui/components";
+import { LLMOutputComponent } from "llm-ui/core";
 import Markdown, { Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 

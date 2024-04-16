@@ -1,4 +1,4 @@
-import { LLMOutputFallbackBlock } from "llm-ui/components";
+import { LLMOutputFallbackBlock } from "llm-ui/core";
 import { MarkdownComponent } from "./MarkdownComponent";
 import { markdownLookBack } from "./lookBack";
 

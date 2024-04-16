@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MaybeLLMOutputMatch } from "../../react/src/components/LLMOutput/types";
+import { MaybeLLMOutputMatch } from "../../react/src/core/LLMOutput/types";
 import { codeBlockCompleteMatcher, codeBlockPartialMatcher } from "./matchers";
 import { CodeBlockOptions } from "./options";
 
