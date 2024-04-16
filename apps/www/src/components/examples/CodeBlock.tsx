@@ -13,7 +13,7 @@ import {
   allLangs,
   allLangsAlias,
 } from "@llm-ui/code-block/shikiBundles/allLangs";
-import { type LLMOutputBlock } from "llm-ui/components";
+import { type LLMOutputBlock } from "llm-ui/core";
 import { Check, Copy } from "lucide-react";
 import { codeBlockPartialMatcher } from "node_modules/@llm-ui/code-block/src/matchers";
 import { useState, type ReactNode } from "react";

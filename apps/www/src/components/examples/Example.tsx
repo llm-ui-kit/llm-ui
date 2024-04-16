@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type LLMOutputProps } from "llm-ui/components";
+import { useLLMOutput, type LLMOutputProps } from "llm-ui/core";
 import {
   stringToTokenArray,
   useStreamTokenArray,

@@ -1,5 +1,5 @@
 import { regexMatcher } from "@llm-ui/shared";
-import { LLMOutputMatcher } from "llm-ui/components";
+import { LLMOutputMatcher } from "llm-ui/core";
 
 export const buttonsCompleteMatcher = (): LLMOutputMatcher => {
   const regex = /<buttons>[\s\S]*<\/buttons>/;

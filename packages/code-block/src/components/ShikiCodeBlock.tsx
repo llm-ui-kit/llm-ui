@@ -1,4 +1,4 @@
-import { LLMOutputComponent } from "llm-ui/components";
+import { LLMOutputComponent } from "llm-ui/core";
 import {
   UseCodeBlockToHtmlParams,
   useCodeBlockToHtml,

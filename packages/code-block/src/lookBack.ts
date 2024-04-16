@@ -1,4 +1,4 @@
-import { LookBackFunction } from "llm-ui/components";
+import { LookBackFunction } from "llm-ui/core";
 import { CodeBlockOptions, getOptions } from "./options";
 import {
   parseCompleteMarkdownCodeBlock,

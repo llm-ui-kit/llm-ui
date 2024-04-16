@@ -2,7 +2,7 @@ import {
   buttonsBlock as buttonsBlockOriginal,
   parseCompleteButtons,
 } from "@llm-ui/buttons";
-import type { LLMOutputBlock, LLMOutputComponent } from "llm-ui/components";
+import type { LLMOutputBlock, LLMOutputComponent } from "llm-ui/core";
 import { Button } from "../ui/Button";
 
 const ButtonsComponent: LLMOutputComponent = ({ llmOutput }) => {
