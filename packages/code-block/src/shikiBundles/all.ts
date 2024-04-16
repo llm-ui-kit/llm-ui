@@ -1,12 +1,10 @@
 import { LLMOutputBlock } from "llm-ui/components";
 import { SetOptional } from "type-fest";
-import {
-  ShikiProps,
-  buildShikiCodeBlockComponent,
-} from "../components/shikiComponent";
+import { buildShikiCodeBlockComponent } from "../components/ShikiCodeBlock";
 import { codeBlockLookBack } from "../lookBack";
 import { codeBlockCompleteMatcher, codeBlockPartialMatcher } from "../matchers";
 import { CodeBlockOptions, getOptions } from "../options";
+import { ShikiProps } from "../types";
 
 export const allShikiDefaultProps = {
   codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },

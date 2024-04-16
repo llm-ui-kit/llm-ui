@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { HighlighterCore } from "shiki/core";
-
-export type LLMUIHighlighter = {
-  getHighlighter: () => HighlighterCore | undefined;
-  highlighterPromise: Promise<HighlighterCore>;
-};
+import { LLMUIHighlighter } from "../types";
 
 // Starts loading the highlighter immediately, hopefully it loads before it's needed
 // we can get the highlighter sync using getHighlighter and async using highlighterPromise

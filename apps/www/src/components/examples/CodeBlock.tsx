@@ -1,5 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
+import type { ShikiCodeBlockComponent, ShikiProps } from "@llm-ui/code-block";
 import {
   buildShikiCodeBlockComponent,
   codeBlockCompleteMatcher,
@@ -13,10 +14,6 @@ import {
 import { type LLMOutputBlock } from "llm-ui/components";
 import { Check, Copy } from "lucide-react";
 import { codeBlockPartialMatcher } from "node_modules/@llm-ui/code-block/src/matchers";
-import type {
-  ShikiCodeBlockComponent,
-  ShikiProps,
-} from "node_modules/@llm-ui/code-block/src/shikiComponent";
 import { useState, type ReactNode } from "react";
 import { getHighlighterCore } from "shiki/core";
 import githubDark from "shiki/themes/github-dark.mjs";

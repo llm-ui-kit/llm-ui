@@ -2,6 +2,7 @@ export {
   codeBlockCompleteMatcher,
   codeBlockPartialMatcher as matchPartialCodeBlock,
 } from "./matchers";
+
 export { defaultOptions as defaultCodeBlockOptions } from "./options";
 export type { CodeBlockOptions } from "./options";
 
@@ -11,17 +12,25 @@ export {
 } from "./parse";
 export type { ParseFunction } from "./parse";
 
+export { codeBlockLookBack } from "./lookBack";
+
 export {
-  ShikiCode,
   ShikiCodeBlock,
   buildShikiCodeBlockComponent,
-} from "./components/shikiComponent";
-export type {
-  CodeToHtmlProps,
-  ShikiCodeBlockComponent,
-  ShikiProps,
-} from "./components/shikiComponent";
+} from "./components/ShikiCodeBlock";
+export type { ShikiCodeBlockComponent } from "./components/ShikiCodeBlock";
 
-export { loadHighlighter } from "./hooks/loadHighlighter";
-export type { LLMUIHighlighter } from "./hooks/loadHighlighter";
-export { codeBlockLookBack } from "./lookBack";
+export { ShikiOrFallback } from "./components/ShikiFallback";
+
+export { useCodeBlockToHtml } from "./hooks/useCodeBlockToHtml";
+export type {
+  UseCodeBlockToHtmlParams,
+  UseCodeBlockToHtmlReturn,
+} from "./hooks/useCodeBlockToHtml";
+
+export { useCodeToHtml } from "./hooks/useCodeToHtml";
+export type { UseCodeToHtmlParams } from "./hooks/useCodeToHtml";
+
+export { loadHighlighter } from "./hooks/useLoadHighlighter";
+
+export type { CodeToHtmlProps, LLMUIHighlighter, ShikiProps } from "./types";
