@@ -101,6 +101,10 @@
       "calt" 1;
   }
 
+  a {
+    @apply underline underline-offset-4;
+  }
+
   /* Documentation part */
   .docs-grid-cols-2 {
     @apply grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2;
