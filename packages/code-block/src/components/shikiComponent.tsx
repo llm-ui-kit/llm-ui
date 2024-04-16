@@ -3,8 +3,8 @@ import { LLMOutputComponent } from "llm-ui/components";
 import { useCallback } from "react";
 import { HighlighterCore } from "shiki/core";
 import { SetOptional } from "type-fest";
-import { LLMUIHighlighter, useLoadHighlighter } from "./loadHighlighter";
-import { ParseFunction, parseCompleteMarkdownCodeBlock } from "./parse";
+import { LLMUIHighlighter, useLoadHighlighter } from "../loadHighlighter";
+import { ParseFunction, parseCompleteMarkdownCodeBlock } from "../parse";
 
 export type CodeToHtmlProps = SetOptional<
   Parameters<HighlighterCore["codeToHtml"]>[1],

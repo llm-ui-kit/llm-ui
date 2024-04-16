@@ -15,12 +15,12 @@ export {
   ShikiCode,
   ShikiCodeBlock,
   buildShikiCodeBlockComponent,
-} from "./shikiComponent";
+} from "./components/shikiComponent";
 export type {
   CodeToHtmlProps,
   ShikiCodeBlockComponent,
   ShikiProps,
-} from "./shikiComponent";
+} from "./components/shikiComponent";
 
 export { loadHighlighter } from "./loadHighlighter";
 export type { LLMUIHighlighter } from "./loadHighlighter";
