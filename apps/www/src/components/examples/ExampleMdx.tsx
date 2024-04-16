@@ -7,7 +7,7 @@ import {
   type ExampleSideBySideProps,
 } from "./Example";
 
-const defaultBackgroundClassName = "bg-background-200";
+const defaultBackgroundClassName = "bg-background-200 border-background";
 const defaultClassName = "my-8";
 
 const defaultOptions: Partial<UseStreamWithProbabilitiesOptions> = {
