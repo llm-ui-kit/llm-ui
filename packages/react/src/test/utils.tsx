@@ -1,5 +1,5 @@
-import { LLMOutputComponent, LookBackFunction } from "../components";
-import { LLMOutputFallbackBlock } from "../components/LLMOutput/types";
+import { LLMOutputComponent, LookBackFunction } from "../core";
+import { LLMOutputFallbackBlock } from "../core/LLMOutput/types";
 
 export const returnParamsLookBack: LookBackFunction = ({
   output,

@@ -7,7 +7,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    "./components": "./src/components/index.ts",
+    "./components": "./src/core/index.ts",
     "./hooks": "./src/hooks/index.ts",
     "./throttle": "./src/throttle/index.ts"
   },

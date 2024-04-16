@@ -1,4 +1,4 @@
-import type { ThrottleFunction } from "llm-ui/components";
+import type { ThrottleFunction } from "../core";
 
 export type ThrottleBasicOptions = {
   readAheadChars: number;
