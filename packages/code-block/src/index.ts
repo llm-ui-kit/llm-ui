@@ -1,7 +1,4 @@
-export {
-  codeBlockCompleteMatcher,
-  codeBlockPartialMatcher as matchPartialCodeBlock,
-} from "./matchers";
+export { codeBlockCompleteMatcher, codeBlockPartialMatcher } from "./matchers";
 
 export { defaultOptions as defaultCodeBlockOptions } from "./options";
 export type { CodeBlockOptions } from "./options";

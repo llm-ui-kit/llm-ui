@@ -1,4 +1,4 @@
-import { LLMOutputBlock } from "llm-ui/components";
+import { LLMOutputBlock } from "llm-ui/core";
 import { SetOptional } from "type-fest";
 import { buildShikiCodeBlockComponent } from "../components/ShikiCodeBlock";
 import { codeBlockLookBack } from "../lookBack";

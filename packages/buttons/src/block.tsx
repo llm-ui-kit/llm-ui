@@ -1,4 +1,4 @@
-import { LLMOutputBlock, LLMOutputComponent } from "llm-ui/components";
+import { LLMOutputBlock, LLMOutputComponent } from "llm-ui/core";
 import { buttonsLookBack } from "./lookBack";
 import { buttonsCompleteMatcher, buttonsPartialMatcher } from "./matchers";
 import { parseCompleteButtons } from "./parse";

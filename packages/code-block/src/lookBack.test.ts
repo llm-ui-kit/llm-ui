@@ -1,4 +1,4 @@
-import { LookBack } from "llm-ui/components";
+import { LookBack } from "llm-ui/core";
 import { describe, expect, it } from "vitest";
 import { codeBlockLookBack } from "./lookBack";
 import { CodeBlockOptions } from "./options";
