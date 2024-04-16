@@ -7,12 +7,14 @@ import vercel from "@astrojs/vercel/serverless";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 import simpleStackForm from "simple-stack-form";
+import { siteConfig } from "./src/config/site";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://llm-ui.com",
   redirects: {
     "/docs": "/docs/getting-started",
+    "/discord": siteConfig.links.discord,
   },
   integrations: [
     mdx({
