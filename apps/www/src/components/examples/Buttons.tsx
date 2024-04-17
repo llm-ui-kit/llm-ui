@@ -5,8 +5,8 @@ import {
 import type { LLMOutputBlock, LLMOutputComponent } from "llm-ui/core";
 import { Button } from "../ui/Button";
 
-const ButtonsComponent: LLMOutputComponent = ({ llmOutput }) => {
-  const buttons = parseCompleteButtons(llmOutput);
+const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
+  const buttons = parseCompleteButtons(blockMatch.output);
   if (!buttons) {
     return undefined;
   }

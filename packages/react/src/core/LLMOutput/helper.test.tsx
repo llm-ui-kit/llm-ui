@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { fallbackBlock, returnParamsLookBack } from "../../test/utils";
-import { BlockMatch, matchBlocks } from "./helper";
+import { matchBlocks } from "./helper";
 import {
+  BlockMatch,
   LLMOutputBlock,
   LLMOutputFallbackBlock,
   MaybeLLMOutputMatch,
@@ -76,14 +77,14 @@ describe("matchBlocks", () => {
       expected: [
         {
           block: fallbackBlock,
-          match: {
-            outputRaw: "helloWorld",
-            visibleText: "helloWorld",
-            outputAfterLookback:
-              "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-            startIndex: 0,
-            endIndex: 10,
-          },
+          outputRaw: "helloWorld",
+          visibleText: "helloWorld",
+          output:
+            "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+          startIndex: 0,
+          endIndex: 10,
+          llmOutput: "helloWorld",
+          isComplete: true,
           priority: 0,
         },
       ],
@@ -98,15 +99,15 @@ describe("matchBlocks", () => {
       expected: [
         {
           block: fallbackBlock,
-          match: {
-            outputRaw: "helloWorld",
-            visibleText: "helloWorld",
-            outputAfterLookback:
-              "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-            startIndex: 0,
-            endIndex: 10,
-          },
+          outputRaw: "helloWorld",
+          visibleText: "helloWorld",
+          output:
+            "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+          startIndex: 0,
+          endIndex: 10,
           priority: 1,
+          llmOutput: "helloWorld",
+          isComplete: true,
         },
       ],
     },
@@ -122,15 +123,15 @@ describe("matchBlocks", () => {
         expected: [
           {
             block: block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "helloWorld",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:99 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "helloWorld",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:99 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorld",
+            isComplete: true,
           },
         ],
       };
@@ -147,15 +148,15 @@ describe("matchBlocks", () => {
         expected: [
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "hel",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "hel",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorld",
+            isComplete: true,
           },
         ],
       };
@@ -172,15 +173,15 @@ describe("matchBlocks", () => {
         expected: [
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "hel",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "hel",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorldhelloWorld",
+            isComplete: true,
           },
         ],
       } satisfies TestCase;
@@ -197,27 +198,27 @@ describe("matchBlocks", () => {
         expected: [
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "helloWorld",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "helloWorld",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorldhelloWorld",
+            isComplete: true,
           },
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "helloWorld",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
-              startIndex: 10,
-              endIndex: 20,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "helloWorld",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
+            startIndex: 10,
+            endIndex: 20,
             priority: 0,
+            llmOutput: "helloWorldhelloWorld",
+            isComplete: true,
           },
         ],
       } satisfies TestCase;
@@ -235,39 +236,39 @@ describe("matchBlocks", () => {
         expected: [
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "helloWorld",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "helloWorld",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorldfallbackhelloWorld",
+            isComplete: true,
           },
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: "fallback",
-              visibleText: "fallback",
-              outputAfterLookback:
-                "fallback isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
-              startIndex: 10,
-              endIndex: 18,
-            },
+            outputRaw: "fallback",
+            visibleText: "fallback",
+            output:
+              "fallback isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
+            startIndex: 10,
+            endIndex: 18,
             priority: 1,
+            llmOutput: "helloWorldfallbackhelloWorld",
+            isComplete: true,
           },
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "helloWorld",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:82 isStreamFinished:true",
-              startIndex: 18,
-              endIndex: 28,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "helloWorld",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:82 isStreamFinished:true",
+            startIndex: 18,
+            endIndex: 28,
             priority: 0,
+            llmOutput: "helloWorldfallbackhelloWorld",
+            isComplete: true,
           },
         ],
       };
@@ -284,27 +285,27 @@ describe("matchBlocks", () => {
         expected: [
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "helloWorld",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "helloWorld",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: " world",
-              visibleText: " world",
-              outputAfterLookback:
-                " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
-              startIndex: 10,
-              endIndex: 16,
-            },
+            outputRaw: " world",
+            visibleText: " world",
+            output:
+              " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
+            startIndex: 10,
+            endIndex: 16,
             priority: 1,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
         ],
       };
@@ -321,27 +322,27 @@ describe("matchBlocks", () => {
         expected: [
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "helloWorld",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "helloWorld",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 10,
             priority: 1,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
           {
             block,
-            match: {
-              outputRaw: " world",
-              visibleText: " world",
-              outputAfterLookback:
-                " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
-              startIndex: 10,
-              endIndex: 16,
-            },
+            outputRaw: " world",
+            visibleText: " world",
+            output:
+              " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
+            startIndex: 10,
+            endIndex: 16,
             priority: 0,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
         ],
       };
@@ -358,15 +359,15 @@ describe("matchBlocks", () => {
         expected: [
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "hel",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "hel",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 10,
             priority: 1,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
         ],
       };
@@ -383,39 +384,39 @@ describe("matchBlocks", () => {
         expected: [
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: "hell",
-              visibleText: "hell",
-              outputAfterLookback:
-                "hell isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 4,
-            },
+            outputRaw: "hell",
+            visibleText: "hell",
+            output:
+              "hell isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 4,
             priority: 1,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
           {
             block,
-            match: {
-              outputRaw: "oWo",
-              visibleText: "oWo",
-              outputAfterLookback:
-                "oWo isComplete:true visibleTextLengthTarget:96 isStreamFinished:true",
-              startIndex: 4,
-              endIndex: 7,
-            },
+            outputRaw: "oWo",
+            visibleText: "oWo",
+            output:
+              "oWo isComplete:true visibleTextLengthTarget:96 isStreamFinished:true",
+            startIndex: 4,
+            endIndex: 7,
             priority: 0,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: "rld world",
-              visibleText: "rld world",
-              outputAfterLookback:
-                "rld world isComplete:true visibleTextLengthTarget:93 isStreamFinished:true",
-              startIndex: 7,
-              endIndex: 16,
-            },
+            outputRaw: "rld world",
+            visibleText: "rld world",
+            output:
+              "rld world isComplete:true visibleTextLengthTarget:93 isStreamFinished:true",
+            startIndex: 7,
+            endIndex: 16,
             priority: 1,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
         ],
       };
@@ -432,27 +433,27 @@ describe("matchBlocks", () => {
         expected: [
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "helloWorld",
-              outputAfterLookback:
-                "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "helloWorld",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 10,
             priority: 1,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: " world",
-              visibleText: " world",
-              outputAfterLookback:
-                " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
-              startIndex: 10,
-              endIndex: 16,
-            },
+            outputRaw: " world",
+            visibleText: " world",
+            output:
+              " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
+            startIndex: 10,
+            endIndex: 16,
             priority: 2,
+            llmOutput: "helloWorld world",
+            isComplete: true,
           },
         ],
       };
@@ -470,27 +471,27 @@ describe("matchBlocks", () => {
         expected: [
           {
             block: block1,
-            match: {
-              outputRaw: "hello",
-              visibleText: "hello",
-              outputAfterLookback:
-                "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 5,
-            },
+            outputRaw: "hello",
+            visibleText: "hello",
+            output:
+              "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 5,
             priority: 0,
+            llmOutput: "helloWorld",
+            isComplete: true,
           },
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: "World",
-              visibleText: "World",
-              outputAfterLookback:
-                "World isComplete:true visibleTextLengthTarget:95 isStreamFinished:true",
-              startIndex: 5,
-              endIndex: 10,
-            },
+            outputRaw: "World",
+            visibleText: "World",
+            output:
+              "World isComplete:true visibleTextLengthTarget:95 isStreamFinished:true",
+            startIndex: 5,
+            endIndex: 10,
             priority: 2,
+            llmOutput: "helloWorld",
+            isComplete: true,
           },
         ],
       };
@@ -508,27 +509,27 @@ describe("matchBlocks", () => {
         expected: [
           {
             block: block1,
-            match: {
-              outputRaw: "hello",
-              visibleText: "hello",
-              outputAfterLookback:
-                "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
-              startIndex: 0,
-              endIndex: 5,
-            },
+            outputRaw: "hello",
+            visibleText: "hello",
+            output:
+              "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
+            startIndex: 0,
+            endIndex: 5,
             priority: 0,
+            llmOutput: "helloWorld",
+            isComplete: true,
           },
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: "World",
-              visibleText: "World",
-              outputAfterLookback:
-                "World isComplete:true visibleTextLengthTarget:95 isStreamFinished:true",
-              startIndex: 5,
-              endIndex: 10,
-            },
+            outputRaw: "World",
+            visibleText: "World",
+            output:
+              "World isComplete:true visibleTextLengthTarget:95 isStreamFinished:true",
+            startIndex: 5,
+            endIndex: 10,
             priority: 2,
+            llmOutput: "helloWorld",
+            isComplete: true,
           },
         ],
       };
@@ -545,15 +546,15 @@ describe("matchBlocks", () => {
         expected: [
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "helloWorld",
-              outputAfterLookback:
-                "helloWorld isComplete:false visibleTextLengthTarget:100 isStreamFinished:false",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "helloWorld",
+            output:
+              "helloWorld isComplete:false visibleTextLengthTarget:100 isStreamFinished:false",
+            startIndex: 0,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorld",
+            isComplete: false,
           },
         ],
       };
@@ -570,15 +571,15 @@ describe("matchBlocks", () => {
         expected: [
           {
             block,
-            match: {
-              outputRaw: "helloWorld",
-              visibleText: "hel",
-              outputAfterLookback:
-                "helloWorld isComplete:false visibleTextLengthTarget:3 isStreamFinished:false",
-              startIndex: 0,
-              endIndex: 10,
-            },
+            outputRaw: "helloWorld",
+            visibleText: "hel",
+            output:
+              "helloWorld isComplete:false visibleTextLengthTarget:3 isStreamFinished:false",
+            startIndex: 0,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorld",
+            isComplete: false,
           },
         ],
       };
@@ -595,27 +596,27 @@ describe("matchBlocks", () => {
         expected: [
           {
             block: fallbackBlock,
-            match: {
-              outputRaw: "hello",
-              visibleText: "hello",
-              outputAfterLookback:
-                "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:false",
-              startIndex: 0,
-              endIndex: 5,
-            },
+            outputRaw: "hello",
+            visibleText: "hello",
+            output:
+              "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:false",
+            startIndex: 0,
+            endIndex: 5,
             priority: 1,
+            llmOutput: "helloWorld",
+            isComplete: true,
           },
           {
             block,
-            match: {
-              outputRaw: "World",
-              visibleText: "World",
-              outputAfterLookback:
-                "World isComplete:false visibleTextLengthTarget:95 isStreamFinished:false",
-              startIndex: 5,
-              endIndex: 10,
-            },
+            outputRaw: "World",
+            visibleText: "World",
+            output:
+              "World isComplete:false visibleTextLengthTarget:95 isStreamFinished:false",
+            startIndex: 5,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorld",
+            isComplete: false,
           },
         ],
       };
@@ -633,27 +634,27 @@ describe("matchBlocks", () => {
         expected: [
           {
             block: completeBlock,
-            match: {
-              outputRaw: "hello",
-              visibleText: "hello",
-              outputAfterLookback:
-                "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:false",
-              startIndex: 0,
-              endIndex: 5,
-            },
+            outputRaw: "hello",
+            visibleText: "hello",
+            output:
+              "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:false",
+            startIndex: 0,
+            endIndex: 5,
             priority: 1,
+            llmOutput: "helloWorld",
+            isComplete: true,
           },
           {
             block: partialBlock,
-            match: {
-              outputRaw: "World",
-              visibleText: "World",
-              outputAfterLookback:
-                "World isComplete:false visibleTextLengthTarget:95 isStreamFinished:false",
-              startIndex: 5,
-              endIndex: 10,
-            },
+            outputRaw: "World",
+            visibleText: "World",
+            output:
+              "World isComplete:false visibleTextLengthTarget:95 isStreamFinished:false",
+            startIndex: 5,
+            endIndex: 10,
             priority: 0,
+            llmOutput: "helloWorld",
+            isComplete: false,
           },
         ],
       };

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { BlockMatch, matchBlocks } from "./helper";
+import { matchBlocks } from "./helper";
 import {
+  BlockMatch,
   LLMOutputBlock,
   LLMOutputFallbackBlock,
   ThrottleFunction,
@@ -16,11 +17,11 @@ export type LLMOutputProps = {
 };
 
 const matchesToVisibleText = (matches: BlockMatch[]): string => {
-  return matches.map((match) => match.match.visibleText).join("");
+  return matches.map((match) => match.visibleText).join("");
 };
 
 const matchesToOutput = (matches: BlockMatch[]): string => {
-  return matches.map((match) => match.match.outputAfterLookback).join("");
+  return matches.map((match) => match.output).join("");
 };
 
 export type UseLLMOutputReturn = {
@@ -174,16 +175,4 @@ export const useLLMOutput = ({
   }, [isStreamFinished]);
 
   return { blockMatches, ...state };
-};
-
-export const LLMOutput: React.FC<LLMOutputProps> = (props) => {
-  const { blockMatches } = useLLMOutput(props);
-  return (
-    <>
-      {blockMatches.map(({ block, match }, index) => {
-        const Component = block.component;
-        return <Component key={index} llmOutput={match.outputAfterLookback} />;
-      })}
-    </>
-  );
 };
