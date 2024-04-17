@@ -7,3 +7,5 @@ apps/www/src/components/Posthog.astro
 pnpm-lock.yaml
 
 *.hbs
+
+.next

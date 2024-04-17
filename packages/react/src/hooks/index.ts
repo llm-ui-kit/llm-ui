@@ -14,6 +14,7 @@ export {
   useStreamTokenArrayOptionsDefaultOptions,
 } from "./stream/useStreamTokenArray";
 export {
+  useStreamWithProbabilities as useStreamExample,
   useStreamWithProbabilities,
   useStreamWithProbabilitiesDefaultOptions,
 } from "./stream/useStreamWithProbabilities";

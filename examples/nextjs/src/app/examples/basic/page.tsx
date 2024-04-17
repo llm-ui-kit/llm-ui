@@ -1,19 +1,9 @@
----
-title: Quick start
-description: ""
----
+"use client";
+import { markdownFallbackBlock } from "@llm-ui/markdown";
+import { useLLMOutput } from "llm-ui/core";
+import { useStreamExample } from "llm-ui/hooks";
+import { throttleBasic } from "llm-ui/throttle";
 
-import { PackageInstall } from "@/components/docs/PackageInstall";
-
-llm-ui is a React library for displaying large language model outputs.
-
-# Installation
-
-<PackageInstall client:load packages={["llm-ui", "@llm-ui/markdown"]} />
-
-# Usage
-
-```tsx
 const example = `
 ## Example
 
@@ -47,4 +37,5 @@ const Example = () => {
     </div>
   );
 };
-```
+
+export default Example;
