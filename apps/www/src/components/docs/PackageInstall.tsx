@@ -22,7 +22,9 @@ const PackageInstallCodeBlock: React.FC<{
 }> = ({ packageManager, packages }) => {
   return (
     <CodeBlock
+      className="mt-1"
       code={installCommand(packageManager as PackageManager, packages)}
+      codeToHtmlProps={{ lang: "shell" }}
     />
   );
 };

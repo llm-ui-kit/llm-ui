@@ -16,7 +16,13 @@ const ShikiBlockComponent: ShikiCodeBlockComponent = ({
   if (!code) {
     return undefined;
   }
-  <CodeBlock code={code} codeToHtmlProps={{ lang: language }} />;
+  return (
+    <CodeBlock
+      className="my-4"
+      code={code}
+      codeToHtmlProps={{ lang: language }}
+    />
+  );
 };
 
 export const codeBlockBlock: LLMOutputBlock = {
