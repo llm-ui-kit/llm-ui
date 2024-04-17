@@ -1,10 +1,11 @@
-import { LLMOutputBlock, LLMOutputComponent } from "llm-ui/core";
+import { BlockMatch, LLMOutputBlock, LLMOutputComponent } from "llm-ui/core";
 import { buttonsLookBack } from "./lookBack";
 import { buttonsCompleteMatcher, buttonsPartialMatcher } from "./matchers";
 import { parseCompleteButtons } from "./parse";
 
-const ButtonsComponent: LLMOutputComponent = ({ llmOutput }) => {
-  const buttons = parseCompleteButtons(llmOutput);
+const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
+  console.log("zzz buttons", blockMatch);
+  const buttons = parseCompleteButtons((blockMatch as BlockMatch).output);
   if (!buttons) {
     return undefined;
   }

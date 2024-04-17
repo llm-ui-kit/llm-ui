@@ -53,15 +53,15 @@ describe("useLLMOutput Hook", () => {
     expect(result.current.blockMatches).toEqual([
       {
         block: fallbackBlock,
-        match: {
-          startIndex: 0,
-          endIndex: 5,
-          outputAfterLookback:
-            "hello isComplete:false visibleTextLengthTarget:105 isStreamFinished:false",
-          outputRaw: "hello",
-          visibleText: "hello",
-        },
+        startIndex: 0,
+        endIndex: 5,
+        output:
+          "hello isComplete:false visibleTextLengthTarget:105 isStreamFinished:false",
+        outputRaw: "hello",
+        visibleText: "hello",
         priority: 0,
+        llmOutput: "hello",
+        isComplete: false,
       },
     ]);
   });

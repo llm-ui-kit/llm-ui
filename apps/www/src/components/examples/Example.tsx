@@ -76,7 +76,7 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
               <Markdown
                 className={cn(!isVisible && "invisible")}
                 isComplete={false}
-                llmOutput={output}
+                blockMatch={{ output }}
               />
             )}
             {tab === "raw" && isActive && (
@@ -145,13 +145,7 @@ const LLMUI = ({
   });
   const blocks = blockMatches.map((blockMatch, index) => {
     const Component = blockMatch.block.component;
-    return (
-      <Component
-        key={index}
-        llmOutput={blockMatch.match.outputAfterLookback}
-        isComplete={isStreamFinished}
-      />
-    );
+    return <Component key={index} blockMatch={blockMatch} />;
   });
   return (
     <div

@@ -12,13 +12,9 @@ export type ShikiCodeBlockComponent = LLMOutputComponent<ShikiProps>;
 // Shiki Markdown code block component
 export const ShikiCodeBlock: LLMOutputComponent<
   Omit<UseCodeBlockToHtmlParams, "markdownCodeBlock">
-> = ({
-  llmOutput: markdownCodeBlock,
-  parser = parseCompleteMarkdownCodeBlock,
-  ...props
-}) => {
+> = ({ blockMatch, parser = parseCompleteMarkdownCodeBlock, ...props }) => {
   const { html, code } = useCodeBlockToHtml({
-    markdownCodeBlock,
+    markdownCodeBlock: blockMatch.output,
     parser,
     ...props,
   });

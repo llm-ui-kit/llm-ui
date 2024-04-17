@@ -3,7 +3,7 @@ import Markdown, { Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 export const MarkdownComponent: LLMOutputComponent<Options> = ({
-  llmOutput,
+  blockMatch,
   ...props
 }) => {
   return (
@@ -11,7 +11,7 @@ export const MarkdownComponent: LLMOutputComponent<Options> = ({
       {...props}
       remarkPlugins={[...(props.remarkPlugins ?? []), remarkGfm]}
     >
-      {llmOutput}
+      {blockMatch.output}
     </Markdown>
   );
 };
