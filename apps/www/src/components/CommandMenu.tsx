@@ -49,7 +49,6 @@ export const CommandMenu = ({ ...props }: CommandMenuProps) => {
 
   return (
     <>
-      <Button variant={"destructive"}></Button>
       <Button
         variant="outline"
         {...props}
