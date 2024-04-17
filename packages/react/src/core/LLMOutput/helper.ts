@@ -81,7 +81,7 @@ const findPartialMatch = ({
   currentIndex: number;
   blocks: LLMOutputBlock[];
 }): BlockMatchNoLookback | undefined => {
-  for (const [priority, block] of blocks.entries()) {
+  for (const [priority, block] of Array.from(blocks.entries())) {
     const outputRaw = llmOutput.slice(currentIndex);
     const partialMatch = block.isPartialMatch(outputRaw);
     if (partialMatch) {
