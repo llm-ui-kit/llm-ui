@@ -29,7 +29,7 @@ const Example = () => {
         return (
           <Component
             key={index}
-            llmOutput={blockMatch.match.outputAfterLookback}
+            blockMatch={blockMatch}
             isStreamFinished={isStreamFinished}
           />
         );
