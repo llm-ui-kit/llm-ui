@@ -3,8 +3,8 @@ import { buttonsLookBack } from "./lookBack";
 import { buttonsCompleteMatcher, buttonsPartialMatcher } from "./matchers";
 import { parseCompleteButtons } from "./parse";
 
-const ButtonsComponent: LLMOutputComponent = ({ llmOutput }) => {
-  const buttons = parseCompleteButtons(llmOutput);
+const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
+  const buttons = parseCompleteButtons(blockMatch.output);
   if (!buttons) {
     return undefined;
   }

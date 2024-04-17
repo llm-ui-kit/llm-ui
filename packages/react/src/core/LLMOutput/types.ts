@@ -4,8 +4,21 @@ export type LLMOutputMatch = {
   outputRaw: string;
 };
 
+export type BlockMatch = MatchBase & LLMOutputMatchWithLookBack;
+
+type MatchBase = {
+  block: LLMOutputFallbackBlock;
+  priority: number;
+  llmOutput: string;
+  isComplete: boolean;
+};
+
+export type BlockMatchNoLookback = MatchBase & {
+  match: LLMOutputMatch;
+};
+
 export type LLMOutputMatchWithLookBack = LLMOutputMatch & {
-  outputAfterLookback: string;
+  output: string;
   visibleText: string;
 };
 
@@ -13,7 +26,7 @@ export type MaybeLLMOutputMatch = LLMOutputMatch | undefined;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type LLMOutputComponent<Props = any> = React.FC<
-  { llmOutput: string; isComplete: boolean } & Props
+  Props & { blockMatch: BlockMatch }
 >;
 
 export type LLMOutputMatcher = (llmOutput: string) => MaybeLLMOutputMatch;

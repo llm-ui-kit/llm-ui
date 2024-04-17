@@ -9,10 +9,8 @@ import { type LLMOutputBlock } from "llm-ui/core";
 import { codeBlockPartialMatcher } from "node_modules/@llm-ui/code-block/src/matchers";
 import { CodeBlock } from "../ui/custom/CodeBlock";
 
-const ShikiBlockComponent: ShikiCodeBlockComponent = ({
-  llmOutput: markdownCodeBlock,
-}) => {
-  const { code, language } = parseCompleteMarkdownCodeBlock(markdownCodeBlock);
+const ShikiBlockComponent: ShikiCodeBlockComponent = ({ blockMatch }) => {
+  const { code, language } = parseCompleteMarkdownCodeBlock(blockMatch.output);
   if (!code) {
     return undefined;
   }

@@ -1,22 +1,10 @@
 import {
+  BlockMatch,
+  BlockMatchNoLookback,
   LLMOutputBlock,
   LLMOutputFallbackBlock,
   LLMOutputMatch,
-  LLMOutputMatchWithLookBack,
 } from "./types";
-
-type MatchBase = {
-  block: LLMOutputFallbackBlock;
-  priority: number;
-};
-
-export type BlockMatch = MatchBase & {
-  match: LLMOutputMatchWithLookBack;
-};
-
-type BlockMatchNoLookback = MatchBase & {
-  match: LLMOutputMatch;
-};
 
 const completeMatchesForBlock = ({
   llmOutput,
@@ -39,6 +27,8 @@ const completeMatchesForBlock = ({
           startIndex: index + nextMatch.startIndex,
           endIndex: index + nextMatch.endIndex,
         },
+        llmOutput,
+        isComplete: true,
         priority,
       });
       index += nextMatch.endIndex;
@@ -102,6 +92,8 @@ const findPartialMatch = ({
           startIndex: partialMatch.startIndex + currentIndex,
           endIndex: partialMatch.endIndex + currentIndex,
         },
+        llmOutput,
+        isComplete: true,
         priority,
       };
     }
@@ -139,6 +131,8 @@ const fallbacksInGaps = ({
             outputRaw,
           },
           priority: fallbackPriority,
+          llmOutput,
+          isComplete: true,
         } satisfies BlockMatchNoLookback;
       }
       return undefined;
@@ -162,6 +156,8 @@ const fallbacksInGaps = ({
         outputRaw,
       },
       priority: fallbackPriority,
+      llmOutput,
+      isComplete: false,
     });
   }
   return fallbacks;
@@ -178,7 +174,7 @@ const matchesWithLookback = ({
 }): BlockMatch[] => {
   return matches.reduce((acc, match, index) => {
     const visibleTextSoFar = acc
-      .map((m) => m.match.visibleText.length)
+      .map((m) => m.visibleText.length)
       .reduce((a, b) => a + b, 0);
     const localVisibleTextLengthTarget =
       visibleTextLengthTarget - visibleTextSoFar;
@@ -186,8 +182,9 @@ const matchesWithLookback = ({
       return acc;
     }
     const isLastMatch = index === matches.length - 1;
+    const isComplete = !isLastMatch || isStreamFinished;
     const { output, visibleText } = match.block.lookBack({
-      isComplete: !isLastMatch || isStreamFinished,
+      isComplete,
       visibleTextLengthTarget: localVisibleTextLengthTarget,
       isStreamFinished: isStreamFinished,
       output: match.match.outputRaw,
@@ -198,12 +195,13 @@ const matchesWithLookback = ({
       );
     }
     const matchWithLookback: BlockMatch = {
-      ...match,
-      match: {
-        ...match.match,
-        outputAfterLookback: output,
-        visibleText,
-      },
+      ...match.match,
+      isComplete,
+      block: match.block,
+      priority: match.priority,
+      llmOutput: match.llmOutput,
+      output,
+      visibleText,
     };
 
     return [...acc, matchWithLookback];

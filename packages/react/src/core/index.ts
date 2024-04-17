@@ -1,6 +1,7 @@
-export { LLMOutput, useLLMOutput } from "./LLMOutput";
+export { useLLMOutput } from "./LLMOutput";
 export type { LLMOutputProps, UseLLMOutputReturn } from "./LLMOutput";
 export type {
+  BlockMatch,
   LLMOutputBlock,
   LLMOutputComponent,
   LLMOutputFallbackBlock,
