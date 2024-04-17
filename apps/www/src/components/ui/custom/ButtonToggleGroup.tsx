@@ -12,6 +12,7 @@ type ButtonGroupProps = {
   defaultActiveIndex?: number;
   onIndexChange?: (index: number) => void;
 };
+
 export const ButtonToggleGroup: React.FC<ButtonGroupProps> = ({
   className,
   buttons,

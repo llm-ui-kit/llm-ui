@@ -6,12 +6,42 @@ export const docsConfig: DocsConfig = {
       title: "Getting Started",
       items: [
         {
-          title: "Introduction",
-          href: "/docs/getting-started",
+          title: "Quick start",
+          href: "/docs/quick-start",
+        },
+      ],
+    },
+    {
+      title: "LLMOutput",
+      items: [
+        {
+          title: "Concepts",
+          href: "/docs/concepts",
         },
         {
-          title: "Examples",
-          href: "/docs/examples",
+          title: "Throttle functions",
+          href: "/docs/throttling",
+        },
+      ],
+    },
+    {
+      title: "Blocks (components)",
+      items: [
+        {
+          title: "Markdown",
+          href: "/docs/blocks/markdown",
+        },
+        {
+          title: "Code blocks",
+          href: "/docs/blocks/code-blocks",
+        },
+        {
+          title: "Buttons",
+          href: "/docs/blocks/buttons",
+        },
+        {
+          title: "Custom blocks",
+          href: "/docs/custom-blocks",
         },
       ],
     },
