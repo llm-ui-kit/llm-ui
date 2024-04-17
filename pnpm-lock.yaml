@@ -253,6 +253,12 @@ importers:
         specifier: ^18
         version: 18.2.0(react@18.2.0)
     devDependencies:
+      '@llm-ui/code-block':
+        specifier: workspace:*
+        version: link:../../packages/code-block
+      '@llm-ui/markdown':
+        specifier: workspace:*
+        version: link:../../packages/markdown
       '@types/node':
         specifier: ^20
         version: 20.12.7
@@ -268,6 +274,9 @@ importers:
       eslint-config-next:
         specifier: 14.2.1
         version: 14.2.1(eslint@8.57.0)(typescript@5.4.3)
+      llm-ui:
+        specifier: workspace:*
+        version: link:../../packages/react
       postcss:
         specifier: ^8
         version: 8.4.38

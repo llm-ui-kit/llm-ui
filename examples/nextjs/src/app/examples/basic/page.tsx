@@ -1,3 +1,41 @@
-const Page = () => <div>Basic</div>;
+"use client";
+import { markdownFallbackBlock } from "@llm-ui/markdown";
+import { useLLMOutput } from "llm-ui/core";
+import { useStreamExample } from "llm-ui/hooks";
+import { throttleBasic } from "llm-ui/throttle";
 
-export default Page;
+const example = `
+## Example
+
+**Hello llm-ui!** this is [markdown](https://markdownguide.org)
+`;
+
+const Example = () => {
+  const { isStreamFinished, loopIndex, output } = useStreamExample(example);
+
+  const { blockMatches } = useLLMOutput({
+    llmOutput: output,
+    blocks: [],
+    fallbackBlock: markdownFallbackBlock,
+    throttle: throttleBasic(),
+    isStreamFinished,
+    loopIndex,
+  });
+
+  return (
+    <div>
+      {blockMatches.map((blockMatch, index) => {
+        const Component = blockMatch.block.component;
+        return (
+          <Component
+            key={index}
+            llmOutput={blockMatch.match.outputAfterLookback}
+            isStreamFinished={isStreamFinished}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
+export default Example;
