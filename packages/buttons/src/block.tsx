@@ -4,7 +4,6 @@ import { buttonsCompleteMatcher, buttonsPartialMatcher } from "./matchers";
 import { parseCompleteButtons } from "./parse";
 
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-  console.log("zzz buttons", blockMatch);
   const buttons = parseCompleteButtons((blockMatch as BlockMatch).output);
   if (!buttons) {
     return undefined;
