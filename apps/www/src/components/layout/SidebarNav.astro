@@ -15,12 +15,12 @@ const { pathname } = Astro.url;
     <div class="w-full">
       {items.map((item) => (
         <div class={cn("pb-8")}>
-          <h4 class="mb-1 rounded-md px-2 py-1 text-sm font-medium">
+          <h4 class=" mb-1 rounded-md px-2 py-1 text-base font-medium">
             {item.title}
           </h4>
 
           {item.items?.length ? (
-            <div class="grid grid-flow-row auto-rows-max text-sm">
+            <div class="ml-2 grid grid-flow-row auto-rows-max text-sm">
               {item.items.map((item) =>
                 !item.disabled && item.href ? (
                   <a
