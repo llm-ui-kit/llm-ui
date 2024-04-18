@@ -5,8 +5,6 @@ description: ""
 
 import { PackageInstall } from "@/components/docs/PackageInstall";
 
-llm-ui is a React library for displaying large language model outputs.
-
 # Installation
 
 <PackageInstall client:load packages={["llm-ui", "@llm-ui/markdown"]} />
@@ -14,6 +12,11 @@ llm-ui is a React library for displaying large language model outputs.
 # Usage
 
 ```tsx
+import { markdownFallbackBlock } from "@llm-ui/markdown";
+import { useLLMOutput } from "llm-ui/core";
+import { useStreamExample } from "llm-ui/hooks";
+import { throttleBasic } from "llm-ui/throttle";
+
 const example = `
 ## Example
 
@@ -29,20 +32,14 @@ const Example = () => {
     fallbackBlock: markdownFallbackBlock,
     throttle: throttleBasic(),
     isStreamFinished,
-    loopIndex,
+    loopIndex, // only needed for useStreamExample
   });
 
   return (
     <div>
       {blockMatches.map((blockMatch, index) => {
         const Component = blockMatch.block.component;
-        return (
-          <Component
-            key={index}
-            blockMatch={blockMatch}
-            isStreamFinished={isStreamFinished}
-          />
-        );
+        return <Component key={index} blockMatch={blockMatch} />;
       })}
     </div>
   );
