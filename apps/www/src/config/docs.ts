@@ -13,23 +13,14 @@ export const docsConfig: DocsConfig = {
           title: "Quick start",
           href: "/docs/quick-start",
         },
-      ],
-    },
-    {
-      title: "LLMOutput",
-      items: [
         {
           title: "Concepts",
           href: "/docs/concepts",
         },
-        {
-          title: "Throttle functions",
-          href: "/docs/throttling",
-        },
       ],
     },
     {
-      title: "Blocks (components)",
+      title: "Blocks",
       items: [
         {
           title: "Markdown",
@@ -45,7 +36,20 @@ export const docsConfig: DocsConfig = {
         },
         {
           title: "Custom blocks",
-          href: "/docs/custom-blocks",
+          href: "/docs/blocks/custom-blocks",
+        },
+      ],
+    },
+    {
+      title: "useLlmOutput hook",
+      items: [
+        {
+          title: "useLlmOutput",
+          href: "/docs/useLlmOutput",
+        },
+        {
+          title: "Throttle functions",
+          href: "/docs/throttling",
         },
       ],
     },

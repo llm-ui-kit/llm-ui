@@ -12,7 +12,7 @@ import simpleStackForm from "simple-stack-form";
 export default defineConfig({
   site: "https://llm-ui.com",
   redirects: {
-    "/docs": "/docs/quick-start",
+    "/docs": "/docs/introduction",
   },
   integrations: [
     mdx({
