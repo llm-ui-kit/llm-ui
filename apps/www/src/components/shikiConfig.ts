@@ -1,10 +1,7 @@
 "use client";
-import type { ShikiProps } from "@llm-ui/code-block";
-import { loadHighlighter } from "@llm-ui/code-block";
-import {
-  allLangs,
-  allLangsAlias,
-} from "@llm-ui/code-block/shikiBundles/allLangs";
+import type { ShikiProps } from "@llm-ui/code";
+import { loadHighlighter } from "@llm-ui/code";
+import { allLangs, allLangsAlias } from "@llm-ui/code/shikiBundles/allLangs";
 import { getHighlighterCore } from "shiki/core";
 import githubDark from "shiki/themes/github-dark.mjs";
 import githubLight from "shiki/themes/github-light.mjs";

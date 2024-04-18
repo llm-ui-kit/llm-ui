@@ -4,7 +4,7 @@ import {
   ShikiOrFallback,
   useCodeToHtml,
   type CodeToHtmlProps,
-} from "@llm-ui/code-block";
+} from "@llm-ui/code";
 import { Check, Copy } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "../Button";

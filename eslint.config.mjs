@@ -18,7 +18,7 @@ const appWww = "apps/www";
 
 const packageReact = "packages/react";
 const packageMarkdown = "packages/markdown";
-const packageCodeBlocks = "packages/code-block";
+const packageCodeBlocks = "packages/code";
 const packageButtons = "packages/buttons";
 const packageShared = "packages/shared";
 

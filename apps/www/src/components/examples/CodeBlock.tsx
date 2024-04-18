@@ -1,12 +1,12 @@
 "use client";
-import type { ShikiCodeBlockComponent } from "@llm-ui/code-block";
+import type { ShikiCodeBlockComponent } from "@llm-ui/code";
 import {
   codeBlockCompleteMatcher,
   codeBlockLookBack,
   parseCompleteMarkdownCodeBlock,
-} from "@llm-ui/code-block";
+} from "@llm-ui/code";
 import { type LLMOutputBlock } from "llm-ui/core";
-import { codeBlockPartialMatcher } from "node_modules/@llm-ui/code-block/src/matchers";
+import { codeBlockPartialMatcher } from "node_modules/@llm-ui/code/src/matchers";
 import { CodeBlock } from "../ui/custom/CodeBlock";
 
 const ShikiBlockComponent: ShikiCodeBlockComponent = ({ blockMatch }) => {

@@ -24,6 +24,6 @@
     "eslint-config-next": "14.2.1",
     "llm-ui": "workspace:*",
     "@llm-ui/markdown": "workspace:*",
-    "@llm-ui/code-block": "workspace:*"
+    "@llm-ui/code": "workspace:*"
   }
 }

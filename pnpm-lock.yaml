@@ -101,9 +101,9 @@ importers:
       '@llm-ui/buttons':
         specifier: workspace:*
         version: link:../../packages/buttons
-      '@llm-ui/code-block':
+      '@llm-ui/code':
         specifier: workspace:*
-        version: link:../../packages/code-block
+        version: link:../../packages/code
       '@llm-ui/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
@@ -253,9 +253,9 @@ importers:
         specifier: ^18
         version: 18.2.0(react@18.2.0)
     devDependencies:
-      '@llm-ui/code-block':
+      '@llm-ui/code':
         specifier: workspace:*
-        version: link:../../packages/code-block
+        version: link:../../packages/code
       '@llm-ui/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
@@ -318,7 +318,7 @@ importers:
         specifier: ^5.4.3
         version: 5.4.3
 
-  packages/code-block:
+  packages/code:
     dependencies:
       '@llm-ui/shared':
         specifier: workspace:*
