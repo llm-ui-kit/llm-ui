@@ -36,8 +36,8 @@ export const docsConfig: DocsConfig = {
           href: "/docs/blocks/markdown",
         },
         {
-          title: "Code blocks",
-          href: "/docs/blocks/code-blocks",
+          title: "Code",
+          href: "/docs/blocks/code",
         },
         {
           title: "Buttons",
