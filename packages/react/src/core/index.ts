@@ -1,5 +1,5 @@
-export { useLLMOutput } from "./LLMOutput";
-export type { LLMOutputProps, UseLLMOutputReturn } from "./LLMOutput";
+export { useLLMOutput } from "./useLLMOutput";
+export type { LLMOutputProps, UseLLMOutputReturn } from "./useLLMOutput";
 export type {
   BlockMatch,
   LLMOutputBlock,
@@ -14,4 +14,4 @@ export type {
   ThrottleFunction,
   ThrottleParams,
   ThrottleResponse,
-} from "./LLMOutput/types";
+} from "./useLLMOutput/types";
