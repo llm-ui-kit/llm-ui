@@ -24,7 +24,7 @@ const PackageInstallCodeBlock: React.FC<{
 }> = ({ packageManager, packages }) => {
   return (
     <CodeBlock
-      className="my-6"
+      className="mt-2"
       code={installCommand(packageManager as PackageManager, packages)}
       codeToHtmlProps={{ lang: "shell" }}
     />
@@ -35,7 +35,7 @@ export const PackageInstall: React.FC<{ packages: string[] }> = ({
   packages,
 }) => {
   return (
-    <Tabs defaultValue="pnpm" className="flex flex-col items-start">
+    <Tabs defaultValue="pnpm" className="flex flex-col items-start my-6">
       <TabsList className="flex flex-row">
         <TabsTrigger value="pnpm">pnpm</TabsTrigger>
         <TabsTrigger value="npm">npm</TabsTrigger>
