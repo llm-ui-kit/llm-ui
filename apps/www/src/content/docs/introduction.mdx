@@ -1,0 +1,40 @@
+---
+title: Introduction
+description: ""
+---
+
+import { Image } from "astro:assets";
+import blocks from "@/assets/docs/blocks.png";
+import { PackageInstall } from "@/components/docs/PackageInstall";
+
+llm-ui is a React library for displaying large language model (LLM) outputs.
+
+The library operates on the string returned from an LLM. For example:
+
+````
+## Python
+```python
+def hello_llm_ui():
+  print("Hello llm-ui!")
+```
+## Typescript
+```typescript
+const helloLlmUi = () => {
+  console.log("Hello llm-ui!");
+};
+```
+````
+
+llm-ui breaks this example into **blocks**:
+
+<Image width="600" src={blocks} alt="Blocks in llm-ui" />
+
+## Features
+
+- [markdown](/docs/blocks/markdown) blocks
+- [code](/docs/blocks/code) blocks
+- Build your own custom blocks
+- [Throtting](/docs/throttling) smooths out pauses in the LLM's streamed output
+- Blocks can hide 'non-user' characters from user (e.g. `##` in a markdown header)
+- Renders the correct number of characters per frame for a smooth user experience
+- Headless: Unopinionated about styling -> bring your own styles

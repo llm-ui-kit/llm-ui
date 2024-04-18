@@ -19,20 +19,14 @@ const Example = () => {
     fallbackBlock: markdownFallbackBlock,
     throttle: throttleBasic(),
     isStreamFinished,
-    loopIndex,
+    loopIndex, // only needed for useStreamExample
   });
 
   return (
     <div>
       {blockMatches.map((blockMatch, index) => {
         const Component = blockMatch.block.component;
-        return (
-          <Component
-            key={index}
-            blockMatch={blockMatch}
-            isStreamFinished={isStreamFinished}
-          />
-        );
+        return <Component key={index} blockMatch={blockMatch} />;
       })}
     </div>
   );
