@@ -1,0 +1,62 @@
+---
+title: Concepts
+description: ""
+---
+
+import blocks from "@/assets/docs/blocks.png";
+
+import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
+
+At the core of llm-ui is `useLLMOutput`. This hook takes a single chat response from an LLM and breaks it into **blocks**.
+
+# Blocks
+
+`useLLMOutput` takes `blocks` and `fallbackBlock` as arguments.
+
+- `blocks` is an array of block configurations that `useLLMOutput` attempts to match against the LLM output.
+- `fallbackBlock` is used for sections of the chat response when no other block matches.
+
+We could pass:
+
+- `blocks: [codeBlock]` which matches codeblock starting with <code>```</code>.
+- `fallbackBlock: markdownBlock` which assumes anything else is markdown .
+
+`useLLMOutput` will then break the chat response into code and markdown blocks:
+
+````
+## Python
+```python
+def hello_llm_ui():
+  print("Hello llm-ui!")
+```
+## Typescript
+```typescript
+const helloLlmUi = () => {
+  console.log("Hello llm-ui!");
+};
+```
+````
+
+llm-ui breaks this example into **blocks**:
+
+<Image width="600" src={blocks} alt="Blocks in llm-ui" />
+
+# Throtting
+
+`useLLMOutput` also takes `throttle` as an argument. This function allows `useLLMOutput` to lag behind the actual LLM output.
+
+Here is an example of llm-ui's throttling in action:
+
+<ExampleSideBySide
+  client:load
+  example={"# H1\nHi Docs\n\n```typescript\nconsole.log('hello')\n```"}
+  throttle="buffer"
+  options={{ delayMultiplier: 2.5 }}
+/>
+
+The disadvantage of throttling is that the llm output is delayed in reaching the user.
+
+The benefits of throttling:
+
+- llm-ui can smooth out pauses in the LLM's streamed output.
+- Blocks can hide 'non-user' characters from user (e.g. `##` in a markdown header).
