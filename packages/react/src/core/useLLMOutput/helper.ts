@@ -18,7 +18,7 @@ const completeMatchesForBlock = ({
   const matches: BlockMatchNoLookback[] = [];
   let index = 0;
   while (index < llmOutput.length) {
-    const nextMatch = block.isCompleteMatch(llmOutput.slice(index));
+    const nextMatch = block.findCompleteMatch(llmOutput.slice(index));
     if (nextMatch) {
       matches.push({
         block,
@@ -83,7 +83,7 @@ const findPartialMatch = ({
 }): BlockMatchNoLookback | undefined => {
   for (const [priority, block] of Array.from(blocks.entries())) {
     const outputRaw = llmOutput.slice(currentIndex);
-    const partialMatch = block.isPartialMatch(outputRaw);
+    const partialMatch = block.findPartialMatch(outputRaw);
     if (partialMatch) {
       return {
         block: block,

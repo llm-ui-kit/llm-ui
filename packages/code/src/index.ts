@@ -11,14 +11,6 @@ export type { ParseFunction } from "./parse";
 
 export { codeBlockLookBack } from "./lookBack";
 
-export {
-  ShikiCodeBlock,
-  buildShikiCodeBlockComponent,
-} from "./components/ShikiCodeBlock";
-export type { ShikiCodeBlockComponent } from "./components/ShikiCodeBlock";
-
-export { ShikiOrFallback } from "./components/ShikiFallback";
-
 export { useCodeBlockToHtml } from "./hooks/useCodeBlockToHtml";
 export type {
   UseCodeBlockToHtmlParams,

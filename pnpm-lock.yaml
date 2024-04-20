@@ -170,6 +170,9 @@ importers:
       framer-motion:
         specifier: ^11.0.14
         version: 11.0.24(react-dom@18.2.0)(react@18.2.0)
+      html-react-parser:
+        specifier: ^5.1.10
+        version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
       llm-ui:
         specifier: workspace:*
         version: link:../../packages/react
@@ -191,6 +194,12 @@ importers:
       react-hook-form:
         specifier: ^7.51.0
         version: 7.51.2(react@18.2.0)
+      react-markdown:
+        specifier: ^9.0.1
+        version: 9.0.1(@types/react@18.2.73)(react@18.2.0)
+      remark-gfm:
+        specifier: ^4.0.0
+        version: 4.0.0
       remeda:
         specifier: ^1.57.0
         version: 1.57.0
@@ -243,6 +252,9 @@ importers:
 
   examples/nextjs:
     dependencies:
+      html-react-parser:
+        specifier: ^5.1.10
+        version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
       next:
         specifier: 14.2.1
         version: 14.2.1(react-dom@18.2.0)(react@18.2.0)
@@ -252,6 +264,15 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.2.0(react@18.2.0)
+      react-markdown:
+        specifier: ^9.0.1
+        version: 9.0.1(@types/react@18.2.73)(react@18.2.0)
+      remark-gfm:
+        specifier: ^4.0.0
+        version: 4.0.0
+      shiki:
+        specifier: ^1.2.4
+        version: 1.2.4
     devDependencies:
       '@llm-ui/code':
         specifier: workspace:*
@@ -323,9 +344,6 @@ importers:
       '@llm-ui/shared':
         specifier: workspace:*
         version: link:../shared
-      html-react-parser:
-        specifier: ^5.1.10
-        version: 5.1.10(@types/react@18.2.60)(react@18.2.0)
       llm-ui:
         specifier: workspace:*
         version: link:../react
@@ -363,12 +381,6 @@ importers:
       react:
         specifier: ^18.0.0
         version: 18.2.0
-      react-markdown:
-        specifier: ^9.0.1
-        version: 9.0.1(@types/react@18.2.60)(react@18.2.0)
-      remark-gfm:
-        specifier: ^4.0.0
-        version: 4.0.0
     devDependencies:
       '@llm-ui/tsconfig':
         specifier: workspace:*
@@ -3262,6 +3274,7 @@ packages:
       '@types/prop-types': 15.7.12
       '@types/scheduler': 0.23.0
       csstype: 3.1.3
+    dev: true
 
   /@types/react@18.2.73:
     resolution: {integrity: sha512-XcGdod0Jjv84HOC7N5ziY3x+qL0AfmubvKOZ9hJjJ2yd5EE+KYjWhdOjt387e9HPheHkdggF9atTifMRtyAaRA==}
@@ -3277,6 +3290,7 @@ packages:
 
   /@types/scheduler@0.23.0:
     resolution: {integrity: sha512-YIoDCTH3Af6XM5VuwGG/QL/CJqga1Zm3NkU3HZ4ZHK2fRMPYP1VczsTUqtsf43PH/iJNVlPHAo2oWX7BSdB2Hw==}
+    dev: true
 
   /@types/semver@7.5.8:
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
@@ -6572,7 +6586,7 @@ packages:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
     dev: false
 
-  /html-react-parser@5.1.10(@types/react@18.2.60)(react@18.2.0):
+  /html-react-parser@5.1.10(@types/react@18.2.73)(react@18.2.0):
     resolution: {integrity: sha512-gV22PvLij4wdEdtrZbGVC7Zy2OVWnQ0bYhX63S196ZRSx4+K0TuutCreHSXr+saUia8KeKB+2TYziVfijpH4Tw==}
     peerDependencies:
       '@types/react': 17 || 18
@@ -6581,7 +6595,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.60
+      '@types/react': 18.2.73
       domhandler: 5.0.3
       html-dom-parser: 5.0.8
       react: 18.2.0
@@ -8948,14 +8962,14 @@ packages:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
 
-  /react-markdown@9.0.1(@types/react@18.2.60)(react@18.2.0):
+  /react-markdown@9.0.1(@types/react@18.2.73)(react@18.2.0):
     resolution: {integrity: sha512-186Gw/vF1uRkydbsOIkcGXw7aHq0sZOCRFFjGrr7b9+nVZg4UfA4enXCaxm4fUzecU38sWfrNDitGhshuU7rdg==}
     peerDependencies:
       '@types/react': '>=18'
       react: '>=18'
     dependencies:
       '@types/hast': 3.0.4
-      '@types/react': 18.2.60
+      '@types/react': 18.2.73
       devlop: 1.1.0
       hast-util-to-jsx-runtime: 2.3.0
       html-url-attributes: 3.0.0

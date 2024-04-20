@@ -3,19 +3,27 @@ title: Quick start
 description: ""
 ---
 
-import { PackageInstall } from "@/components/docs/PackageInstall";
+import { PackageInstall } from "../../components/docs/PackageInstall";
 
 # Installation
 
-<PackageInstall client:load packages={["llm-ui", "@llm-ui/markdown"]} />
+<PackageInstall
+  client:load
+  packages={["llm-ui", "@llm-ui/markdown", "react-markdown", "remark-gfm"]}
+/>
 
 # Usage
 
 ```tsx
-import { markdownFallbackBlock } from "@llm-ui/markdown";
-import { useLLMOutput } from "llm-ui/core";
+import { markdownLookBack } from "@llm-ui/markdown";
+import {
+  LLMOutputFallbackBlock,
+  useLLMOutput,
+  type LLMOutputComponent,
+} from "llm-ui/core";
 import { useStreamExample } from "llm-ui/hooks";
-import { throttleBasic } from "llm-ui/throttle";
+import ReactMarkdown, { type Options } from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const example = `
 ## Example
@@ -23,14 +31,31 @@ const example = `
 **Hello llm-ui!** this is [markdown](https://markdownguide.org)
 `;
 
+const MarkdownComponent: LLMOutputComponent<Options> = ({
+  blockMatch,
+  ...props
+}) => {
+  const markdown = blockMatch.output;
+  return (
+    <ReactMarkdown
+      {...props}
+      remarkPlugins={[...(props.remarkPlugins ?? []), remarkGfm]}
+    >
+      {markdown}
+    </ReactMarkdown>
+  );
+};
+
 const Example = () => {
   const { isStreamFinished, loopIndex, output } = useStreamExample(example);
 
   const { blockMatches } = useLLMOutput({
     llmOutput: output,
     blocks: [],
-    fallbackBlock: markdownFallbackBlock,
-    throttle: throttleBasic(),
+    fallbackBlock: {
+      component: MarkdownComponent,
+      lookBack: markdownLookBack,
+    },
     isStreamFinished,
     loopIndex, // only needed for useStreamExample
   });

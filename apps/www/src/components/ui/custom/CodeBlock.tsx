@@ -1,10 +1,7 @@
 import { shikiConfig } from "@/components/shikiConfig";
 import { cn } from "@/lib/utils";
-import {
-  ShikiOrFallback,
-  useCodeToHtml,
-  type CodeToHtmlProps,
-} from "@llm-ui/code";
+import { useCodeToHtml, type CodeToHtmlProps } from "@llm-ui/code";
+import parseHtml from "html-react-parser";
 import { Check, Copy } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "../Button";
@@ -40,6 +37,20 @@ const CodeBlockContainer: React.FC<{
       {children}
     </div>
   );
+};
+
+const ShikiOrFallback: React.FC<{ html: string; code: string }> = ({
+  html,
+  code,
+}) => {
+  if (!html) {
+    return (
+      <pre className="shiki">
+        <code>{code}</code>
+      </pre>
+    );
+  }
+  return <>{parseHtml(html)}</>;
 };
 
 export const CodeBlock: React.FC<{

@@ -51,8 +51,8 @@ export type LLMOutputFallbackBlock = {
 };
 
 export type LLMOutputBlock = {
-  isPartialMatch: LLMOutputMatcher;
-  isCompleteMatch: LLMOutputMatcher;
+  findPartialMatch: LLMOutputMatcher;
+  findCompleteMatch: LLMOutputMatcher;
 } & LLMOutputFallbackBlock;
 
 export type ThrottleParams = {

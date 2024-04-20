@@ -8,9 +8,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./shikiBundles/all": "./src/shikiBundles/all.ts",
     "./shikiBundles/allLangs": "./src/shikiBundles/allLangs.ts",
-    "./shikiBundles/allShikiOptions": "./src/shikiBundles/allShikiOptions.ts",
     "./shikiBundles/allThemes": "./src/shikiBundles/allThemes.ts"
   },
   "files": [
@@ -25,7 +23,6 @@
     "test": "vitest"
   },
   "dependencies": {
-    "html-react-parser": "^5.1.10",
     "llm-ui": "workspace:*",
     "shiki": "^1.2.4",
     "@llm-ui/shared": "workspace:*"

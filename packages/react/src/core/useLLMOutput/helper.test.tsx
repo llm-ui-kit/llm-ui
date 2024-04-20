@@ -15,8 +15,8 @@ const noMatch = () => undefined;
 
 const neverMatchBlock: LLMOutputBlock = {
   component: component1,
-  isCompleteMatch: noMatch,
-  isPartialMatch: noMatch,
+  findCompleteMatch: noMatch,
+  findPartialMatch: noMatch,
   lookBack: returnParamsLookBack,
 };
 
@@ -40,8 +40,8 @@ const completeMatchesString = (
   lookBack = returnParamsLookBack,
 ): LLMOutputBlock => ({
   component: component1,
-  isCompleteMatch: (output) => matchString(output, target),
-  isPartialMatch: noMatch,
+  findCompleteMatch: (output) => matchString(output, target),
+  findPartialMatch: noMatch,
   lookBack: lookBack,
 });
 
@@ -50,8 +50,8 @@ const partialMatchesString = (
   lookBack = returnParamsLookBack,
 ): LLMOutputBlock => ({
   component: component2,
-  isCompleteMatch: noMatch,
-  isPartialMatch: (output) => matchString(output, target),
+  findCompleteMatch: noMatch,
+  findPartialMatch: (output) => matchString(output, target),
   lookBack: lookBack,
 });
 

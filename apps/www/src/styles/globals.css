@@ -119,7 +119,12 @@
 
   /* MdxComponent: For <code></code> with no parent <pre></pre> */
   :not(pre) > code {
-    @apply bg-background text-foreground relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm;
+    @apply bg-background text-foreground relative rounded border px-[0.3rem] py-[0.2rem] font-mono;
+  }
+
+  p,
+  a > code {
+    @apply text-sm;
   }
 }
 
