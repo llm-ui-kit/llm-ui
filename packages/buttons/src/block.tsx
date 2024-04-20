@@ -20,6 +20,6 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
 export const buttonsBlock: LLMOutputBlock = {
   component: ButtonsComponent,
   lookBack: buttonsLookBack(),
-  isPartialMatch: buttonsPartialMatcher(),
-  isCompleteMatch: buttonsCompleteMatcher(),
+  findPartialMatch: buttonsPartialMatcher(),
+  findCompleteMatch: buttonsCompleteMatcher(),
 };

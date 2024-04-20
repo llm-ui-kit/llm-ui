@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { throttleBasic } from "../../throttle";
 import { matchBlocks } from "./helper";
 import {
   BlockMatch,
@@ -12,7 +13,7 @@ export type LLMOutputProps = {
   blocks?: LLMOutputBlock[];
   fallbackBlock: LLMOutputFallbackBlock;
   isStreamFinished: boolean;
-  throttle: ThrottleFunction;
+  throttle?: ThrottleFunction;
   loopIndex?: number;
 };
 
@@ -42,7 +43,7 @@ export const useLLMOutput = ({
   isStreamFinished,
   blocks = [],
   fallbackBlock,
-  throttle,
+  throttle = throttleBasic(),
   loopIndex = 0,
 }: LLMOutputProps): UseLLMOutputReturn => {
   const startTime = useRef(performance.now());

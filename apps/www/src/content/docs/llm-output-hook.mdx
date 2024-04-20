@@ -1,0 +1,168 @@
+---
+title: LLM output hook
+description: ""
+---
+
+import { PackageInstall } from "@/components/docs/PackageInstall";
+
+# Installation
+
+<PackageInstall client:load packages={["llm-ui"]} />
+
+```typescript
+import { useLLMOutput } from "llm-ui/core";
+```
+
+# Usage:
+
+Example:
+
+```typescript
+import { useLLMOutput } from "llm-ui/core";
+
+const { blockMatches } = useLLMOutput({
+  llmOutput: "llm output",
+  blocks: [],
+  fallbackBlock: {
+    ...fallback block
+  },
+  isStreamFinished,
+});
+```
+
+# `useLLMOutput` Parameters
+
+## `llmOutput` (string)
+
+The output from a single LLM chat response.
+
+You can pass the full chat response or pass the streamed chat responses as you receive more tokens from the LLM.
+
+## `isStreamFinished` (boolean)
+
+Whether the LLM has finished streaming the chat response.
+
+## `blocks` (object[])
+
+An array of the blocks to try and match with the LLM output. The highest priority is given to the first block in the array.
+
+For built-in blocks you'll usually get the block config from `@llm-ui/markdown`, `@llm-ui/code` etc.
+
+For your own custom blocks, please see the [custom-blocks](/docs/custom-blocks) docs for more details.
+
+```tsx
+const block = {
+  // The component to render when the block is matched.
+  // Block match contains information about the match.
+  component: ({ blockMatch }) => <div>{blockMatch.block.match}</div>,
+
+  // The logic to find a 'complete' match:
+  // when a block starts and ends inside of the `llmOutput` string.
+  findCompleteMatch: (llmOutput: string) => ({
+    startIndex: 1, // the index where the match starts
+    endIndex: 10, // the index where the match ends
+    outputRaw: "some llm output" // the raw string output of the match
+  }),
+
+  // The logic to find a 'partial' match:
+  // when a block starts but does not end inside of the `llmOutput` string.
+  findPartialMatch: (llmOutput: string) => ({
+    startIndex, // the index where the match starts
+    endIndex, // the index where the match ends
+    outputRaw // the raw string output of the match
+  }),
+
+  // A lookback function to look backwards in the LLM output for smooth rendering.
+  lookBack: ({
+    output: "<buttons><button>my b",
+    isComplete: false, // whether the match is complete or partial
+    visibleTextLengthTarget: 10, // the number of visible characters to return
+    isStreamFinished: true // whether the LLM has finished streaming
+  }) => {
+    return {
+      // The llm output to return. In some cases this will be the original.
+      // In other cases this function may modify the output to make it 'complete'.
+      output: "<buttons><button>my b</button><buttons>"
+      visibleText: "my b" // the visible text the user will actually see
+    }
+  }
+}
+```
+
+## `fallbackBlock` (object)
+
+The fallback block is the block to use when no other block matches. This is usually the [markdown block](/docs/markdown-block).
+
+## `throttle` (function) (optional)
+
+Defaults to [`throttleBasic`](/docs/throttle#basic).
+
+The throttle function allows `useLLMOutput` to lag behind the actual LLM output.
+
+Read more about throttle functions in the [throttle docs](/docs/throttle).
+
+## `loopIndex` (number) (optional)
+
+This is only needed when you wish to loop the stream output. For example when using the `useStreamExample` hook.
+
+# `useLLMOutput` Return value
+
+## `isFinished` (boolean)
+
+Returns `false` when the response is still streaming, `true` once the last character has been streamed and the parameter `isStreamFinished` is `true`.
+
+## `visibleText` (string)
+
+The visible text that the user will see. Calculated by joining each block's `lookBack` function.
+
+## `blockMatches` (object)
+
+The block matches found in the `llmOutput` parameter.
+
+```typescript
+const {blockMatches} = useLLMOutput({
+  llmOutput: output,
+  blocks: [],
+  fallbackBlock,
+  isStreamFinished,
+});
+console.log(blockMatches);
+// =>
+[{
+  block: {
+    // The component to render
+    component: ...,
+    // The block's lookBack function
+    lookBack: ...,
+  };
+
+  // The LLM output for the block
+  // (possibly modified by the lookback function)
+  output: "<buttons><button>my b</button><buttons>",
+
+  // The unmodified LLM output for the block
+  outputRaw: "<buttons><button>my b",
+
+  // The visible text for the block
+  visibleText: "my b",
+
+  // The full LLM output (for all blocks)
+  llmOutput: "...",
+
+  // The start index of the block match in the `llmOutput`
+  startIndex: 0,
+
+  // The end index of the block match in the `llmOutput`
+  endIndex: 21,
+
+  // Is the block complete or partial
+  isComplete: true,
+
+  // priority (index in the `blocks` parameter array)
+  priority: 2
+}]
+```
+
+## `loopIndex` (number)
+
+Similar to the `loopIndex` parameter, only needed for looping examples.

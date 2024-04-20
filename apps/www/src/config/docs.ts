@@ -20,37 +20,35 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: "Blocks",
+      title: "Guides",
       items: [
+        { title: "LLM output hook", href: "/docs/llm-output-hook" },
         {
-          title: "Markdown",
+          title: "Markdown block",
           href: "/docs/blocks/markdown",
         },
         {
-          title: "Code",
+          title: "Code block",
           href: "/docs/blocks/code",
         },
         {
-          title: "Buttons",
+          title: "Buttons block",
           href: "/docs/blocks/buttons",
-        },
-        {
-          title: "Custom blocks",
-          href: "/docs/blocks/custom-blocks",
         },
       ],
     },
     {
-      title: "useLlmOutput hook",
+      title: "Advanced",
       items: [
         {
-          title: "useLlmOutput",
-          href: "/docs/useLlmOutput",
+          title: "Custom blocks",
+          href: "/docs/blocks/custom-blocks",
         },
         {
           title: "Throttle functions",
           href: "/docs/throttling",
         },
+        { title: "Example hooks", href: "/" },
       ],
     },
   ],

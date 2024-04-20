@@ -1,6 +1,31 @@
-"use client";
+---
+title: Markdown block
+description: ""
+---
+
+import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
+import { PackageInstall } from "@/components/docs/PackageInstall";
+
+The markdown block displays markdown content in the LLM output. The markdown block is designed to be used as the [fallback block](/docs/llm-output-hook#fallbackblock-object) in `useLLMOutput` which is used if no other block matches.
+
+The markdown block hides markdown syntax from users, only showing one visible character at a time.
+
+# Installation
+
+<PackageInstall
+  client:load
+  packages={["llm-ui", "@llm-ui/markdown", "react-markdown", "remark-gfm"]}
+/>
+
+# Quick start
+
+```tsx
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type LLMOutputComponent } from "llm-ui/core";
+import {
+  LLMOutputFallbackBlock,
+  useLLMOutput,
+  type LLMOutputComponent,
+} from "llm-ui/core";
 import { useStreamExample } from "llm-ui/hooks";
 import ReactMarkdown, { type Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -50,5 +75,16 @@ const Example = () => {
     </div>
   );
 };
+```
 
-export default Example;
+[Example github](https://github.com)
+
+<ExampleSideBySide
+  client:load
+  example={`# Example\n\n**Hello llm-ui!** this is [markdown](https://markdownguide.org)`}
+  options={{ delayMultiplier: 4 }}
+/>
+
+# Usage with `throttle`
+
+In order to hide markdown syntax from users, your [`throttle` function](/docs/throttling) must leave enough unrendered characters for the markdown block to parse and hide the syntax.
