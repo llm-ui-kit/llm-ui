@@ -48,9 +48,10 @@ const highlighter = loadHighlighter(
 );
 
 const codeToHtmlProps: CodeToHtmlProps = {
-  themes: { light: "github-light", dark: "github-dark" },
+  theme: "github-dark",
 };
 
+// Customize this component with your own styling
 const CodeBlock: LLMOutputComponent = ({ blockMatch }) => {
   const { html, code } = useCodeBlockToHtml({
     markdownCodeBlock: blockMatch.output,
@@ -105,7 +106,7 @@ const Example = () => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       {blockMatches.map((blockMatch, index) => {
         const Component = blockMatch.block.component;
         return <Component key={index} blockMatch={blockMatch} />;
