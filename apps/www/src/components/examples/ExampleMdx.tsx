@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { UseStreamWithProbabilitiesOptions } from "llm-ui/hooks";
+import type { UseStreamWithProbabilitiesOptions } from "llm-ui/examples";
 import {
   ExampleSideBySide as ExampleSideBySideOriginal,
   ExampleTabs as ExampleTabsOriginal,

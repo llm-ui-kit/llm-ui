@@ -7,7 +7,7 @@ import {
   type TokenWithDelay,
   type UseStreamTokenArrayOptions,
   type UseStreamWithProbabilitiesOptions,
-} from "llm-ui/hooks";
+} from "llm-ui/examples";
 import { throttleBasic } from "llm-ui/throttle";
 import React, { useState, type ReactNode } from "react";
 import type { SetRequired } from "type-fest";
