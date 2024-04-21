@@ -15,8 +15,8 @@ The code block displays markdown code blocks in the LLM output using [shiki](htt
   example={"```typescript key=value\nconsole.log('hello llm-ui')\n```"}
 />
 
-- code block syntax is hidden from users
-- code highlighting for 100s of languages with [shiki](https://shiki.style)
+- Code block syntax is hidden from users
+- Code highlighting for 100s of languages with [shiki](https://shiki.style)
 
 # Installation
 
@@ -28,16 +28,19 @@ Copy and paste [this file](https://github.com/llm-ui-kit/llm-ui/blob/main/exampl
 
 # Shiki setup
 
-llm-ui's code block uses [shiki](https://shiki.style) to highlight code. Shiki is often used in server side code, but llm-ui needs to highlight code blocks on the client.
+llm-ui's code block uses [shiki](https://shiki.style) to highlight code. Shiki is often used in server side code, but llm-ui needs to highlight code blocks on the client. This can be tricky to setup, but llm-ui provides some helpers to make it easier.
 
 ## Loading Shiki
 
 Shiki highlighters are loaded asynchronously, this can be awkward to work with in practice.
 
-llm-ui provides `loadHighlighter` proactively loads the shiki highlighter and returns a `LLMUIHighlighter` object.
+llm-ui provides `loadHighlighter`, which proactively loads the shiki highlighter and returns a `LLMUIHighlighter` object.
 
 ```typescript
-loadHighlighter(
+import { loadHighlighter } from "@llm-ui/code";
+import { getHighlighterCore } from "shiki/core";
+
+const highlighter = loadHighlighter(
   getHighlighterCore({
     // shiki options here
   }),
@@ -112,7 +115,7 @@ The [quick start example](#quick-start) imports all shiki languages. You may als
 
 # Code block functions
 
-```typescript
+```tsx
 const codeBlock = {
   findCompleteMatch: findCompleteCodeBlock(),
   findPartialMatch: findPartialCodeBlock(),
