@@ -15,11 +15,49 @@ import * as React from "react";
 
 type CommandMenuProps = DialogProps;
 
+const defaultSearchResults: PagefindResultWithData[] = [
+  {
+    id: "introduction",
+    data: {
+      meta: { title: "Introduction" },
+      url: "/docs/introduction",
+    },
+  },
+  {
+    id: "quick-start",
+    data: {
+      meta: { title: "Quick start" },
+      url: "/docs/quick-start",
+    },
+  },
+  {
+    id: "concepts",
+    data: {
+      meta: { title: "Concepts" },
+      url: "/docs/concepts",
+    },
+  },
+  {
+    id: "markdown",
+    data: {
+      meta: { title: "Markdown block" },
+      url: "/docs/blocks/markdown",
+    },
+  },
+  {
+    id: "code",
+    data: {
+      meta: { title: "Code block" },
+      url: "/docs/blocks/code",
+    },
+  },
+] as PagefindResultWithData[];
+
 export const CommandMenu = ({ ...props }: CommandMenuProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchResults, setSearchResults] = React.useState<
     PagefindResultWithData[] | undefined
-  >(undefined);
+  >(defaultSearchResults);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -71,6 +109,11 @@ export const CommandMenu = ({ ...props }: CommandMenuProps) => {
         <CommandInput
           placeholder="Search docs..."
           onValueChange={async (searchQuery) => {
+            console.log("zzz searchQuery", searchQuery);
+            if (!searchQuery) {
+              setSearchResults(undefined);
+              return;
+            }
             const searchResponse = await search(searchQuery);
             if (searchResponse) {
               const results = await Promise.all(
