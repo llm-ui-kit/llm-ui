@@ -1,5 +1,7 @@
 import {
-  buttonsBlock as buttonsBlockOriginal,
+  buttonsLookBack,
+  findCompleteButtons,
+  findPartialButtons,
   parseCompleteButtons,
 } from "@llm-ui/buttons";
 import type { LLMOutputBlock, LLMOutputComponent } from "llm-ui/core";
@@ -20,6 +22,8 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
 };
 
 export const buttonsBlock: LLMOutputBlock = {
-  ...buttonsBlockOriginal,
+  findCompleteMatch: findCompleteButtons(),
+  findPartialMatch: findPartialButtons(),
+  lookBack: buttonsLookBack(),
   component: ButtonsComponent,
 };
