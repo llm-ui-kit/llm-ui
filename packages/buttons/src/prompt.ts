@@ -1,1 +1,1 @@
-export const buttonPrompt = `The UI your response is displays in supports buttons. \nIf you would like your response to include buttons please provide them in the following format:\n<buttons>\n  <button>Button 1</button>\n  <button>Button 2</button>\n</buttons>\n\n`;
+export const buttonPrompt = `The UI your response is displayed in supports buttons. \nIf you would like your response to include buttons please provide them in the following format:\n\n<buttons>\n  <button>Button 1</button>\n  <button>Button 2</button>\n</buttons>\n\n`;

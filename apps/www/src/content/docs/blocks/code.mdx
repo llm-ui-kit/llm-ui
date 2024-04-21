@@ -35,7 +35,7 @@ llm-ui's code block uses [shiki](https://shiki.style) to highlight code. Shiki i
 
 Shiki highlighters are loaded asynchronously, this can be awkward to work with in practice.
 
-llm-ui provides `loadHighlighter`, which proactively loads the shiki highlighter and returns a `LLMUIHighlighter` object.
+llm-ui provides `loadHighlighter`, which proactively loads the shiki highlighter and returns a `LLMUIHighlighter` object:
 
 ```typescript
 import { loadHighlighter } from "@llm-ui/code";
@@ -57,7 +57,7 @@ const highlighter = loadHighlighter(
 }
 ```
 
-You should call `loadHighlighter` early in your applications lifecycle to ensure the highlighter is ready when you need it.
+You should call `loadHighlighter` early in your application's lifecycle to ensure the highlighter is ready when you need it.
 
 If the highlighter is not yet loaded you could fallback to a `<pre>` element or a loading spinner.
 
@@ -112,7 +112,7 @@ Read the [Shiki docs](https://shiki.style/guide/bundles) for more information ab
 
 ### Languages
 
-The [quick start example](#quick-start) imports all shiki languages. You may also want to reduce the number of languages imported, depending on your usecase. Read the [Shiki docs](https://shiki.style/guide/install#fine-grained-bundle) for more information.
+The [quick start example](#quick-start) imports all shiki languages. You may also want to reduce the number of languages imported depending on your usecase. Read the [Shiki docs](https://shiki.style/guide/install#fine-grained-bundle) for more information.
 
 # Code block functions
 
@@ -153,16 +153,21 @@ All three block functions accept the follow options:
 
 ````typescript
 import { useCodeBlockToHtml } from "@llm-ui/code";
-const { html, code } = useCodeBlockToHtml({
-  markdownCodeBlock: "```typescript\nconsole.log('llm-ui');\n```",
-  highlighter, // highlighter from loadHighlighter function
-  codeToHtmlProps, // Shiki codeToHtmlProps
-});
-console.log(html);
-// => "<pre class="shiki"...>...</pre>"
 
-console.log(code);
-// => "console.log('llm-ui');"
+const MyComponent = () => {
+  const { html, code } = useCodeBlockToHtml({
+    markdownCodeBlock: "```typescript\nconsole.log('llm-ui');\n```",
+    highlighter, // highlighter from loadHighlighter function
+    codeToHtmlProps, // Shiki codeToHtmlProps
+  });
+  console.log(html);
+  // => "<pre class="shiki"...>...</pre>"
+
+  console.log(code);
+  // => "console.log('llm-ui');"
+
+  ...
+}
 ````
 
 `useCodeBlockToHtml` converts a markdown code block to highlighted HTML and code (string).
@@ -172,14 +177,19 @@ console.log(code);
 ````typescript
 import { useCodeToHtml } from "@llm-ui/code";
 
-const html = useCodeToHtml({
-  markdownCodeBlock: "```typescript\nconsole.log('llm-ui');\n```",
-  highlighter, // highlighter from loadHighlighter function
-  codeToHtmlProps, // Shiki codeToHtmlProps
-});
+const MyComponent = () => {
 
-console.log(html);
-// => "<pre class="shiki"...>...</pre>"
+  const html = useCodeToHtml({
+    markdownCodeBlock: "```typescript\nconsole.log('llm-ui');\n```",
+    highlighter, // highlighter from loadHighlighter function
+    codeToHtmlProps, // Shiki codeToHtmlProps
+  });
+
+  console.log(html);
+  // => "<pre class="shiki"...>...</pre>"
+
+  ...
+}
 ````
 
 `useCodeToHtml` converts a markdown code block to highlighted HTML.
