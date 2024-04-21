@@ -26,11 +26,11 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
   return (
     <ExampleSideBySideOriginal
       className={cn(defaultClassName, className)}
-      options={options}
       backgroundClassName={backgroundClassName}
       tabs={tabs}
       showPlayPause={showPlayPause}
       {...props}
+      options={options}
     />
   );
 };
