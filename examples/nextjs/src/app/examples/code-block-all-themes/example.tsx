@@ -1,9 +1,9 @@
 "use client";
 import type { CodeToHtmlProps } from "@llm-ui/code";
 import {
-  codeBlockCompleteMatcher,
   codeBlockLookBack,
-  codeBlockPartialMatcher,
+  findCompleteCodeBlock,
+  findPartialCodeBlock,
   loadHighlighter,
   useCodeBlockToHtml,
 } from "@llm-ui/code";
@@ -92,8 +92,8 @@ const Example = () => {
     blocks: [
       {
         component: CodeBlock,
-        findCompleteMatch: codeBlockCompleteMatcher(),
-        findPartialMatch: codeBlockPartialMatcher(),
+        findCompleteMatch: findCompleteCodeBlock(),
+        findPartialMatch: findPartialCodeBlock(),
         lookBack: codeBlockLookBack(),
       },
     ],

@@ -120,12 +120,13 @@ The visible text that the user will see. Calculated by joining each block's `loo
 The block matches found in the `llmOutput` parameter.
 
 ```typescript
-const {blockMatches} = useLLMOutput({
+const { blockMatches } = useLLMOutput({
   llmOutput: output,
   blocks: [],
   fallbackBlock,
   isStreamFinished,
 });
+
 console.log(blockMatches);
 // =>
 [{

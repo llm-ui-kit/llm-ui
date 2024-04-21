@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MaybeLLMOutputMatch } from "../../react/src/core/useLLMOutput/types";
-import { codeBlockCompleteMatcher, codeBlockPartialMatcher } from "./matchers";
+import { findCompleteCodeBlock, findPartialCodeBlock } from "./matchers";
 import { CodeBlockOptions } from "./options";
 
 type TestCase = {
@@ -108,7 +108,7 @@ describe("matchCompleteMarkdownCodeBlock", () => {
 
   testCases.forEach(({ name, input, expected, options }) => {
     it(name, () => {
-      const result = codeBlockCompleteMatcher(options)(input);
+      const result = findCompleteCodeBlock(options)(input);
       expect(result).toEqual(expected);
     });
   });
@@ -212,7 +212,7 @@ describe("matchPartialMarkdownCodeBlock", () => {
 
   testCases.forEach(({ name, input, expected, options }) => {
     it(name, () => {
-      const result = codeBlockPartialMatcher(options)(input);
+      const result = findPartialCodeBlock(options)(input);
       expect(result).toEqual(expected);
     });
   });

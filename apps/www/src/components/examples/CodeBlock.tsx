@@ -1,11 +1,11 @@
 "use client";
 import {
-  codeBlockCompleteMatcher,
   codeBlockLookBack,
+  findCompleteCodeBlock,
   parseCompleteMarkdownCodeBlock,
 } from "@llm-ui/code";
 import { type LLMOutputBlock, type LLMOutputComponent } from "llm-ui/core";
-import { codeBlockPartialMatcher } from "node_modules/@llm-ui/code/src/matchers";
+import { findPartialCodeBlock } from "node_modules/@llm-ui/code/src/matchers";
 import { CodeBlock } from "../ui/custom/CodeBlock";
 
 const ShikiBlockComponent: LLMOutputComponent = ({ blockMatch }) => {
@@ -23,8 +23,8 @@ const ShikiBlockComponent: LLMOutputComponent = ({ blockMatch }) => {
 };
 
 export const codeBlockBlock: LLMOutputBlock = {
-  findCompleteMatch: codeBlockCompleteMatcher(),
-  findPartialMatch: codeBlockPartialMatcher(),
+  findCompleteMatch: findCompleteCodeBlock(),
+  findPartialMatch: findPartialCodeBlock(),
   lookBack: codeBlockLookBack(),
   component: ShikiBlockComponent,
 };

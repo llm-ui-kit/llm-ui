@@ -1,4 +1,4 @@
-export { codeBlockCompleteMatcher, codeBlockPartialMatcher } from "./matchers";
+export { findCompleteCodeBlock, findPartialCodeBlock } from "./matchers";
 
 export { defaultOptions as defaultCodeBlockOptions } from "./options";
 export type { CodeBlockOptions } from "./options";
