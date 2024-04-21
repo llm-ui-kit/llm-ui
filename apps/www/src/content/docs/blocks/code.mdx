@@ -8,6 +8,16 @@ import { PackageInstall } from "@/components/docs/PackageInstall";
 
 The code block displays markdown code blocks in the LLM output using [shiki](https://shiki.style).
 
+# Features
+
+<ExampleSideBySide
+  client:load
+  example={"```typescript key=value\nconsole.log('hello llm-ui')\n```"}
+/>
+
+- code block syntax is hidden from users
+- code highlighting for 100s of languages with [shiki](https://shiki.style)
+
 # Installation
 
 <PackageInstall client:load packages={["llm-ui", "@llm-ui/code", "shiki"]} />
