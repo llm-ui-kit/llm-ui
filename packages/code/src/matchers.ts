@@ -4,7 +4,7 @@ import { CodeBlockOptions, getOptions } from "./options";
 import { regexMatcher } from "@llm-ui/shared";
 import { getStartEndGroup } from "./shared";
 
-export const codeBlockCompleteMatcher = (
+export const findCompleteCodeBlock = (
   userOptions?: Partial<CodeBlockOptions>,
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
@@ -15,7 +15,7 @@ export const codeBlockCompleteMatcher = (
   return regexMatcher(regex);
 };
 
-export const codeBlockPartialMatcher = (
+export const findPartialCodeBlock = (
   userOptions?: Partial<CodeBlockOptions>,
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);

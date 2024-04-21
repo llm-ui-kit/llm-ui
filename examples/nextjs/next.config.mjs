@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["shiki", "vscode-oniguruma"],
-  },
-};
+const nextConfig = {};
 
 export default nextConfig;

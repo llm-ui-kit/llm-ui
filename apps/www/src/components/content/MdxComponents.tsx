@@ -13,7 +13,7 @@ export const MdxComponents = {
   h1: ({ className, ...props }: Props) => (
     <h1
       className={cn(
-        "mt-2 scroll-m-20 text-3xl font-bold tracking-tight mb-8",
+        "mt-12 first:mt-2 scroll-m-20 text-3xl font-bold tracking-tight mb-8",
         className,
       )}
       {...props}
@@ -31,7 +31,7 @@ export const MdxComponents = {
   h3: ({ className, ...props }: Props) => (
     <h3
       className={cn(
-        "mt-8 scroll-m-20 text-2xl font-semibold tracking-tight mb-3",
+        "mt-8 scroll-m-20 text-xl font-semibold tracking-tight mb-3",
         className,
       )}
       {...props}
@@ -40,7 +40,7 @@ export const MdxComponents = {
   h4: ({ className, ...props }: Props) => (
     <h4
       className={cn(
-        "mt-8 scroll-m-20 text-xl font-semibold tracking-tight mb-2",
+        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight mb-2",
         className,
       )}
       {...props}
@@ -49,7 +49,7 @@ export const MdxComponents = {
   h5: ({ className, ...props }: Props) => (
     <h5
       className={cn(
-        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
+        "mt-8 scroll-m-20 text-md font-semibold tracking-tight",
         className,
       )}
       {...props}
