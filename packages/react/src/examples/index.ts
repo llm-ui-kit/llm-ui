@@ -1,4 +1,4 @@
-export { stringToTokenArray } from "./stream/helper";
+export { stringToTokenArray } from "./helper";
 export type {
   DelayProbability,
   Probability,
@@ -8,13 +8,13 @@ export type {
   UseStreamResponse,
   UseStreamTokenArrayOptions,
   UseStreamWithProbabilitiesOptions,
-} from "./stream/types";
+} from "./types";
 export {
   useStreamTokenArray,
   useStreamTokenArrayOptionsDefaultOptions,
-} from "./stream/useStreamTokenArray";
+} from "./useStreamTokenArray";
 export {
   useStreamWithProbabilities as useStreamExample,
   useStreamWithProbabilities,
   useStreamWithProbabilitiesDefaultOptions,
-} from "./stream/useStreamWithProbabilities";
+} from "./useStreamWithProbabilities";

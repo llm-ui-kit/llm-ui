@@ -12,7 +12,7 @@ import { allThemes } from "@llm-ui/code/shikiBundles/allThemes"; // WARNING: Thi
 import { markdownLookBack } from "@llm-ui/markdown";
 import parseHtml from "html-react-parser";
 import { useLLMOutput, type LLMOutputComponent } from "llm-ui/core";
-import { useStreamExample } from "llm-ui/hooks";
+import { useStreamExample } from "llm-ui/examples";
 import ReactMarkdown, { type Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";

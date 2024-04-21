@@ -7,7 +7,7 @@ import {
 } from "@llm-ui/buttons";
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent } from "llm-ui/core";
-import { useStreamExample } from "llm-ui/hooks";
+import { useStreamExample } from "llm-ui/examples";
 import ReactMarkdown, { type Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 

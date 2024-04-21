@@ -8,7 +8,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     "./core": "./src/core/index.ts",
-    "./hooks": "./src/hooks/index.ts",
+    "./examples": "./src/examples/index.ts",
     "./throttle": "./src/throttle/index.ts"
   },
   "files": [
