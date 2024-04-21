@@ -23,6 +23,8 @@ The buttons block allows LLMs to display buttons in the LLM output.
 
 # Quick start
 
+Copy and paste [this file](https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/buttons/page.tsx) into your project to get started.
+
 # Prompt
 
 <CodeBlock className="whitespace-pre-wrap" code={buttonPrompt} />
@@ -36,3 +38,38 @@ You can import this prompt in code:
   }}
   code={`import { buttonPrompt } from "@llm-ui/buttons";\n\nconsole.log(buttonPrompt);\n// => "${buttonPrompt.slice(0, 53)}..."`}
 />
+
+# Code block functions
+
+```tsx
+const buttonsBlock = {
+  findPartialMatch: findPartialButtons(),
+  findCompleteMatch: findCompleteButtons(),
+  lookBack: buttonsLookBack(),
+  component: () => <div>Buttons</div>,
+};
+```
+
+## `findCompleteButtons`
+
+Finds a [complete buttons block](/docs/llm-output-hook#blocks-object) in a string.
+
+## `findPartialButtons`
+
+Find a [partial buttons block](/docs/llm-output-hook#blocks-object) in a string.
+
+## `buttonsLookBack`
+
+[Look back function](/docs/llm-output-hook#blocks-object) for the buttons block.
+
+# `parseCompleteButtons`
+
+You can use the `parseCompleteButtons` to parse a buttons block. This is helpful for building a custom component for buttons.
+
+```ts
+parseCompleteButtons(
+  "<buttons><button>Button 1</button><button>Button 2</button></buttons>",
+);
+
+// => ['Button 1', 'Button 2']
+```

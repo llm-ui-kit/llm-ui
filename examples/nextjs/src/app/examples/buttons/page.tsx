@@ -1,5 +1,10 @@
 "use client";
-import { buttonsLookBack, parseCompleteButtons } from "@llm-ui/buttons";
+import {
+  buttonsLookBack,
+  findCompleteButtons,
+  findPartialButtons,
+  parseCompleteButtons,
+} from "@llm-ui/buttons";
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent } from "llm-ui/core";
 import { useStreamExample } from "llm-ui/hooks";
@@ -26,6 +31,8 @@ const MarkdownComponent: LLMOutputComponent<Options> = ({
 // --- Markdown setup end ---
 
 // --- Buttons block setup start ---
+
+// Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
   const buttons = parseCompleteButtons(blockMatch.output);
   if (!buttons) {
@@ -55,9 +62,9 @@ const Example = () => {
     blocks: [
       {
         component: ButtonsComponent,
+        findPartialMatch: findPartialButtons(),
+        findCompleteMatch: findCompleteButtons(),
         lookBack: buttonsLookBack(),
-        findPartialMatch: buttonsPartialMatcher(),
-        findCompleteMatch: buttonsCompleteMatcher(),
       },
     ],
     fallbackBlock: {
