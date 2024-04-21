@@ -10,7 +10,7 @@ const options: UseStreamTokenArrayOptions = {
   autoStartDelayMs: 0,
   delayMultiplier: 0,
   loopDelayMs: 0,
-  loopStartIndex: 0,
+  firstLoopStartIndex: 0,
 };
 
 const allAtOnce: TokenWithDelay[] = [
@@ -119,9 +119,9 @@ describe("useStreamTokenArray", () => {
     });
   });
 
-  test("loopStartIndex: 20", async () => {
+  test("firstLoopStartIndex: 20", async () => {
     const { result, waitFor } = renderHook(() =>
-      useStreamTokenArray(allAtOnce, { ...options, loopStartIndex: 20 }),
+      useStreamTokenArray(allAtOnce, { ...options, firstLoopStartIndex: 20 }),
     );
     waitFor(() => {
       const { output } = resultToArrays(result);

@@ -11,7 +11,7 @@ const options: UseStreamWithProbabilitiesOptions = {
   delayMultiplier: 0,
   loopDelayMs: 0,
   autoStartDelayMs: 0,
-  loopStartIndex: 0,
+  firstLoopStartIndex: 0,
   tokenCharsProbabilities: [
     {
       tokenChars: 100,

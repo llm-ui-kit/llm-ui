@@ -187,7 +187,7 @@ const useExampleTokenArray = ({
     autoStart: true,
     autoStartDelayMs: 0,
     loopDelayMs: 3000,
-    loopStartIndex: Number.MAX_SAFE_INTEGER,
+    firstLoopStartIndex: Number.MAX_SAFE_INTEGER,
     ...options,
     delayMultiplier,
   });

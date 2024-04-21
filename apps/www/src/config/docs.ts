@@ -42,13 +42,13 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: "Custom blocks",
-          href: "/docs/blocks/custom-blocks",
+          href: "/docs/advanced/custom-blocks",
         },
         {
           title: "Throttle functions",
-          href: "/docs/throttling",
+          href: "/docs/advanced/throttle-functions",
         },
-        { title: "Example hooks", href: "/" },
+        { title: "Example hooks", href: "/docs/advanced/example-hooks" },
       ],
     },
   ],

@@ -1,0 +1,156 @@
+---
+title: Example hooks
+description: ""
+---
+
+llm-ui provides convenient hooks to help demo streaming LLM output without needing to connect your code to a real LLM: `useStreamExample` and `useStreamTokenArray`.
+
+Example:
+
+```ts
+import { useStreamExample } from "llm-ui/hooks";
+
+const example = "# Hello llm-ui!";
+const {
+  output,
+  isStreamStarted,
+  isStreamFinished,
+  isPlaying,
+  pause,
+  reset,
+  start,
+  loopIndex,
+} = useStreamExample(example, {
+  autoStart: true,
+  autoStartDelayMs: 1000,
+  loop: true,
+  loopDelayMs: 1000,
+  firstLoopStartIndex: 0,
+  delayMultiplier: 2,
+});
+
+console.log(output);
+// => ""
+
+// ...later
+
+console.log(output);
+// => "# Hello"
+
+// ...later
+
+console.log(output);
+// => "# Hello llm-ui!"
+```
+
+# Common options
+
+## `autoStart` (boolean) (optional)
+
+Automatically start the stream when the component mounts.
+
+## `autoStartDelayMs` (number) (optional)
+
+The delay in milliseconds before the stream starts.
+
+## `loop` (boolean) (optional)
+
+Whether the stream 'loops' when it finishes streaming.
+
+## `loopDelayMs` (number) (optional)
+
+The delay in milliseconds between loops.
+
+## `firstLoopStartIndex` (number) (optional)
+
+On the first loop, how many characters of the output are shown to start with.
+
+## `delayMultiplier` (number) (optional)
+
+All delays sending tokens are multiplied by
+
+# Return value
+
+## `output` (string)
+
+The LLM output that has been streamed so far.
+
+## `isStreamStarted` (boolean)
+
+Returns `true` when the stream has started.
+
+## `isStreamFinished` (boolean)
+
+Returns `true` when the stream has finished.
+
+## `isPlaying` (boolean)
+
+Returns `true` when the stream is playing.
+
+## `pause` (function)
+
+Pauses the stream.
+
+## `reset` (function)
+
+Resets the stream back to the beginning.
+
+## `start` (function)
+
+Starts the stream.
+
+## `loopIndex` (number)
+
+The current loop index. Only needed when looping the stream.
+
+# `useStreamExample`
+
+Alias: `useStreamWithProbabilities`
+
+`useStreamExample` uses probabilities to produce realistic LLM output.
+
+```ts
+const { output } = useStreamExample(example, {
+  tokenCharsProbabilities: [
+    {
+      tokenChars: 1,
+      prob: 0.5,
+    },
+    {
+      tokenChars: 2,
+      prob: 0.5,
+    },
+  ],
+  delayMsProbabilities: [
+    { delayMs: 1000, prob: 0.5 },
+    { delayMs: 2000, prob: 0.5 },
+  ],
+});
+```
+
+## Options
+
+### `tokenCharsProbabilities` (array)
+
+An array of objects with the following properties:
+
+- `tokenChars` (number): The number of characters to send.
+- `prob` (number): The probability of this token being sent.
+
+### `delayMsProbabilities` (array)
+
+An array of objects with the following properties:
+
+- `delayMs` (number): The delay in milliseconds before sending the next token.
+- `prob` (number): The probability of this delay being used.
+
+# `useStreamTokenArray`
+
+`useStreamTokenArray` accepts an array of tokens with a delay for complete control of the stream:
+
+```ts
+const { output } = useStreamTokenArray([
+  { token: "Hel", delayMs: 1000 },
+  { token: "lo", delayMs: 2000 },
+]);
+```
