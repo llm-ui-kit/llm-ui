@@ -12,7 +12,7 @@ export const useStreamTokenArrayOptionsDefaultOptions: UseStreamTokenArrayOption
     loop: false,
     loopDelayMs: 1000,
     delayMultiplier: 1,
-    loopStartIndex: 0,
+    firstLoopStartIndex: 0,
   };
 
 export const useStreamTokenArray = (
@@ -28,7 +28,7 @@ export const useStreamTokenArray = (
     [userOptions],
   );
   const currentIndex = useRef<number>(
-    Math.min(options.loopStartIndex, tokenArray.length),
+    Math.min(options.firstLoopStartIndex, tokenArray.length),
   );
   const [output, setOutput] = useState<string>(
     tokenArray
