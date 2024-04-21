@@ -18,6 +18,7 @@
     "shiki": "^1.2.4"
   },
   "devDependencies": {
+    "@llm-ui/buttons": "workspace:*",
     "@llm-ui/code": "workspace:*",
     "@llm-ui/markdown": "workspace:*",
     "@types/node": "^20",

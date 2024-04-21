@@ -1,0 +1,38 @@
+---
+title: Buttons block
+description: ""
+---
+
+import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
+import { CodeBlock } from "@/components/ui/custom/CodeBlock";
+import { PackageInstall } from "@/components/docs/PackageInstall";
+import { buttonPrompt } from "@llm-ui/buttons";
+
+The buttons block allows LLMs to display buttons in the LLM output.
+
+<ExampleSideBySide
+  client:load
+  example={
+    "Buttons example\n<buttons>\n  <button>Button 1</button>\n  <button>Button 2</button>\n</buttons>"
+  }
+/>
+
+# Installation
+
+<PackageInstall client:load packages={["llm-ui", "@llm-ui/buttons"]} />
+
+# Quick start
+
+# Prompt
+
+<CodeBlock className="whitespace-pre-wrap" code={buttonPrompt} />
+
+You can import this prompt in code:
+
+<CodeBlock
+  className="whitespace-pre-wrap"
+  codeToHtmlProps={{
+    lang: "typescript",
+  }}
+  code={`import { buttonPrompt } from "@llm-ui/buttons";\n\nconsole.log(buttonPrompt);\n// => "${buttonPrompt.slice(0, 53)}..."`}
+/>
