@@ -4,6 +4,11 @@ import { resultToArrays } from "./testUtils";
 import { UseStreamWithProbabilitiesOptions } from "./types";
 import { useStreamWithProbabilities } from "./useStreamWithProbabilities";
 
+type HookProps = {
+  example: string;
+  userOptions: Partial<UseStreamWithProbabilitiesOptions>;
+};
+
 const options: UseStreamWithProbabilitiesOptions = {
   autoStart: true,
   loop: false,
@@ -98,6 +103,35 @@ describe("useStreamWithProbabilities", () => {
       expect(isFinished).containSubset([false, true, false, true]);
       expect(isFinished).containSubset([false, true, false, true]);
       expect(result.current.loopIndex).greaterThan(0);
+    });
+  });
+
+  test("rerenders", async () => {
+    const { result, waitFor, rerender } = renderHook(
+      ({ example, userOptions }: HookProps) => {
+        return useStreamWithProbabilities(example, userOptions);
+      },
+      {
+        initialProps: {
+          example: "Hello",
+          userOptions: {
+            ...options,
+            tokenCharsProbabilities: [{ tokenChars: 2, prob: 1 }],
+          },
+        },
+      },
+    );
+
+    rerender({
+      example: "Hello",
+      userOptions: {
+        ...options,
+        tokenCharsProbabilities: [{ tokenChars: 1, prob: 1 }],
+      },
+    });
+
+    await waitFor(() => {
+      expect(result.current.output).toBe("Hello");
     });
   });
 });

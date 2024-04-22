@@ -1,6 +1,10 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { stringToTokenArray } from "./helper";
-import { UseStreamResponse, UseStreamWithProbabilitiesOptions } from "./types";
+import {
+  TokenWithDelay,
+  UseStreamResponse,
+  UseStreamWithProbabilitiesOptions,
+} from "./types";
 import {
   useStreamTokenArray,
   useStreamTokenArrayOptionsDefaultOptions,
@@ -33,9 +37,9 @@ export const useStreamWithProbabilities = (
     }),
     [userOptions],
   );
-  const tokenArray = useMemo(
-    () => stringToTokenArray(output, options),
-    [output, options],
+  const tokenArrayRef = useRef<TokenWithDelay[]>(
+    stringToTokenArray(output, options),
   );
-  return useStreamTokenArray(tokenArray, options);
+
+  return useStreamTokenArray(tokenArrayRef.current, options);
 };
