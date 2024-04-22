@@ -19,8 +19,7 @@ export const markdownExample = `### Header
 4. **bold**
 5. *nested **important** text*
 6. \`inline code\`
-
-\`\`\``;
+`;
 
 export const codeBlockExample = `#### Python
 \`\`\`python
