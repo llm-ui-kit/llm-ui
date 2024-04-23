@@ -1,4 +1,4 @@
-import { Parent, Root, RootContent, Text } from "mdast";
+import { List, Parent, Root, RootContent, Text } from "mdast";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { gfmFromMarkdown, gfmToMarkdown } from "mdast-util-gfm";
 import { toMarkdown } from "mdast-util-to-markdown";
@@ -7,6 +7,24 @@ import { gfm } from "micromark-extension-gfm";
 // enclosing symbols: _a_ __a__ *a* **a** ~a~ ~~a~~
 // _'s behave differently to * and ~.
 const ENCLOSING_START = /(\*{1,3}|(^|\s|\n)_{1,3}|~{1,3})(\S|$)/;
+
+const isEmptyList = (list: List): boolean => {
+  return (
+    list.children.length === 1 &&
+    list.children[0].type === "listItem" &&
+    list.children[0].children.length === 0
+  );
+};
+
+const isListCharacterLength = (list: List, length: number): boolean => {
+  return Boolean(
+    list.position &&
+      list.position.start.line === list.position.end.line &&
+      list.position.end.column &&
+      list.position.start.column &&
+      list.position.end.column - list.position.start.column === length,
+  );
+};
 
 const markdownToAst = (markdown: string): Root => {
   return fromMarkdown(markdown, {
@@ -51,9 +69,9 @@ const removePartialAmbiguousMarkdownFromAst = (markdownAst: Root): void => {
           type: "text",
           value: matchText.slice(0, matchIndex),
         };
-        lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex + 1);
+        lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex + 1); // keep the updated text node, remove the rest
       } else {
-        lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex);
+        lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex); // delete the text node and the rest
       }
       // remove the 'lastChild' if it no longer has any children
       if (lastChild.children.length === 0) {
@@ -63,13 +81,8 @@ const removePartialAmbiguousMarkdownFromAst = (markdownAst: Root): void => {
   } else if (
     // if there is an empty list item at the end, remove it
     lastChild.type === "list" &&
-    lastChild.children.length === 1 &&
-    lastChild.children[0].type === "listItem" &&
-    lastChild.children[0].children.length === 0 &&
-    lastChild.position?.start.line === lastChild.position?.end.line &&
-    lastChild.position?.end.column &&
-    lastChild.position?.start.column &&
-    lastChild.position?.end.column - lastChild.position?.start.column <= 1 // '*' is deleted, '* ' is not deleted.
+    isEmptyList(lastChild) &&
+    isListCharacterLength(lastChild, 1) // '*' is deleted, '* ' is not deleted.
   ) {
     markdownAst.children.splice(-1);
   } else if (lastChild.type === "thematicBreak") {
@@ -87,7 +100,9 @@ type WithChildren<T> = T extends Parent ? T : never;
 
 type RootContentWithChildren = WithChildren<RootContent> | Root;
 
-// todo: use constants here and reuse them in the remove function for less bugs (:
+const THEMATIC_BREAK_VISIBLE = "_";
+const LIST_ITEM_VISIBLE = "*";
+
 const markdownAstToVisibleTextHelper = (
   markdownAst: RootContentWithChildren,
 ): string => {
@@ -97,7 +112,7 @@ const markdownAstToVisibleTextHelper = (
         return child.value;
       }
       if (child.type === "thematicBreak") {
-        return "_";
+        return THEMATIC_BREAK_VISIBLE;
       }
       if (child.type === "heading") {
         return markdownAstToVisibleTextHelper(child);
@@ -108,7 +123,7 @@ const markdownAstToVisibleTextHelper = (
       }
 
       if (child.type === "listItem") {
-        return "*" + markdownAstToVisibleTextHelper(child);
+        return LIST_ITEM_VISIBLE + markdownAstToVisibleTextHelper(child);
       }
       if ("children" in child) {
         return markdownAstToVisibleTextHelper(child);
@@ -146,17 +161,15 @@ const removeVisibleCharsFromAstHelper = (
     }
   }
   if (node.type === "thematicBreak") {
-    return { charsRemoved: 1, toDelete: true };
+    return { charsRemoved: THEMATIC_BREAK_VISIBLE.length, toDelete: true };
   }
 
   let removedCharsCount = 0;
   if ("children" in node) {
-    // right to left
-    for (let index = node.children.length - 1; index >= 0; index--) {
+    // traverse children right to left
+    let index = node.children.length - 1;
+    while (index >= 0 && removedCharsCount < visibleCharsToRemove) {
       const child = node.children[index];
-      if (removedCharsCount >= visibleCharsToRemove) {
-        break;
-      }
 
       const { charsRemoved, toDelete } = removeVisibleCharsFromAstHelper(
         child,
@@ -164,8 +177,9 @@ const removeVisibleCharsFromAstHelper = (
       );
       removedCharsCount += charsRemoved;
       if (toDelete) {
-        node.children.splice(index, 1);
+        node.children.splice(index, 1); // delete the child
       }
+      index--;
     }
 
     if (node.type === "listItem") {
@@ -173,7 +187,9 @@ const removeVisibleCharsFromAstHelper = (
         node.children.length === 0 &&
         visibleCharsToRemove - removedCharsCount > 0;
       return {
-        charsRemoved: removedCharsCount + (shouldDeleteListItem ? 1 : 0),
+        charsRemoved:
+          removedCharsCount +
+          (shouldDeleteListItem ? LIST_ITEM_VISIBLE.length : 0),
         toDelete: shouldDeleteListItem,
       };
     }
