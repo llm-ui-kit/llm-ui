@@ -3,69 +3,10 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { gfmFromMarkdown, gfmToMarkdown } from "mdast-util-gfm";
 import { toMarkdown } from "mdast-util-to-markdown";
 import { gfm } from "micromark-extension-gfm";
+
 // enclosing symbols: _a_ __a__ *a* **a** ~a~ ~~a~~
-
-// matches: *abc$, _abc$, __abc$, ~~~abc$ etc.
-// \S{0,1} handles single char case e.g. *a*
-const ENCLOSING_STARTED_END_MATCH = /[\*_~]{1,3}(\S.*?\S{0,1})$/gm;
-
-// matches: *abc*, __abc__, etc.
-const ENCLOSING_MATCH = /([\*_~]{1,3})(\S.*?\S{0,1})\1/g;
-
-// matches: *abc*$, __abc__$, etc. where $ is end of line
-const ENCLOSING_MATCH_END = /([\*_~]{1,3})(\S.*?\S{0,1})\1$/g;
-
-// matches: *$, _$, __$, ~~~$ (where $ is end of line)
-const ENCLOSING_START_END_MATCH = /[\*_~]{1,3}$/;
-
 // _'s behave differently to * and ~.
 const ENCLOSING_START = /(\*{1,3}|(^|\s|\n)_{1,3}|~{1,3})(\S|$)/;
-
-const findLastEnclosingMatchIndex = (markdown: string): number => {
-  const start = markdown.match(/([*_~]{1,3})\S{0,1}/);
-  if (!start) {
-    return 0;
-  }
-  const startEnclosingString = start[1];
-  const startEnclosingEndIndex = start.index! + startEnclosingString.length;
-  const rest = markdown.slice(startEnclosingEndIndex);
-  const endRegex = new RegExp(`\\S([\\*_~]{${startEnclosingString.length}})`);
-  const end = rest.match(endRegex);
-  if (!end) {
-    return 0;
-  }
-  const endEnclosingString = end[1];
-  const endIndex =
-    startEnclosingEndIndex + end.index! + endEnclosingString.length + 1;
-  return findLastEnclosingMatchIndex(markdown.slice(endIndex)) + endIndex;
-};
-
-const splitStringByLastEnclosingSymbol = (markdown: string) => {
-  const lastEnclosingMatchIndex = findLastEnclosingMatchIndex(markdown);
-  const before = markdown.slice(0, lastEnclosingMatchIndex);
-  const after = markdown.slice(lastEnclosingMatchIndex);
-  return { before, after };
-};
-
-const lastCharIsUnmatchedStar = (markdown: string) => {
-  const { after } = splitStringByLastEnclosingSymbol(markdown);
-  const match = after.match(ENCLOSING_START_END_MATCH);
-  return match ? match[0] : undefined;
-};
-
-const removePartialAmbiguousEnclosingSymbols = (markdown: string): string => {
-  const lastCharsUnmatched = lastCharIsUnmatchedStar(markdown);
-  if (lastCharsUnmatched) {
-    return removePartialAmbiguousEnclosingSymbols(
-      markdown.slice(0, -1 * lastCharsUnmatched.length),
-    );
-  }
-  if (ENCLOSING_STARTED_END_MATCH.test(markdown)) {
-    const { before, after } = splitStringByLastEnclosingSymbol(markdown);
-    return `${before}${after.replace(ENCLOSING_STARTED_END_MATCH, "")}`;
-  }
-  return markdown;
-};
 
 const markdownToAst = (markdown: string): Root => {
   return fromMarkdown(markdown, {

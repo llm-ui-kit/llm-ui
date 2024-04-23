@@ -13,118 +13,118 @@ describe("removePartialAmbiguousMarkdown", () => {
     markdown: string;
     expected: string;
   }[] = [
-    // { markdown: "hello", expected: "hello\n" },
-    // { markdown: "hello world", expected: "hello world\n" },
-    // { markdown: "*abc*", expected: "*abc*\n" },
-    // { markdown: "**abc*", expected: "" },
-    // { markdown: "*a*", expected: "*a*\n" },
-    // { markdown: "*a", expected: "" },
-    // { markdown: "def*a", expected: "def\n" },
-    // { markdown: "*_abc_*", expected: "**abc**\n" },
-    // { markdown: "* abc", expected: "* abc\n" }, // bullet point
-    // { markdown: "*abc*def", expected: "*abc*def\n" },
-    // { markdown: "*abc*def*", expected: "*abc*def\n" },
-    // { markdown: "*abc*def*abc*", expected: "*abc*def*abc*\n" },
-    // { markdown: "*abc*def*abc*a", expected: "*abc*def*abc*a\n" },
-    // { markdown: "*abc*def*abc*abc*", expected: "*abc*def*abc*abc\n" },
-    // { markdown: "*abc", expected: "" },
-    // { markdown: "*", expected: "" },
-    // { markdown: "*hello* *abc", expected: "*hello*&#x20;\n" },
-    // { markdown: "abc\n*", expected: "abc\n" },
-    // { markdown: "abc\n", expected: "abc\n" },
-    // // weird incorrect syntax (*a should be * a)
+    { markdown: "hello", expected: "hello\n" },
+    { markdown: "hello world", expected: "hello world\n" },
+    { markdown: "*abc*", expected: "*abc*\n" },
+    { markdown: "**abc*", expected: "" },
+    { markdown: "*a*", expected: "*a*\n" },
+    { markdown: "*a", expected: "" },
+    { markdown: "def*a", expected: "def\n" },
+    { markdown: "*_abc_*", expected: "**abc**\n" },
+    { markdown: "* abc", expected: "* abc\n" }, // bullet point
+    { markdown: "*abc*def", expected: "*abc*def\n" },
+    { markdown: "*abc*def*", expected: "*abc*def\n" },
+    { markdown: "*abc*def*abc*", expected: "*abc*def*abc*\n" },
+    { markdown: "*abc*def*abc*a", expected: "*abc*def*abc*a\n" },
+    { markdown: "*abc*def*abc*abc*", expected: "*abc*def*abc*abc\n" },
+    { markdown: "*abc", expected: "" },
+    { markdown: "*", expected: "" },
+    { markdown: "*hello* *abc", expected: "*hello*&#x20;\n" },
+    { markdown: "abc\n*", expected: "abc\n" },
+    { markdown: "abc\n", expected: "abc\n" },
+    // weird incorrect syntax (*a should be * a)
 
-    // { markdown: "*abc\n", expected: "" },
-    // { markdown: "*abc\n\n", expected: "" },
-    // { markdown: "*abc\n\ndef", expected: "\\*abc\n\ndef\n" },
-    // { markdown: "*abc\ndef", expected: "\\*abc\ndef\n" },
-    // { markdown: "*abc\ndef*", expected: "*abc\ndef*\n" },
-    // { markdown: "*abc\n**def*", expected: "" },
-    // { markdown: "abc\n*abc", expected: "abc\n" },
-    // { markdown: "abc\n*abc*abc", expected: "abc\n*abc*abc\n" },
-    // { markdown: "abc\n*abc*abc*", expected: "abc\n*abc*abc\n" },
-    // { markdown: "**abc**", expected: "**abc**\n" },
-    // { markdown: "**abc**def", expected: "**abc**def\n" }, //working up to here
-    // { markdown: "**abc**def**", expected: "**abc**def\n" },
-    // { markdown: "**abc**def**abc**", expected: "**abc**def**abc**\n" },
-    // { markdown: "**abc**def**abc**a", expected: "**abc**def**abc**a\n" },
-    // { markdown: "**abc**def**abc**abc**", expected: "**abc**def**abc**abc\n" },
-    // { markdown: "**abc", expected: "" },
-    // { markdown: "**", expected: "" },
-    // { markdown: "**hello** **abc", expected: "**hello**&#x20;\n" },
-    // { markdown: "abc\n**", expected: "abc\n" },
-    // { markdown: "abc\n**abc", expected: "abc\n" },
-    // { markdown: "abc\n**abc**abc", expected: "abc\n**abc**abc\n" },
-    // { markdown: "abc\n**abc**abc**", expected: "abc\n**abc**abc\n" },
-    // { markdown: "_abc_", expected: "*abc*\n" },
-    // { markdown: "_abc_ def", expected: "*abc* def\n" },
-    // { markdown: "_abc_def_", expected: "*abc\\_def*\n" },
-    // { markdown: "_abc_ def_", expected: "*abc* def\\_\n" },
-    // { markdown: "_abc_def_abc_", expected: "*abc\\_def\\_abc*\n" },
-    // { markdown: "_abc_ def _abc_", expected: "*abc* def *abc*\n" },
-    // { markdown: "_abc_ def _abc_ abc_", expected: "*abc* def *abc* abc\\_\n" },
-    // { markdown: "_abc", expected: "" },
-    // { markdown: "_", expected: "" },
-    // { markdown: "_hello_ _abc", expected: "*hello*\n" },
-    // { markdown: "abc\n_", expected: "abc\n" },
-    // { markdown: "abc\n_abc", expected: "abc\n" },
-    // { markdown: "abc\n_abc_abc", expected: "abc\n" }, // _ edge case
-    // { markdown: "abc\n_abc_abc_", expected: "abc\n*abc\\_abc*\n" },
-    // { markdown: "___abc___", expected: "***abc***\n" },
-    // { markdown: "___abc___def", expected: "" }, // _ edge case
-    // { markdown: "___abc___ def___", expected: "***abc*** def\\_\\_\\_\n" },
-    // {
-    //   markdown: "___abc___ def ___abc___",
-    //   expected: "***abc*** def ***abc***\n",
-    // },
-    // {
-    //   markdown: "___abc___ def ___abc___ a",
-    //   expected: "***abc*** def ***abc*** a\n",
-    // },
-    // {
-    //   markdown: "___abc___ def ___abc___ abc___",
-    //   expected: "***abc*** def ***abc*** abc\\_\\_\\_\n",
-    // },
-    // { markdown: "___abc", expected: "" },
+    { markdown: "*abc\n", expected: "" },
+    { markdown: "*abc\n\n", expected: "" },
+    { markdown: "*abc\n\ndef", expected: "\\*abc\n\ndef\n" },
+    { markdown: "*abc\ndef", expected: "\\*abc\ndef\n" },
+    { markdown: "*abc\ndef*", expected: "*abc\ndef*\n" },
+    { markdown: "*abc\n**def*", expected: "" },
+    { markdown: "abc\n*abc", expected: "abc\n" },
+    { markdown: "abc\n*abc*abc", expected: "abc\n*abc*abc\n" },
+    { markdown: "abc\n*abc*abc*", expected: "abc\n*abc*abc\n" },
+    { markdown: "**abc**", expected: "**abc**\n" },
+    { markdown: "**abc**def", expected: "**abc**def\n" }, //working up to here
+    { markdown: "**abc**def**", expected: "**abc**def\n" },
+    { markdown: "**abc**def**abc**", expected: "**abc**def**abc**\n" },
+    { markdown: "**abc**def**abc**a", expected: "**abc**def**abc**a\n" },
+    { markdown: "**abc**def**abc**abc**", expected: "**abc**def**abc**abc\n" },
+    { markdown: "**abc", expected: "" },
+    { markdown: "**", expected: "" },
+    { markdown: "**hello** **abc", expected: "**hello**&#x20;\n" },
+    { markdown: "abc\n**", expected: "abc\n" },
+    { markdown: "abc\n**abc", expected: "abc\n" },
+    { markdown: "abc\n**abc**abc", expected: "abc\n**abc**abc\n" },
+    { markdown: "abc\n**abc**abc**", expected: "abc\n**abc**abc\n" },
+    { markdown: "_abc_", expected: "*abc*\n" },
+    { markdown: "_abc_ def", expected: "*abc* def\n" },
+    { markdown: "_abc_def_", expected: "*abc\\_def*\n" },
+    { markdown: "_abc_ def_", expected: "*abc* def\\_\n" },
+    { markdown: "_abc_def_abc_", expected: "*abc\\_def\\_abc*\n" },
+    { markdown: "_abc_ def _abc_", expected: "*abc* def *abc*\n" },
+    { markdown: "_abc_ def _abc_ abc_", expected: "*abc* def *abc* abc\\_\n" },
+    { markdown: "_abc", expected: "" },
+    { markdown: "_", expected: "" },
+    { markdown: "_hello_ _abc", expected: "*hello*\n" },
+    { markdown: "abc\n_", expected: "abc\n" },
+    { markdown: "abc\n_abc", expected: "abc\n" },
+    { markdown: "abc\n_abc_abc", expected: "abc\n" }, // _ edge case
+    { markdown: "abc\n_abc_abc_", expected: "abc\n*abc\\_abc*\n" },
+    { markdown: "___abc___", expected: "***abc***\n" },
+    { markdown: "___abc___def", expected: "" }, // _ edge case
+    { markdown: "___abc___ def___", expected: "***abc*** def\\_\\_\\_\n" },
+    {
+      markdown: "___abc___ def ___abc___",
+      expected: "***abc*** def ***abc***\n",
+    },
+    {
+      markdown: "___abc___ def ___abc___ a",
+      expected: "***abc*** def ***abc*** a\n",
+    },
+    {
+      markdown: "___abc___ def ___abc___ abc___",
+      expected: "***abc*** def ***abc*** abc\\_\\_\\_\n",
+    },
+    { markdown: "___abc", expected: "" },
 
-    // { markdown: "___hello___ ___abc", expected: "***hello***\n" },
-    // { markdown: "abc\n___abc", expected: "abc\n" },
-    // { markdown: "abc\n___abc___ abc", expected: "abc\n***abc*** abc\n" },
-    // {
-    //   markdown: "abc\n___abc___abc___",
-    //   expected: "abc\n***abc\\_\\_\\_abc***\n", // this is how mdast works
-    // },
-    // { markdown: "abc\n***abc***abc***", expected: "abc\n***abc***abc\n" },
-    // { markdown: "*__abc__**", expected: "***abc***\n" },
-    // { markdown: "*__abc__**abc*", expected: "***abc**\\*\\*abc*\n" },
-    // { markdown: "*__abc__* *abc*", expected: "***abc*** *abc*\n" },
-    // {
-    //   markdown: "*nested **important** text*\n",
-    //   expected: "*nested **important** text*\n",
-    // },
-    // {
-    //   markdown: "*nested **impor",
-    //   expected: "",
-    // },
-    // {
-    //   markdown:
-    //     "# heading\n\n*abc*\n*nested [abc](https://something.com) **impor",
-    //   expected: "# heading\n\n*abc*\n",
-    // },
-    // {
-    //   markdown:
-    //     "# heading\n\n*abc*\n*nested [abc](https://something.com) **impor** something*",
-    //   expected:
-    //     "# heading\n\n*abc*\n*nested [abc](https://something.com) **impor** something*\n",
-    // },
+    { markdown: "___hello___ ___abc", expected: "***hello***\n" },
+    { markdown: "abc\n___abc", expected: "abc\n" },
+    { markdown: "abc\n___abc___ abc", expected: "abc\n***abc*** abc\n" },
+    {
+      markdown: "abc\n___abc___abc___",
+      expected: "abc\n***abc\\_\\_\\_abc***\n", // this is how mdast works
+    },
+    { markdown: "abc\n***abc***abc***", expected: "abc\n***abc***abc\n" },
+    { markdown: "*__abc__**", expected: "***abc***\n" },
+    { markdown: "*__abc__**abc*", expected: "***abc**\\*\\*abc*\n" },
+    { markdown: "*__abc__* *abc*", expected: "***abc*** *abc*\n" },
+    {
+      markdown: "*nested **important** text*\n",
+      expected: "*nested **important** text*\n",
+    },
+    {
+      markdown: "*nested **impor",
+      expected: "",
+    },
+    {
+      markdown:
+        "# heading\n\n*abc*\n*nested [abc](https://something.com) **impor",
+      expected: "# heading\n\n*abc*\n",
+    },
+    {
+      markdown:
+        "# heading\n\n*abc*\n*nested [abc](https://something.com) **impor** something*",
+      expected:
+        "# heading\n\n*abc*\n*nested [abc](https://something.com) **impor** something*\n",
+    },
 
     // // thematic breaks
-    // { markdown: "___", expected: "" },
-    // { markdown: "___\na", expected: "***\n\na\n" },
-    // { markdown: "***", expected: "" },
-    // { markdown: "***\nabc", expected: "***\n\nabc\n" },
-    // { markdown: "abc\n___", expected: "abc\n" },
-    // { markdown: "abc\n***", expected: "abc\n" },
+    { markdown: "___", expected: "" },
+    { markdown: "___\na", expected: "***\n\na\n" },
+    { markdown: "***", expected: "" },
+    { markdown: "***\nabc", expected: "***\n\nabc\n" },
+    { markdown: "abc\n___", expected: "abc\n" },
+    { markdown: "abc\n***", expected: "abc\n" },
 
     // headers
     // headers are not ambiguous, so we don't need to remove them
@@ -167,68 +167,68 @@ describe("markdownToVisibleText", () => {
     isFinished: boolean;
     expected: string;
   }[] = [
-    // { input: "hello", isFinished: false, expected: "hello" },
-    // { input: "~hello~", isFinished: false, expected: "hello" }, // needs gfm
-    // { input: "_a_", isFinished: false, expected: "a" },
-    // { input: "hello *world*", isFinished: false, expected: "hello world" },
-    // {
-    //   input: "hello *world* *world*",
-    //   isFinished: false,
-    //   expected: "hello world world",
-    // },
-    // {
-    //   input: "hello _*world*_ *world*",
-    //   isFinished: false,
-    //   expected: "hello world world",
-    // },
-    // {
-    //   input: "hello *world* **world**",
-    //   isFinished: false,
-    //   expected: "hello world world",
-    // },
-    // {
-    //   input: "~~hello~~ *world* **world**",
-    //   isFinished: false,
-    //   expected: "hello world world",
-    // },
-    // {
-    //   input: "~~hello~~ *world* **world***",
-    //   isFinished: false,
-    //   expected: "hello world world",
-    // },
-    // // ambiguous so we don't show it yet.
-    // { input: "*", isFinished: false, expected: "" },
-    // { input: "abc\n*", isFinished: false, expected: "abc\n" },
-    // { input: "*abc", isFinished: false, expected: "" },
-    // { input: "__abc", isFinished: false, expected: "" },
-    // { input: "~~~abc", isFinished: false, expected: "" },
-    // // weird incorrect syntax (*a should be * a)
-    // { input: "*abc\n", isFinished: false, expected: "" },
-    // { input: "*abc\ndef", isFinished: false, expected: "*abc\ndef" },
-    // { input: "*abc\ndef*", isFinished: false, expected: "abc\ndef" },
-    // { input: "*abc\n**def*", isFinished: false, expected: "" },
-    // // ambiguous, but isFinished true so we don't hide things
-    // { input: "*", isFinished: true, expected: "*" },
-    // { input: "*abc", isFinished: true, expected: "*abc" },
-    // { input: "*abc\n", isFinished: true, expected: "*abc" },
-    // { input: "*abc\ndef", isFinished: true, expected: "*abc\ndef" },
-    // { input: "*abc\n**def**", isFinished: true, expected: "*abc\ndef" },
-    // { input: "*abc\ndef*", isFinished: true, expected: "abc\ndef" }, // weird syntax edge case
-    // { input: "*abc* *def*", isFinished: true, expected: "abc def" },
+    { input: "hello", isFinished: false, expected: "hello" },
+    { input: "~hello~", isFinished: false, expected: "hello" }, // needs gfm
+    { input: "_a_", isFinished: false, expected: "a" },
+    { input: "hello *world*", isFinished: false, expected: "hello world" },
+    {
+      input: "hello *world* *world*",
+      isFinished: false,
+      expected: "hello world world",
+    },
+    {
+      input: "hello _*world*_ *world*",
+      isFinished: false,
+      expected: "hello world world",
+    },
+    {
+      input: "hello *world* **world**",
+      isFinished: false,
+      expected: "hello world world",
+    },
+    {
+      input: "~~hello~~ *world* **world**",
+      isFinished: false,
+      expected: "hello world world",
+    },
+    {
+      input: "~~hello~~ *world* **world***",
+      isFinished: false,
+      expected: "hello world world",
+    },
+    // ambiguous so we don't show it yet.
+    { input: "*", isFinished: false, expected: "" },
+    { input: "abc\n*", isFinished: false, expected: "abc\n" },
+    { input: "*abc", isFinished: false, expected: "" },
+    { input: "__abc", isFinished: false, expected: "" },
+    { input: "~~~abc", isFinished: false, expected: "" },
+    // weird incorrect syntax (*a should be * a)
+    { input: "*abc\n", isFinished: false, expected: "" },
+    { input: "*abc\ndef", isFinished: false, expected: "*abc\ndef" },
+    { input: "*abc\ndef*", isFinished: false, expected: "abc\ndef" },
+    { input: "*abc\n**def*", isFinished: false, expected: "" },
+    // ambiguous, but isFinished true so we don't hide things
+    { input: "*", isFinished: true, expected: "*" },
+    { input: "*abc", isFinished: true, expected: "*abc" },
+    { input: "*abc\n", isFinished: true, expected: "*abc" },
+    { input: "*abc\ndef", isFinished: true, expected: "*abc\ndef" },
+    { input: "*abc\n**def**", isFinished: true, expected: "*abc\ndef" },
+    { input: "*abc\ndef*", isFinished: true, expected: "abc\ndef" }, // weird syntax edge case
+    { input: "*abc* *def*", isFinished: true, expected: "abc def" },
 
     // thematic breaks
-    // { input: "___", isFinished: false, expected: "" },
-    // { input: "___", isFinished: true, expected: "_" },
-    // { input: "___\nabc", isFinished: true, expected: "_abc" },
-    // { input: "___\nabc", isFinished: false, expected: "_abc" },
-    // { input: "***", isFinished: false, expected: "" },
-    // { input: "***", isFinished: true, expected: "_" },
-    // { input: "***\nabc", isFinished: true, expected: "_abc" },
-    // { input: "***\nabc", isFinished: false, expected: "_abc" },
-    // { input: "a\n***", isFinished: false, expected: "a" },
-    // { input: "a\n***", isFinished: true, expected: "a_" },
-    // { input: "a\n___", isFinished: false, expected: "a" },
-    // { input: "a\n___", isFinished: true, expected: "a_" },
+    { input: "___", isFinished: false, expected: "" },
+    { input: "___", isFinished: true, expected: "_" },
+    { input: "___\nabc", isFinished: true, expected: "_abc" },
+    { input: "___\nabc", isFinished: false, expected: "_abc" },
+    { input: "***", isFinished: false, expected: "" },
+    { input: "***", isFinished: true, expected: "_" },
+    { input: "***\nabc", isFinished: true, expected: "_abc" },
+    { input: "***\nabc", isFinished: false, expected: "_abc" },
+    { input: "a\n***", isFinished: false, expected: "a" },
+    { input: "a\n***", isFinished: true, expected: "a_" },
+    { input: "a\n___", isFinished: false, expected: "a" },
+    { input: "a\n___", isFinished: true, expected: "a_" },
 
     // headers
     { input: "#", isFinished: false, expected: "\n" },
@@ -261,10 +261,10 @@ describe("markdownToVisibleText", () => {
     { input: "abc\n", isFinished: false, expected: "abc" },
 
     // list item todo: add tests
-    // { input: "* abc", isFinished: false, expected: "*abc" }, // since "* " is rendered as a bullet point, but "*" isn't, so it's 1 char
+    { input: "* abc", isFinished: false, expected: "*abc" }, // since "* " is rendered as a bullet point, but "*" isn't, so it's 1 char
   ];
   testCases.forEach(({ input, isFinished, expected }) => {
-    it.skip(`should convert "${input}" isFinished:${isFinished} to "${expected}"`, () => {
+    it(`should convert "${input}" isFinished:${isFinished} to "${expected}"`, () => {
       expect(markdownToVisibleText(input, isFinished)).toBe(expected);
     });
   });
