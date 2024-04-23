@@ -164,6 +164,22 @@ describe("removePartialAmbiguousMarkdown", () => {
     { markdown: "1. abc\n2. def", expected: "1. abc\n2. def\n" },
     { markdown: "1.", expected: "1.\n" },
     { markdown: "2. ", expected: "2.\n" },
+
+    // links
+    { markdown: "[", expected: "" },
+    { markdown: "[a", expected: "" },
+    { markdown: "[ab]", expected: "" },
+    { markdown: "[ab](", expected: "" },
+    { markdown: "[ab](h", expected: "" },
+    { markdown: "[abc](ht", expected: "" },
+    { markdown: "[abc](https://", expected: "" },
+    { markdown: "[abc](https://a.com", expected: "" },
+    { markdown: "abc[abc](https://a.com", expected: "abc\n" },
+    { markdown: "abc [abc](https://a.com", expected: "abc&#x20;\n" },
+    {
+      markdown: "[abc](https://a.com)",
+      expected: "[abc](https://a.com)\n",
+    },
   ];
 
   testCases.forEach(({ markdown, expected }) => {
@@ -297,6 +313,31 @@ describe("markdownToVisibleText", () => {
       input: "2. abc\n3. def",
       isFinished: false,
       expected: "*abc*def",
+    },
+
+    // links
+    { input: "[", isFinished: false, expected: "" },
+    { input: "[a", isFinished: false, expected: "" },
+    { input: "[ab]", isFinished: false, expected: "" },
+    { input: "[ab](", isFinished: false, expected: "" },
+    { input: "[ab](h", isFinished: false, expected: "" },
+    { input: "[abc](ht", isFinished: false, expected: "" },
+    { input: "[abc](https://", isFinished: false, expected: "" },
+    { input: "[abc](https://a.com", isFinished: false, expected: "" },
+    {
+      input: "[abc](https://a.com)",
+      isFinished: false,
+      expected: "abc",
+    },
+    {
+      input: "def [abc](https://a.com)",
+      isFinished: false,
+      expected: "def abc",
+    },
+    {
+      input: "def [abc](https://a.com) ghi",
+      isFinished: false,
+      expected: "def abc ghi",
     },
   ];
   testCases.forEach(({ input, isFinished, expected }) => {
@@ -591,6 +632,39 @@ describe("markdownWithVisibleChars", () => {
       isFinished: false,
       visibleChars: 6,
       expected: "* abc\n  * d\n",
+    },
+
+    // links
+    { markdown: "[", isFinished: false, visibleChars: 1, expected: "" },
+    {
+      markdown: "[abc](https://a.com)",
+      isFinished: false,
+      visibleChars: 1,
+      expected: "[a](https://a.com)\n",
+    },
+    {
+      markdown: "[abc](https://a.com)",
+      isFinished: false,
+      visibleChars: 2,
+      expected: "[ab](https://a.com)\n",
+    },
+    {
+      markdown: "[abc](https://a.com)",
+      isFinished: false,
+      visibleChars: 3,
+      expected: "[abc](https://a.com)\n",
+    },
+    {
+      markdown: "def [abc](https://a.com)",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "def&#x20;\n",
+    },
+    {
+      markdown: "def [abc](https://a.com)",
+      isFinished: false,
+      visibleChars: 5,
+      expected: "def [a](https://a.com)\n",
     },
   ];
 

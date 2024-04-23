@@ -1,4 +1,4 @@
-import { List, Parent, Root, RootContent, Text } from "mdast";
+import { List, Paragraph, Parent, Root, RootContent, Text } from "mdast";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { gfmFromMarkdown, gfmToMarkdown } from "mdast-util-gfm";
 import { toMarkdown } from "mdast-util-to-markdown";
@@ -6,7 +6,18 @@ import { gfm } from "micromark-extension-gfm";
 
 // enclosing symbols: _a_ __a__ *a* **a** ~a~ ~~a~~
 // _'s behave differently to * and ~.
-const ENCLOSING_START = /(\*{1,3}|(^|\s|\n)_{1,3}|~{1,3})(\S|$)/;
+const ENCLOSING_START_REGEX = /(\*{1,3}|(^|\s|\n)_{1,3}|~{1,3})(\S|$)/;
+
+// Matches:
+// [
+// [a
+// [ab]
+// [ab](
+// [abc](ht
+// [abc](https://
+// [abc](https://a.com
+// [abc](https://a.com)
+const LINK_REGEX = /(\[$|\[[^\]]+$|\[[^\]]+\]$|\[[^\]]+\]\(.*$)/;
 
 const isEmptyList = (list: List): boolean => {
   return (
@@ -42,51 +53,73 @@ const afterLastNewline = (markdown: string): string => {
   return markdown.slice(lastNewlineIndex + 1);
 };
 
+const removeRegexesFromParagraph = (
+  root: Root,
+  paragraph: Paragraph,
+  regexes: RegExp[],
+) => {
+  regexes.forEach((regex) => {
+    if (removeRegexFromParagraph(root, paragraph, regex)) {
+      return;
+    }
+  });
+};
+
+const removeRegexFromParagraph = (
+  root: Root,
+  paragraph: Paragraph,
+  regex: RegExp,
+): boolean => {
+  const partialAmbiguousEnclosingSymbolsIndex = paragraph.children.findIndex(
+    (child) => {
+      return child.type === "text" && regex.test(afterLastNewline(child.value));
+    },
+  );
+  if (partialAmbiguousEnclosingSymbolsIndex !== -1) {
+    const match = paragraph.children[
+      partialAmbiguousEnclosingSymbolsIndex
+    ] as Text;
+    const matchText = match.value;
+    const matchIndex = regex.exec(matchText)!.index;
+
+    if (matchIndex > 0) {
+      paragraph.children[partialAmbiguousEnclosingSymbolsIndex] = {
+        type: "text",
+        value: matchText.slice(0, matchIndex),
+      };
+      paragraph.children.splice(partialAmbiguousEnclosingSymbolsIndex + 1); // keep the updated text node, remove the rest
+    } else {
+      paragraph.children.splice(partialAmbiguousEnclosingSymbolsIndex); // delete the text node and the rest
+    }
+    // remove the 'lastChild' if it no longer has any children
+    if (paragraph.children.length === 0) {
+      root.children.splice(-1);
+    }
+  }
+  return partialAmbiguousEnclosingSymbolsIndex !== -1;
+};
+
 // mutates the ast
-const removePartialAmbiguousMarkdownFromAst = (markdownAst: Root): void => {
-  if (markdownAst.children.length === 0) {
+const removePartialAmbiguousMarkdownFromAst = (root: Root): void => {
+  console.log("markdownAst", JSON.stringify(root, null, 2));
+  if (root.children.length === 0) {
     return;
   }
-  const lastChild = markdownAst.children[markdownAst.children.length - 1];
+  const lastChild = root.children[root.children.length - 1];
   if (lastChild.type === "paragraph") {
-    const partialAmbiguousEnclosingSymbolsIndex = lastChild.children.findIndex(
-      (child) => {
-        return (
-          child.type === "text" &&
-          ENCLOSING_START.test(afterLastNewline(child.value))
-        );
-      },
-    );
-    if (partialAmbiguousEnclosingSymbolsIndex !== -1) {
-      const match = lastChild.children[
-        partialAmbiguousEnclosingSymbolsIndex
-      ] as Text;
-      const matchText = match.value;
-      const matchIndex = ENCLOSING_START.exec(matchText)!.index;
-
-      if (matchIndex > 0) {
-        lastChild.children[partialAmbiguousEnclosingSymbolsIndex] = {
-          type: "text",
-          value: matchText.slice(0, matchIndex),
-        };
-        lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex + 1); // keep the updated text node, remove the rest
-      } else {
-        lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex); // delete the text node and the rest
-      }
-      // remove the 'lastChild' if it no longer has any children
-      if (lastChild.children.length === 0) {
-        markdownAst.children.splice(-1);
-      }
-    }
+    removeRegexesFromParagraph(root, lastChild, [
+      ENCLOSING_START_REGEX,
+      LINK_REGEX,
+    ]);
   } else if (
     // if there is an empty list item at the end, remove it
     lastChild.type === "list" &&
     isEmptyList(lastChild) &&
     isListCharacterLength(lastChild, 1) // '*' is deleted, '* ' is not deleted.
   ) {
-    markdownAst.children.splice(-1);
+    root.children.splice(-1);
   } else if (lastChild.type === "thematicBreak") {
-    markdownAst.children.splice(-1);
+    root.children.splice(-1);
   }
 };
 
