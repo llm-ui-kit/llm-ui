@@ -138,6 +138,8 @@ const removePartialAmbiguousMarkdownFromAst = (markdownAst: Root): void => {
     lastChild.children[0].children.length === 0
   ) {
     markdownAst.children.splice(-1);
+  } else if (lastChild.type === "thematicBreak") {
+    markdownAst.children.splice(-1);
   }
 };
 
@@ -160,6 +162,9 @@ const markdownAstToVisibleTextHelper = (
     .map((child) => {
       if (child.type === "text") {
         return child.value;
+      }
+      if (child.type === "thematicBreak") {
+        return "_";
       }
       if (child.type === "listItem") {
         return "*" + markdownAstToVisibleTextHelper(child);
@@ -215,6 +220,11 @@ const removeVisibleCharsFromAst = (
           removedChars += visibleCharsToRemove;
         }
       }
+
+      if (child.type === "thematicBreak") {
+        markdownAst.children.splice(index, 1); // remove the child
+        removedChars += 1;
+      }
       console.log("markdownAst", JSON.stringify(markdownAst, null, 2));
 
       removedChars += removeVisibleCharsFromAst(
@@ -247,11 +257,14 @@ export const markdownWithVisibleChars = (
   isFinished: boolean,
 ): string => {
   const markdownAst = markdownToAst(markdown);
-  removePartialAmbiguousMarkdownFromAst(markdownAst);
+  console.log("markdownAst", JSON.stringify(markdownAst, null, 2));
+  if (!isFinished) {
+    removePartialAmbiguousMarkdownFromAst(markdownAst);
+  }
   const visibleText = markdownAstToVisibleText(markdownAst, isFinished);
 
   const charsToRemove = visibleText.length - visibleChars;
-
+  console.log("charsToRemove", charsToRemove);
   removeVisibleCharsFromAst(markdownAst, charsToRemove);
 
   return astToMarkdown(markdownAst);

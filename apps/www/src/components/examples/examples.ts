@@ -12,13 +12,13 @@ pnpm add llm-ui @llm-ui/markdown
 `;
 
 export const markdownExample = `### Header
-[links](https://llm-ui.com)
-1. Ordered list
-2. ~strikethrough~
-3. *italic*
-4. **bold**
-5. *nested **important** text*
-6. \`inline code\`
+~abc~ **bold** *italic* ***something***
+
+---
+
+something else
+
+# ok lets go
 `;
 
 export const codeBlockExample = `#### Python
