@@ -11,14 +11,22 @@ pnpm add llm-ui @llm-ui/markdown
 - *italic*, **bold**, ~strikethrough~,
 `;
 
-export const markdownExample = `### Header
-~abc~ **bold** *italic* ***something***
+// export const markdownExample = `### Header
+// ~abc~ **bold** *italic* ***something***
 
----
+// ---
 
-something else
+// something else
 
-# ok lets go
+// # ok lets go
+// `;
+export const markdownExample = `abc
+
+# def sdlklksdlksld
+
+ghi asdlkasldk sdlksldksd
+
+jkl asdlkasdlklkasd
 `;
 
 export const codeBlockExample = `#### Python

@@ -494,6 +494,30 @@ describe("markdownWithVisibleChars", () => {
       visibleChars: 5,
       expected: "# a\n\nabc\n",
     },
+    {
+      markdown: "abcd\n#",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "abcd\n",
+    },
+    {
+      markdown: "abcd\n# header1",
+      isFinished: false,
+      visibleChars: 6,
+      expected: "abcd\n\n# he\n",
+    },
+    {
+      markdown: "abcd\n# header1\nsomething",
+      isFinished: false,
+      visibleChars: 6,
+      expected: "abcd\n\n# he\n",
+    },
+    {
+      markdown: "abcd\n# header1\nsomething",
+      isFinished: false,
+      visibleChars: 21,
+      expected: "abcd\n\n# header1\n\nsomething\n",
+    },
   ]; //todo: add isFinished: true test cases
 
   testCases.forEach(({ markdown, visibleChars, isFinished, expected }) => {
