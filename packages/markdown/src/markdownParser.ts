@@ -166,6 +166,10 @@ const markdownAstToVisibleTextHelper = (
       if (child.type === "thematicBreak") {
         return "_";
       }
+      if (child.type === "heading") {
+        return markdownAstToVisibleTextHelper(child) + "\n";
+      }
+
       if (child.type === "listItem") {
         return "*" + markdownAstToVisibleTextHelper(child);
       }
@@ -181,7 +185,7 @@ const markdownAstToVisibleText = (markdownAst: Root, isFinished: boolean) => {
   if (!isFinished) {
     removePartialAmbiguousMarkdownFromAst(markdownAst);
   }
-
+  console.log("markdownAst", JSON.stringify(markdownAst, null, 2));
   return markdownAstToVisibleTextHelper(markdownAst);
 };
 
@@ -224,6 +228,9 @@ const removeVisibleCharsFromAst = (
       if (child.type === "thematicBreak") {
         markdownAst.children.splice(index, 1); // remove the child
         removedChars += 1;
+      }
+      if (child.type === "heading") {
+        removedChars += 1; // the newline
       }
       console.log("markdownAst", JSON.stringify(markdownAst, null, 2));
 
