@@ -381,6 +381,18 @@ importers:
       llm-ui:
         specifier: workspace:*
         version: link:../react
+      mdast-util-from-markdown:
+        specifier: ^2.0.0
+        version: 2.0.0
+      mdast-util-gfm:
+        specifier: ^3.0.0
+        version: 3.0.0
+      mdast-util-to-markdown:
+        specifier: ^2.1.0
+        version: 2.1.0
+      micromark-extension-gfm:
+        specifier: ^3.0.0
+        version: 3.0.0
       react:
         specifier: ^18.0.0
         version: 18.2.0
@@ -388,6 +400,9 @@ importers:
       '@llm-ui/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/tsconfig
+      '@types/mdast':
+        specifier: ^4.0.3
+        version: 4.0.3
       '@types/react':
         specifier: 18.2.60
         version: 18.2.60

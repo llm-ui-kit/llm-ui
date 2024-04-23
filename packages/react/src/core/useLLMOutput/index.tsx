@@ -128,6 +128,7 @@ export const useLLMOutput = ({
     });
     visibleTextIncrementsRef.current.push(visibleTextIncrement);
     const visibleTextLengthTarget = visibleText.length + visibleTextIncrement;
+
     if (visibleTextLengthTarget > visibleText.length) {
       const matches = matchBlocks({
         llmOutput,

@@ -1,84 +1,220 @@
+import { List, Parent, Root, RootContent, Text } from "mdast";
+import { fromMarkdown } from "mdast-util-from-markdown";
+import { gfmFromMarkdown, gfmToMarkdown } from "mdast-util-gfm";
+import { toMarkdown } from "mdast-util-to-markdown";
+import { gfm } from "micromark-extension-gfm";
+
 // enclosing symbols: _a_ __a__ *a* **a** ~a~ ~~a~~
+// _'s behave differently to * and ~.
+const ENCLOSING_START = /(\*{1,3}|(^|\s|\n)_{1,3}|~{1,3})(\S|$)/;
 
-// matches: *abc$, _abc$, __abc$, ~~~abc$ etc.
-// \S{0,1} handles single char case e.g. *a*
-const ENCLOSING_STARTED_END_MATCH = /[\*_~]{1,3}(\S.*?\S{0,1})$/gm;
+const isEmptyList = (list: List): boolean => {
+  return (
+    list.children.length === 1 &&
+    list.children[0].type === "listItem" &&
+    list.children[0].children.length === 0
+  );
+};
 
-// matches: *abc*, __abc__, etc.
-const ENCLOSING_MATCH = /([\*_~]{1,3})(\S.*?\S{0,1})\1/g;
+const isListCharacterLength = (list: List, length: number): boolean => {
+  return Boolean(
+    list.position &&
+      list.position.start.line === list.position.end.line &&
+      list.position.end.column &&
+      list.position.start.column &&
+      list.position.end.column - list.position.start.column === length,
+  );
+};
 
-// matches: *abc*$, __abc__$, etc. where $ is end of line
-const ENCLOSING_MATCH_END = /([\*_~]{1,3})(\S.*?\S{0,1})\1$/g;
+const markdownToAst = (markdown: string): Root => {
+  return fromMarkdown(markdown, {
+    extensions: [gfm()],
+    mdastExtensions: [gfmFromMarkdown()],
+  });
+};
 
-// matches: *$, _$, __$, ~~~$ (where $ is end of line)
-const ENCLOSING_START_END_MATCH = /[\*_~]{1,3}$/;
+const astToMarkdown = (markdownAst: Root): string => {
+  return toMarkdown(markdownAst, { extensions: [gfmToMarkdown()] });
+};
 
-const findLastEnclosingMatchIndex = (markdown: string): number => {
-  const start = markdown.match(/([*_~]{1,3})\S{0,1}/);
-  if (!start) {
-    return 0;
+const afterLastNewline = (markdown: string): string => {
+  const lastNewlineIndex = markdown.lastIndexOf("\n");
+  return markdown.slice(lastNewlineIndex + 1);
+};
+
+// mutates the ast
+const removePartialAmbiguousMarkdownFromAst = (markdownAst: Root): void => {
+  if (markdownAst.children.length === 0) {
+    return;
   }
-  const startEnclosingString = start[1];
-  const startEnclosingEndIndex = start.index! + startEnclosingString.length;
-  const rest = markdown.slice(startEnclosingEndIndex);
-  const endRegex = new RegExp(`\\S([\\*_~]{${startEnclosingString.length}})`);
-  const end = rest.match(endRegex);
-  if (!end) {
-    return 0;
-  }
-  const endEnclosingString = end[1];
-  const endIndex =
-    startEnclosingEndIndex + end.index! + endEnclosingString.length + 1;
-  return findLastEnclosingMatchIndex(markdown.slice(endIndex)) + endIndex;
-};
-
-const splitStringByLastEnclosingSymbol = (markdown: string) => {
-  const lastEnclosingMatchIndex = findLastEnclosingMatchIndex(markdown);
-  const before = markdown.slice(0, lastEnclosingMatchIndex);
-  const after = markdown.slice(lastEnclosingMatchIndex);
-  return { before, after };
-};
-
-const lastCharIsUnmatchedStar = (markdown: string) => {
-  const { after } = splitStringByLastEnclosingSymbol(markdown);
-  const match = after.match(ENCLOSING_START_END_MATCH);
-  return match ? match[0] : undefined;
-};
-
-const removePartialAmbiguousEnclosingSymbols = (markdown: string): string => {
-  const lastCharsUnmatched = lastCharIsUnmatchedStar(markdown);
-  if (lastCharsUnmatched) {
-    return removePartialAmbiguousEnclosingSymbols(
-      markdown.slice(0, -1 * lastCharsUnmatched.length),
+  const lastChild = markdownAst.children[markdownAst.children.length - 1];
+  if (lastChild.type === "paragraph") {
+    const partialAmbiguousEnclosingSymbolsIndex = lastChild.children.findIndex(
+      (child) => {
+        return (
+          child.type === "text" &&
+          ENCLOSING_START.test(afterLastNewline(child.value))
+        );
+      },
     );
+    if (partialAmbiguousEnclosingSymbolsIndex !== -1) {
+      const match = lastChild.children[
+        partialAmbiguousEnclosingSymbolsIndex
+      ] as Text;
+      const matchText = match.value;
+      const matchIndex = ENCLOSING_START.exec(matchText)!.index;
+
+      if (matchIndex > 0) {
+        lastChild.children[partialAmbiguousEnclosingSymbolsIndex] = {
+          type: "text",
+          value: matchText.slice(0, matchIndex),
+        };
+        lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex + 1); // keep the updated text node, remove the rest
+      } else {
+        lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex); // delete the text node and the rest
+      }
+      // remove the 'lastChild' if it no longer has any children
+      if (lastChild.children.length === 0) {
+        markdownAst.children.splice(-1);
+      }
+    }
+  } else if (
+    // if there is an empty list item at the end, remove it
+    lastChild.type === "list" &&
+    isEmptyList(lastChild) &&
+    isListCharacterLength(lastChild, 1) // '*' is deleted, '* ' is not deleted.
+  ) {
+    markdownAst.children.splice(-1);
+  } else if (lastChild.type === "thematicBreak") {
+    markdownAst.children.splice(-1);
   }
-  if (ENCLOSING_STARTED_END_MATCH.test(markdown)) {
-    const { before, after } = splitStringByLastEnclosingSymbol(markdown);
-    return `${before}${after.replace(ENCLOSING_STARTED_END_MATCH, "")}`;
-  }
-  return markdown;
 };
 
 export const removePartialAmbiguousMarkdown = (markdown: string): string => {
-  const lines = markdown.split("\n");
-  const beginningLines = lines.slice(0, -1);
-  const lastLine = lines[lines.length - 1];
-  const newLines = [
-    ...beginningLines,
-    removePartialAmbiguousEnclosingSymbols(lastLine),
-  ];
-  return newLines.join("\n");
+  const markdownAst = markdownToAst(markdown);
+  removePartialAmbiguousMarkdownFromAst(markdownAst);
+  return astToMarkdown(markdownAst);
+};
+
+type WithChildren<T> = T extends Parent ? T : never;
+
+type RootContentWithChildren = WithChildren<RootContent> | Root;
+
+const THEMATIC_BREAK_VISIBLE = "_";
+const LIST_ITEM_VISIBLE = "*";
+
+const markdownAstToVisibleTextHelper = (
+  markdownAst: RootContentWithChildren,
+): string => {
+  return markdownAst.children
+    .map((child) => {
+      if (child.type === "text") {
+        return child.value;
+      }
+      if (child.type === "thematicBreak") {
+        return THEMATIC_BREAK_VISIBLE;
+      }
+      if (child.type === "heading") {
+        return markdownAstToVisibleTextHelper(child);
+      }
+
+      if (child.type === "paragraph") {
+        return markdownAstToVisibleTextHelper(child);
+      }
+
+      if (child.type === "listItem") {
+        return LIST_ITEM_VISIBLE + markdownAstToVisibleTextHelper(child);
+      }
+      if ("children" in child) {
+        return markdownAstToVisibleTextHelper(child);
+      }
+      return "";
+    })
+    .join("");
+};
+
+const markdownAstToVisibleText = (markdownAst: Root, isFinished: boolean) => {
+  if (!isFinished) {
+    removePartialAmbiguousMarkdownFromAst(markdownAst);
+  }
+  return markdownAstToVisibleTextHelper(markdownAst);
 };
 
 export const markdownToVisibleText = (
   markdown: string,
   isFinished: boolean,
 ): string => {
-  markdown = isFinished ? markdown : removePartialAmbiguousMarkdown(markdown);
-  return markdown
-    .replace(ENCLOSING_MATCH, "$2")
-    .replace(ENCLOSING_MATCH, "$2") // handles: _*a*_
-    .replace(ENCLOSING_MATCH, "$2"); // again for good luck
+  const markdownAst = markdownToAst(markdown);
+  return markdownAstToVisibleText(markdownAst, isFinished);
+};
+
+const removeVisibleCharsFromAstHelper = (
+  node: RootContent | Root,
+  visibleCharsToRemove: number,
+): { charsRemoved: number; toDelete: boolean } => {
+  if (node.type === "text") {
+    if (node.value.length <= visibleCharsToRemove) {
+      return { charsRemoved: node.value.length, toDelete: true };
+    } else {
+      node.value = node.value.slice(0, -1 * visibleCharsToRemove);
+      return { charsRemoved: visibleCharsToRemove, toDelete: false };
+    }
+  }
+  if (node.type === "thematicBreak") {
+    return { charsRemoved: THEMATIC_BREAK_VISIBLE.length, toDelete: true };
+  }
+
+  let removedCharsCount = 0;
+  if ("children" in node) {
+    // traverse children right to left
+    let index = node.children.length - 1;
+    while (index >= 0 && removedCharsCount < visibleCharsToRemove) {
+      const child = node.children[index];
+
+      const { charsRemoved, toDelete } = removeVisibleCharsFromAstHelper(
+        child,
+        visibleCharsToRemove - removedCharsCount,
+      );
+      removedCharsCount += charsRemoved;
+      if (toDelete) {
+        node.children.splice(index, 1); // delete the child
+      }
+      index--;
+    }
+
+    if (node.type === "listItem") {
+      const shouldDeleteListItem =
+        node.children.length === 0 &&
+        visibleCharsToRemove - removedCharsCount > 0;
+      return {
+        charsRemoved:
+          removedCharsCount +
+          (shouldDeleteListItem ? LIST_ITEM_VISIBLE.length : 0),
+        toDelete: shouldDeleteListItem,
+      };
+    }
+
+    return {
+      charsRemoved: removedCharsCount,
+      toDelete: node.children.length === 0,
+    };
+  }
+
+  return { charsRemoved: 0, toDelete: false };
+};
+
+const removeVisibleCharsFromAst = (
+  node: Root,
+  visibleCharsToRemove: number,
+): void => {
+  const { toDelete } = removeVisibleCharsFromAstHelper(
+    node,
+    visibleCharsToRemove,
+  );
+
+  if (toDelete) {
+    node.children = [];
+  }
 };
 
 // This function operates on a complete markdown string
@@ -86,27 +222,9 @@ export const markdownRemoveChars = (
   markdown: string,
   maxCharsToRemove: number,
 ): string => {
-  const enclosingMatches = Array.from(markdown.matchAll(ENCLOSING_MATCH));
-
-  if (enclosingMatches && enclosingMatches.length > 0) {
-    const lastMatch = enclosingMatches[enclosingMatches.length - 1];
-    const lastMatchStartIndex = lastMatch.index!;
-    const lastMatchEndIndex = lastMatchStartIndex + lastMatch[0].length;
-    const isEndOfString = lastMatchEndIndex === markdown.length;
-    if (isEndOfString) {
-      const before = markdown.slice(0, lastMatchStartIndex);
-      const after = markdown
-        .slice(lastMatchStartIndex)
-        .replace(ENCLOSING_MATCH_END, (_match, enclosingOpen, content) => {
-          if (content.length > maxCharsToRemove) {
-            return `${enclosingOpen}${content.slice(0, -1 * maxCharsToRemove)}${enclosingOpen}`;
-          }
-          return ``;
-        });
-      return `${before}${after}`;
-    }
-  }
-  return markdown.slice(0, -1);
+  const markdownAst = markdownToAst(markdown);
+  removeVisibleCharsFromAst(markdownAst, maxCharsToRemove);
+  return astToMarkdown(markdownAst);
 };
 
 export const markdownWithVisibleChars = (
@@ -114,18 +232,13 @@ export const markdownWithVisibleChars = (
   visibleChars: number,
   isFinished: boolean,
 ): string => {
-  markdown = isFinished ? markdown : removePartialAmbiguousMarkdown(markdown);
-  let charsToRemove =
-    markdownToVisibleText(markdown, isFinished).length - visibleChars;
-  let prevMarkdown;
-  while (charsToRemove > 0 && prevMarkdown != markdown) {
-    prevMarkdown = markdown;
-    markdown = markdownRemoveChars(markdown, charsToRemove);
-    charsToRemove =
-      markdownToVisibleText(markdown, isFinished).length - visibleChars;
+  const markdownAst = markdownToAst(markdown);
+  if (!isFinished) {
+    removePartialAmbiguousMarkdownFromAst(markdownAst);
   }
-  if (prevMarkdown === markdown) {
-    console.error("markdownWithVisibleChars: infinite loop detected");
-  }
-  return markdown;
+  const visibleText = markdownAstToVisibleText(markdownAst, isFinished);
+
+  const charsToRemove = visibleText.length - visibleChars;
+  removeVisibleCharsFromAst(markdownAst, charsToRemove);
+  return astToMarkdown(markdownAst);
 };

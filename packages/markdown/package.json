@@ -23,10 +23,15 @@
     "react": "^18.0.0"
   },
   "dependencies": {
-    "llm-ui": "workspace:*"
+    "llm-ui": "workspace:*",
+    "mdast-util-from-markdown": "^2.0.0",
+    "mdast-util-gfm": "^3.0.0",
+    "mdast-util-to-markdown": "^2.1.0",
+    "micromark-extension-gfm": "^3.0.0"
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",
+    "@types/mdast": "^4.0.3",
     "@types/react": "18.2.60",
     "@types/react-dom": "18.2.19",
     "tsup": "^8.0.2",
