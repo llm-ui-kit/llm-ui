@@ -19,6 +19,7 @@ describe("removePartialAmbiguousMarkdown", () => {
     { markdown: "**abc*", expected: "" },
     { markdown: "*a*", expected: "*a*\n" },
     { markdown: "*a", expected: "" },
+    { markdown: "a*", expected: "a\n" },
     { markdown: "def*a", expected: "def\n" },
     { markdown: "*_abc_*", expected: "**abc**\n" },
     { markdown: "* abc", expected: "* abc\n" }, // bullet point
@@ -118,7 +119,7 @@ describe("removePartialAmbiguousMarkdown", () => {
         "# heading\n\n*abc*\n*nested [abc](https://something.com) **impor** something*\n",
     },
 
-    // // thematic breaks
+    // thematic breaks
     { markdown: "___", expected: "" },
     { markdown: "___\na", expected: "***\n\na\n" },
     { markdown: "***", expected: "" },
@@ -154,7 +155,7 @@ describe("removePartialAmbiguousMarkdown", () => {
   ];
 
   testCases.forEach(({ markdown, expected }) => {
-    it.skip(`should convert "${markdown}" to "${expected}"`, () => {
+    it(`should convert "${markdown}" to "${expected}"`, () => {
       expect(removePartialAmbiguousMarkdown(markdown)).toBe(expected);
     });
   });
@@ -206,7 +207,7 @@ describe("markdownToVisibleText", () => {
     { input: "*abc\n", isFinished: false, expected: "" },
     { input: "*abc\ndef", isFinished: false, expected: "*abc\ndef" },
     { input: "*abc\ndef*", isFinished: false, expected: "abc\ndef" },
-    { input: "*abc\n**def*", isFinished: false, expected: "" },
+    { input: "*abc\n**def*", isFinished: false, expected: "" }, // broken
     // ambiguous, but isFinished true so we don't hide things
     { input: "*", isFinished: true, expected: "*" },
     { input: "*abc", isFinished: true, expected: "*abc" },
@@ -231,34 +232,37 @@ describe("markdownToVisibleText", () => {
     { input: "a\n___", isFinished: true, expected: "a_" },
 
     // headers
-    { input: "#", isFinished: false, expected: "\n" },
-    { input: "# ", isFinished: false, expected: "\n" },
-    { input: "# a", isFinished: false, expected: "a\n" },
-    { input: "# a\nabc", isFinished: false, expected: "a\nabc" },
+    { input: "#", isFinished: false, expected: "" },
+    { input: "# ", isFinished: false, expected: "" },
+    { input: "# a", isFinished: false, expected: "a" },
+    { input: "# a\nabc", isFinished: false, expected: "aabc" },
+    { input: "abc\n# a", isFinished: false, expected: "abca" },
 
-    { input: "##", isFinished: false, expected: "\n" },
-    { input: "## ", isFinished: false, expected: "\n" },
-    { input: "## a", isFinished: false, expected: "a\n" },
+    { input: "##", isFinished: false, expected: "" },
+    { input: "## ", isFinished: false, expected: "" },
+    { input: "## a", isFinished: false, expected: "a" },
 
-    { input: "###", isFinished: false, expected: "\n" },
-    { input: "### ", isFinished: false, expected: "\n" },
-    { input: "### a", isFinished: false, expected: "a\n" },
+    { input: "###", isFinished: false, expected: "" },
+    { input: "### ", isFinished: false, expected: "" },
+    { input: "### a", isFinished: false, expected: "a" },
 
-    { input: "####", isFinished: false, expected: "\n" },
-    { input: "#### ", isFinished: false, expected: "\n" },
-    { input: "#### a", isFinished: false, expected: "a\n" },
+    { input: "####", isFinished: false, expected: "" },
+    { input: "#### ", isFinished: false, expected: "" },
+    { input: "#### a", isFinished: false, expected: "a" },
 
-    { input: "#####", isFinished: false, expected: "\n" },
-    { input: "##### ", isFinished: false, expected: "\n" },
-    { input: "##### a", isFinished: false, expected: "a\n" },
+    { input: "#####", isFinished: false, expected: "" },
+    { input: "##### ", isFinished: false, expected: "" },
+    { input: "##### a", isFinished: false, expected: "a" },
 
-    { input: "######", isFinished: false, expected: "\n" },
-    { input: "###### ", isFinished: false, expected: "\n" },
-    { input: "###### a", isFinished: false, expected: "a\n" },
+    { input: "######", isFinished: false, expected: "" },
+    { input: "###### ", isFinished: false, expected: "" },
+    { input: "###### a", isFinished: false, expected: "a" },
 
     // paragraphs
 
     { input: "abc\n", isFinished: false, expected: "abc" },
+    { input: "abc\ndef", isFinished: false, expected: "abc\ndef" }, // mdast seems to see this as a single paragraph in the ast
+    { input: "abc\n\ndef", isFinished: false, expected: "abcdef" },
 
     // list item todo: add tests
     { input: "* abc", isFinished: false, expected: "*abc" }, // since "* " is rendered as a bullet point, but "*" isn't, so it's 1 char
@@ -297,7 +301,7 @@ describe("markdownRemoveChars", () => {
   ];
 
   testCases.forEach(({ markdown, charsToRemove, expected }) => {
-    it.skip(`should convert "${markdown}" charsToRemove:${charsToRemove} to "${expected}"`, () => {
+    it(`should convert "${markdown}" charsToRemove:${charsToRemove} to "${expected}"`, () => {
       expect(markdownRemoveChars(markdown, charsToRemove)).toBe(expected);
     });
   });
@@ -480,13 +484,13 @@ describe("markdownWithVisibleChars", () => {
       markdown: "# a\nabc",
       isFinished: false,
       visibleChars: 2,
-      expected: "# a\n",
+      expected: "# a\n\na\n",
     },
     {
       markdown: "# a\nabc",
       isFinished: false,
       visibleChars: 4,
-      expected: "# a\n\nab\n",
+      expected: "# a\n\nabc\n",
     },
     {
       markdown: "# a\nabc",
@@ -498,7 +502,7 @@ describe("markdownWithVisibleChars", () => {
       markdown: "abcd\n#",
       isFinished: false,
       visibleChars: 4,
-      expected: "abcd\n",
+      expected: "abcd\n\n#\n",
     },
     {
       markdown: "abcd\n# header1",
@@ -525,6 +529,31 @@ describe("markdownWithVisibleChars", () => {
       expect(markdownWithVisibleChars(markdown, visibleChars, isFinished)).toBe(
         expected,
       );
+    });
+  });
+
+  testCases.forEach(({ markdown, visibleChars, isFinished }) => {
+    it(`markdownWithVisibleChars & markdownToVisibleText "${markdown}" visibleChars:${visibleChars} isFinished:${isFinished} lengths equal"`, () => {
+      const output = markdownWithVisibleChars(
+        markdown,
+        visibleChars,
+        isFinished,
+      );
+      const originalVisibleText = markdownToVisibleText(markdown, isFinished);
+      const visibleText = markdownToVisibleText(output, true); // isFinished true, because ambiguous syntax is already removed by markdownWithVisibleChars
+      const expectedVisibleChars = Math.min(
+        visibleChars,
+        originalVisibleText.length,
+      );
+      if (visibleText.length !== expectedVisibleChars) {
+        console.log("markdown", markdown);
+        console.log("output", output);
+        console.log("visibleChars", visibleChars);
+        console.log("expectedVisibleChars", expectedVisibleChars);
+        console.log("originalVisibleText", originalVisibleText);
+        console.log("visibleText", visibleText);
+      }
+      expect(visibleText.length).toBe(expectedVisibleChars);
     });
   });
 });

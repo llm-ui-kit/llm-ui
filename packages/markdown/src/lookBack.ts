@@ -9,6 +9,7 @@ export const markdownLookBack: LookBackFunction = ({
   visibleTextLengthTarget,
   isStreamFinished,
 }) => {
+  console.log("zzz visibleTextLengthTarget", visibleTextLengthTarget);
   const output = markdownWithVisibleChars(
     completeLlmOutput,
     visibleTextLengthTarget,
