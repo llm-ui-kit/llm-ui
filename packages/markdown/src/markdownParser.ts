@@ -3,6 +3,7 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { gfmFromMarkdown, gfmToMarkdown } from "mdast-util-gfm";
 import { toMarkdown } from "mdast-util-to-markdown";
 import { gfm } from "micromark-extension-gfm";
+
 // enclosing symbols: _a_ __a__ *a* **a** ~a~ ~~a~~
 // _'s behave differently to * and ~.
 const ENCLOSING_START = /(\*{1,3}|(^|\s|\n)_{1,3}|~{1,3})(\S|$)/;
@@ -29,10 +30,6 @@ const removePartialAmbiguousMarkdownFromAst = (markdownAst: Root): void => {
     return;
   }
   const lastChild = markdownAst.children[markdownAst.children.length - 1];
-  // console.log("ast", JSON.stringify(markdownAst, null, 2));
-  // console.log("lastChild", JSON.stringify(lastChild, null, 2));
-
-  // todo: not paragraph? (might be right)
   if (lastChild.type === "paragraph") {
     const partialAmbiguousEnclosingSymbolsIndex = lastChild.children.findIndex(
       (child) => {
@@ -42,30 +39,19 @@ const removePartialAmbiguousMarkdownFromAst = (markdownAst: Root): void => {
         );
       },
     );
-    // console.log(
-    //   "zzz partialAmbiguousEnclosingSymbolsIndex",
-    //   partialAmbiguousEnclosingSymbolsIndex,
-    // );
     if (partialAmbiguousEnclosingSymbolsIndex !== -1) {
       const match = lastChild.children[
         partialAmbiguousEnclosingSymbolsIndex
       ] as Text;
       const matchText = match.value;
       const matchIndex = ENCLOSING_START.exec(matchText)!.index;
-      // console.log(
-      //   "matchText",
-      //   matchText,
-      //   matchIndex,
-      //   matchText.slice(0, matchIndex),
-      // );
+
       if (matchIndex > 0) {
         lastChild.children[partialAmbiguousEnclosingSymbolsIndex] = {
           type: "text",
           value: matchText.slice(0, matchIndex),
         };
-        // console.log("lastChild.children", lastChild.children);
         lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex + 1);
-        // console.log("lastChild.children", lastChild.children);
       } else {
         lastChild.children.splice(partialAmbiguousEnclosingSymbolsIndex);
       }
@@ -79,21 +65,21 @@ const removePartialAmbiguousMarkdownFromAst = (markdownAst: Root): void => {
     lastChild.type === "list" &&
     lastChild.children.length === 1 &&
     lastChild.children[0].type === "listItem" &&
-    lastChild.children[0].children.length === 0
+    lastChild.children[0].children.length === 0 &&
+    lastChild.position?.start.line === lastChild.position?.end.line &&
+    lastChild.position?.end.column &&
+    lastChild.position?.start.column &&
+    lastChild.position?.end.column - lastChild.position?.start.column <= 1 // '*' is deleted, '* ' is not deleted.
   ) {
     markdownAst.children.splice(-1);
   } else if (lastChild.type === "thematicBreak") {
     markdownAst.children.splice(-1);
   }
-  // console.log("after ast", JSON.stringify(markdownAst, null, 2));
 };
 
 export const removePartialAmbiguousMarkdown = (markdown: string): string => {
   const markdownAst = markdownToAst(markdown);
-  // console.log("markdownAst", JSON.stringify(markdownAst, null, 2));
   removePartialAmbiguousMarkdownFromAst(markdownAst);
-  // console.log("markdownAst", JSON.stringify(markdownAst, null, 2));
-
   return astToMarkdown(markdownAst);
 };
 
@@ -136,7 +122,6 @@ const markdownAstToVisibleText = (markdownAst: Root, isFinished: boolean) => {
   if (!isFinished) {
     removePartialAmbiguousMarkdownFromAst(markdownAst);
   }
-  // console.log("markdownAst", JSON.stringify(markdownAst, null, 2));
   return markdownAstToVisibleTextHelper(markdownAst);
 };
 
@@ -145,7 +130,6 @@ export const markdownToVisibleText = (
   isFinished: boolean,
 ): string => {
   const markdownAst = markdownToAst(markdown);
-  // console.log("markdownAst", JSON.stringify(markdownAst, null, 2));
   return markdownAstToVisibleText(markdownAst, isFinished);
 };
 
@@ -153,8 +137,6 @@ const removeVisibleCharsFromAstHelper = (
   node: RootContent | Root,
   visibleCharsToRemove: number,
 ): { charsRemoved: number; toDelete: boolean } => {
-  // console.log("---\nhelper ast", JSON.stringify(node, null, 2));
-
   if (node.type === "text") {
     if (node.value.length <= visibleCharsToRemove) {
       return { charsRemoved: node.value.length, toDelete: true };
@@ -166,9 +148,7 @@ const removeVisibleCharsFromAstHelper = (
   if (node.type === "thematicBreak") {
     return { charsRemoved: 1, toDelete: true };
   }
-  //  if (child.type === "heading") {
-  //    removedChars += 1; // the newline
-  //  }
+
   let removedCharsCount = 0;
   if ("children" in node) {
     // right to left
@@ -187,6 +167,17 @@ const removeVisibleCharsFromAstHelper = (
         node.children.splice(index, 1);
       }
     }
+
+    if (node.type === "listItem") {
+      const shouldDeleteListItem =
+        node.children.length === 0 &&
+        visibleCharsToRemove - removedCharsCount > 0;
+      return {
+        charsRemoved: removedCharsCount + (shouldDeleteListItem ? 1 : 0),
+        toDelete: shouldDeleteListItem,
+      };
+    }
+
     return {
       charsRemoved: removedCharsCount,
       toDelete: node.children.length === 0,
@@ -204,7 +195,6 @@ const removeVisibleCharsFromAst = (
     node,
     visibleCharsToRemove,
   );
-  // console.log("---\nfinished ast", JSON.stringify(node, null, 2));
 
   if (toDelete) {
     node.children = [];
@@ -234,6 +224,5 @@ export const markdownWithVisibleChars = (
 
   const charsToRemove = visibleText.length - visibleChars;
   removeVisibleCharsFromAst(markdownAst, charsToRemove);
-
   return astToMarkdown(markdownAst);
 };

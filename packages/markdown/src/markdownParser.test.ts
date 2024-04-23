@@ -152,6 +152,18 @@ describe("removePartialAmbiguousMarkdown", () => {
     { markdown: "######", expected: "######\n" },
     { markdown: "###### ", expected: "######\n" },
     { markdown: "###### a", expected: "###### a\n" },
+
+    // list items
+    { markdown: "* abc", expected: "* abc\n" },
+    { markdown: "* abc\n  * def", expected: "* abc\n  * def\n" },
+    { markdown: "*", expected: "" },
+    { markdown: "* ", expected: "*\n" },
+
+    // numbered list items
+    { markdown: "1. abc", expected: "1. abc\n" },
+    { markdown: "1. abc\n2. def", expected: "1. abc\n2. def\n" },
+    { markdown: "1.", expected: "1.\n" },
+    { markdown: "2. ", expected: "2.\n" },
   ];
 
   testCases.forEach(({ markdown, expected }) => {
@@ -264,8 +276,28 @@ describe("markdownToVisibleText", () => {
     { input: "abc\ndef", isFinished: false, expected: "abc\ndef" }, // mdast seems to see this as a single paragraph in the ast
     { input: "abc\n\ndef", isFinished: false, expected: "abcdef" },
 
-    // list item todo: add tests
+    // list items
     { input: "* abc", isFinished: false, expected: "*abc" }, // since "* " is rendered as a bullet point, but "*" isn't, so it's 1 char
+    { input: "*", isFinished: true, expected: "*" },
+    { input: "*", isFinished: false, expected: "" },
+    { input: "* ", isFinished: false, expected: "*" },
+    { input: "* ", isFinished: true, expected: "*" },
+    {
+      input: "* abc\n  * def",
+      isFinished: false,
+      expected: "*abc*def",
+    },
+
+    // numbered list items
+    { input: "1. abc", isFinished: false, expected: "*abc" },
+    { input: "1.", isFinished: true, expected: "*" },
+    { input: "1. ", isFinished: false, expected: "*" },
+    { input: "1. ", isFinished: true, expected: "*" },
+    {
+      input: "2. abc\n3. def",
+      isFinished: false,
+      expected: "*abc*def",
+    },
   ];
   testCases.forEach(({ input, isFinished, expected }) => {
     it(`should convert "${input}" isFinished:${isFinished} to "${expected}"`, () => {
@@ -522,7 +554,45 @@ describe("markdownWithVisibleChars", () => {
       visibleChars: 21,
       expected: "abcd\n\n# header1\n\nsomething\n",
     },
-  ]; //todo: add isFinished: true test cases
+
+    // list items
+    {
+      markdown: "* abc",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "* abc\n",
+    },
+    {
+      markdown: "* abc",
+      isFinished: false,
+      visibleChars: 3,
+      expected: "* ab\n",
+    },
+    {
+      markdown: "* abc",
+      isFinished: false,
+      visibleChars: 1,
+      expected: "*\n",
+    },
+    {
+      markdown: "*",
+      isFinished: false,
+      visibleChars: 1,
+      expected: "",
+    },
+    {
+      markdown: "* ",
+      isFinished: false,
+      visibleChars: 1,
+      expected: "*\n",
+    },
+    {
+      markdown: "* abc\n  * def",
+      isFinished: false,
+      visibleChars: 6,
+      expected: "* abc\n  * d\n",
+    },
+  ];
 
   testCases.forEach(({ markdown, visibleChars, isFinished, expected }) => {
     it(`should convert "${markdown}" visibleChars:${visibleChars} isFinished:${isFinished} to "${expected}"`, () => {
@@ -545,14 +615,6 @@ describe("markdownWithVisibleChars", () => {
         visibleChars,
         originalVisibleText.length,
       );
-      if (visibleText.length !== expectedVisibleChars) {
-        console.log("markdown", markdown);
-        console.log("output", output);
-        console.log("visibleChars", visibleChars);
-        console.log("expectedVisibleChars", expectedVisibleChars);
-        console.log("originalVisibleText", originalVisibleText);
-        console.log("visibleText", visibleText);
-      }
       expect(visibleText.length).toBe(expectedVisibleChars);
     });
   });
