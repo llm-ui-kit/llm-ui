@@ -109,7 +109,6 @@ export const CommandMenu = ({ ...props }: CommandMenuProps) => {
         <CommandInput
           placeholder="Search docs..."
           onValueChange={async (searchQuery) => {
-            console.log("zzz searchQuery", searchQuery);
             if (!searchQuery) {
               setSearchResults(undefined);
               return;

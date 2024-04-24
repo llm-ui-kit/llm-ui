@@ -25,14 +25,11 @@ export type UseStreamResponse = {
   isStreamStarted: boolean;
   isStreamFinished: boolean;
   isPlaying: boolean;
-  loopIndex: number;
 };
 
 export type UseStreamTokenArrayOptions = {
   autoStart: boolean;
   autoStartDelayMs: number;
-  loop: boolean;
-  loopDelayMs: number;
-  firstLoopStartIndex: number;
+  startIndex: number;
   delayMultiplier: number;
 };

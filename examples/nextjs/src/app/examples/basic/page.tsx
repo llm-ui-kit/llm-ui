@@ -28,7 +28,7 @@ const example = `
 `;
 
 const Example = () => {
-  const { isStreamFinished, loopIndex, output } = useStreamExample(example);
+  const { isStreamFinished, output } = useStreamExample(example);
 
   const { blockMatches } = useLLMOutput({
     llmOutput: output,
@@ -38,7 +38,6 @@ const Example = () => {
       lookBack: markdownLookBack,
     },
     isStreamFinished,
-    loopIndex, // only needed for useStreamExample
   });
 
   return (
