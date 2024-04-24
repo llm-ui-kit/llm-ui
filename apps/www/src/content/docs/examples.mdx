@@ -7,6 +7,7 @@ import {
   ExampleSideBySide,
   ExampleTabs,
 } from "@/components/examples/ExampleMdx";
+import { markdownExample } from "@/components/examples/examples";
 
 llm-ui is a work in progress.
 
@@ -16,12 +17,4 @@ Examples
 <Example prop1={1} prop2={2} />
 ```
 
-<ExampleSideBySide
-  client:load
-  example={"# H1\nHi Docs\n\n```typescript\nconsole.log('hello')\n```"}
-/>
-
-<ExampleTabs
-  client:load
-  example={"# H1\nHi Docs\n\n```typescript\nconsole.log('hello')\n```"}
-/>
+<ExampleTabs client:load example={markdownExample} />

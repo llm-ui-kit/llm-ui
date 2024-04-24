@@ -50,12 +50,14 @@ export const useLLMOutput = ({
   const lastRenderTime = useRef(performance.now());
   const renderLoopRef = useRef<(frameTime: DOMHighResTimeStamp) => void>();
   const frameRef = useRef<number>();
+  const frameCountRef = useRef<number>(0);
   const finishTimeRef = useRef<DOMHighResTimeStamp>();
   const restartRef = useRef<boolean>(false);
   const previousFrameTimeRef = useRef<DOMHighResTimeStamp>();
   const visibleTextAllLengthsRef = useRef<number[]>([]);
   const outputLengthsRef = useRef<number[]>([]);
   const visibleTextIncrementsRef = useRef<number[]>([]);
+  const visibleTextLengthTargetRef = useRef<number>(0);
 
   const [{ blockMatches, ...state }, setState] = useState<UseLLMOutputReturn>({
     ...initialState,
@@ -76,10 +78,12 @@ export const useLLMOutput = ({
       startTime.current = performance.now();
       restartRef.current = false;
       finishTimeRef.current = undefined;
+      frameCountRef.current = 0;
       previousFrameTimeRef.current = undefined;
       visibleTextAllLengthsRef.current = [];
       outputLengthsRef.current = [];
       visibleTextIncrementsRef.current = [];
+      visibleTextLengthTargetRef.current = 0;
       requestAnimationFrame(renderLoopRef.current);
       return;
     }
@@ -119,34 +123,45 @@ export const useLLMOutput = ({
       visibleTextAll,
       startStreamTime: startTime.current,
       isStreamFinished,
+      frameCount: frameCountRef.current,
       frameTime,
       frameTimePrevious: previousFrameTimeRef.current,
       finishStreamTime: finishTimeRef.current,
       visibleTextLengthsAll: visibleTextAllLengthsRef.current,
       outputLengths: outputLengthsRef.current,
       visibleTextIncrements: visibleTextIncrementsRef.current,
+      visibleTextLengthTarget: visibleTextLengthTargetRef.current,
     });
-    visibleTextIncrementsRef.current.push(visibleTextIncrement);
-    const visibleTextLengthTarget = visibleText.length + visibleTextIncrement;
+    if (visibleTextIncrement < 0) {
+      throw new Error("throttle returned negative visibleTextIncrement");
+    }
 
-    if (visibleTextLengthTarget > visibleText.length) {
+    visibleTextIncrementsRef.current.push(visibleTextIncrement);
+    visibleTextLengthTargetRef.current =
+      visibleTextLengthTargetRef.current + visibleTextIncrement;
+
+    if (visibleTextLengthTargetRef.current > visibleText.length) {
       const matches = matchBlocks({
         llmOutput,
         blocks,
         fallbackBlock,
         isStreamFinished,
-        visibleTextLengthTarget,
+        visibleTextLengthTarget: visibleTextLengthTargetRef.current,
       });
+      const updatedVisibleText = matchesToVisibleText(matches);
+
       lastRenderTime.current = performance.now();
+
       setState((state) => ({
         ...state,
         blockMatches: matches,
         isFinished,
-        visibleText,
+        visibleText: updatedVisibleText,
       }));
     }
     frameRef.current = requestAnimationFrame(renderLoopRef.current);
     previousFrameTimeRef.current = frameTime;
+    frameCountRef.current = frameCountRef.current + 1;
   };
 
   useEffect(() => {
@@ -155,7 +170,14 @@ export const useLLMOutput = ({
 
   useEffect(() => {
     renderLoopRef.current = renderLoop;
-    frameRef.current = requestAnimationFrame(renderLoopRef.current);
+    if (!frameRef.current) {
+      frameRef.current = requestAnimationFrame(renderLoopRef.current);
+    }
+    () => {
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
