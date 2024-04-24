@@ -9,10 +9,8 @@ export const useStreamTokenArrayOptionsDefaultOptions: UseStreamTokenArrayOption
   {
     autoStartDelayMs: 0,
     autoStart: true,
-    loop: false,
-    loopDelayMs: 1000,
     delayMultiplier: 1,
-    firstLoopStartIndex: 0,
+    startIndex: 0,
   };
 
 export const useStreamTokenArray = (
@@ -28,7 +26,7 @@ export const useStreamTokenArray = (
     [userOptions],
   );
   const currentIndex = useRef<number>(
-    Math.min(options.firstLoopStartIndex, tokenArray.length),
+    Math.min(options.startIndex, tokenArray.length),
   );
   const [output, setOutput] = useState<string>(
     tokenArray
@@ -36,7 +34,6 @@ export const useStreamTokenArray = (
       .map((t) => t.token)
       .join(""),
   );
-  const [loopIndex, setLoopIndex] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(options.autoStart);
 
   const clearTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -51,7 +48,6 @@ export const useStreamTokenArray = (
 
   const reset = useCallback(() => {
     setOutput("");
-    setLoopIndex((prev) => prev + 1);
     pause();
     currentIndex.current = 0;
   }, []);
@@ -63,15 +59,8 @@ export const useStreamTokenArray = (
     const index = currentIndex.current;
     const isFinished = index >= tokenArray.length;
     if (isFinished) {
-      if (options.loop) {
-        clearTimeoutRef.current = setTimeout(() => {
-          reset();
-          start();
-        }, options.loopDelayMs);
-      } else {
-        setIsPlaying(false);
-        clearTimeoutRef.current = null;
-      }
+      setIsPlaying(false);
+      clearTimeoutRef.current = null;
     } else {
       const { token, delayMs } = tokenArray[index];
       setOutput((prevOutput) => `${prevOutput}${token}`);
@@ -88,12 +77,8 @@ export const useStreamTokenArray = (
   });
 
   const start = useCallback(() => {
-    const isFinished = currentIndex.current >= tokenArray.length;
     if (clearTimeoutRef.current) {
       return;
-    }
-    if (isFinished) {
-      reset();
     }
     setIsPlaying(true);
     nextToken();
@@ -115,6 +100,5 @@ export const useStreamTokenArray = (
     isPlaying,
     isStreamStarted: output.length > 0,
     isStreamFinished: isFinished,
-    loopIndex,
   };
 };

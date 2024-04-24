@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
+import { cn, delay } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type LLMOutputProps } from "llm-ui/core";
+import { useLLMOutput, type UseLLMOutputReturn } from "llm-ui/core";
 import {
   stringToTokenArray,
   useStreamTokenArray,
@@ -8,9 +8,7 @@ import {
   type UseStreamTokenArrayOptions,
   type UseStreamWithProbabilitiesOptions,
 } from "llm-ui/examples";
-import { throttleBasic } from "llm-ui/throttle";
 import React, { useState, type ReactNode } from "react";
-import type { SetRequired } from "type-fest";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
 import { buttonsBlock } from "./Buttons";
@@ -21,6 +19,8 @@ import { NeverShrinkContainer } from "./NeverShrinkContainer";
 import { defaultExampleProbs } from "./contants";
 import { getThrottle } from "./throttle";
 import type { Tab } from "./types";
+
+const LOOP_DELAY = 3000;
 
 const SideBySideContainer: React.FC<{
   className?: string;
@@ -111,6 +111,7 @@ type ExampleCommonProps = {
   showPlayPause?: boolean;
   hideFirstLoop?: boolean;
   throttle?: "basic" | "buffer";
+  loop?: boolean;
 };
 
 export type ExampleTokenArrayProps = ExampleCommonProps &
@@ -118,31 +119,15 @@ export type ExampleTokenArrayProps = ExampleCommonProps &
 export type ExampleProps = ExampleCommonProps & UseExampleProbsProps;
 
 const LLMUI = ({
-  isStreamFinished,
   isPlaying,
-  loopIndex,
   hideFirstLoop = false,
-  throttle = throttleBasic(),
-  ...props
-}: SetRequired<Partial<LLMOutputProps>, "isStreamFinished" | "llmOutput"> & {
+  blockMatches,
+  finishCount,
+  visibleText,
+}: Omit<UseLLMOutputReturn, "restart"> & {
   isPlaying: boolean;
   hideFirstLoop?: boolean;
 }) => {
-  const {
-    blockMatches,
-    visibleText,
-    loopIndex: outputLoopIndex,
-  } = useLLMOutput({
-    blocks: [codeBlockBlock, buttonsBlock],
-    fallbackBlock: {
-      component: Markdown,
-      lookBack: markdownLookBack,
-    },
-    throttle,
-    isStreamFinished,
-    loopIndex,
-    ...props,
-  });
   const blocks = blockMatches.map((blockMatch, index) => {
     const Component = blockMatch.block.component;
     return <Component key={index} blockMatch={blockMatch} />;
@@ -151,10 +136,10 @@ const LLMUI = ({
     <div
       className={cn(
         "flex flex-1 flex-col overflow-x-auto",
-        hideFirstLoop && outputLoopIndex === 0 && "invisible",
+        hideFirstLoop && finishCount === 0 && "invisible",
       )}
     >
-      {visibleText.length === 0 && isPlaying && outputLoopIndex !== 0 ? (
+      {visibleText.length === 0 && isPlaying && finishCount !== 0 ? (
         <div className="flex flex-1 justify-center items-center">
           <Loader />
         </div>
@@ -183,11 +168,9 @@ const useExampleTokenArray = ({
     options.delayMultiplier ?? 1,
   );
   const result = useStreamTokenArray(tokenArray, {
-    loop: true,
     autoStart: true,
     autoStartDelayMs: 0,
-    loopDelayMs: 3000,
-    firstLoopStartIndex: Number.MAX_SAFE_INTEGER,
+    startIndex: Number.MAX_SAFE_INTEGER,
     ...options,
     delayMultiplier,
   });
@@ -203,34 +186,61 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   throttle,
   showPlayPause = true,
   hideFirstLoop,
+  loop = true,
 }) => {
+  const [hasLooped, setHasLooped] = useState(false);
+
   const [tabIndex, setTabIndex] = useState(0);
 
   const {
     output,
     isStreamFinished,
     isPlaying,
-    loopIndex,
     setDelayMultiplier,
     delayMultiplier,
     pause,
     start,
+    reset,
   } = useExampleTokenArray({ tokenArray, options });
+
+  const { finishCount, restart, blockMatches, isFinished, visibleText } =
+    useLLMOutput({
+      llmOutput: output,
+      blocks: [codeBlockBlock, buttonsBlock],
+      fallbackBlock: {
+        component: Markdown,
+        lookBack: markdownLookBack,
+      },
+      throttle: getThrottle(throttle),
+      isStreamFinished,
+      onFinish: async () => {
+        if (loop) {
+          if (hasLooped) {
+            await delay(LOOP_DELAY);
+          }
+          reset();
+          start();
+          restart();
+          setHasLooped(true);
+        }
+      },
+    });
+
   const llmUi = (
     <LLMUI
-      isStreamFinished={isStreamFinished}
-      llmOutput={output}
-      loopIndex={loopIndex}
       isPlaying={isPlaying}
       hideFirstLoop={hideFirstLoop}
-      throttle={getThrottle(throttle)}
+      blockMatches={blockMatches}
+      isFinished={isFinished}
+      visibleText={visibleText}
+      finishCount={finishCount}
     />
   );
   return (
     <div className={cn("grid grid-cols-1", className)}>
       <NeverShrinkContainer className="flex flex-1">
         <OutputTabs
-          isVisible={!hideFirstLoop || loopIndex !== 0}
+          isVisible={!hideFirstLoop || hasLooped}
           className={cn(backgroundClassName, "flex flex-1 rounded-t-lg")}
           output={output}
           llmUi={llmUi}
@@ -243,7 +253,14 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
         delayMultiplier={delayMultiplier}
         onDelayMultiplier={setDelayMultiplier}
         onPause={pause}
-        onStart={start}
+        onStart={() => {
+          if (isFinished) {
+            reset();
+          }
+          start();
+          restart();
+          setHasLooped(true);
+        }}
         showPlayPause={showPlayPause}
         isPlaying={isPlaying}
         desktopTabs={tabs}
@@ -272,8 +289,10 @@ export const ExampleSideBySideTokenArray: React.FC<
   showPlayPause = true,
   hideFirstLoop,
   throttle,
+  loop = true,
   ...props
 }) => {
+  const [hasLooped, setHasLooped] = useState(false);
   if (!tabs.includes("llm-ui")) {
     throw new Error("llm-ui tab is required for ExampleSideBySide");
   }
@@ -287,22 +306,44 @@ export const ExampleSideBySideTokenArray: React.FC<
     isStreamFinished,
     pause,
     start,
+    reset,
     isPlaying,
-    loopIndex,
     setDelayMultiplier,
     delayMultiplier,
   } = useExampleTokenArray(props);
+  const { finishCount, restart, blockMatches, isFinished, visibleText } =
+    useLLMOutput({
+      llmOutput: output,
+      blocks: [codeBlockBlock, buttonsBlock],
+      fallbackBlock: {
+        component: Markdown,
+        lookBack: markdownLookBack,
+      },
+      throttle: getThrottle(throttle),
+      isStreamFinished,
+      onFinish: async () => {
+        if (loop) {
+          if (hasLooped) {
+            await delay(LOOP_DELAY);
+          }
+          reset();
+          start();
+          restart();
+          setHasLooped(true);
+        }
+      },
+    });
   const llmUi = (
     <LLMUI
-      isStreamFinished={isStreamFinished}
-      llmOutput={output}
-      loopIndex={loopIndex}
       isPlaying={isPlaying}
       hideFirstLoop={hideFirstLoop}
-      throttle={getThrottle(throttle)}
+      blockMatches={blockMatches}
+      isFinished={isFinished}
+      visibleText={visibleText}
+      finishCount={finishCount}
     />
   );
-  const isVisible = !hideFirstLoop || loopIndex !== 0;
+  const isVisible = !hideFirstLoop || hasLooped;
   return (
     <div className={className}>
       <NeverShrinkContainer className="grid md:grid-cols-2 grid-cols-1 ">
@@ -358,7 +399,14 @@ export const ExampleSideBySideTokenArray: React.FC<
         isPlaying={isPlaying}
         showPlayPause={showPlayPause}
         onPause={pause}
-        onStart={start}
+        onStart={() => {
+          if (isFinished) {
+            reset();
+          }
+          start();
+          restart();
+          setHasLooped(true);
+        }}
         desktopTabs={desktopTabs}
         mobileTabs={mobileTabs}
         onDesktopTabIndexChange={setDesktopTabIndex}

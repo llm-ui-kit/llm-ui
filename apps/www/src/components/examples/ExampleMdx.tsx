@@ -12,7 +12,6 @@ const defaultClassName = "my-8";
 
 const defaultOptions: Partial<UseStreamWithProbabilitiesOptions> = {
   autoStart: false,
-  loop: false,
 };
 
 export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
@@ -26,11 +25,12 @@ export const ExampleSideBySide: React.FC<ExampleSideBySideProps> = ({
   return (
     <ExampleSideBySideOriginal
       className={cn(defaultClassName, className)}
+      options={options}
       backgroundClassName={backgroundClassName}
       tabs={tabs}
       showPlayPause={showPlayPause}
+      loop={false}
       {...props}
-      options={options}
     />
   );
 };
@@ -51,6 +51,7 @@ export const ExampleTabs: React.FC<ExampleProps> = ({
       backgroundClassName={backgroundClassName}
       tabs={tabs}
       showPlayPause={showPlayPause}
+      loop={false}
       {...props}
     />
   );

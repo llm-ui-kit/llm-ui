@@ -6,11 +6,9 @@ import { useStreamTokenArray } from "./useStreamTokenArray";
 
 const options: UseStreamTokenArrayOptions = {
   autoStart: true,
-  loop: false,
   autoStartDelayMs: 0,
   delayMultiplier: 0,
-  loopDelayMs: 0,
-  firstLoopStartIndex: 0,
+  startIndex: 0,
 };
 
 const allAtOnce: TokenWithDelay[] = [
@@ -101,27 +99,9 @@ describe("useStreamTokenArray", () => {
     });
   });
 
-  test("loop: true", async () => {
+  test("startIndex: 20", async () => {
     const { result, waitFor } = renderHook(() =>
-      useStreamTokenArray(allAtOnce, { ...options, loop: true }),
-    );
-    await waitFor(() => {
-      const { output, isStarted, isFinished } = resultToArrays(result);
-      const hellos = output.filter((o) => o === "Hello");
-      const empties = output.filter((o) => o === "");
-      expect(hellos.length).greaterThan(5);
-      expect(empties.length).greaterThan(5);
-
-      expect(isStarted).containSubset([false, true, false, true]);
-      expect(isFinished).containSubset([false, true, false, true]);
-      expect(result.current.loopIndex).greaterThan(0);
-      expect(result.current.isPlaying).toBe(true);
-    });
-  });
-
-  test("firstLoopStartIndex: 20", async () => {
-    const { result, waitFor } = renderHook(() =>
-      useStreamTokenArray(allAtOnce, { ...options, firstLoopStartIndex: 20 }),
+      useStreamTokenArray(allAtOnce, { ...options, startIndex: 20 }),
     );
     waitFor(() => {
       const { output } = resultToArrays(result);

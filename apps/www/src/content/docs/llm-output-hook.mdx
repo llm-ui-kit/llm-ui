@@ -101,10 +101,6 @@ The throttle function allows `useLLMOutput` to lag behind the actual LLM output.
 
 Read more about throttle functions in the [throttle docs](/docs/advanced/throttle-functions).
 
-## `loopIndex` (number) (optional)
-
-This is only needed when you wish to loop the stream output. For example when using the `useStreamExample` hook.
-
 # `useLLMOutput` Return value
 
 ## `isFinished` (boolean)
@@ -164,6 +160,6 @@ console.log(blockMatches);
 }]
 ```
 
-## `loopIndex` (number)
+## `finishedCount` (number)
 
-Similar to the `loopIndex` parameter, only needed for looping examples.
+How many times the output has finished. Only needed for looping examples.

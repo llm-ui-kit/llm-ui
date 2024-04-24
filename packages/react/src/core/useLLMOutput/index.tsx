@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { throttleBasic } from "../../throttle";
 import { matchBlocks } from "./helper";
 import {
@@ -14,7 +14,7 @@ export type LLMOutputProps = {
   fallbackBlock: LLMOutputFallbackBlock;
   isStreamFinished: boolean;
   throttle?: ThrottleFunction;
-  loopIndex?: number;
+  onFinish?: () => void;
 };
 
 const matchesToVisibleText = (matches: BlockMatch[]): string => {
@@ -28,8 +28,9 @@ const matchesToOutput = (matches: BlockMatch[]): string => {
 export type UseLLMOutputReturn = {
   blockMatches: BlockMatch[];
   isFinished: boolean;
+  finishCount: number;
   visibleText: string;
-  loopIndex: number;
+  restart: () => void;
 };
 
 const initialState = {
@@ -44,7 +45,7 @@ export const useLLMOutput = ({
   blocks = [],
   fallbackBlock,
   throttle = throttleBasic(),
-  loopIndex = 0,
+  onFinish = () => null,
 }: LLMOutputProps): UseLLMOutputReturn => {
   const startTime = useRef(performance.now());
   const lastRenderTime = useRef(performance.now());
@@ -52,16 +53,17 @@ export const useLLMOutput = ({
   const frameRef = useRef<number>();
   const frameCountRef = useRef<number>(0);
   const finishTimeRef = useRef<DOMHighResTimeStamp>();
-  const restartRef = useRef<boolean>(false);
   const previousFrameTimeRef = useRef<DOMHighResTimeStamp>();
   const visibleTextAllLengthsRef = useRef<number[]>([]);
   const outputLengthsRef = useRef<number[]>([]);
   const visibleTextIncrementsRef = useRef<number[]>([]);
   const visibleTextLengthTargetRef = useRef<number>(0);
 
-  const [{ blockMatches, ...state }, setState] = useState<UseLLMOutputReturn>({
+  const [{ blockMatches, ...state }, setState] = useState<
+    Omit<UseLLMOutputReturn, "restart">
+  >({
     ...initialState,
-    loopIndex,
+    finishCount: 0,
     blockMatches: matchBlocks({
       llmOutput,
       blocks,
@@ -70,21 +72,28 @@ export const useLLMOutput = ({
     }),
   });
 
+  const restart = useCallback(() => {
+    setState((state) => ({ ...state, ...initialState }));
+    startTime.current = performance.now();
+    finishTimeRef.current = undefined;
+    previousFrameTimeRef.current = undefined;
+    visibleTextAllLengthsRef.current = [];
+    outputLengthsRef.current = [];
+    visibleTextIncrementsRef.current = [];
+    visibleTextLengthTargetRef.current = 0;
+    frameCountRef.current = 0;
+    if (frameRef.current) {
+      cancelAnimationFrame(frameRef.current);
+    }
+    setTimeout(() => {
+      if (renderLoopRef.current) {
+        frameRef.current = requestAnimationFrame(renderLoopRef.current);
+      }
+    }, 10);
+  }, [setState]);
+
   const renderLoop = (frameTime: DOMHighResTimeStamp) => {
     if (!renderLoopRef.current) {
-      return;
-    }
-    if (restartRef.current) {
-      startTime.current = performance.now();
-      restartRef.current = false;
-      finishTimeRef.current = undefined;
-      frameCountRef.current = 0;
-      previousFrameTimeRef.current = undefined;
-      visibleTextAllLengthsRef.current = [];
-      outputLengthsRef.current = [];
-      visibleTextIncrementsRef.current = [];
-      visibleTextLengthTargetRef.current = 0;
-      requestAnimationFrame(renderLoopRef.current);
       return;
     }
 
@@ -110,8 +119,10 @@ export const useLLMOutput = ({
         ...state,
         blockMatches,
         isFinished,
+        finishCount: state.finishCount + 1,
         visibleText,
       }));
+      onFinish();
       return;
     }
 
@@ -181,22 +192,10 @@ export const useLLMOutput = ({
   }, []);
 
   useEffect(() => {
-    if (loopIndex > 0) {
-      // set the state here so we have latest loopIndex
-      setState({ ...initialState, loopIndex });
-      restartRef.current = true;
-      if (!frameRef.current) {
-        renderLoopRef.current = renderLoop;
-        frameRef.current = requestAnimationFrame(renderLoopRef.current);
-      }
-    }
-  }, [loopIndex]);
-
-  useEffect(() => {
     if (!finishTimeRef.current && isStreamFinished) {
       finishTimeRef.current = performance.now();
     }
   }, [isStreamFinished]);
 
-  return { blockMatches, ...state };
+  return { blockMatches, restart, ...state };
 };
