@@ -101,7 +101,6 @@ const removeRegexFromParagraph = (
 
 // mutates the ast
 const removePartialAmbiguousMarkdownFromAst = (root: Root): void => {
-  console.log("markdownAst", JSON.stringify(root, null, 2));
   if (root.children.length === 0) {
     return;
   }
