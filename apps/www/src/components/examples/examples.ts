@@ -12,7 +12,12 @@ pnpm add llm-ui @llm-ui/markdown
 `;
 
 export const markdownExample = `### Header
-~abc~ **bold** *italic* ***something***
+- ~abc~
+- **bold**
+- *italic*
+- ***something***
+
+[Docs](https://llm-ui.com/docs)
 
 ---
 

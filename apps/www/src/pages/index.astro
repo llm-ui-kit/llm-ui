@@ -60,13 +60,13 @@ import { marketingConfig } from "@/config/marketing";
 
   <section id="example" class="bg-background-200">
     <div class="container flex min-h-[500px] max-w-[80rem] flex-col space-y-6">
-      <ExampleSideBySide
+      <!-- <ExampleSideBySide
         client:load
         example={ctaExample}
         tabs={["llm-ui", "markdown", "raw"]}
         showHeaders
         hideFirstLoop
-      />
+      /> -->
     </div>
   </section>
 
@@ -104,12 +104,12 @@ import { marketingConfig } from "@/config/marketing";
         >
       </HeaderSection>
       <div class="container max-w-[600px]">
-        <ExampleTabs
+        <!-- <ExampleTabs
           client:load
           example={codeBlockExample}
           tabs={["llm-ui", "raw"]}
           hideFirstLoop
-        />
+        /> -->
       </div>
     </div>
   </section>
@@ -122,13 +122,13 @@ import { marketingConfig } from "@/config/marketing";
         title="Custom Components"
         subtitle="Render the model's output using your own custom 'blocks'"
       />
-      <ExampleSideBySide
+      <!-- <ExampleSideBySide
         client:load
         example={customComponentExample}
         options={{ delayMultiplier: 0.2 }}
         tabs={["llm-ui", "raw"]}
         hideFirstLoop
-      />
+      /> -->
     </div>
   </section>
   <section
@@ -140,13 +140,13 @@ import { marketingConfig } from "@/config/marketing";
         title="Throttling"
         subtitle="Smooth out pauses in the model's output"
       />
-      <ExampleSideBySideTokenArray
+      <!-- <ExampleSideBySideTokenArray
         client:only
         tokenArray={throttleExample}
         throttle={"buffer"}
         tabs={["llm-ui", "raw"]}
         hideFirstLoop
-      />
+      /> -->
     </div>
   </section>
   <section
