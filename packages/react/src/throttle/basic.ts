@@ -9,8 +9,8 @@ export type ThrottleBasicOptions = {
 
 export const defaultOptions: ThrottleBasicOptions = {
   readAheadChars: 15,
-  lagBufferChars: 15,
-  percentage: 0.35,
+  lagBufferChars: 9,
+  percentage: 0.1,
   frameLookbackMs: 3000,
 };
 export const throttleBasic = (
