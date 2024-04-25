@@ -2,21 +2,43 @@ import type { ThrottleFunction } from "../core";
 
 export type ThrottleBasicOptions = {
   readAheadChars: number;
-  lagBufferChars: number;
+  targetBufferChars: number;
   frameLookbackMs: number;
-  percentage: number;
+  adjustPercentage: number;
 };
 
 export const defaultOptions: ThrottleBasicOptions = {
   readAheadChars: 15,
-  lagBufferChars: 9,
-  percentage: 0.1,
+  targetBufferChars: 9,
+  adjustPercentage: 0.1,
   frameLookbackMs: 3000,
 };
+
+const calcPercentage = ({
+  isBehind,
+  adjustPercentage,
+  isStreamFinished,
+}: {
+  isBehind: boolean;
+  adjustPercentage: number;
+  isStreamFinished: boolean;
+}) => {
+  return isStreamFinished
+    ? 1
+    : isBehind
+      ? 1 + adjustPercentage
+      : 1 - adjustPercentage;
+};
+
 export const throttleBasic = (
   userOptions: Partial<ThrottleBasicOptions> = {},
 ): ThrottleFunction => {
-  const { frameLookbackMs, lagBufferChars, readAheadChars, percentage } = {
+  const {
+    frameLookbackMs,
+    targetBufferChars,
+    readAheadChars,
+    adjustPercentage,
+  } = {
     ...defaultOptions,
     ...userOptions,
   };
@@ -56,7 +78,7 @@ export const throttleBasic = (
     framesSinceLastIncrement =
       framesSinceLastIncrement === -1 ? frameCount : framesSinceLastIncrement;
     let visibleTextIncrement = 0;
-    const targetBufferSize = readAheadChars + lagBufferChars;
+    const targetBufferSize = readAheadChars + targetBufferChars;
     if (
       !isStreamFinished &&
       (bufferSize < readAheadChars ||
@@ -64,15 +86,12 @@ export const throttleBasic = (
     ) {
       visibleTextIncrement = 0;
     } else {
-      const targetBufferSize = readAheadChars + lagBufferChars;
+      const targetBufferSize = readAheadChars + targetBufferChars;
       const isBehind = bufferSize > targetBufferSize;
 
-      const adjustPercentage = isStreamFinished
-        ? 1
-        : isBehind
-          ? 1 + percentage
-          : 1 - percentage;
-      const targetFrameEveryN = visibleTextEveryNFrames * adjustPercentage;
+      const targetFrameEveryN =
+        visibleTextEveryNFrames *
+        calcPercentage({ adjustPercentage, isBehind, isStreamFinished });
 
       visibleTextIncrement =
         framesSinceLastIncrement > targetFrameEveryN ? 1 : 0;
