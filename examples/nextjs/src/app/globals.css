@@ -18,12 +18,9 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
@@ -34,4 +31,8 @@ body {
 
 button {
   @apply rounded bg-blue-500 px-4 py-2 font-semibold text-white;
+}
+
+a {
+  @apply underline underline-offset-4;
 }
