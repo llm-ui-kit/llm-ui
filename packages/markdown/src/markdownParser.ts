@@ -4,6 +4,8 @@ import { gfmFromMarkdown, gfmToMarkdown } from "mdast-util-gfm";
 import { toMarkdown } from "mdast-util-to-markdown";
 import { gfm } from "micromark-extension-gfm";
 
+export const ZERO_WIDTH_SPACE = "\u200b";
+
 // enclosing symbols: _a_ __a__ *a* **a** ~a~ ~~a~~
 // _'s behave differently to * and ~.
 const ENCLOSING_START_REGEX = /(\*{1,3}|(^|\s|\n)_{1,3}|~{1,3})(\S|$)/;
@@ -38,10 +40,12 @@ const isListCharacterLength = (list: List, length: number): boolean => {
 };
 
 const markdownToAst = (markdown: string): Root => {
-  return fromMarkdown(markdown, {
+  const ast = fromMarkdown(markdown, {
     extensions: [gfm()],
     mdastExtensions: [gfmFromMarkdown()],
   });
+  // remarkTrailingWhitespace(ast);
+  return ast;
 };
 
 const astToMarkdown = (markdownAst: Root): string => {
@@ -51,6 +55,11 @@ const astToMarkdown = (markdownAst: Root): string => {
 const afterLastNewline = (markdown: string): string => {
   const lastNewlineIndex = markdown.lastIndexOf("\n");
   return markdown.slice(lastNewlineIndex + 1);
+};
+
+const replaceTrailingSpaces = (text: string): string => {
+  // return text;
+  return text.replace(/\s$/, ` ${ZERO_WIDTH_SPACE}`);
 };
 
 const removeRegexesFromParagraph = (
@@ -169,7 +178,10 @@ const markdownAstToVisibleText = (markdownAst: Root, isFinished: boolean) => {
   if (!isFinished) {
     removePartialAmbiguousMarkdownFromAst(markdownAst);
   }
-  return markdownAstToVisibleTextHelper(markdownAst);
+  return markdownAstToVisibleTextHelper(markdownAst).replaceAll(
+    ZERO_WIDTH_SPACE,
+    "",
+  );
 };
 
 export const markdownToVisibleText = (
@@ -188,7 +200,9 @@ const removeVisibleCharsFromAstHelper = (
     if (node.value.length <= visibleCharsToRemove) {
       return { charsRemoved: node.value.length, toDelete: true };
     } else {
-      node.value = node.value.slice(0, -1 * visibleCharsToRemove);
+      node.value = replaceTrailingSpaces(
+        node.value.slice(0, -1 * visibleCharsToRemove),
+      );
       return { charsRemoved: visibleCharsToRemove, toDelete: false };
     }
   }
@@ -247,16 +261,6 @@ const removeVisibleCharsFromAst = (
   if (toDelete) {
     node.children = [];
   }
-};
-
-// This function operates on a complete markdown string
-export const markdownRemoveChars = (
-  markdown: string,
-  maxCharsToRemove: number,
-): string => {
-  const markdownAst = markdownToAst(markdown);
-  removeVisibleCharsFromAst(markdownAst, maxCharsToRemove);
-  return astToMarkdown(markdownAst);
 };
 
 export const markdownWithVisibleChars = (
