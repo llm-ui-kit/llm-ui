@@ -25,11 +25,12 @@ const example = `
 ## Example
 
 **Hello llm-ui!** this is [markdown](https://markdownguide.org)
-`;
+
+
+`.repeat(10);
 
 const Example = () => {
   const { isStreamFinished, output } = useStreamExample(example);
-
   const { blockMatches } = useLLMOutput({
     llmOutput: output,
     blocks: [],

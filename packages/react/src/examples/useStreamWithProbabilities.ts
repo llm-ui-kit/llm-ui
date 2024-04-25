@@ -14,9 +14,9 @@ export const useStreamWithProbabilitiesDefaultOptions: UseStreamWithProbabilitie
   {
     delayMsProbabilities: [
       { delayMs: 10, prob: 0.4 },
-      { delayMs: 200, prob: 0.3 },
-      { delayMs: 500, prob: 0.2 },
-      { delayMs: 1000, prob: 0.1 },
+      { delayMs: 70, prob: 0.3 },
+      { delayMs: 250, prob: 0.2 },
+      { delayMs: 600, prob: 0.1 },
     ],
     tokenCharsProbabilities: [
       { tokenChars: 1, prob: 0.5 },

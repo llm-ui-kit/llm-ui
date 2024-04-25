@@ -42,7 +42,8 @@ const throttle = throttleBasic({
   readAheadChars: 10,
   targetBufferChars: 7,
   frameLookbackMs: 200,
-  percentage: 0.35,
+  adjustPercentage: 0.35,
+  windowCount: 5,
 });
 
 const { blockMatches } = useLLMOutput({
@@ -74,17 +75,23 @@ This value is transformed into a target number of visible characters to withhold
 
 ### `frameLookbackMs` (number)
 
-default: `200`
+default: `10000`
 
 The number of milliseconds to look back when making estimations about how fast the visible text is being produced.
 
 ### `adjustPercentage` (number)
 
-Default: `0.1`
+Default: `0.2`
 
 When the throttle is behind the target number of visible characters, the throttle will increase the number of visible characters displayed by this factor to catch back up to the target.
 
 When the throttle is ahead of the target number of visible characters, the throttle will decrease the number of visible characters displayed by this factor to slow down and get back to the target.
+
+### `windowCount` (number)
+
+Default: `5`
+
+How many windows to break the `frameLookbackMs` into when calculating the average visible text per frame.
 
 # Writing your own throttle function
 
