@@ -191,7 +191,7 @@ const matchesWithLookback = ({
     });
     if (visibleText.length > localVisibleTextLengthTarget) {
       throw new Error(
-        `Visible text length exceeded target for: ${visibleText} target: ${localVisibleTextLengthTarget}`,
+        `Visible text length exceeded target for: ${visibleText} has length ${visibleText.length} target: ${localVisibleTextLengthTarget}`,
       );
     }
     const matchWithLookback: BlockMatch = {

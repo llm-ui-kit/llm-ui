@@ -5,13 +5,15 @@ export type ThrottleBasicOptions = {
   targetBufferChars: number;
   frameLookbackMs: number;
   adjustPercentage: number;
+  windowCount: number;
 };
 
 export const defaultOptions: ThrottleBasicOptions = {
   readAheadChars: 15,
-  targetBufferChars: 9,
-  adjustPercentage: 0.1,
-  frameLookbackMs: 3000,
+  targetBufferChars: 15,
+  adjustPercentage: 0.2,
+  frameLookbackMs: 10000,
+  windowCount: 5,
 };
 
 const calcPercentage = ({
@@ -32,6 +34,36 @@ const calcPercentage = ({
   return 1 + adjustPercentage;
 };
 
+const getVisibleTextEveryNFrames = (
+  lookbackFrameCount: number,
+  windowCount: number,
+  visibleTextLengthsAll: number[],
+) => {
+  const lookbackFrames = Math.min(
+    lookbackFrameCount,
+    visibleTextLengthsAll.length,
+  );
+  const recentVisibleTextLengths = visibleTextLengthsAll.slice(
+    -1 * lookbackFrames,
+  );
+  const windowSize = Math.floor(lookbackFrames / windowCount);
+
+  const textAddedCounts = [];
+
+  for (let i = 0; i < recentVisibleTextLengths.length - windowSize; i++) {
+    const start = i;
+    const end = i + windowSize;
+    const textAddedCount =
+      recentVisibleTextLengths[end] - recentVisibleTextLengths[start];
+    textAddedCounts.push(textAddedCount);
+  }
+
+  const avgTextAddedCount =
+    textAddedCounts.reduce((a, b) => a + b, 0) / textAddedCounts.length;
+
+  return avgTextAddedCount > 0 ? windowSize / avgTextAddedCount : windowSize;
+};
+
 export const throttleBasic = (
   userOptions: Partial<ThrottleBasicOptions> = {},
 ): ThrottleFunction => {
@@ -40,6 +72,7 @@ export const throttleBasic = (
     targetBufferChars,
     readAheadChars,
     adjustPercentage,
+    windowCount,
   } = {
     ...defaultOptions,
     ...userOptions,
@@ -60,6 +93,12 @@ export const throttleBasic = (
 
     const bufferSize = visibleTextAll.length - visibleTextLengthTarget;
     const lookbackFrameCount = Math.ceil(frameLookbackMs / (1000 / fps));
+
+    const visibleTextEveryNFrames = getVisibleTextEveryNFrames(
+      lookbackFrameCount,
+      windowCount,
+      visibleTextLengthsAll,
+    );
     const lookbackFrames = Math.min(
       lookbackFrameCount,
       visibleTextLengthsAll.length,
@@ -71,7 +110,7 @@ export const throttleBasic = (
       recentVisibleTextLengths[recentVisibleTextLengths.length - 1] -
       recentVisibleTextLengths[0];
 
-    const visibleTextEveryNFrames =
+    const oldVisibleTextEveryNFrames =
       textAddedCount > 0 ? lookbackFrames / textAddedCount : lookbackFrames;
 
     let framesSinceLastIncrement = [...visibleTextIncrements]
@@ -82,9 +121,10 @@ export const throttleBasic = (
     let visibleTextIncrement = 0;
     const targetBufferSize = readAheadChars + targetBufferChars;
     if (
-      !isStreamFinished &&
-      (bufferSize < readAheadChars ||
-        (visibleText.length === 0 && bufferSize < targetBufferSize))
+      (!isStreamFinished &&
+        (bufferSize < readAheadChars ||
+          (visibleText.length === 0 && bufferSize < targetBufferSize))) ||
+      visibleTextLengthTarget >= visibleTextAll.length
     ) {
       visibleTextIncrement = 0;
     } else {
