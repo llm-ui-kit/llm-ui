@@ -84,7 +84,6 @@ import { marketingConfig } from "@/config/marketing";
         example={markdownExample}
         tabs={["llm-ui", "raw"]}
         options={{ delayMultiplier: 4 }}
-        throttle="buffer"
         hideFirstLoop
       />
     </div>
@@ -143,7 +142,6 @@ import { marketingConfig } from "@/config/marketing";
       <ExampleSideBySideTokenArray
         client:only
         tokenArray={throttleExample}
-        throttle={"buffer"}
         tabs={["llm-ui", "raw"]}
         hideFirstLoop
       />
