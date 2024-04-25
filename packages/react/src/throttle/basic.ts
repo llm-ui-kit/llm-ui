@@ -23,11 +23,13 @@ const calcPercentage = ({
   adjustPercentage: number;
   isStreamFinished: boolean;
 }) => {
-  return isStreamFinished
-    ? 1
-    : isBehind
-      ? 1 + adjustPercentage
-      : 1 - adjustPercentage;
+  if (isStreamFinished) {
+    return 1;
+  }
+  if (isBehind) {
+    return 1 + adjustPercentage;
+  }
+  return 1 - adjustPercentage;
 };
 
 export const throttleBasic = (
