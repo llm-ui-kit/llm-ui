@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  markdownRemoveChars,
+  ZERO_WIDTH_SPACE,
   markdownToVisibleText,
   markdownWithVisibleChars,
   removePartialAmbiguousMarkdown,
@@ -33,6 +33,8 @@ describe("removePartialAmbiguousMarkdown", () => {
     { markdown: "*hello* *abc", expected: "*hello*&#x20;\n" },
     { markdown: "abc\n*", expected: "abc\n" },
     { markdown: "abc\n", expected: "abc\n" },
+    // spaces inside
+    { markdown: "*b a c*", expected: "*b a c*\n" },
     // weird incorrect syntax (*a should be * a)
 
     { markdown: "*abc\n", expected: "" },
@@ -225,6 +227,19 @@ describe("markdownToVisibleText", () => {
       isFinished: false,
       expected: "hello world world",
     },
+    // spaces inside
+    { input: "*b a c*", isFinished: false, expected: "b a c" },
+    // we insert zero width spaces into emphasis to preserve trailing whitespace, but zero width spaces should not be in visible text
+    {
+      input: `*b a c ${ZERO_WIDTH_SPACE}*`,
+      isFinished: false,
+      expected: "b a c ",
+    },
+    {
+      input: `*b a c  ${ZERO_WIDTH_SPACE}*`,
+      isFinished: false,
+      expected: "b a c  ",
+    },
     // ambiguous so we don't show it yet.
     { input: "*", isFinished: false, expected: "" },
     { input: "abc\n*", isFinished: false, expected: "abc\n" },
@@ -347,39 +362,6 @@ describe("markdownToVisibleText", () => {
   });
 });
 
-describe("markdownRemoveChars", () => {
-  const testCases: {
-    markdown: string;
-    charsToRemove: number;
-    expected: string;
-  }[] = [
-    { markdown: "hello", charsToRemove: 1, expected: "hell\n" },
-    { markdown: "hello", charsToRemove: 2, expected: "hel\n" },
-    { markdown: "hello", charsToRemove: 5, expected: "" },
-    { markdown: "*a*", charsToRemove: 1, expected: "" },
-    { markdown: "*abc*", charsToRemove: 1, expected: "*ab*\n" },
-    { markdown: "*abc*", charsToRemove: 2, expected: "*a*\n" },
-    { markdown: "_abc_", charsToRemove: 2, expected: "*a*\n" },
-    { markdown: "*abc*", charsToRemove: 3, expected: "" },
-    { markdown: "*abc*", charsToRemove: 4, expected: "" },
-    { markdown: "*abc* ", charsToRemove: 1, expected: "*ab*\n" },
-    { markdown: "*abc* ", charsToRemove: 2, expected: "*a*\n" },
-    { markdown: "*abc* *def*", charsToRemove: 4, expected: "*abc*\n" },
-    { markdown: "*abc* *def*", charsToRemove: 1, expected: "*abc* *de*\n" },
-    { markdown: "*abc* *def*", charsToRemove: 5, expected: "*ab*\n" },
-    // mdast matches the outer *s if there is no space between them
-    { markdown: "*abc**def*", charsToRemove: 2, expected: "*abc\\*\\*d*\n" },
-    { markdown: "*abc**def*", charsToRemove: 3, expected: "*abc\\*\\**\n" },
-    { markdown: "*abc**def*", charsToRemove: 4, expected: "*abc\\**\n" },
-  ];
-
-  testCases.forEach(({ markdown, charsToRemove, expected }) => {
-    it(`should convert "${markdown}" charsToRemove:${charsToRemove} to "${expected}"`, () => {
-      expect(markdownRemoveChars(markdown, charsToRemove)).toBe(expected);
-    });
-  });
-});
-
 describe("markdownWithVisibleChars", () => {
   const testCases: {
     markdown: string;
@@ -413,6 +395,12 @@ describe("markdownWithVisibleChars", () => {
       expected: "hello\n",
     },
     {
+      markdown: "hello ",
+      visibleChars: 6,
+      isFinished: false,
+      expected: "hello\n",
+    },
+    {
       markdown: "*abc*",
       visibleChars: 3,
       isFinished: false,
@@ -433,6 +421,12 @@ describe("markdownWithVisibleChars", () => {
     { markdown: "*abc*", visibleChars: 0, isFinished: false, expected: "" },
     {
       markdown: "*abc* ",
+      visibleChars: 3,
+      isFinished: false,
+      expected: "*abc*\n",
+    },
+    {
+      markdown: "_abc_ ",
       visibleChars: 3,
       isFinished: false,
       expected: "*abc*\n",
@@ -474,10 +468,22 @@ describe("markdownWithVisibleChars", () => {
       expected: "*abc*&#x20;\n",
     },
     {
-      markdown: "*abc* *def*",
+      markdown: "*abc  def*",
       visibleChars: 3,
       isFinished: false,
       expected: "*abc*\n",
+    },
+    {
+      markdown: "*abc  def*",
+      visibleChars: 4,
+      isFinished: false,
+      expected: `*abc ${ZERO_WIDTH_SPACE}*\n`,
+    },
+    {
+      markdown: "*abc  def*",
+      visibleChars: 5,
+      isFinished: false,
+      expected: `*abc  ${ZERO_WIDTH_SPACE}*\n`,
     },
     {
       markdown: "*abc* *def*",
