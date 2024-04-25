@@ -25,13 +25,13 @@ export const markdownExample = `### Header
 
 ***something***
 
-[Docs](https://llm-ui.com/docs)
+[Link](https://llm-ui.com/docs)
 
 ---
 
-something else
-
-# ok lets go
+- bullet 1
+2. ordered list
+3. three
 `;
 
 export const codeBlockExample = `#### Python
