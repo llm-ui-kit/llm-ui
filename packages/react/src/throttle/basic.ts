@@ -99,19 +99,6 @@ export const throttleBasic = (
       windowCount,
       visibleTextLengthsAll,
     );
-    const lookbackFrames = Math.min(
-      lookbackFrameCount,
-      visibleTextLengthsAll.length,
-    );
-    const recentVisibleTextLengths = visibleTextLengthsAll.slice(
-      -1 * lookbackFrames,
-    );
-    const textAddedCount =
-      recentVisibleTextLengths[recentVisibleTextLengths.length - 1] -
-      recentVisibleTextLengths[0];
-
-    const oldVisibleTextEveryNFrames =
-      textAddedCount > 0 ? lookbackFrames / textAddedCount : lookbackFrames;
 
     let framesSinceLastIncrement = [...visibleTextIncrements]
       .reverse()
