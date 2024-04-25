@@ -1,7 +1,7 @@
 import { stringToTokenArray, type TokenWithDelay } from "llm-ui/examples";
 import { defaultExampleProbs } from "./contants";
 
-export const ctaExample = `### [Docs](https://llm-ui.com/docs)
+export const ctaExample = `[Docs](https://llm-ui.com/docs)
 
 **Install**:
 \`\`\`bash
@@ -12,13 +12,26 @@ pnpm add llm-ui @llm-ui/markdown
 `;
 
 export const markdownExample = `### Header
-~abc~ **bold** *italic* ***something***
+
+
+~abc~
+
+
+**bold**
+
+
+*italic*
+
+
+***something***
+
+[Link](https://llm-ui.com/docs)
 
 ---
 
-something else
-
-# ok lets go
+- bullet 1
+2. ordered list
+3. three
 `;
 
 export const codeBlockExample = `#### Python
@@ -51,7 +64,7 @@ Quick actions:
 
 const throttleBeforePause = `### Throttling
 
-Sometimes models outputs stop for a couple of seconds. llm-ui can throttle the output to make it look more natural.
+Sometimes model outputs stop for a couple of seconds. llm-ui can throttle the output to make it look more natural.
 
 
 Pausing in 3...2...1`;

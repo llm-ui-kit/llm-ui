@@ -2,43 +2,63 @@ import type { ThrottleFunction } from "../core";
 
 export type ThrottleBasicOptions = {
   readAheadChars: number;
-  lagBufferMs: number;
+  targetBufferChars: number;
   frameLookbackMs: number;
-  behindIncrementFactor: number;
-  aheadIncrementFactor: number;
+  adjustPercentage: number;
 };
 
 export const defaultOptions: ThrottleBasicOptions = {
-  readAheadChars: 10,
-  lagBufferMs: 200,
-  behindIncrementFactor: 3,
-  aheadIncrementFactor: 1 / 3,
-  frameLookbackMs: 200,
+  readAheadChars: 15,
+  targetBufferChars: 9,
+  adjustPercentage: 0.1,
+  frameLookbackMs: 3000,
+};
+
+const calcPercentage = ({
+  isBehind,
+  adjustPercentage,
+  isStreamFinished,
+}: {
+  isBehind: boolean;
+  adjustPercentage: number;
+  isStreamFinished: boolean;
+}) => {
+  if (isStreamFinished) {
+    return 1;
+  }
+  if (isBehind) {
+    return 1 - adjustPercentage;
+  }
+  return 1 + adjustPercentage;
 };
 
 export const throttleBasic = (
   userOptions: Partial<ThrottleBasicOptions> = {},
 ): ThrottleFunction => {
   const {
-    aheadIncrementFactor,
-    behindIncrementFactor,
     frameLookbackMs,
-    lagBufferMs,
+    targetBufferChars,
     readAheadChars,
-  } = { ...defaultOptions, ...userOptions };
+    adjustPercentage,
+  } = {
+    ...defaultOptions,
+    ...userOptions,
+  };
   return ({
-    isStreamFinished,
     visibleText,
+    isStreamFinished,
     visibleTextAll,
     visibleTextLengthsAll,
-    frameTime,
-    frameTimePrevious,
+    frameCount,
     visibleTextIncrements,
+    visibleTextLengthTarget,
+    startStreamTime,
   }) => {
-    const fps =
-      1000 / (frameTime - (frameTimePrevious ?? frameTime - 1000 / 30));
+    const timeSinceStartMs = performance.now() - startStreamTime;
+    const timeSinceStartSec = timeSinceStartMs / 1000;
+    const fps = frameCount / timeSinceStartSec;
 
-    const bufferSize = visibleTextAll.length - visibleText.length;
+    const bufferSize = visibleTextAll.length - visibleTextLengthTarget;
     const lookbackFrameCount = Math.ceil(frameLookbackMs / (1000 / fps));
     const lookbackFrames = Math.min(
       lookbackFrameCount,
@@ -51,31 +71,32 @@ export const throttleBasic = (
       recentVisibleTextLengths[recentVisibleTextLengths.length - 1] -
       recentVisibleTextLengths[0];
 
-    const visibleTextPerRender = textAddedCount / lookbackFrames;
-    const visibleTextPerMs = visibleTextPerRender / (1000 / fps);
-    const lagBufferChars = lagBufferMs * visibleTextPerMs;
-    let visibleTextIncrement = 0;
-    const recentIncrements = visibleTextIncrements.slice(-20);
+    const visibleTextEveryNFrames =
+      textAddedCount > 0 ? lookbackFrames / textAddedCount : lookbackFrames;
 
-    const recentAverageIncrement =
-      recentIncrements.reduce((a, b) => a + b, 0) / recentIncrements.length;
-    if (isStreamFinished) {
-      visibleTextIncrement = Math.max(1, Math.ceil(visibleTextPerRender));
-    } else if (!isStreamFinished && bufferSize < readAheadChars) {
+    let framesSinceLastIncrement = [...visibleTextIncrements]
+      .reverse()
+      .findIndex((inc) => inc > 0);
+    framesSinceLastIncrement =
+      framesSinceLastIncrement === -1 ? frameCount : framesSinceLastIncrement;
+    let visibleTextIncrement = 0;
+    const targetBufferSize = readAheadChars + targetBufferChars;
+    if (
+      !isStreamFinished &&
+      (bufferSize < readAheadChars ||
+        (visibleText.length === 0 && bufferSize < targetBufferSize))
+    ) {
       visibleTextIncrement = 0;
     } else {
-      const targetBufferSize = isStreamFinished
-        ? 0
-        : readAheadChars + lagBufferChars;
-      const isBehindTarget = bufferSize > targetBufferSize;
-      const targetIncrement = isBehindTarget
-        ? visibleTextPerRender * behindIncrementFactor
-        : visibleTextPerRender * aheadIncrementFactor;
+      const targetBufferSize = readAheadChars + targetBufferChars;
+      const isBehind = bufferSize > targetBufferSize;
+
+      const targetFrameEveryN =
+        visibleTextEveryNFrames *
+        calcPercentage({ adjustPercentage, isBehind, isStreamFinished });
 
       visibleTextIncrement =
-        recentAverageIncrement > targetIncrement
-          ? Math.floor(targetIncrement)
-          : Math.ceil(targetIncrement);
+        framesSinceLastIncrement > targetFrameEveryN ? 1 : 0;
     }
     return {
       visibleTextIncrement,
