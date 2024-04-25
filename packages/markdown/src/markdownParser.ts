@@ -40,12 +40,10 @@ const isListCharacterLength = (list: List, length: number): boolean => {
 };
 
 const markdownToAst = (markdown: string): Root => {
-  const ast = fromMarkdown(markdown, {
+  return fromMarkdown(markdown, {
     extensions: [gfm()],
     mdastExtensions: [gfmFromMarkdown()],
   });
-  // remarkTrailingWhitespace(ast);
-  return ast;
 };
 
 const astToMarkdown = (markdownAst: Root): string => {
