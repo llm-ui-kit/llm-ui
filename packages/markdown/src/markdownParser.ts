@@ -58,7 +58,6 @@ const afterLastNewline = (markdown: string): string => {
 };
 
 const replaceTrailingSpaces = (text: string): string => {
-  // return text;
   return text.replace(/\s$/, ` ${ZERO_WIDTH_SPACE}`);
 };
 
