@@ -1,6 +1,10 @@
 import { cn, delay } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type UseLLMOutputReturn } from "llm-ui/core";
+import {
+  useLLMOutput,
+  type BlockMatch,
+  type UseLLMOutputReturn,
+} from "llm-ui/core";
 import {
   stringToTokenArray,
   useStreamTokenArray,
@@ -75,8 +79,7 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
             {tab === "markdown" && isActive && (
               <Markdown
                 className={cn(!isVisible && "invisible")}
-                isComplete={false}
-                blockMatch={{ output }}
+                blockMatch={{ output } as BlockMatch}
               />
             )}
             {tab === "raw" && isActive && (

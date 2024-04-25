@@ -19,7 +19,7 @@ const MarkdownComponent: LLMOutputComponent<Options> = ({
   );
 };
 
-export const Markdown: LLMOutputComponent = (props) => {
+export const Markdown: LLMOutputComponent<Options> = (props) => {
   return (
     <MarkdownComponent
       {...props}
