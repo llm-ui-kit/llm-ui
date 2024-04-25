@@ -27,9 +27,9 @@ const calcPercentage = ({
     return 1;
   }
   if (isBehind) {
-    return 1 + adjustPercentage;
+    return 1 - adjustPercentage;
   }
-  return 1 - adjustPercentage;
+  return 1 + adjustPercentage;
 };
 
 export const throttleBasic = (
