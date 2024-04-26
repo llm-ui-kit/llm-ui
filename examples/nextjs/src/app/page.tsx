@@ -5,6 +5,7 @@ export default function Home() {
       <a href="/examples/basic">Basic</a>
       <a href="/examples/code-block-all-themes">Code blocks with Shiki</a>
       <a href="/examples/buttons">Buttons</a>
+      <a href="/examples/openai">Openai</a>
     </main>
   );
 }

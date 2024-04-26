@@ -13,6 +13,7 @@ const MarkdownComponent: LLMOutputComponent<Options> = ({
   const markdown = blockMatch.output;
   return (
     <ReactMarkdown
+      className="prose prose-invert"
       {...props}
       remarkPlugins={[...(props.remarkPlugins ?? []), remarkGfm]}
     >
