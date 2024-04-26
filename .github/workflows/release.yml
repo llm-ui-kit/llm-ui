@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
@@ -20,4 +25,4 @@ jobs:
           commit: "chore(release): 📦 version packages"
           title: "chore(release): 📦  version packages"
         env:
-          GITHUB_TOKEN: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
