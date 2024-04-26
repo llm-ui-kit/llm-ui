@@ -18,10 +18,10 @@
     "shiki": "^1.2.4"
   },
   "devDependencies": {
-    "@llm-ui/buttons": "0.0.3",
-    "@llm-ui/code": "0.0.3",
-    "@llm-ui/markdown": "0.0.3",
-    "@llm-ui/react": "0.0.3",
+    "@llm-ui/buttons": "workspace:*",
+    "@llm-ui/code": "workspace:*",
+    "@llm-ui/markdown": "workspace:*",
+    "@llm-ui/react": "workspace:*",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
