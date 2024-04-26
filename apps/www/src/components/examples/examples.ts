@@ -8,7 +8,7 @@ export const ctaExample = `[Docs](https://llm-ui.com/docs)
 
 **Install**:
 \`\`\`bash
-pnpm add llm-ui @llm-ui/markdown
+pnpm add @llm-ui/react @llm-ui/markdown
 \`\`\`
 
 - *italic*, **bold**, ~strikethrough~

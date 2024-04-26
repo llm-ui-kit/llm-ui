@@ -2,20 +2,37 @@
 
 The code for the examples is in `src/app/examples`
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+Clone this repo and navigate to the examples directory:
 
 ```bash
+git clone
+cd llm-ui/examples/nextjs
+```
+
+Install the dependencies using your package manager:
+
+```bash
+pnpm install
+# or
+npm install
+# or
+yarn install
+# or
+bun install
+```
+
+Then, run the development server:
+
+```bash
+pnpm dev
+# or
 npm run dev
 # or
 yarn dev
 # or
-pnpm dev
-# or
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
