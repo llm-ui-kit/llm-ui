@@ -1,5 +1,11 @@
 # @llm-ui/gen
 
+## 0.0.3
+
+### Patch Changes
+
+- [#97](https://github.com/llm-ui-kit/llm-ui/pull/97) [`503a51a`](https://github.com/llm-ui-kit/llm-ui/commit/503a51a103b926f7daea123b446cc9b2ce9eac11) Thanks [@richardgill](https://github.com/richardgill)! - npm auto publish setup
+
 ## 0.0.2
 
 ### Patch Changes
