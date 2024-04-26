@@ -3,18 +3,67 @@ title: Examples
 description: ""
 ---
 
-import {
-  ExampleSideBySide,
-  ExampleTabs,
-} from "@/components/examples/ExampleMdx";
-import { markdownExample } from "@/components/examples/examples";
+llm-ui provides example code to get you started.
 
-llm-ui is a work in progress.
+# Browse the code
 
-Examples
+Our example code is in the [github repo](https://github.com/llm-ui-kit/llm-ui/tree/main/examples/nextjs/src/app/examples).
 
-```tsx
-<Example prop1={1} prop2={2} />
+# Running the examples
+
+llm-ui's includes examples for Next.js.
+
+Clone the llm-ui repo and navigate to the Next.js examples directory:
+
+```bash
+git clone https://github.com/llm-ui-kit/llm-ui.git
+cd llm-ui/examples/nextjs
 ```
 
-<ExampleTabs client:load example={markdownExample} />
+Install the dependencies using your package manager:
+
+```bash
+pnpm install
+# or
+npm install
+# or
+yarn install
+# or
+bun install
+```
+
+Then, run the development server:
+
+```bash
+pnpm dev
+# or
+npm run dev
+# or
+yarn dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+<Callout icon="⚠️" type="warning">
+
+Some examples require environment variables, see below for details.
+
+</Callout>
+
+# Environment variables
+
+Some examples require environment variables to run.
+
+Create an empty file in: `examples/nextjs/.env`
+
+## Set the environment variables
+
+You can see example environment variables in: [examples/nextjs/.env.example](https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/.env.example)
+
+# OpenAI
+
+Our OpenAI example requires you to set the `OPENAI_API_KEY` [environment variable](#environment-variables) in `examples/nextjs/.env`.
+
+You can generate/find your OpenAI key in their dashboard: https://platform.openai.com/api-keys

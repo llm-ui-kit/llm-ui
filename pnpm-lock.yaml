@@ -284,16 +284,16 @@ importers:
         version: 1.2.4
     devDependencies:
       '@llm-ui/buttons':
-        specifier: workspace:*
+        specifier: 0.0.4
         version: link:../../packages/buttons
       '@llm-ui/code':
-        specifier: workspace:*
+        specifier: 0.0.4
         version: link:../../packages/code
       '@llm-ui/markdown':
-        specifier: workspace:*
+        specifier: 0.0.4
         version: link:../../packages/markdown
       '@llm-ui/react':
-        specifier: workspace:*
+        specifier: 0.0.4
         version: link:../../packages/react
       '@tailwindcss/typography':
         specifier: ^0.5.10
