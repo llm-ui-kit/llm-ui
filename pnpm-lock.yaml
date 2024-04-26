@@ -281,16 +281,16 @@ importers:
         version: 1.2.4
     devDependencies:
       '@llm-ui/buttons':
-        specifier: 0.0.3
+        specifier: workspace:*
         version: link:../../packages/buttons
       '@llm-ui/code':
-        specifier: 0.0.3
+        specifier: workspace:*
         version: link:../../packages/code
       '@llm-ui/markdown':
-        specifier: 0.0.3
+        specifier: workspace:*
         version: link:../../packages/markdown
       '@llm-ui/react':
-        specifier: 0.0.3
+        specifier: workspace:*
         version: link:../../packages/react
       '@types/node':
         specifier: ^20
