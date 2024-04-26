@@ -2,6 +2,7 @@
   "version": "0.0.1",
   "type": "module",
   "name": "@llm-ui/gen",
+  "private": true,
   "scripts": {
     "gen": "tsx src/generatePackage.ts"
   },
