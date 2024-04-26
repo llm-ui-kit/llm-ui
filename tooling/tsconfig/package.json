@@ -1,5 +1,5 @@
 {
-  "name": "@llm-ui-internal/tsconfig",
+  "name": "@llm-ui/tsconfig",
   "version": "0.0.3",
   "private": true,
   "files": [
