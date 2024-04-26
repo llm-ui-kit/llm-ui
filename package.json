@@ -9,6 +9,7 @@
     "build": "nx run-many -t build",
     "typecheck": "nx run-many -t typecheck",
     "test": "nx run-many -t test -- run",
+    "publish": "pnpm build && pnpm changeset publish",
     "prepare": "husky",
     "format-check": "prettier --config=.prettierrc.precommit.mjs --check .",
     "format-write": "prettier --config=.prettierrc.precommit.mjs --write ."
