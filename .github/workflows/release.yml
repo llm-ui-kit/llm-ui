@@ -19,5 +19,6 @@ jobs:
         with:
           commit: "chore(release): 📦 version packages"
           title: "chore(release): 📦  version packages"
+          setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
