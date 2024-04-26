@@ -20,7 +20,7 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@llm-ui/tsconfig": "workspace:*",
+    "@llm-ui-internal/tsconfig": "workspace:*",
     "tsup": "^8.0.2",
     "typescript": "^5.4.3",
     "@types/react": "18.2.60",

@@ -4,7 +4,7 @@
   "scripts": {
     "ci": "pnpm lint && pnpm format-check && pnpm typecheck && pnpm test && pnpm build",
     "lint": "eslint .",
-    "gen": "nx run @llm-ui/gen:gen",
+    "gen": "nx run @llm-ui-internal/gen:gen",
     "dev": "nx run-many -t dev",
     "build": "nx run-many -t build",
     "typecheck": "nx run-many -t typecheck",
