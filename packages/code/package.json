@@ -27,7 +27,7 @@
     "@llm-ui/shared": "workspace:*"
   },
   "devDependencies": {
-    "@llm-ui/tsconfig": "workspace:*",
+    "@llm-ui-internal/tsconfig": "workspace:*",
     "@types/react": "18.2.60",
     "@types/react-dom": "18.2.19",
     "tsup": "^8.0.2",

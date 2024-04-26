@@ -281,16 +281,16 @@ importers:
         version: 1.2.4
     devDependencies:
       '@llm-ui/buttons':
-        specifier: workspace:*
+        specifier: 0.0.3
         version: link:../../packages/buttons
       '@llm-ui/code':
-        specifier: workspace:*
+        specifier: 0.0.3
         version: link:../../packages/code
       '@llm-ui/markdown':
-        specifier: workspace:*
+        specifier: 0.0.3
         version: link:../../packages/markdown
       '@llm-ui/react':
-        specifier: workspace:*
+        specifier: 0.0.3
         version: link:../../packages/react
       '@types/node':
         specifier: ^20
@@ -332,7 +332,7 @@ importers:
         specifier: ^18.0.0
         version: 18.2.0
     devDependencies:
-      '@llm-ui/tsconfig':
+      '@llm-ui-internal/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/tsconfig
       '@types/react':
@@ -363,7 +363,7 @@ importers:
         specifier: ^1.2.4
         version: 1.2.4
     devDependencies:
-      '@llm-ui/tsconfig':
+      '@llm-ui-internal/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/tsconfig
       '@types/react':
@@ -403,7 +403,7 @@ importers:
         specifier: ^18.0.0
         version: 18.2.0
     devDependencies:
-      '@llm-ui/tsconfig':
+      '@llm-ui-internal/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/tsconfig
       '@types/mdast':
@@ -428,7 +428,7 @@ importers:
         specifier: ^1.57.0
         version: 1.57.0
     devDependencies:
-      '@llm-ui/tsconfig':
+      '@llm-ui-internal/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/tsconfig
       '@testing-library/react-hooks':
@@ -462,7 +462,7 @@ importers:
         specifier: workspace:*
         version: link:../react
     devDependencies:
-      '@llm-ui/tsconfig':
+      '@llm-ui-internal/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/tsconfig
       tsup:
@@ -474,7 +474,7 @@ importers:
 
   tooling/gen:
     devDependencies:
-      '@llm-ui/tsconfig':
+      '@llm-ui-internal/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       fast-glob:

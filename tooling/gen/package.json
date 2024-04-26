@@ -1,13 +1,13 @@
 {
   "version": "0.0.3",
   "type": "module",
-  "name": "@llm-ui/gen",
+  "name": "@llm-ui-internal/gen",
   "private": true,
   "scripts": {
     "gen": "tsx src/generatePackage.ts"
   },
   "devDependencies": {
-    "@llm-ui/tsconfig": "workspace:*",
+    "@llm-ui-internal/tsconfig": "workspace:*",
     "fast-glob": "^3.3.2",
     "handlebars": "^4.7.8",
     "tsx": "^4.7.2",
