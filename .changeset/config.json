@@ -12,7 +12,5 @@
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": [
-    "tooling/*"
-  ]
+  "ignore": ["tooling/*"]
 }
