@@ -56,7 +56,7 @@ const example = `
 
 const Example = () => {
   const { isStreamFinished, output } = useStreamExample(example, {
-    delayMultiplier: 0.2,
+    delayMultiplier: 0,
   });
 
   const { blockMatches } = useLLMOutput({
