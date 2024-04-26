@@ -12,5 +12,10 @@
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": [
+    "@llm-ui/gen",
+    "@llm-ui/tsconfig",
+    "@llm-ui/www",
+    "@llm-ui/nextjs-examples"
+  ]
 }
