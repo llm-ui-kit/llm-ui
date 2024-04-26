@@ -2,6 +2,8 @@
 
 Display language model outputs in your React project.
 
+![readmeDemo](https://github.com/llm-ui-kit/llm-ui/assets/6640874/bd37553f-5259-4f47-88f5-8ff8702f679d)
+
 More examples: https://llm-ui.com.
 
 ## Features
