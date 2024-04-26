@@ -7,7 +7,7 @@ The code for the examples is in `src/app/examples`
 Clone this repo and navigate to the examples directory:
 
 ```bash
-git clone
+git clone https://github.com/llm-ui-kit/llm-ui.git
 cd llm-ui/examples/nextjs
 ```
 
@@ -36,3 +36,13 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+# Environment variables
+
+Some examples require environment variables to run.
+
+Create an empty file in: `examples/nextjs/.env`
+
+## Set the environment variables
+
+You can see example environment variables in: [examples/nextjs/.env.example](/examples/nextjs/.env.example)

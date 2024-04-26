@@ -20,7 +20,7 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: "Guides",
+      title: "Core",
       items: [
         { title: "LLM output hook", href: "/docs/llm-output-hook" },
         {
@@ -34,6 +34,19 @@ export const docsConfig: DocsConfig = {
         {
           title: "Buttons block",
           href: "/docs/blocks/buttons",
+        },
+      ],
+    },
+    {
+      title: "Examples",
+      items: [
+        {
+          title: "Getting started",
+          href: "/docs/examples",
+        },
+        {
+          title: "OpenAI",
+          href: "/docs/examples#openai",
         },
       ],
     },
