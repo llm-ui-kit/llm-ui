@@ -30,7 +30,7 @@
     "micromark-extension-gfm": "^3.0.0"
   },
   "devDependencies": {
-    "@llm-ui-internal/tsconfig": "workspace:*",
+    "@llm-ui/tsconfig": "workspace:*",
     "@types/mdast": "^4.0.3",
     "@types/react": "18.2.60",
     "@types/react-dom": "18.2.19",
