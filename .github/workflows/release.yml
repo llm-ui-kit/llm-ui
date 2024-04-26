@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-        token: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
+          token: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
 
       - uses: ./.github/shared
 
