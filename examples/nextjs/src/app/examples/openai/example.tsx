@@ -1,4 +1,4 @@
-w"use client";
+"use client";
 import type { CodeToHtmlProps } from "@llm-ui/code";
 import {
   codeBlockLookBack,
