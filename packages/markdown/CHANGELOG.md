@@ -1,5 +1,14 @@
 # @llm-ui/markdown
 
+## 0.0.4
+
+### Patch Changes
+
+- [#105](https://github.com/llm-ui-kit/llm-ui/pull/105) [`d735ab7`](https://github.com/llm-ui-kit/llm-ui/commit/d735ab78aa7766cb5fb1414b742fb48433c3deff) Thanks [@richardgill](https://github.com/richardgill)! - README.md updates for npm
+
+- Updated dependencies [[`d735ab7`](https://github.com/llm-ui-kit/llm-ui/commit/d735ab78aa7766cb5fb1414b742fb48433c3deff)]:
+  - @llm-ui/react@0.0.4
+
 ## 0.0.3
 
 ### Patch Changes
