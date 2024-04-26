@@ -12,6 +12,7 @@ concurrency:
 
 env:
   FORCE_COLOR: 3
+  OPENAI_API_KEY: "sk-xyz"
 
 jobs:
   format-check:

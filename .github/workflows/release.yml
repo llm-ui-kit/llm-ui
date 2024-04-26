@@ -7,6 +7,10 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+env:
+  FORCE_COLOR: 3
+  OPENAI_API_KEY: "sk-xyz"
+
 jobs:
   release:
     runs-on: ubuntu-latest
