@@ -21,12 +21,12 @@
     "@llm-ui/buttons": "workspace:*",
     "@llm-ui/code": "workspace:*",
     "@llm-ui/markdown": "workspace:*",
+    "@llm-ui/react": "workspace:*",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
-    "llm-ui": "workspace:*",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"

@@ -4,14 +4,14 @@ import {
   useLLMOutput,
   type BlockMatch,
   type UseLLMOutputReturn,
-} from "llm-ui/core";
+} from "@llm-ui/react/core";
 import {
   stringToTokenArray,
   useStreamTokenArray,
   type TokenWithDelay,
   type UseStreamTokenArrayOptions,
   type UseStreamWithProbabilitiesOptions,
-} from "llm-ui/examples";
+} from "@llm-ui/react/examples";
 import React, { useState, type ReactNode } from "react";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";

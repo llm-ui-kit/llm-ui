@@ -1,4 +1,7 @@
-import { stringToTokenArray, type TokenWithDelay } from "llm-ui/examples";
+import {
+  stringToTokenArray,
+  type TokenWithDelay,
+} from "@llm-ui/react/examples";
 import { defaultExampleProbs } from "./contants";
 
 export const ctaExample = `[Docs](https://llm-ui.com/docs)

@@ -21,7 +21,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "llm-ui": "workspace:*"
+    "@llm-ui/react": "workspace:*"
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",

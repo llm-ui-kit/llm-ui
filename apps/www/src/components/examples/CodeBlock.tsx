@@ -4,7 +4,10 @@ import {
   findCompleteCodeBlock,
   parseCompleteMarkdownCodeBlock,
 } from "@llm-ui/code";
-import { type LLMOutputBlock, type LLMOutputComponent } from "llm-ui/core";
+import {
+  type LLMOutputBlock,
+  type LLMOutputComponent,
+} from "@llm-ui/react/core";
 import { findPartialCodeBlock } from "node_modules/@llm-ui/code/src/matchers";
 import { CodeBlock } from "../ui/custom/CodeBlock";
 

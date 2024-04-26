@@ -1,4 +1,4 @@
-import { throttleBasic } from "llm-ui/throttle";
+import { throttleBasic } from "@llm-ui/react/throttle";
 
 export const throttleBuffer = throttleBasic({
   adjustPercentage: 0.35,
