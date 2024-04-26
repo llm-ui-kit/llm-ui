@@ -1,4 +1,4 @@
-"use client";
+w"use client";
 import type { CodeToHtmlProps } from "@llm-ui/code";
 import {
   codeBlockLookBack,
@@ -84,6 +84,7 @@ const Example = () => {
     eventSource.addEventListener("error", () => eventSource.close());
 
     eventSource.addEventListener("token", (e) => {
+      // avoid newlines getting messed up
       const token = e.data.replaceAll(NEWLINE, "\n");
       setOutput((prevResponse) => `${prevResponse}${token}`);
     });

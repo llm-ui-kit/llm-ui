@@ -8,8 +8,6 @@ const openai = new OpenAI();
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
-  const url = new URL(request.url);
-
   let responseStream = new TransformStream();
   const writer = responseStream.writable.getWriter();
   const encoder = new TextEncoder();
@@ -30,6 +28,7 @@ export async function GET(request: Request) {
     for await (const chunk of completion) {
       const content = chunk.choices[0].delta.content;
       if (content !== undefined && content !== null) {
+        // avoid newlines getting messed up
         const contentWithNewlines = content.replace(/\n/g, NEWLINE);
         await writer.write(
           encoder.encode(`event: token\ndata: ${contentWithNewlines}\n\n`),
