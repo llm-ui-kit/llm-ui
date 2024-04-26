@@ -5,11 +5,6 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
@@ -17,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+        token: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
+
       - uses: ./.github/shared
 
       - name: Create Release Pull Request
@@ -25,4 +23,4 @@ jobs:
           commit: "chore(release): 📦 version packages"
           title: "chore(release): 📦  version packages"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
