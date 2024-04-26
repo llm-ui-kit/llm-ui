@@ -10,9 +10,9 @@ import {
 import { allLangs, allLangsAlias } from "@llm-ui/code/shikiBundles/allLangs";
 import { allThemes } from "@llm-ui/code/shikiBundles/allThemes"; // WARNING: This import will increase your bundle size, see: https://llm-ui.com/docs/blocks/code#bundle-size
 import { markdownLookBack } from "@llm-ui/markdown";
+import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
+import { useStreamExample } from "@llm-ui/react/examples";
 import parseHtml from "html-react-parser";
-import { useLLMOutput, type LLMOutputComponent } from "llm-ui/core";
-import { useStreamExample } from "llm-ui/examples";
 import ReactMarkdown, { type Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";

@@ -1,4 +1,4 @@
-import { LLMOutputMatcher } from "llm-ui/core";
+import { LLMOutputMatcher } from "@llm-ui/react/core";
 import { CodeBlockOptions, getOptions } from "./options";
 
 import { regexMatcher } from "@llm-ui/shared";

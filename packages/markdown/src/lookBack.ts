@@ -1,4 +1,4 @@
-import { LookBackFunction } from "llm-ui/core";
+import { LookBackFunction } from "@llm-ui/react/core";
 import {
   markdownToVisibleText,
   markdownWithVisibleChars,

@@ -113,6 +113,9 @@ importers:
       '@llm-ui/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
+      '@llm-ui/react':
+        specifier: workspace:*
+        version: link:../../packages/react
       '@radix-ui/react-accordion':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
@@ -179,9 +182,6 @@ importers:
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
-      llm-ui:
-        specifier: workspace:*
-        version: link:../../packages/react
       lucide-react:
         specifier: ^0.358.0
         version: 0.358.0(react@18.2.0)
@@ -289,6 +289,9 @@ importers:
       '@llm-ui/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
+      '@llm-ui/react':
+        specifier: workspace:*
+        version: link:../../packages/react
       '@types/node':
         specifier: ^20
         version: 20.12.7
@@ -304,9 +307,6 @@ importers:
       eslint-config-next:
         specifier: 14.2.1
         version: 14.2.1(eslint@8.57.0)(typescript@5.4.3)
-      llm-ui:
-        specifier: workspace:*
-        version: link:../../packages/react
       postcss:
         specifier: ^8
         version: 8.4.38
@@ -319,15 +319,15 @@ importers:
 
   packages/buttons:
     dependencies:
+      '@llm-ui/react':
+        specifier: workspace:*
+        version: link:../react
       '@llm-ui/shared':
         specifier: workspace:*
         version: link:../shared
       fast-xml-parser:
         specifier: ^4.3.6
         version: 4.3.6
-      llm-ui:
-        specifier: workspace:*
-        version: link:../react
       react:
         specifier: ^18.0.0
         version: 18.2.0
@@ -350,12 +350,12 @@ importers:
 
   packages/code:
     dependencies:
+      '@llm-ui/react':
+        specifier: workspace:*
+        version: link:../react
       '@llm-ui/shared':
         specifier: workspace:*
         version: link:../shared
-      llm-ui:
-        specifier: workspace:*
-        version: link:../react
       react:
         specifier: ^18.0.0
         version: 18.2.0
@@ -384,7 +384,7 @@ importers:
 
   packages/markdown:
     dependencies:
-      llm-ui:
+      '@llm-ui/react':
         specifier: workspace:*
         version: link:../react
       mdast-util-from-markdown:
@@ -458,7 +458,7 @@ importers:
 
   packages/shared:
     dependencies:
-      llm-ui:
+      '@llm-ui/react':
         specifier: workspace:*
         version: link:../react
     devDependencies:

@@ -51,7 +51,7 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.5.0",
     "framer-motion": "^11.0.14",
-    "llm-ui": "workspace:*",
+    "@llm-ui/react": "workspace:*",
     "lucide-react": "^0.358.0",
     "next-themes": "^0.3.0",
     "pagefind": "^1.0.4",

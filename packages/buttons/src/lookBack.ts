@@ -1,4 +1,4 @@
-import { LookBackFunction } from "llm-ui/core";
+import { LookBackFunction } from "@llm-ui/react/core";
 import { Button, parseCompleteButtons } from "./parse";
 
 const buttonsToVisibleText = (buttons: string[] | undefined): string =>

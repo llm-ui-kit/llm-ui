@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "fast-xml-parser": "^4.3.6",
-    "llm-ui": "workspace:*",
+    "@llm-ui/react": "workspace:*",
     "@llm-ui/shared": "workspace:*"
   }
 }

@@ -23,7 +23,7 @@
     "react": "^18.0.0"
   },
   "dependencies": {
-    "llm-ui": "workspace:*",
+    "@llm-ui/react": "workspace:*",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-gfm": "^3.0.0",
     "mdast-util-to-markdown": "^2.1.0",

@@ -1,4 +1,4 @@
-import { MaybeLLMOutputMatch } from "llm-ui/core";
+import { MaybeLLMOutputMatch } from "@llm-ui/react/core";
 
 export const regexMatcher =
   (regex: RegExp) =>

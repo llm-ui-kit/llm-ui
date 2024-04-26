@@ -7,10 +7,10 @@ import { PackageInstall } from "@/components/docs/PackageInstall";
 
 # Installation
 
-<PackageInstall client:load packages={["llm-ui"]} />
+<PackageInstall client:load packages={["@llm-ui/react"]} />
 
 ```typescript
-import { useLLMOutput } from "llm-ui/core";
+import { useLLMOutput } from "@llm-ui/react/core";
 ```
 
 # Usage:
@@ -18,7 +18,7 @@ import { useLLMOutput } from "llm-ui/core";
 Example:
 
 ```typescript
-import { useLLMOutput } from "llm-ui/core";
+import { useLLMOutput } from "@llm-ui/react/core";
 
 const { blockMatches } = useLLMOutput({
   llmOutput: "llm output",

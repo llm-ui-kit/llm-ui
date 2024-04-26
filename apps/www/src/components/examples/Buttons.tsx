@@ -4,7 +4,7 @@ import {
   findPartialButtons,
   parseCompleteButtons,
 } from "@llm-ui/buttons";
-import type { LLMOutputBlock, LLMOutputComponent } from "llm-ui/core";
+import type { LLMOutputBlock, LLMOutputComponent } from "@llm-ui/react/core";
 import { Button } from "../ui/Button";
 
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
