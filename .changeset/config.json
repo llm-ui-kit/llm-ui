@@ -13,8 +13,6 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "@llm-ui/gen",
-    "@llm-ui/tsconfig",
     "@llm-ui/www",
     "@llm-ui/nextjs-examples"
   ]
