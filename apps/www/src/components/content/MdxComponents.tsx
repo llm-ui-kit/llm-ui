@@ -77,7 +77,7 @@ export const MdxComponents = {
     />
   ),
   ul: ({ className, ...props }: Props) => (
-    <ul className={cn("mb-6 ml-6 list-disc", className)} {...props} />
+    <ul className={cn("mb-2 ml-6 list-disc", className)} {...props} />
   ),
   ol: ({ className, ...props }: Props) => (
     <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
