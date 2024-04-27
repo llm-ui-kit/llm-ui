@@ -20,8 +20,5 @@
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": [
-    "@llm-ui/www",
-    "@llm-ui/nextjs-examples"
-  ]
+  "ignore": ["@llm-ui/www", "@llm-ui/nextjs-examples"]
 }
