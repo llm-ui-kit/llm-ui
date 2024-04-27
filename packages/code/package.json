@@ -6,9 +6,21 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./shikiBundles/allLangs": "./src/shikiBundles/allLangs.ts",
-    "./shikiBundles/allThemes": "./src/shikiBundles/allThemes.ts"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./shikiBundles/allLangs": {
+      "import": "./dist/shikiBundles/allLangs.js",
+      "require": "./dist/shikiBundles/allLangs.cjs",
+      "types": "./dist/shikiBundles/allLangs.d.ts"
+    },
+    "./shikiBundles/allThemes": {
+      "import": "./dist/shikiBundles/allThemes.js",
+      "require": "./dist/shikiBundles/allThemes.cjs",
+      "types": "./dist/shikiBundles/allThemes.d.ts"
+    }
   },
   "files": [
     "dist"
@@ -18,6 +30,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "build-watch": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest"
   },
