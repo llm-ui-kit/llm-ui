@@ -1,5 +1,5 @@
+import { MaybeLLMOutputMatch } from "@llm-ui/react/core";
 import { describe, expect, it } from "vitest";
-import { MaybeLLMOutputMatch } from "../../react/src/core/useLLMOutput/types";
 import { findCompleteCodeBlock, findPartialCodeBlock } from "./matchers";
 import { CodeBlockOptions } from "./options";
 
