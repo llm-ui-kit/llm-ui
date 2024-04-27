@@ -7,7 +7,15 @@
     }
   ],
   "commit": false,
-  "fixed": [],
+  "fixed": [
+    [
+      "@llm-ui/react",
+      "@llm-ui/markdown",
+      "@llm-ui/code",
+      "@llm-ui/buttons",
+      "@llm-ui/shared"
+    ]
+  ],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
