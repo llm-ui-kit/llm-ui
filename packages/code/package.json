@@ -1,6 +1,6 @@
 {
   "name": "@llm-ui/code",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

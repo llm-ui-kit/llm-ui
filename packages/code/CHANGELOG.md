@@ -1,5 +1,15 @@
 # @llm-ui/code
 
+## 0.0.5
+
+### Patch Changes
+
+- [#108](https://github.com/llm-ui-kit/llm-ui/pull/108) [`fc3d785`](https://github.com/llm-ui-kit/llm-ui/commit/fc3d78558ccaa5c7fa08e6ecfa44798abbe38d7d) Thanks [@richardgill](https://github.com/richardgill)! - tsup config fixed
+
+- Updated dependencies [[`fc3d785`](https://github.com/llm-ui-kit/llm-ui/commit/fc3d78558ccaa5c7fa08e6ecfa44798abbe38d7d)]:
+  - @llm-ui/react@0.0.5
+  - @llm-ui/shared@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes
