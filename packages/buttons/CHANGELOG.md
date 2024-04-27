@@ -1,5 +1,12 @@
 # @llm-ui/buttons
 
+## 0.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`3c07962`](https://github.com/llm-ui-kit/llm-ui/commit/3c07962143d6ca087fe06416754012f01845ac20)]:
+  - @llm-ui/shared@0.0.6
+
 ## 0.0.5
 
 ### Patch Changes

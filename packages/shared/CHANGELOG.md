@@ -1,5 +1,11 @@
 # @llm-ui/shared
 
+## 0.0.6
+
+### Patch Changes
+
+- [#110](https://github.com/llm-ui-kit/llm-ui/pull/110) [`3c07962`](https://github.com/llm-ui-kit/llm-ui/commit/3c07962143d6ca087fe06416754012f01845ac20) Thanks [@richardgill](https://github.com/richardgill)! - @llm-ui/shared tsup configuration
+
 ## 0.0.5
 
 ### Patch Changes
