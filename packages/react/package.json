@@ -2,13 +2,22 @@
   "name": "@llm-ui/react",
   "version": "0.0.4",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
-    "./core": "./src/core/index.ts",
-    "./examples": "./src/examples/index.ts",
-    "./throttle": "./src/throttle/index.ts"
+    "./core": {
+      "import": "./dist/core/index.js",
+      "require": "./dist/core/index.cjs",
+      "types": "./dist/core/index.d.ts"
+    },
+    "./examples": {
+      "import": "./dist/examples/index.js",
+      "require": "./dist/examples/index.cjs",
+      "types": "./dist/examples/index.d.ts"
+    },
+    "./throttle": {
+      "import": "./dist/throttle/index.js",
+      "require": "./dist/throttle/index.cjs",
+      "types": "./dist/throttle/index.d.ts"
+    }
   },
   "files": [
     "dist"
@@ -18,6 +27,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "build-watch": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest"
   },

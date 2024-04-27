@@ -36,7 +36,7 @@ export const useStreamTokenArray = (
   );
   const [isPlaying, setIsPlaying] = useState<boolean>(options.autoStart);
 
-  const clearTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const clearTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const pause = useCallback(() => {
     if (clearTimeoutRef.current) {

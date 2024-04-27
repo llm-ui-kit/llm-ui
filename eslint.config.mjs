@@ -53,6 +53,7 @@ export default [
     ignores: [
       `${appWww}/{public,dist,.vercel,.astro}/**/*`,
       `${appWww}/src/components/Posthog.astro`,
+      `packages/*/dist/**/*`,
     ],
   },
   ...typescriptProjects.map((project) => ({

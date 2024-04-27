@@ -14,7 +14,14 @@
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": "../..",
+    "paths": {
+      "@llm-ui/react/*": ["packages/react/src/*"],
+      "@llm-ui/markdown/*": ["packages/markdown/src/*"],
+      "@llm-ui/code/*": ["packages/code/src/*"],
+      "@llm-ui/buttons/*": ["packages/buttons/src/*"]
+    }
   },
   "include": ["*.ts"],
   "exclude": ["node_modules"]

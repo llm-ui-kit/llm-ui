@@ -1,0 +1,7 @@
+{
+  "targets": {
+    "build-remote": {
+      "dependsOn": ["^build"]
+    }
+  }
+}
