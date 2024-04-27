@@ -1,5 +1,12 @@
 # @llm-ui/markdown
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.0.7
+
 ## 0.0.5
 
 ### Patch Changes

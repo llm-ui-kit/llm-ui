@@ -1,5 +1,15 @@
 # @llm-ui/buttons
 
+## 0.0.7
+
+### Patch Changes
+
+- [#112](https://github.com/llm-ui-kit/llm-ui/pull/112) [`3cfc887`](https://github.com/llm-ui-kit/llm-ui/commit/3cfc887e47a5a7c3b7ee47c41e6947129bf585bb) Thanks [@richardgill](https://github.com/richardgill)! - 'fix' changeset versions together, fix pnpm bug
+
+- Updated dependencies []:
+  - @llm-ui/react@0.0.7
+  - @llm-ui/shared@0.0.7
+
 ## 0.0.6
 
 ### Patch Changes

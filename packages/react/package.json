@@ -1,6 +1,6 @@
 {
   "name": "@llm-ui/react",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "type": "module",
   "exports": {
     "./core": {
