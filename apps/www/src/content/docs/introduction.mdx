@@ -5,30 +5,19 @@ description: ""
 
 import { Image } from "astro:assets";
 import blocks from "@/assets/docs/blocks.png";
+import { introExample } from "../../snippets/quickStart";
 
 llm-ui is a React library for displaying large language model (LLM) outputs.
 
 The library operates on the string returned from an LLM. For example:
 
-<CodeBlock>
-````
-## Python
-```python
-def hello_llm_ui():
-  print("Hello llm-ui!")
-```
-## Typescript
-```typescript
-const helloLlmUi = () => {
-  console.log("Hello llm-ui!");
-};
-```
-````
-</CodeBlock>
+<CodeBlock code={introExample} lang="markdown" />
 
 llm-ui breaks this example into **blocks**:
 
 <Image width="600" src={blocks} alt="Blocks in llm-ui" />
+
+You can then render the **blocks** with your own components.
 
 ## Features
 

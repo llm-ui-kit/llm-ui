@@ -21,17 +21,10 @@ import getWasm from "shiki/wasm";
 // --- Markdown setup start ---
 
 // Customize this component with your own styling
-const MarkdownComponent: LLMOutputComponent<Options> = ({
-  blockMatch,
-  ...props
-}) => {
+const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
   const markdown = blockMatch.output;
   return (
-    <ReactMarkdown
-      className="prose prose-invert"
-      {...props}
-      remarkPlugins={[...(props.remarkPlugins ?? []), remarkGfm]}
-    >
+    <ReactMarkdown className="prose prose-invert" remarkPlugins={[remarkGfm]}>
       {markdown}
     </ReactMarkdown>
   );
@@ -72,7 +65,7 @@ const CodeBlock: LLMOutputComponent = ({ blockMatch }) => {
 // --- Code block setup end ---
 
 const example = `
-## Code block example
+## Demo
 
 Typescript:
 \`\`\`typescript
@@ -90,6 +83,10 @@ const Example = () => {
 
   const { blockMatches } = useLLMOutput({
     llmOutput: output,
+    fallbackBlock: {
+      component: MarkdownComponent,
+      lookBack: markdownLookBack,
+    },
     blocks: [
       {
         component: CodeBlock,
@@ -98,10 +95,6 @@ const Example = () => {
         lookBack: codeBlockLookBack(),
       },
     ],
-    fallbackBlock: {
-      component: MarkdownComponent,
-      lookBack: markdownLookBack,
-    },
     isStreamFinished,
   });
 

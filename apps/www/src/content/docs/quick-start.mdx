@@ -4,8 +4,28 @@ description: ""
 ---
 
 import { PackageInstall } from "../../components/docs/PackageInstall";
+import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
+import { CopyButton } from "@/components/ui/custom/CopyButton";
+import { GithubLinkButton } from "@/components/ui/custom/GithubLinkButton";
+import {
+  markdownQuickStart,
+  codeblockQuickstart,
+  llmUiOutputQuickStart,
+  llmUiOutputQuickStartStep,
+  quickStartExampleAll,
+  fullQuickStart,
+  markdownAndCodeGithubExampleUrl,
+} from "../../snippets/quickStart";
 
-# Installation
+Setup llm-ui with code and markdown blocks:
+
+<ExampleSideBySide
+  client:load
+  example={quickStartExampleAll}
+  options={{ delayMultiplier: 2.5 }}
+/>
+
+# Install dependencies
 
 <PackageInstall
   client:load
@@ -14,67 +34,46 @@ import { PackageInstall } from "../../components/docs/PackageInstall";
     "@llm-ui/markdown",
     "react-markdown",
     "remark-gfm",
+    "@llm-ui/code",
+    "shiki",
+    "html-react-parser",
   ]}
 />
 
-# Usage
+# Setup
 
-<CodeBlock>
+<div class="flex flex-row items-center gap-2">
+  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  <GithubLinkButton client:load href={markdownAndCodeGithubExampleUrl} />
+</div>
 
-```tsx
-import { markdownLookBack } from "@llm-ui/markdown";
-import {
-  LLMOutputFallbackBlock,
-  useLLMOutput,
-  type LLMOutputComponent,
-} from "@llm-ui/react/core";
-import { useStreamExample } from "@llm-ui/react/examples";
-import ReactMarkdown, { type Options } from "react-markdown";
-import remarkGfm from "remark-gfm";
+## Step 1: Create a markdown component
 
-const example = `
-## Example
+Create a component to render markdown using `react-markdown`.
 
-**Hello llm-ui!** this is [markdown](https://markdownguide.org)
-`;
+<CodeBlock code={markdownQuickStart} lang="tsx" />
+<div class="flex flex-row items-center gap-3">
+  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  Read more in the [markdown block docs](/docs/blocks/markdown)
+</div>
 
-const MarkdownComponent: LLMOutputComponent<Options> = ({
-  blockMatch,
-  ...props
-}) => {
-  const markdown = blockMatch.output;
-  return (
-    <ReactMarkdown
-      {...props}
-      remarkPlugins={[...(props.remarkPlugins ?? []), remarkGfm]}
-    >
-      {markdown}
-    </ReactMarkdown>
-  );
-};
+## Step 2: Create a code block component
 
-const Example = () => {
-  const { isStreamFinished, output } = useStreamExample(example);
+Create a component to render code blocks using [Shiki](https://shiki.style).
 
-  const { blockMatches } = useLLMOutput({
-    llmOutput: output,
-    blocks: [],
-    fallbackBlock: {
-      component: MarkdownComponent,
-      lookBack: markdownLookBack,
-    },
-    isStreamFinished,
-  });
+<CodeBlock code={codeblockQuickstart} lang="tsx" />
 
-  return (
-    <div>
-      {blockMatches.map((blockMatch, index) => {
-        const Component = blockMatch.block.component;
-        return <Component key={index} blockMatch={blockMatch} />;
-      })}
-    </div>
-  );
-};
-```
+<div class="flex flex-row items-center gap-3">
+  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  Read more in the [code block docs](/docs/blocks/code)
+</div>
 
-</CodeBlock>
+## Step 3: Render markdown and code with llm-ui
+
+Now we've created our components, we're ready to use [useLLMOutput](/docs/llm-output-hook) to render language model output which contains markdown and code.
+
+<CodeBlock code={llmUiOutputQuickStartStep} lang="tsx" />
+<div class="flex flex-row items-center gap-3">
+  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  Read more in the [useLLMOutput docs](/docs/llm-output-hook)
+</div>

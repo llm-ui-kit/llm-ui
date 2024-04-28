@@ -9,11 +9,7 @@ import { PackageInstall } from "@/components/docs/PackageInstall";
 
 <PackageInstall client:load packages={["@llm-ui/react"]} />
 
-```typescript
-import { useLLMOutput } from "@llm-ui/react/core";
-```
-
-# Usage:
+# Usage
 
 Example:
 
@@ -30,13 +26,16 @@ const { blockMatches } = useLLMOutput({
 });
 ```
 
-# `useLLMOutput` Parameters
+# `useLLMOutput` parameters
 
 ## `llmOutput` (string)
 
 The output from a single LLM chat response.
 
-You can pass the full chat response or pass the streamed chat responses as you receive more tokens from the LLM.
+You can pass either:
+
+- A fully completed chat response
+- An in-progress streamed chat response, as you receive more tokens from the LLM
 
 ## `isStreamFinished` (boolean)
 
@@ -101,7 +100,7 @@ The throttle function allows `useLLMOutput` to lag behind the actual LLM output.
 
 Read more about throttle functions in the [throttle docs](/docs/advanced/throttle-functions).
 
-# `useLLMOutput` Return value
+# `useLLMOutput` return value
 
 ## `isFinished` (boolean)
 
