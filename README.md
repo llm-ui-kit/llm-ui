@@ -9,9 +9,9 @@ More examples: https://llm-ui.com.
 ## Features
 
 - Markdown blocks
-  Streamed markdown support
-  Markdown syntax hidden from users e.g. ## for headers
-  Show’s one visible character at a time.
+  - Streamed markdown support
+  - Markdown syntax hidden from users e.g. ## for headers
+  - Show’s one visible character at a time.
 - Code blocks
   - Beautiful syntax highlighting for every language with Shiki
 - Build your own custom blocks
