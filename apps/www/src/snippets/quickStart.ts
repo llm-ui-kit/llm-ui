@@ -78,8 +78,6 @@ console.log('Hello llm-ui!');
 \\\`\\\`\\\`
 HIDDEN`;
 
-export const introExample = introExampleHidden.replaceAll("HIDDEN", "");
-
 export const quickStartExampleHidden = introExampleHidden;
 
 export const quickStartExampleVisible = quickStartExampleHidden.replace(
@@ -87,10 +85,9 @@ export const quickStartExampleVisible = quickStartExampleHidden.replace(
   "...continues...\n",
 );
 
-export const quickStartExampleAll = quickStartExampleHidden.replace(
-  /HIDDEN/g,
-  "",
-);
+export const introExampleAll = introExampleHidden
+  .replaceAll("HIDDEN", "")
+  .replaceAll("\\`", "`");
 
 export const getLlmUiOutputUsage = (
   example: string,
@@ -131,7 +128,7 @@ const Example = () => {
     .replaceAll("STEP1", step1Replace)
     .replaceAll("STEP2", step2Replace);
 
-export const llmUiOutputUsage = getLlmUiOutputUsage(quickStartExampleAll);
+export const llmUiOutputUsage = getLlmUiOutputUsage(introExampleAll);
 
 export const llmUiOutputUsageStep = getLlmUiOutputUsage(
   quickStartExampleVisible,

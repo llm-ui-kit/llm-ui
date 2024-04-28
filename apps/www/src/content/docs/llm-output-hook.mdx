@@ -13,6 +13,8 @@ import { PackageInstall } from "@/components/docs/PackageInstall";
 
 Example:
 
+<CodeBlockInline>
+
 ```typescript
 import { useLLMOutput } from "@llm-ui/react/core";
 
@@ -20,11 +22,13 @@ const { blockMatches } = useLLMOutput({
   llmOutput: "llm output",
   blocks: [],
   fallbackBlock: {
-    ...fallback block
+    // fallback block here
   },
   isStreamFinished,
 });
 ```
+
+</CodeBlockInline>
 
 # `useLLMOutput` parameters
 
@@ -48,6 +52,8 @@ An array of the blocks to try and match with the LLM output. The highest priorit
 For built-in blocks you'll usually get the block config from `@llm-ui/markdown`, `@llm-ui/code` etc.
 
 For your own custom blocks, please see the [custom-blocks](/docs/custom-blocks) docs for more details.
+
+<CodeBlockInline>
 
 ```tsx
 const block = {
@@ -88,6 +94,8 @@ const block = {
 }
 ```
 
+</CodeBlockInline>
+
 ## `fallbackBlock` (object)
 
 The fallback block is the block to use when no other block matches. This is usually the [markdown block](/docs/markdown-block).
@@ -113,6 +121,8 @@ The visible text that the user will see. Calculated by joining each block's `loo
 ## `blockMatches` (object)
 
 The block matches found in the `llmOutput` parameter.
+
+<CodeBlockInline>
 
 ```typescript
 const { blockMatches } = useLLMOutput({
@@ -158,6 +168,8 @@ console.log(blockMatches);
   priority: 2
 }]
 ```
+
+</CodeBlockInline>
 
 ## `finishedCount` (number)
 
