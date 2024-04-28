@@ -1,4 +1,3 @@
-"use client";
 import type { ShikiProps } from "@llm-ui/code";
 import { loadHighlighter } from "@llm-ui/code";
 import { allLangs, allLangsAlias } from "@llm-ui/code/shikiBundles/allLangs";
