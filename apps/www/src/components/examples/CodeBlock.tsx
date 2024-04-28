@@ -1,13 +1,13 @@
 import {
   codeBlockLookBack,
   findCompleteCodeBlock,
+  findPartialCodeBlock,
   parseCompleteMarkdownCodeBlock,
 } from "@llm-ui/code";
 import {
   type LLMOutputBlock,
   type LLMOutputComponent,
 } from "@llm-ui/react/core";
-import { findPartialCodeBlock } from "node_modules/@llm-ui/code/src/matchers";
 import { CodeBlock } from "../ui/custom/CodeBlock";
 
 const ShikiBlockComponent: LLMOutputComponent = ({ blockMatch }) => {
