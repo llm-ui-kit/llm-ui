@@ -1,4 +1,3 @@
-"use client";
 import { cn } from "@/lib/utils";
 import { type LLMOutputComponent } from "@llm-ui/react/core";
 import ReactMarkdown, { type Options } from "react-markdown";
