@@ -16,7 +16,6 @@ export const CodeBlockContainer: React.FC<{
 
   useEffect(() => {
     if (containerRef.current) {
-      console.log("ref", containerRef.current);
       const codeElement = containerRef.current.querySelector("code");
       if (codeElement) {
         setCode(codeElement.innerText);
