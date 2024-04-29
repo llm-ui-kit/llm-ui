@@ -6,6 +6,7 @@ description: ""
 import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
 import { PackageInstall } from "@/components/docs/PackageInstall";
 import { buttonPrompt } from "@llm-ui/buttons";
+import { GithubLinkButton } from "@/components/ui/custom/GithubLinkButton";
 
 # Features
 
@@ -26,7 +27,12 @@ The buttons block allows LLMs to display buttons in the LLM output.
 
 # Quick start
 
-Copy and paste [this file](https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/buttons/page.tsx) into your project to get started.
+<GithubLinkButton
+  client:load
+  href={
+    "https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/buttons/page.tsx"
+  }
+/>
 
 # Prompt
 
