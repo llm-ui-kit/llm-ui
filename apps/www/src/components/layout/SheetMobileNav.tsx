@@ -3,6 +3,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/Button";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet";
+import { H6 } from "@/components/ui/custom/Text";
 import { Icons } from "@/icons";
 import type { MainNavItem, SidebarNavItem } from "@/types";
 import { ThemeToggle } from "../ThemeToggle";
@@ -18,14 +19,13 @@ export const SheetMobileNav = ({
 }: SheetMobileProps) => {
   const [open, setOpen] = React.useState(false);
 
-  const mergedMainNavItems = [
-    { href: "/", title: "Home" },
-    ...mainNavItems,
-  ].filter(
-    (item, index, self) =>
-      index ===
-      self.findIndex((t) => t.href === item.href && t.title === item.title),
-  );
+  const mergedMainNavItems = [{ href: "/", title: "Home" }, ...mainNavItems]
+    .filter(
+      (item, index, self) =>
+        index ===
+        self.findIndex((t) => t.href === item.href && t.title === item.title),
+    )
+    .filter((item) => !item.isDesktopOnly);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -63,7 +63,8 @@ export const SheetMobileNav = ({
                 )}
               </div>
             ) : null}
-
+            <div className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+            <H6 className="mb-2">Docs</H6>
             {sidebarNavItems?.length ? (
               <div className="flex flex-col space-y-2">
                 {sidebarNavItems.map((item, index) => {
