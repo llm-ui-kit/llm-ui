@@ -18,30 +18,31 @@ import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
 import getWasm from "shiki/wasm";
 
-// --- Markdown setup start ---
+// -------Step 1: Create a markdown component-------
 
 // Customize this component with your own styling
 const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
   const markdown = blockMatch.output;
   return (
-    <ReactMarkdown className="prose prose-invert" remarkPlugins={[remarkGfm]}>
+    <ReactMarkdown className={"markdown"} remarkPlugins={[remarkGfm]}>
       {markdown}
     </ReactMarkdown>
   );
 };
-// --- Markdown setup end ---
 
-// --- Code block setup start ---
+// -------Step 2: Create a code block component-------
+
 const highlighter = loadHighlighter(
   getHighlighterCore({
     langs: allLangs,
     langAlias: allLangsAlias,
-    themes: allThemes, // WARNING: importing allThemes increases your bundle size, see: https://llm-ui.com/docs/blocks/code#bundle-size
+    themes: allThemes,
     loadWasm: getWasm,
   }),
 );
 
 const codeToHtmlProps: CodeToHtmlProps = {
+  // @ts-ignore
   theme: "github-dark",
 };
 
@@ -62,19 +63,19 @@ const CodeBlock: LLMOutputComponent = ({ blockMatch }) => {
   }
   return <>{parseHtml(html)}</>;
 };
-// --- Code block setup end ---
 
-const example = `
-## Demo
+// -------Step 3: Render markdown and code with llm-ui-------
 
-Typescript:
-\`\`\`typescript
-console.log('Hello llm-ui!');
-\`\`\`
+const example = `## Python
 
-Python:
 \`\`\`python
 print('Hello llm-ui!')
+\`\`\`
+
+## Typescript
+
+\`\`\`typescript
+console.log('Hello llm-ui!');
 \`\`\`
 `;
 
@@ -99,7 +100,7 @@ const Example = () => {
   });
 
   return (
-    <div className="flex flex-col gap-4">
+    <div>
       {blockMatches.map((blockMatch, index) => {
         const Component = blockMatch.block.component;
         return <Component key={index} blockMatch={blockMatch} />;

@@ -1,4 +1,4 @@
-export const markdownImports = `import ReactMarkdown, { type Options } from "react-markdown";
+export const markdownImports = `import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { type LLMOutputComponent } from "@llm-ui/react/core";
 `;
@@ -85,7 +85,9 @@ export const quickStartExampleVisible = quickStartExampleHidden.replace(
   "...continues...\n",
 );
 
-export const introExampleAll = introExampleHidden
+export const introExampleAll = introExampleHidden.replaceAll("HIDDEN", "");
+
+export const introExampleAllDisplay = introExampleHidden
   .replaceAll("HIDDEN", "")
   .replaceAll("\\`", "`");
 
@@ -154,13 +156,17 @@ import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
 import { useStreamExample } from "@llm-ui/react/examples";
 import parseHtml from "html-react-parser";
-import ReactMarkdown, { type Options } from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
 import getWasm from "shiki/wasm";
 `;
+const step1Comment = "// -------Step 1: Create a markdown component-------";
+const step2Comment = "// -------Step 2: Create a code block component-------";
+const step3Comment =
+  "// -------Step 3: Render markdown and code with llm-ui-------";
 
-export const fullQuickStart = `${markdownAndCodeblockImports}\n\n${markdownComponent}\n\n${codeblockComponent}\n\n${llmUiOutputUsage}\n\nexport default Example`;
+export const fullQuickStart = `${markdownAndCodeblockImports}\n\n${step1Comment}\n\n${markdownComponent}\n\n${step2Comment}\n\n${codeblockComponent}\n\n${step3Comment}\n\n${llmUiOutputUsage}\n\nexport default Example`;
 
 export const markdownAndCodeGithubExampleUrl =
   "https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/code-block/example.tsx";

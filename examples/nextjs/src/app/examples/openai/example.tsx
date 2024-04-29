@@ -13,44 +13,38 @@ import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
 import parseHtml from "html-react-parser";
 import { useCallback, useState } from "react";
-import ReactMarkdown, { type Options } from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
 import getWasm from "shiki/wasm";
 
 const NEWLINE = "$NEWLINE$";
 
-// --- Markdown setup start ---
+// -------Step 1: Create a markdown component-------
 
 // Customize this component with your own styling
-const MarkdownComponent: LLMOutputComponent<Options> = ({
-  blockMatch,
-  ...props
-}) => {
+const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
   const markdown = blockMatch.output;
   return (
-    <ReactMarkdown
-      className="prose prose-invert"
-      {...props}
-      remarkPlugins={[...(props.remarkPlugins ?? []), remarkGfm]}
-    >
+    <ReactMarkdown className={"markdown"} remarkPlugins={[remarkGfm]}>
       {markdown}
     </ReactMarkdown>
   );
 };
-// --- Markdown setup end ---
 
-// --- Code block setup start ---
+// -------Step 2: Create a code block component-------
+
 const highlighter = loadHighlighter(
   getHighlighterCore({
     langs: allLangs,
     langAlias: allLangsAlias,
-    themes: allThemes, // WARNING: importing allThemes increases your bundle size, see: https://llm-ui.com/docs/blocks/code#bundle-size
+    themes: allThemes,
     loadWasm: getWasm,
   }),
 );
 
 const codeToHtmlProps: CodeToHtmlProps = {
+  // @ts-ignore
   theme: "github-dark",
 };
 
@@ -71,7 +65,8 @@ const CodeBlock: LLMOutputComponent = ({ blockMatch }) => {
   }
   return <>{parseHtml(html)}</>;
 };
-// --- Code block setup end ---
+
+// -------Step 3: Render markdown and code with llm-ui-------
 
 const Example = () => {
   const [output, setOutput] = useState<string>("");
@@ -100,6 +95,10 @@ const Example = () => {
 
   const { blockMatches } = useLLMOutput({
     llmOutput: output,
+    fallbackBlock: {
+      component: MarkdownComponent,
+      lookBack: markdownLookBack(),
+    },
     blocks: [
       {
         component: CodeBlock,
@@ -108,15 +107,11 @@ const Example = () => {
         lookBack: codeBlockLookBack(),
       },
     ],
-    fallbackBlock: {
-      component: MarkdownComponent,
-      lookBack: markdownLookBack(),
-    },
     isStreamFinished,
   });
 
   return (
-    <div className="flex flex-col gap-4">
+    <div>
       {output.length === 0 && <button onClick={startChat}>Start</button>}
       {blockMatches.map((blockMatch, index) => {
         const Component = blockMatch.block.component;

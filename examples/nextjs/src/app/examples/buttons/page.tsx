@@ -8,29 +8,22 @@ import {
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
 import { useStreamExample } from "@llm-ui/react/examples";
-import ReactMarkdown, { type Options } from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-// --- Markdown setup start ---
+// -------Step 1: Create a markdown component-------
 
 // Customize this component with your own styling
-const MarkdownComponent: LLMOutputComponent<Options> = ({
-  blockMatch,
-  ...props
-}) => {
+const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
   const markdown = blockMatch.output;
   return (
-    <ReactMarkdown
-      {...props}
-      remarkPlugins={[...(props.remarkPlugins ?? []), remarkGfm]}
-    >
+    <ReactMarkdown className={"markdown"} remarkPlugins={[remarkGfm]}>
       {markdown}
     </ReactMarkdown>
   );
 };
-// --- Markdown setup end ---
 
-// --- Buttons block setup start ---
+// -------Step 2: Create a buttons component-------
 
 // Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
@@ -46,7 +39,8 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
     </div>
   );
 };
-// --- Buttons block setup end ---
+
+// -------Step 3: Render markdown with llm-ui-------
 
 const example = `
 ## Example
@@ -55,9 +49,7 @@ const example = `
 `;
 
 const Example = () => {
-  const { isStreamFinished, output } = useStreamExample(example, {
-    delayMultiplier: 0,
-  });
+  const { isStreamFinished, output } = useStreamExample(example);
 
   const { blockMatches } = useLLMOutput({
     llmOutput: output,
