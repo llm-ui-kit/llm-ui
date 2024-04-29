@@ -43,3 +43,7 @@ a {
 pre {
   @apply overflow-x-auto;
 }
+
+.markdown {
+  @apply prose prose-invert;
+}

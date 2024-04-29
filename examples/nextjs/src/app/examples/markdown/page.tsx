@@ -10,7 +10,11 @@ import remarkGfm from "remark-gfm";
 // Customize this component with your own styling
 const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
   const markdown = blockMatch.output;
-  return <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>;
+  return (
+    <ReactMarkdown className={"markdown"} remarkPlugins={[remarkGfm]}>
+      {markdown}
+    </ReactMarkdown>
+  );
 };
 
 // -------Step 2: Render markdown with llm-ui-------

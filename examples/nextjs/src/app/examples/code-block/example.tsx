@@ -23,7 +23,11 @@ import getWasm from "shiki/wasm";
 // Customize this component with your own styling
 const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
   const markdown = blockMatch.output;
-  return <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>;
+  return (
+    <ReactMarkdown className={"markdown"} remarkPlugins={[remarkGfm]}>
+      {markdown}
+    </ReactMarkdown>
+  );
 };
 
 // -------Step 2: Create a code block component-------
