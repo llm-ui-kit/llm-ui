@@ -1,7 +1,24 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+import { shikiConfig } from "../shikiConfig";
 import { CodeBlockContainer } from "../ui/custom/CodeBlock";
+
+interface Props extends HTMLAttributes<"div"> {
+  code: string;
+  visibleCode?: string;
+  lang?: string;
+}
+
+const { code, visibleCode, lang = "plain", ...attrs } = Astro.props;
+
+const highlighter = await shikiConfig.highlighter.highlighterPromise;
+const codeToRender = visibleCode ?? code;
+const shikiHtml = highlighter.codeToHtml(codeToRender, {
+  lang,
+  ...shikiConfig.codeToHtmlProps,
+});
 ---
 
-<CodeBlockContainer client:load>
-  <slot />
+<CodeBlockContainer className="my-6" code={code} client:load>
+  <div set:html={shikiHtml} />
 </CodeBlockContainer>

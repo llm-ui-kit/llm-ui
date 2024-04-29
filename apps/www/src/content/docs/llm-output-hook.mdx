@@ -9,13 +9,11 @@ import { PackageInstall } from "@/components/docs/PackageInstall";
 
 <PackageInstall client:load packages={["@llm-ui/react"]} />
 
-```typescript
-import { useLLMOutput } from "@llm-ui/react/core";
-```
-
-# Usage:
+# Usage
 
 Example:
+
+<CodeBlockInline>
 
 ```typescript
 import { useLLMOutput } from "@llm-ui/react/core";
@@ -24,19 +22,24 @@ const { blockMatches } = useLLMOutput({
   llmOutput: "llm output",
   blocks: [],
   fallbackBlock: {
-    ...fallback block
+    // fallback block here
   },
   isStreamFinished,
 });
 ```
 
-# `useLLMOutput` Parameters
+</CodeBlockInline>
+
+# `useLLMOutput` parameters
 
 ## `llmOutput` (string)
 
 The output from a single LLM chat response.
 
-You can pass the full chat response or pass the streamed chat responses as you receive more tokens from the LLM.
+You can pass either:
+
+- A fully completed chat response
+- An in-progress streamed chat response, as you receive more tokens from the LLM
 
 ## `isStreamFinished` (boolean)
 
@@ -49,6 +52,8 @@ An array of the blocks to try and match with the LLM output. The highest priorit
 For built-in blocks you'll usually get the block config from `@llm-ui/markdown`, `@llm-ui/code` etc.
 
 For your own custom blocks, please see the [custom-blocks](/docs/custom-blocks) docs for more details.
+
+<CodeBlockInline>
 
 ```tsx
 const block = {
@@ -89,6 +94,8 @@ const block = {
 }
 ```
 
+</CodeBlockInline>
+
 ## `fallbackBlock` (object)
 
 The fallback block is the block to use when no other block matches. This is usually the [markdown block](/docs/markdown-block).
@@ -101,7 +108,7 @@ The throttle function allows `useLLMOutput` to lag behind the actual LLM output.
 
 Read more about throttle functions in the [throttle docs](/docs/advanced/throttle-functions).
 
-# `useLLMOutput` Return value
+# `useLLMOutput` return value
 
 ## `isFinished` (boolean)
 
@@ -114,6 +121,8 @@ The visible text that the user will see. Calculated by joining each block's `loo
 ## `blockMatches` (object)
 
 The block matches found in the `llmOutput` parameter.
+
+<CodeBlockInline>
 
 ```typescript
 const { blockMatches } = useLLMOutput({
@@ -159,6 +168,8 @@ console.log(blockMatches);
   priority: 2
 }]
 ```
+
+</CodeBlockInline>
 
 ## `finishedCount` (number)
 

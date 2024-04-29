@@ -5,6 +5,17 @@ description: ""
 
 import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
 import { PackageInstall } from "@/components/docs/PackageInstall";
+import { CopyButton } from "@/components/ui/custom/CopyButton";
+import { GithubLinkButton } from "@/components/ui/custom/GithubLinkButton";
+import {
+  markdownQuickStart,
+  codeblockQuickstart,
+  llmUiOutputQuickStart,
+  llmUiOutputQuickStartStep,
+  introExampleAll,
+  fullQuickStart,
+  markdownAndCodeGithubExampleUrl,
+} from "../../../snippets/quickStart";
 
 The code block displays markdown code blocks in the LLM output using [shiki](https://shiki.style).
 
@@ -13,7 +24,7 @@ The code block displays markdown code blocks in the LLM output using [shiki](htt
 <ExampleSideBySide
   client:load
   example={"```typescript key=value\nconsole.log('hello llm-ui')\n```"}
-  options={{ delayMultiplier: 2.5 }}
+  options={{ delayMultiplier: 1 }}
 />
 
 - Code block syntax is hidden from users
@@ -28,7 +39,38 @@ The code block displays markdown code blocks in the LLM output using [shiki](htt
 
 # Quick start
 
-Copy and paste [this file](https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/code-block-all-themes/example.tsx) into your project to get started.
+<div class="flex flex-row items-center gap-2">
+  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  <GithubLinkButton client:load href={markdownAndCodeGithubExampleUrl} />
+</div>
+
+## Step 1: Create a markdown component
+
+Create a component to render markdown using `react-markdown`.
+
+<CodeBlock code={markdownQuickStart} lang="tsx" />
+<div class="flex flex-row items-center gap-3">
+  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  Read more in the [markdown block docs](/docs/blocks/markdown)
+</div>
+
+## Step 2: Create a code block component
+
+Create a component to render code blocks using [Shiki](https://shiki.style).
+
+<CodeBlock code={codeblockQuickstart} lang="tsx" />
+
+<CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+
+## Step 3: Render markdown and code with llm-ui
+
+Now we've created our components, we're ready to use [useLLMOutput](/docs/llm-output-hook) to render language model output which contains markdown and code.
+
+<CodeBlock code={llmUiOutputQuickStartStep} lang="tsx" />
+<div class="flex flex-row items-center gap-3">
+  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  Read more in the [useLLMOutput docs](/docs/llm-output-hook)
+</div>
 
 # Shiki setup
 
@@ -39,6 +81,8 @@ llm-ui's code block uses [shiki](https://shiki.style) to highlight code. Shiki i
 Shiki highlighters are loaded asynchronously, this can be awkward to work with in practice.
 
 llm-ui provides `loadHighlighter`, which proactively loads the shiki highlighter and returns a `LLMUIHighlighter` object:
+
+<CodeBlockInline>
 
 ```typescript
 import { loadHighlighter } from "@llm-ui/code";
@@ -60,6 +104,8 @@ const highlighter = loadHighlighter(
 }
 ```
 
+</CodeBlockInline>
+
 You should call `loadHighlighter` early in your application's lifecycle to ensure the highlighter is ready when you need it.
 
 If the highlighter is not yet loaded you could fallback to a `<pre>` element or a loading spinner.
@@ -67,6 +113,8 @@ If the highlighter is not yet loaded you could fallback to a `<pre>` element or 
 ## Next.js
 
 To use shiki client-side with next.js you must use [dynamic imports](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading#skipping-ssr) to avoid server-side-rendering.
+
+<CodeBlockInline>
 
 ```tsx
 // file: app/page.tsx
@@ -82,6 +130,8 @@ const Page = () => {
 export default Page;
 ```
 
+</CodeBlockInline>
+
 ## Bundle size
 
 ### Themes
@@ -89,6 +139,8 @@ export default Page;
 The [quick start example](#quick-start) imports all shiki themes. This is not recommended for production. To reduce bundle size, only import the themes you need.
 
 Change the import:
+
+<CodeBlockInline>
 
 ```tsx
 // Before:
@@ -98,7 +150,11 @@ import { allThemes } from "@llm-ui/code/shikiBundles/allThemes";
 import githubDark from "shiki/themes/github-dark.mjs";
 ```
 
+</CodeBlockInline>
+
 Pass the theme to the shiki highlighter:
+
+<CodeBlockInline>
 
 ```tsx
 const highlighter = loadHighlighter(
@@ -111,6 +167,8 @@ const highlighter = loadHighlighter(
 );
 ```
 
+</CodeBlockInline>
+
 Read the [Shiki docs](https://shiki.style/guide/bundles) for more information about how to reduce bundle size.
 
 ### Languages
@@ -118,6 +176,8 @@ Read the [Shiki docs](https://shiki.style/guide/bundles) for more information ab
 The [quick start example](#quick-start) imports all shiki languages. You may also want to reduce the number of languages imported depending on your usecase. Read the [Shiki docs](https://shiki.style/guide/install#fine-grained-bundle) for more information.
 
 # Code block functions
+
+<CodeBlockInline>
 
 ```tsx
 const codeBlock = {
@@ -127,6 +187,8 @@ const codeBlock = {
   component: () => <div>Code block</div>,
 };
 ```
+
+</CodeBlockInline>
 
 ## `findCompleteCodeBlock`
 
@@ -144,15 +206,21 @@ Find a [partial code block](/docs/llm-output-hook#blocks-object) in a string.
 
 All three block functions accept the follow options:
 
+<CodeBlockInline>
+
 ````typescript
 {
-  startEndChars: ["```", "~~~"],;
+  startEndChars: ["```", "~~~"],
 }
 ````
+
+</CodeBlockInline>
 
 # Helper functions
 
 ## `useCodeBlockToHtml`
+
+<CodeBlockInline>
 
 ````typescript
 import { useCodeBlockToHtml } from "@llm-ui/code";
@@ -173,9 +241,13 @@ const MyComponent = () => {
 }
 ````
 
+</CodeBlockInline>
+
 `useCodeBlockToHtml` converts a markdown code block to highlighted HTML and code (string).
 
 ## `useCodeToHtml`
+
+<CodeBlockInline>
 
 ````typescript
 import { useCodeToHtml } from "@llm-ui/code";
@@ -195,11 +267,15 @@ const MyComponent = () => {
 }
 ````
 
+</CodeBlockInline>
+
 `useCodeToHtml` converts a markdown code block to highlighted HTML.
 
 ## `parseCompleteMarkdownCodeBlock`
 
 Parses a complete code block:
+
+<CodeBlockInline>
 
 ````typescript
 import { parseCompleteMarkdownCodeBlock } from "@llm-ui/code";
@@ -217,9 +293,13 @@ parseCompleteMarkdownCodeBlock(
 // }
 ````
 
+</CodeBlockInline>
+
 ## `parsePartialMarkdownCodeBlock`
 
 Parses a partial code block:
+
+<CodeBlockInline>
 
 ````typescript
 import { parsePartialMarkdownCodeBlock } from "@llm-ui/code";
@@ -236,3 +316,5 @@ parsePartialMarkdownCodeBlock(
 //   meta: 'title="file.ts"'
 // }
 ````
+
+</CodeBlockInline>

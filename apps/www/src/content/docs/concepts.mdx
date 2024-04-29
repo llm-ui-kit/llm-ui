@@ -6,38 +6,31 @@ description: ""
 import blocks from "@/assets/docs/blocks.png";
 
 import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
+import { introExampleAll } from "../../snippets/quickStart";
 
 At the core of llm-ui is `useLLMOutput`. This hook takes a single chat response from an LLM and breaks it into **blocks**.
 
 # Blocks
 
-`useLLMOutput` takes `blocks` and `fallbackBlock` as arguments.
+`useLLMOutput` takes `blocks` and `fallbackBlock` as parameters.
 
 - `blocks` is an array of block configurations that `useLLMOutput` attempts to match against the LLM output.
-- `fallbackBlock` is used for sections of the chat response when no other block matches.
+- `fallbackBlock` is used for parts of the chat response when no other block matches.
 
-We could pass:
+## Example
 
-- `blocks: [codeBlock]` which matches codeblock starting with <code>```</code>.
+Language model markdown output:
+
+<CodeBlock code={introExampleAll} lang="markdown" />
+
+If we pass the following parameters to `useLLMOutput`:
+
+- `blocks: [codeBlock]` which matches code blocks starting with <code>```</code>.
 - `fallbackBlock: markdownBlock` which assumes anything else is markdown .
 
-`useLLMOutput` will then break the chat response into code and markdown blocks:
+`useLLMOutput` will break the chat response into code and markdown blocks.
 
-````
-## Python
-```python
-def hello_llm_ui():
-  print("Hello llm-ui!")
-```
-## Typescript
-```typescript
-const helloLlmUi = () => {
-  console.log("Hello llm-ui!");
-};
-```
-````
-
-llm-ui breaks this example into **blocks**:
+llm-ui breaks the example into **blocks**:
 
 <Image width="600" src={blocks} alt="Blocks in llm-ui" />
 
