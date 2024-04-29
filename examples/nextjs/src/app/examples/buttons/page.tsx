@@ -71,7 +71,7 @@ const Example = () => {
     ],
     fallbackBlock: {
       component: MarkdownComponent,
-      lookBack: markdownLookBack,
+      lookBack: markdownLookBack(),
     },
     isStreamFinished,
   });
