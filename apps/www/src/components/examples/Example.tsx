@@ -115,7 +115,7 @@ type ExampleCommonProps = {
   hideFirstLoop?: boolean;
   throttle?: ThrottleType;
   loop?: boolean;
-  showControls?: boolean;
+  showSlider?: boolean;
 };
 
 export type ExampleTokenArrayProps = ExampleCommonProps &
@@ -191,7 +191,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   showPlayPause = true,
   hideFirstLoop,
   loop = true,
-  showControls = true,
+  showSlider = true,
 }) => {
   const [hasLooped, setHasLooped] = useState(false);
 
@@ -253,28 +253,27 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
           tabIndex={tabIndex}
         />
       </NeverShrinkContainer>
-      {showControls && (
-        <Controls
-          className={""}
-          delayMultiplier={delayMultiplier}
-          onDelayMultiplier={setDelayMultiplier}
-          onPause={pause}
-          onStart={() => {
-            if (isFinished) {
-              reset();
-            }
-            start();
-            restart();
-            setHasLooped(true);
-          }}
-          showPlayPause={showPlayPause}
-          isPlaying={isPlaying}
-          desktopTabs={tabs}
-          onDesktopTabIndexChange={setTabIndex}
-          mobileTabs={tabs}
-          onMobileTabIndexChange={setTabIndex}
-        />
-      )}
+      <Controls
+        className={""}
+        delayMultiplier={delayMultiplier}
+        onDelayMultiplier={setDelayMultiplier}
+        onPause={pause}
+        onStart={() => {
+          if (isFinished) {
+            reset();
+          }
+          start();
+          restart();
+          setHasLooped(true);
+        }}
+        showPlayPause={showPlayPause}
+        showSlider={showSlider}
+        isPlaying={isPlaying}
+        desktopTabs={tabs}
+        onDesktopTabIndexChange={setTabIndex}
+        mobileTabs={tabs}
+        onMobileTabIndexChange={setTabIndex}
+      />
     </div>
   );
 };
@@ -297,7 +296,7 @@ export const ExampleSideBySideTokenArray: React.FC<
   hideFirstLoop,
   throttle,
   loop = true,
-  showControls = true,
+  showSlider = true,
   ...props
 }) => {
   const [hasLooped, setHasLooped] = useState(false);
@@ -401,27 +400,27 @@ export const ExampleSideBySideTokenArray: React.FC<
           </OutputBackground>
         </SideBySideContainer>
       </NeverShrinkContainer>
-      {showControls && (
-        <Controls
-          delayMultiplier={delayMultiplier}
-          onDelayMultiplier={setDelayMultiplier}
-          isPlaying={isPlaying}
-          showPlayPause={showPlayPause}
-          onPause={pause}
-          onStart={() => {
-            if (isFinished) {
-              reset();
-            }
-            start();
-            restart();
-            setHasLooped(true);
-          }}
-          desktopTabs={desktopTabs}
-          mobileTabs={mobileTabs}
-          onDesktopTabIndexChange={setDesktopTabIndex}
-          onMobileTabIndexChange={setMobileTabIndex}
-        />
-      )}
+
+      <Controls
+        delayMultiplier={delayMultiplier}
+        onDelayMultiplier={setDelayMultiplier}
+        isPlaying={isPlaying}
+        showPlayPause={showPlayPause}
+        showSlider={showSlider}
+        onPause={pause}
+        onStart={() => {
+          if (isFinished) {
+            reset();
+          }
+          start();
+          restart();
+          setHasLooped(true);
+        }}
+        desktopTabs={desktopTabs}
+        mobileTabs={mobileTabs}
+        onDesktopTabIndexChange={setDesktopTabIndex}
+        onMobileTabIndexChange={setMobileTabIndex}
+      />
     </div>
   );
 };
