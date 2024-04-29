@@ -85,7 +85,7 @@ const Example = () => {
     llmOutput: output,
     fallbackBlock: {
       component: MarkdownComponent,
-      lookBack: markdownLookBack,
+      lookBack: markdownLookBack(),
     },
     blocks: [
       {

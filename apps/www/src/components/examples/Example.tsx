@@ -212,7 +212,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
       blocks: [codeBlockBlock, buttonsBlock],
       fallbackBlock: {
         component: Markdown,
-        lookBack: markdownLookBack,
+        lookBack: markdownLookBack(),
       },
       throttle: getThrottle(throttle),
       isStreamFinished,
@@ -320,7 +320,7 @@ export const ExampleSideBySideTokenArray: React.FC<
       blocks: [codeBlockBlock, buttonsBlock],
       fallbackBlock: {
         component: Markdown,
-        lookBack: markdownLookBack,
+        lookBack: markdownLookBack(),
       },
       throttle: getThrottle(throttle),
       isStreamFinished,
