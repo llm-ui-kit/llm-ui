@@ -42,18 +42,20 @@ export const PackageInstall: React.FC<{ packages: string[] }> = ({
         <TabsTrigger value="yarn">yarn</TabsTrigger>
         <TabsTrigger value="bun">bun</TabsTrigger>
       </TabsList>
-      <TabsContent value="pnpm">
-        <PackageInstallCodeBlock packageManager="pnpm" packages={packages} />
-      </TabsContent>
-      <TabsContent value="npm">
-        <PackageInstallCodeBlock packageManager="npm" packages={packages} />
-      </TabsContent>
-      <TabsContent value="yarn">
-        <PackageInstallCodeBlock packageManager="yarn" packages={packages} />
-      </TabsContent>
-      <TabsContent value="bun">
-        <PackageInstallCodeBlock packageManager="bun" packages={packages} />
-      </TabsContent>
+      <div className="max-w-full">
+        <TabsContent value="pnpm">
+          <PackageInstallCodeBlock packageManager="pnpm" packages={packages} />
+        </TabsContent>
+        <TabsContent value="npm">
+          <PackageInstallCodeBlock packageManager="npm" packages={packages} />
+        </TabsContent>
+        <TabsContent value="yarn">
+          <PackageInstallCodeBlock packageManager="yarn" packages={packages} />
+        </TabsContent>
+        <TabsContent value="bun">
+          <PackageInstallCodeBlock packageManager="bun" packages={packages} />
+        </TabsContent>
+      </div>
     </Tabs>
   );
 };
