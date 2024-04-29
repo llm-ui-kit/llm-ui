@@ -13,7 +13,7 @@ The code block displays markdown code blocks in the LLM output using [shiki](htt
 <ExampleSideBySide
   client:load
   example={"```typescript key=value\nconsole.log('hello llm-ui')\n```"}
-  options={{ delayMultiplier: 2.5 }}
+  options={{ delayMultiplier: 1 }}
 />
 
 - Code block syntax is hidden from users
@@ -40,6 +40,8 @@ Shiki highlighters are loaded asynchronously, this can be awkward to work with i
 
 llm-ui provides `loadHighlighter`, which proactively loads the shiki highlighter and returns a `LLMUIHighlighter` object:
 
+<CodeBlockInline>
+
 ```typescript
 import { loadHighlighter } from "@llm-ui/code";
 import { getHighlighterCore } from "shiki/core";
@@ -60,6 +62,8 @@ const highlighter = loadHighlighter(
 }
 ```
 
+</CodeBlockInline>
+
 You should call `loadHighlighter` early in your application's lifecycle to ensure the highlighter is ready when you need it.
 
 If the highlighter is not yet loaded you could fallback to a `<pre>` element or a loading spinner.
@@ -67,6 +71,8 @@ If the highlighter is not yet loaded you could fallback to a `<pre>` element or 
 ## Next.js
 
 To use shiki client-side with next.js you must use [dynamic imports](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading#skipping-ssr) to avoid server-side-rendering.
+
+<CodeBlockInline>
 
 ```tsx
 // file: app/page.tsx
@@ -82,6 +88,8 @@ const Page = () => {
 export default Page;
 ```
 
+</CodeBlockInline>
+
 ## Bundle size
 
 ### Themes
@@ -89,6 +97,8 @@ export default Page;
 The [quick start example](#quick-start) imports all shiki themes. This is not recommended for production. To reduce bundle size, only import the themes you need.
 
 Change the import:
+
+<CodeBlockInline>
 
 ```tsx
 // Before:
@@ -98,7 +108,11 @@ import { allThemes } from "@llm-ui/code/shikiBundles/allThemes";
 import githubDark from "shiki/themes/github-dark.mjs";
 ```
 
+</CodeBlockInline>
+
 Pass the theme to the shiki highlighter:
+
+<CodeBlockInline>
 
 ```tsx
 const highlighter = loadHighlighter(
@@ -111,6 +125,8 @@ const highlighter = loadHighlighter(
 );
 ```
 
+</CodeBlockInline>
+
 Read the [Shiki docs](https://shiki.style/guide/bundles) for more information about how to reduce bundle size.
 
 ### Languages
@@ -118,6 +134,8 @@ Read the [Shiki docs](https://shiki.style/guide/bundles) for more information ab
 The [quick start example](#quick-start) imports all shiki languages. You may also want to reduce the number of languages imported depending on your usecase. Read the [Shiki docs](https://shiki.style/guide/install#fine-grained-bundle) for more information.
 
 # Code block functions
+
+<CodeBlockInline>
 
 ```tsx
 const codeBlock = {
@@ -127,6 +145,8 @@ const codeBlock = {
   component: () => <div>Code block</div>,
 };
 ```
+
+</CodeBlockInline>
 
 ## `findCompleteCodeBlock`
 
@@ -144,15 +164,21 @@ Find a [partial code block](/docs/llm-output-hook#blocks-object) in a string.
 
 All three block functions accept the follow options:
 
+<CodeBlockInline>
+
 ````typescript
 {
-  startEndChars: ["```", "~~~"],;
+  startEndChars: ["```", "~~~"],
 }
 ````
+
+</CodeBlockInline>
 
 # Helper functions
 
 ## `useCodeBlockToHtml`
+
+<CodeBlockInline>
 
 ````typescript
 import { useCodeBlockToHtml } from "@llm-ui/code";
@@ -173,9 +199,13 @@ const MyComponent = () => {
 }
 ````
 
+</CodeBlockInline>
+
 `useCodeBlockToHtml` converts a markdown code block to highlighted HTML and code (string).
 
 ## `useCodeToHtml`
+
+<CodeBlockInline>
 
 ````typescript
 import { useCodeToHtml } from "@llm-ui/code";
@@ -195,11 +225,15 @@ const MyComponent = () => {
 }
 ````
 
+</CodeBlockInline>
+
 `useCodeToHtml` converts a markdown code block to highlighted HTML.
 
 ## `parseCompleteMarkdownCodeBlock`
 
 Parses a complete code block:
+
+<CodeBlockInline>
 
 ````typescript
 import { parseCompleteMarkdownCodeBlock } from "@llm-ui/code";
@@ -217,9 +251,13 @@ parseCompleteMarkdownCodeBlock(
 // }
 ````
 
+</CodeBlockInline>
+
 ## `parsePartialMarkdownCodeBlock`
 
 Parses a partial code block:
+
+<CodeBlockInline>
 
 ````typescript
 import { parsePartialMarkdownCodeBlock } from "@llm-ui/code";
@@ -236,3 +274,5 @@ parsePartialMarkdownCodeBlock(
 //   meta: 'title="file.ts"'
 // }
 ````
+
+</CodeBlockInline>
