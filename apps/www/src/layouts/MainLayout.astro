@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { siteConfig } from "@/config/site";
 import { Icon } from "astro-icon/components";
 import { marketingConfig } from "@/config/marketing";
+import { docsConfig } from "@/config/docs";
 import MainNav from "@/components/layout/MainNav.astro";
 
 type Props = {
@@ -26,6 +27,7 @@ const { title, description, mainClass, bodyClass } = Astro.props;
     <MainNav items={marketingConfig.mainNav} slot="left-header" />
     <SheetMobileNav
       mainNavItems={marketingConfig.mainNav}
+      sidebarNavItems={docsConfig.sidebarNav}
       slot="mobile-nav-header"
       client:load
     />
