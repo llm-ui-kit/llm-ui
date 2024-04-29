@@ -1,0 +1,11 @@
+---
+import { CopyButton } from "@/components/ui/custom/CopyButton";
+
+type Props = {
+  text?: string;
+  toCopy: string;
+};
+const { toCopy, text = "Copy full example" } = Astro.props;
+---
+
+<CopyButton className="max-md:hidden" client:load text={text} toCopy={toCopy} />
