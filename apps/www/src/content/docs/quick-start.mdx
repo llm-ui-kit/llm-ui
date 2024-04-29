@@ -80,3 +80,27 @@ Now we've created our components, we're ready to use [useLLMOutput](/docs/llm-ou
   <CopyExampleButton toCopy={fullQuickStart} />
   Read more in the [useLLMOutput docs](/docs/llm-output-hook)
 </CopyDocsContainer>
+
+# Setting up Shiki with Next.js
+
+To use shiki client-side with next.js you must use [dynamic imports](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading#skipping-ssr) to avoid server-side-rendering.
+
+<CodeBlockInline>
+
+```tsx
+// file: app/page.tsx
+
+import dynamic from "next/dynamic";
+
+const Page = () => {
+  // Code which uses Shiki must be imported dynamically
+  const Example = dynamic(() => import("./example"), { ssr: false });
+  return <Example />;
+};
+
+export default Page;
+```
+
+</CodeBlockInline>
+
+Read more about setting up Shiki in the [code block docs](/docs/blocks/code#shiki-setup).
