@@ -208,9 +208,24 @@ const codeBlock = {
 
 Finds a [complete code block](/docs/llm-output-hook#blocks-object) in a string.
 
+Example:
+
+````
+```ts
+console.log('hello llm-ui');
+```
+````
+
 ## `findPartialCodeBlock`
 
 Find a [partial code block](/docs/llm-output-hook#blocks-object) in a string.
+
+Example:
+
+````
+```ts
+console.log(
+````
 
 ## `codeBlockLookBack`
 
@@ -233,6 +248,8 @@ All three block functions accept the follow options:
 # Helper functions
 
 ## `useCodeBlockToHtml`
+
+`useCodeBlockToHtml` converts a markdown code block to highlighted HTML and code (string).
 
 <CodeBlockInline>
 
@@ -257,21 +274,21 @@ const MyComponent = () => {
 
 </CodeBlockInline>
 
-`useCodeBlockToHtml` converts a markdown code block to highlighted HTML and code (string).
-
 ## `useCodeToHtml`
+
+`useCodeToHtml` converts a markdown code block to highlighted HTML.
 
 <CodeBlockInline>
 
-````typescript
+```typescript
 import { useCodeToHtml } from "@llm-ui/code";
 
 const MyComponent = () => {
 
   const html = useCodeToHtml({
-    markdownCodeBlock: "```typescript\nconsole.log('llm-ui');\n```",
+    code: "console.log('llm-ui');",
     highlighter, // highlighter from loadHighlighter function
-    codeToHtmlProps, // Shiki codeToHtmlProps
+    codeToHtmlProps: { lang: 'typescript' }, // Shiki codeToHtmlProps
   });
 
   console.log(html);
@@ -279,11 +296,9 @@ const MyComponent = () => {
 
   ...
 }
-````
+```
 
 </CodeBlockInline>
-
-`useCodeToHtml` converts a markdown code block to highlighted HTML.
 
 ## `parseCompleteMarkdownCodeBlock`
 

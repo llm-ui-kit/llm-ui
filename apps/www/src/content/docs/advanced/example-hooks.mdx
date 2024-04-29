@@ -7,38 +7,44 @@ llm-ui provides convenient hooks to help demo streaming LLM output without needi
 
 Example:
 
+<CodeBlockInline>
+
 ```ts
 import { useStreamExample } from "@llm-ui/react/examples";
 
-const example = "# Hello llm-ui!";
-const {
-  output,
-  isStreamStarted,
-  isStreamFinished,
-  isPlaying,
-  pause,
-  reset,
-  start,
-} = useStreamExample(example, {
-  autoStart: true,
-  autoStartDelayMs: 1000,
-  startIndex: 0,
-  delayMultiplier: 2,
-});
+const Example = () => {
+  const example = "# Hello llm-ui!";
+  const {
+    output,
+    isStreamStarted,
+    isStreamFinished,
+    isPlaying,
+    pause,
+    reset,
+    start,
+  } = useStreamExample(example, {
+    autoStart: true,
+    autoStartDelayMs: 1000,
+    startIndex: 0,
+    delayMultiplier: 2,
+  });
 
-console.log(output);
-// => ""
+  console.log(output);
+  // => ""
 
-// ...later
+  // ...later
 
-console.log(output);
-// => "# Hello"
+  console.log(output);
+  // => "# Hello"
 
-// ...later
+  // ...later
 
-console.log(output);
-// => "# Hello llm-ui!"
+  console.log(output);
+  // => "# Hello llm-ui!"
+};
 ```
+
+</CodeBlockInline>
 
 # Common options
 
@@ -94,6 +100,8 @@ Alias: `useStreamWithProbabilities`
 
 `useStreamExample` uses probabilities to produce realistic LLM output.
 
+<CodeBlockInline>
+
 ```ts
 const { output } = useStreamExample(example, {
   tokenCharsProbabilities: [
@@ -112,6 +120,8 @@ const { output } = useStreamExample(example, {
   ],
 });
 ```
+
+</CodeBlockInline>
 
 ## Options
 
@@ -133,9 +143,13 @@ An array of objects with the following properties:
 
 `useStreamTokenArray` accepts an array of tokens with a delay for complete control of the stream:
 
+<CodeBlockInline>
+
 ```ts
 const { output } = useStreamTokenArray([
   { token: "Hel", delayMs: 1000 },
   { token: "lo", delayMs: 2000 },
 ]);
 ```
+
+</CodeBlockInline>

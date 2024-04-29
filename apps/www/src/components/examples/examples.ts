@@ -26,7 +26,7 @@ export const markdownExample = `### Header
 *italic*
 
 
-***something***
+***bold and italic***
 
 [Link](https://llm-ui.com/docs)
 

@@ -24,7 +24,7 @@ const { blockMatches } = useLLMOutput({
   fallbackBlock: {
     // fallback block here
   },
-  isStreamFinished,
+  isStreamFinished: false,
 });
 ```
 
@@ -45,13 +45,15 @@ You can pass either:
 
 Whether the LLM has finished streaming the chat response.
 
+`isStreamFinished` can be used by [throttle functions](/docs/advanced/throttle-functions) to determine how far to lag behind the LLM output.
+
 ## `blocks` (object[])
 
 An array of the blocks to try and match with the LLM output. The highest priority is given to the first block in the array.
 
 For built-in blocks you'll usually get the block config from `@llm-ui/markdown`, `@llm-ui/code` etc.
 
-For your own custom blocks, please see the [custom-blocks](/docs/custom-blocks) docs for more details.
+For your own custom blocks, please see the [custom-blocks](/docs/advanced/custom-blocks) docs for more details.
 
 <CodeBlockInline>
 
@@ -98,7 +100,7 @@ const block = {
 
 ## `fallbackBlock` (object)
 
-The fallback block is the block to use when no other block matches. This is usually the [markdown block](/docs/markdown-block).
+The fallback block is the block to use when no other block matches. This is usually the [markdown block](/docs/blocks/markdown).
 
 <CodeBlockInline>
 
@@ -131,7 +133,7 @@ const fallbackBlock = {
 
 Defaults to [`throttleBasic`](/docs/advanced/throttle-functions#throttlebasic).
 
-The throttle function allows `useLLMOutput` to lag behind the actual LLM output.
+The throttle function determines how `useLLMOutput` lags behind the actual LLM output.
 
 Read more about throttle functions in the [throttle docs](/docs/advanced/throttle-functions).
 
