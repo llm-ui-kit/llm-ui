@@ -5,7 +5,6 @@ description: ""
 
 import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
 import { PackageInstall } from "@/components/docs/PackageInstall";
-import { CopyButton } from "@/components/ui/custom/CopyButton";
 import {
   markdownQuickStart,
   codeblockQuickstart,
@@ -16,6 +15,7 @@ import {
   markdownAndCodeGithubExampleUrl,
 } from "../../../snippets/quickStart";
 import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
+import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
 import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
 
 The code block displays markdown code blocks in the LLM output using [shiki](https://shiki.style).
@@ -51,7 +51,7 @@ Create a component to render markdown using `react-markdown`.
 
 <CodeBlock code={markdownQuickStart} lang="tsx" />
 <CopyDocsContainer>
-  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  <CopyExampleButton toCopy={fullQuickStart} />
   Read more in the [markdown block docs](/docs/blocks/markdown)
 </CopyDocsContainer>
 
@@ -62,7 +62,7 @@ Create a component to render code blocks using [Shiki](https://shiki.style).
 <CodeBlock code={codeblockQuickstart} lang="tsx" />
 
 <CopyDocsContainer>
-  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  <CopyExampleButton toCopy={fullQuickStart} />
 </CopyDocsContainer>
 ## Step 3: Render markdown and code with llm-ui
 
@@ -70,7 +70,7 @@ Now we've created our components, we're ready to use [useLLMOutput](/docs/llm-ou
 
 <CodeBlock code={llmUiOutputQuickStartStep} lang="tsx" />
 <CopyDocsContainer>
-  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  <CopyExampleButton toCopy={fullQuickStart} />
   Read more in the [useLLMOutput docs](/docs/llm-output-hook)
 </CopyDocsContainer>
 

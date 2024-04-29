@@ -6,6 +6,7 @@ description: ""
 import { PackageInstall } from "../../components/docs/PackageInstall";
 import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
 import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
+import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
 import { CopyButton } from "@/components/ui/custom/CopyButton";
 import { GithubLinkButton } from "@/components/ui/custom/GithubLinkButton";
 import {
@@ -55,7 +56,7 @@ Create a component to render markdown using `react-markdown`.
 
 <CodeBlock code={markdownQuickStart} lang="tsx" />
 <CopyDocsContainer>
-  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  <CopyExampleButton toCopy={fullQuickStart} />
   Read more in the [markdown block docs](/docs/blocks/markdown)
 </CopyDocsContainer>
 
@@ -66,7 +67,7 @@ Create a component to render code blocks using [Shiki](https://shiki.style).
 <CodeBlock code={codeblockQuickstart} lang="tsx" />
 
 <CopyDocsContainer>
-  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  <CopyExampleButton toCopy={fullQuickStart} />
   Read more in the [code block docs](/docs/blocks/code)
 </CopyDocsContainer>
 
@@ -76,6 +77,6 @@ Now we've created our components, we're ready to use [useLLMOutput](/docs/llm-ou
 
 <CodeBlock code={llmUiOutputQuickStartStep} lang="tsx" />
 <CopyDocsContainer>
-  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+  <CopyExampleButton toCopy={fullQuickStart} />
   Read more in the [useLLMOutput docs](/docs/llm-output-hook)
 </CopyDocsContainer>
