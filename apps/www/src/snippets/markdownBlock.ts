@@ -1,7 +1,7 @@
 import { markdownComponent, markdownQuickStart } from "./quickStart";
 
 export const markdownGithubExampleUrl =
-  "https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/basic/page.tsx";
+  "https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/markdown/page.tsx";
 
 export const getLlmUiOutputUsage = (step1Replace: string = "") =>
   `const example = \`
