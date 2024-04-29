@@ -1,5 +1,14 @@
 # @llm-ui/markdown
 
+## 0.0.8
+
+### Patch Changes
+
+- [#120](https://github.com/llm-ui-kit/llm-ui/pull/120) [`ae1a7dd`](https://github.com/llm-ui-kit/llm-ui/commit/ae1a7dd37a068687e1cc6409fc08bd92e7ab0340) Thanks [@richardgill](https://github.com/richardgill)! - convert markdownLookBack to function for consistency with other blocks
+
+- Updated dependencies []:
+  - @llm-ui/react@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes
