@@ -2,7 +2,7 @@
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
 import { useStreamExample } from "@llm-ui/react/examples";
-import ReactMarkdown, { type Options } from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 // -------Step 1: Create a markdown component-------
