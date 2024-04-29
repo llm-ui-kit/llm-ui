@@ -3,12 +3,30 @@ title: Markdown block
 description: ""
 ---
 
+import { CopyButton } from "@/components/ui/custom/CopyButton";
+import { GithubLinkButton } from "@/components/ui/custom/GithubLinkButton";
 import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
 import { PackageInstall } from "@/components/docs/PackageInstall";
+import {
+  markdownGithubExampleUrl,
+  fullMarkdownQuickStart,
+  markdownStep1,
+  markdownStep2,
+} from "../../../snippets/markdownBlock";
 
 The markdown block displays markdown content in the LLM output. The markdown block is designed to be used as the [fallback block](/docs/llm-output-hook#fallbackblock-object) in `useLLMOutput` which is used if no other block matches.
 
-The markdown block hides markdown syntax from users, only showing one visible character at a time.
+# Features
+
+<ExampleSideBySide
+  client:load
+  example={`# Demo\n\n**Hello llm-ui!** this is [markdown](https://markdownguide.org)`}
+  options={{ delayMultiplier: 1 }}
+/>
+
+- Streamed markdown support
+- Markdown syntax hidden from users e.g. `##` for headers
+- Show's one visible character at a time
 
 # Installation
 
@@ -24,74 +42,41 @@ The markdown block hides markdown syntax from users, only showing one visible ch
 
 # Quick start
 
-<CodeBlockInline>
+<div class="flex flex-row items-center gap-2">
+  <CopyButton
+    client:load
+    text="Copy full example"
+    toCopy={fullMarkdownQuickStart}
+  />
+  <GithubLinkButton client:load href={markdownGithubExampleUrl} />
+</div>
 
-```tsx
-import { markdownLookBack } from "@llm-ui/markdown";
-import {
-  LLMOutputFallbackBlock,
-  useLLMOutput,
-  type LLMOutputComponent,
-} from "@llm-ui/react/core";
-import { useStreamExample } from "@llm-ui/react/examples";
-import ReactMarkdown, { type Options } from "react-markdown";
-import remarkGfm from "remark-gfm";
+## Step 1: Create a markdown component
 
-// Customize this component with your own styling
-const MarkdownComponent: LLMOutputComponent<Options> = ({
-  blockMatch,
-  ...props
-}) => {
-  const markdown = blockMatch.output;
-  return (
-    <ReactMarkdown
-      {...props}
-      remarkPlugins={[...(props.remarkPlugins ?? []), remarkGfm]}
-    >
-      {markdown}
-    </ReactMarkdown>
-  );
-};
+Create a component to render markdown using `react-markdown`.
 
-const example = `
-## Example
+<CodeBlock code={markdownStep1} lang="tsx" />
 
-**Hello llm-ui!** this is [markdown](https://markdownguide.org)
-`;
-
-const Example = () => {
-  const { isStreamFinished, output } = useStreamExample(example);
-
-  const { blockMatches } = useLLMOutput({
-    llmOutput: output,
-    blocks: [],
-    fallbackBlock: {
-      component: MarkdownComponent,
-      lookBack: markdownLookBack,
-    },
-    isStreamFinished,
-  });
-
-  return (
-    <div>
-      {blockMatches.map((blockMatch, index) => {
-        const Component = blockMatch.block.component;
-        return <Component key={index} blockMatch={blockMatch} />;
-      })}
-    </div>
-  );
-};
-```
-
-</CodeBlockInline>
-
-[Full example](https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/basic/page.tsx)
-
-<ExampleSideBySide
+<CopyButton
   client:load
-  example={`# Example\n\n**Hello llm-ui!** this is [markdown](https://markdownguide.org)`}
-  options={{ delayMultiplier: 4 }}
+  text="Copy full example"
+  toCopy={fullMarkdownQuickStart}
 />
+
+## Step 2: Render markdown with llm-ui
+
+Now we've created our markdown component, we're ready to use [useLLMOutput](/docs/llm-output-hook) to render a language model output which contains markdown.
+
+<CodeBlock code={markdownStep2} lang="tsx" />
+
+<div class="flex flex-row items-center gap-3">
+  <CopyButton
+    client:load
+    text="Copy full example"
+    toCopy={fullMarkdownQuickStart}
+  />
+  Read more in the [useLLMOutput docs](/docs/llm-output-hook)
+</div>
 
 # Usage with `throttle`
 
