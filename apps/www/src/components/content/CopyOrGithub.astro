@@ -1,0 +1,20 @@
+---
+import { CopyButton } from "@/components/ui/custom/CopyButton";
+import { GithubLinkButton } from "@/components/ui/custom/GithubLinkButton";
+
+type Props = {
+  githubUrl: string;
+  codeToCopy: string;
+};
+const { githubUrl, codeToCopy } = Astro.props;
+---
+
+<div class="flex flex-col md:flex-row md:items-center md:gap-3">
+  <CopyButton
+    className="max-md:hidden"
+    client:load
+    text="Copy full example"
+    toCopy={codeToCopy}
+  />
+  <GithubLinkButton client:load href={githubUrl} />
+</div>

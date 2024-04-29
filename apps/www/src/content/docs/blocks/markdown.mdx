@@ -13,6 +13,8 @@ import {
   markdownStep1,
   markdownStep2,
 } from "../../../snippets/markdownBlock";
+import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
+import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
 
 The markdown block displays markdown content in the LLM output. The markdown block is designed to be used as the [fallback block](/docs/llm-output-hook#fallbackblock-object) in `useLLMOutput` which is used if no other block matches.
 
@@ -42,14 +44,10 @@ The markdown block displays markdown content in the LLM output. The markdown blo
 
 # Quick start
 
-<div class="flex flex-row items-center gap-2">
-  <CopyButton
-    client:load
-    text="Copy full example"
-    toCopy={fullMarkdownQuickStart}
-  />
-  <GithubLinkButton client:load href={markdownGithubExampleUrl} />
-</div>
+<CopyOrGithub
+  codeToCopy={fullMarkdownQuickStart}
+  githubUrl={markdownGithubExampleUrl}
+/>
 
 ## Step 1: Create a markdown component
 
@@ -57,11 +55,13 @@ Create a component to render markdown using `react-markdown`.
 
 <CodeBlock code={markdownStep1} lang="tsx" />
 
-<CopyButton
-  client:load
-  text="Copy full example"
-  toCopy={fullMarkdownQuickStart}
-/>
+<CopyDocsContainer>
+  <CopyButton
+    client:load
+    text="Copy full example"
+    toCopy={fullMarkdownQuickStart}
+  />
+</CopyDocsContainer>
 
 ## Step 2: Render markdown with llm-ui
 
@@ -69,14 +69,14 @@ Now we've created our markdown component, we're ready to use [useLLMOutput](/doc
 
 <CodeBlock code={markdownStep2} lang="tsx" />
 
-<div class="flex flex-row items-center gap-3">
+<CopyDocsContainer>
   <CopyButton
     client:load
     text="Copy full example"
     toCopy={fullMarkdownQuickStart}
   />
   Read more in the [useLLMOutput docs](/docs/llm-output-hook)
-</div>
+</CopyDocsContainer>
 
 # Markdown block functions
 
