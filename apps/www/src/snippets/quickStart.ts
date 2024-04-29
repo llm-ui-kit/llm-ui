@@ -163,4 +163,4 @@ import getWasm from "shiki/wasm";
 export const fullQuickStart = `${markdownAndCodeblockImports}\n\n${markdownComponent}\n\n${codeblockComponent}\n\n${llmUiOutputUsage}\n\nexport default Example`;
 
 export const markdownAndCodeGithubExampleUrl =
-  "https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/code-block-all-themes/example.tsx";
+  "https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/code-block/example.tsx";
