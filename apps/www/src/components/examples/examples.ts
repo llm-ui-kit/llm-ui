@@ -4,12 +4,12 @@ import {
 } from "@llm-ui/react/examples";
 import { defaultExampleProbs } from "./contants";
 
-export const ctaExample = `[Docs](https://llm-ui.com/docs)
-
-**Install**:
+export const ctaExample = `### Install
 \`\`\`bash
 pnpm add @llm-ui/react @llm-ui/markdown
 \`\`\`
+
+[Docs](/docs)
 
 - *italic*, **bold**, ~strikethrough~
 `;

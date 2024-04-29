@@ -65,7 +65,11 @@ import { marketingConfig } from "@/config/marketing";
         example={ctaExample}
         tabs={["llm-ui", "markdown", "raw"]}
         showHeaders
+        options={{ delayMultiplier: 0.4 }}
         hideFirstLoop
+        throttle="low-lag"
+        showSlider={false}
+        showPlayPause={false}
       />
     </div>
   </section>
@@ -85,6 +89,7 @@ import { marketingConfig } from "@/config/marketing";
         tabs={["llm-ui", "raw"]}
         options={{ delayMultiplier: 0.6 }}
         hideFirstLoop
+        throttle="low-lag"
       />
     </div>
   </section>
@@ -108,6 +113,7 @@ import { marketingConfig } from "@/config/marketing";
           example={codeBlockExample}
           tabs={["llm-ui", "raw"]}
           hideFirstLoop
+          throttle="buffered"
         />
       </div>
     </div>
@@ -126,6 +132,7 @@ import { marketingConfig } from "@/config/marketing";
         example={customComponentExample}
         options={{ delayMultiplier: 0.2 }}
         tabs={["llm-ui", "raw"]}
+        throttle="buffered"
         hideFirstLoop
       />
     </div>
@@ -144,6 +151,7 @@ import { marketingConfig } from "@/config/marketing";
         tokenArray={throttleExample}
         tabs={["llm-ui", "raw"]}
         hideFirstLoop
+        throttle="buffered"
       />
     </div>
   </section>

@@ -36,6 +36,7 @@ export const Controls: React.FC<{
   onDelayMultiplier: (delayMultiplier: number) => void;
   isPlaying: boolean;
   showPlayPause: boolean;
+  showSlider: boolean;
   onPause: () => void;
   onStart: () => void;
   desktopTabs: Tab[];
@@ -48,6 +49,7 @@ export const Controls: React.FC<{
   onDelayMultiplier,
   isPlaying,
   showPlayPause,
+  showSlider,
   onPause,
   onStart,
   desktopTabs,
@@ -82,23 +84,25 @@ export const Controls: React.FC<{
           />
         )}
       </div>
-      <div className="flex flex-row sm:flex-1 items-center gap-2 sm:justify-self-center justify-self-auto sm:ml-12">
-        <Slider
-          className="md:w-52 sm:w-36 w-24"
-          variant={"secondary"}
-          value={[inverseTransformSliderValue(delayMultiplier)]}
-          min={min}
-          max={max}
-          step={0.5}
-          onValueChange={(newValue) => {
-            const delayMultiplier = transformSliderValue(newValue[0]);
-            onDelayMultiplier(Math.min(Math.max(delayMultiplier, min), max));
-          }}
-        />
-        <p className="text-foreground text-sm w-10 max-sm:hidden">
-          {delayMultiplier === 0 ? max : (1 / delayMultiplier).toFixed(1)}x
-        </p>
-      </div>
+      {showSlider && (
+        <div className="flex flex-row sm:flex-1 items-center gap-2 sm:justify-self-center justify-self-auto sm:ml-12">
+          <Slider
+            className="md:w-52 sm:w-36 w-24"
+            variant={"secondary"}
+            value={[inverseTransformSliderValue(delayMultiplier)]}
+            min={min}
+            max={max}
+            step={0.5}
+            onValueChange={(newValue) => {
+              const delayMultiplier = transformSliderValue(newValue[0]);
+              onDelayMultiplier(Math.min(Math.max(delayMultiplier, min), max));
+            }}
+          />
+          <p className="text-foreground text-sm w-10 max-sm:hidden">
+            {delayMultiplier === 0 ? max : (1 / delayMultiplier).toFixed(1)}x
+          </p>
+        </div>
+      )}
       {showPlayPause && (
         <div className="sm:justify-self-end justify-self-auto flex justify-end">
           <Button

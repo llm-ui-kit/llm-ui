@@ -1,14 +1,17 @@
 import { throttleBasic } from "@llm-ui/react/throttle";
 
-export const throttleBuffer = throttleBasic({
+export type ThrottleType = "buffered" | "low-lag";
+
+export const throttleLowLag = throttleBasic({
   adjustPercentage: 0.35,
   frameLookbackMs: 500,
-  targetBufferChars: 10,
+  readAheadChars: 10,
+  targetBufferChars: 9,
 });
 
-export const getThrottle = (throttleType: "basic" | "buffer" | undefined) => {
-  if (throttleType === "basic" || throttleType === undefined) {
-    return throttleBasic();
+export const getThrottle = (throttleType: ThrottleType | undefined) => {
+  if (throttleType === "low-lag" || throttleType === undefined) {
+    return throttleLowLag;
   }
-  return throttleBuffer;
+  return throttleBasic();
 };

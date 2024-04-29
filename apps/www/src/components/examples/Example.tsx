@@ -21,7 +21,7 @@ import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
 import { NeverShrinkContainer } from "./NeverShrinkContainer";
 import { defaultExampleProbs } from "./contants";
-import { getThrottle } from "./throttle";
+import { getThrottle, type ThrottleType } from "./throttle";
 import type { Tab } from "./types";
 
 const LOOP_DELAY = 3000;
@@ -113,8 +113,9 @@ type ExampleCommonProps = {
   backgroundClassName?: string;
   showPlayPause?: boolean;
   hideFirstLoop?: boolean;
-  throttle?: "basic" | "buffer";
+  throttle?: ThrottleType;
   loop?: boolean;
+  showSlider?: boolean;
 };
 
 export type ExampleTokenArrayProps = ExampleCommonProps &
@@ -190,6 +191,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   showPlayPause = true,
   hideFirstLoop,
   loop = true,
+  showSlider = true,
 }) => {
   const [hasLooped, setHasLooped] = useState(false);
 
@@ -265,6 +267,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
           setHasLooped(true);
         }}
         showPlayPause={showPlayPause}
+        showSlider={showSlider}
         isPlaying={isPlaying}
         desktopTabs={tabs}
         onDesktopTabIndexChange={setTabIndex}
@@ -293,6 +296,7 @@ export const ExampleSideBySideTokenArray: React.FC<
   hideFirstLoop,
   throttle,
   loop = true,
+  showSlider = true,
   ...props
 }) => {
   const [hasLooped, setHasLooped] = useState(false);
@@ -396,11 +400,13 @@ export const ExampleSideBySideTokenArray: React.FC<
           </OutputBackground>
         </SideBySideContainer>
       </NeverShrinkContainer>
+
       <Controls
         delayMultiplier={delayMultiplier}
         onDelayMultiplier={setDelayMultiplier}
         isPlaying={isPlaying}
         showPlayPause={showPlayPause}
+        showSlider={showSlider}
         onPause={pause}
         onStart={() => {
           if (isFinished) {
