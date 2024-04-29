@@ -100,6 +100,33 @@ const block = {
 
 The fallback block is the block to use when no other block matches. This is usually the [markdown block](/docs/markdown-block).
 
+<CodeBlockInline>
+
+```tsx
+const fallbackBlock = {
+  // The component to render when the fallback block is matched.
+  // Block match contains information about the match.
+  component: ({ blockMatch }) => <div>{blockMatch.block.match}</div>,
+
+  // A lookback function to look backwards in the LLM output for smooth rendering.
+  lookBack: ({
+    output: "## header 1",
+    isComplete: false, // whether the match is complete or partial
+    visibleTextLengthTarget: 10, // the number of visible characters to return
+    isStreamFinished: true // whether the LLM has finished streaming
+  }) => {
+    return {
+      // The llm output to return. In some cases this will be the original.
+      // In other cases this function may modify the output to make it 'complete'.
+      output: "## header 1"
+      visibleText: "header 1" // the visible text the user will actually see
+    }
+  }
+}
+```
+
+</CodeBlockInline>
+
 ## `throttle` (function) (optional)
 
 Defaults to [`throttleBasic`](/docs/advanced/throttle-functions#throttlebasic).
