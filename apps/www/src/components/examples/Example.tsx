@@ -21,7 +21,7 @@ import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
 import { NeverShrinkContainer } from "./NeverShrinkContainer";
 import { defaultExampleProbs } from "./contants";
-import { getThrottle } from "./throttle";
+import { getThrottle, type ThrottleType } from "./throttle";
 import type { Tab } from "./types";
 
 const LOOP_DELAY = 3000;
@@ -113,8 +113,9 @@ type ExampleCommonProps = {
   backgroundClassName?: string;
   showPlayPause?: boolean;
   hideFirstLoop?: boolean;
-  throttle?: "basic" | "buffer";
+  throttle?: ThrottleType;
   loop?: boolean;
+  showControls?: boolean;
 };
 
 export type ExampleTokenArrayProps = ExampleCommonProps &
@@ -190,6 +191,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   showPlayPause = true,
   hideFirstLoop,
   loop = true,
+  showControls = true,
 }) => {
   const [hasLooped, setHasLooped] = useState(false);
 
@@ -251,26 +253,28 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
           tabIndex={tabIndex}
         />
       </NeverShrinkContainer>
-      <Controls
-        className={""}
-        delayMultiplier={delayMultiplier}
-        onDelayMultiplier={setDelayMultiplier}
-        onPause={pause}
-        onStart={() => {
-          if (isFinished) {
-            reset();
-          }
-          start();
-          restart();
-          setHasLooped(true);
-        }}
-        showPlayPause={showPlayPause}
-        isPlaying={isPlaying}
-        desktopTabs={tabs}
-        onDesktopTabIndexChange={setTabIndex}
-        mobileTabs={tabs}
-        onMobileTabIndexChange={setTabIndex}
-      />
+      {showControls && (
+        <Controls
+          className={""}
+          delayMultiplier={delayMultiplier}
+          onDelayMultiplier={setDelayMultiplier}
+          onPause={pause}
+          onStart={() => {
+            if (isFinished) {
+              reset();
+            }
+            start();
+            restart();
+            setHasLooped(true);
+          }}
+          showPlayPause={showPlayPause}
+          isPlaying={isPlaying}
+          desktopTabs={tabs}
+          onDesktopTabIndexChange={setTabIndex}
+          mobileTabs={tabs}
+          onMobileTabIndexChange={setTabIndex}
+        />
+      )}
     </div>
   );
 };
@@ -293,6 +297,7 @@ export const ExampleSideBySideTokenArray: React.FC<
   hideFirstLoop,
   throttle,
   loop = true,
+  showControls = true,
   ...props
 }) => {
   const [hasLooped, setHasLooped] = useState(false);
@@ -396,25 +401,27 @@ export const ExampleSideBySideTokenArray: React.FC<
           </OutputBackground>
         </SideBySideContainer>
       </NeverShrinkContainer>
-      <Controls
-        delayMultiplier={delayMultiplier}
-        onDelayMultiplier={setDelayMultiplier}
-        isPlaying={isPlaying}
-        showPlayPause={showPlayPause}
-        onPause={pause}
-        onStart={() => {
-          if (isFinished) {
-            reset();
-          }
-          start();
-          restart();
-          setHasLooped(true);
-        }}
-        desktopTabs={desktopTabs}
-        mobileTabs={mobileTabs}
-        onDesktopTabIndexChange={setDesktopTabIndex}
-        onMobileTabIndexChange={setMobileTabIndex}
-      />
+      {showControls && (
+        <Controls
+          delayMultiplier={delayMultiplier}
+          onDelayMultiplier={setDelayMultiplier}
+          isPlaying={isPlaying}
+          showPlayPause={showPlayPause}
+          onPause={pause}
+          onStart={() => {
+            if (isFinished) {
+              reset();
+            }
+            start();
+            restart();
+            setHasLooped(true);
+          }}
+          desktopTabs={desktopTabs}
+          mobileTabs={mobileTabs}
+          onDesktopTabIndexChange={setDesktopTabIndex}
+          onMobileTabIndexChange={setMobileTabIndex}
+        />
+      )}
     </div>
   );
 };
