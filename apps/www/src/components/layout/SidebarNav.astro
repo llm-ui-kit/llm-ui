@@ -8,6 +8,7 @@ type Props = {
 
 const { items } = Astro.props;
 const { pathname } = Astro.url;
+console.log("zzz", pathname);
 ---
 
 {
@@ -28,7 +29,10 @@ const { pathname } = Astro.url;
                     class={cn(
                       "flex w-full items-center rounded-md p-2 hover:underline",
                       {
-                        "bg-muted": pathname === item.href,
+                        // https://github.com/withastro/astro/issues/5248#issuecomment-1298833549
+                        "bg-muted":
+                          item.href === pathname ||
+                          item.href === pathname.replace(/\/$/, ""),
                       },
                     )}
                     target={item.external ? "_blank" : ""}
