@@ -6,7 +6,6 @@ description: ""
 import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
 import { PackageInstall } from "@/components/docs/PackageInstall";
 import { CopyButton } from "@/components/ui/custom/CopyButton";
-import { GithubLinkButton } from "@/components/ui/custom/GithubLinkButton";
 import {
   markdownQuickStart,
   codeblockQuickstart,
@@ -16,6 +15,8 @@ import {
   fullQuickStart,
   markdownAndCodeGithubExampleUrl,
 } from "../../../snippets/quickStart";
+import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
+import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
 
 The code block displays markdown code blocks in the LLM output using [shiki](https://shiki.style).
 
@@ -39,20 +40,20 @@ The code block displays markdown code blocks in the LLM output using [shiki](htt
 
 # Quick start
 
-<div class="flex flex-row items-center gap-2">
-  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
-  <GithubLinkButton client:load href={markdownAndCodeGithubExampleUrl} />
-</div>
+<CopyOrGithub
+  codeToCopy={fullQuickStart}
+  githubUrl={markdownAndCodeGithubExampleUrl}
+/>
 
 ## Step 1: Create a markdown component
 
 Create a component to render markdown using `react-markdown`.
 
 <CodeBlock code={markdownQuickStart} lang="tsx" />
-<div class="flex flex-row items-center gap-3">
+<CopyDocsContainer>
   <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
   Read more in the [markdown block docs](/docs/blocks/markdown)
-</div>
+</CopyDocsContainer>
 
 ## Step 2: Create a code block component
 
@@ -60,17 +61,18 @@ Create a component to render code blocks using [Shiki](https://shiki.style).
 
 <CodeBlock code={codeblockQuickstart} lang="tsx" />
 
-<CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
-
+<CopyDocsContainer>
+  <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
+</CopyDocsContainer>
 ## Step 3: Render markdown and code with llm-ui
 
 Now we've created our components, we're ready to use [useLLMOutput](/docs/llm-output-hook) to render language model output which contains markdown and code.
 
 <CodeBlock code={llmUiOutputQuickStartStep} lang="tsx" />
-<div class="flex flex-row items-center gap-3">
+<CopyDocsContainer>
   <CopyButton client:load text="Copy full example" toCopy={fullQuickStart} />
   Read more in the [useLLMOutput docs](/docs/llm-output-hook)
-</div>
+</CopyDocsContainer>
 
 # Shiki setup
 
