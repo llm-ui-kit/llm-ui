@@ -33,6 +33,17 @@ The markdown block displays markdown content in the LLM output. The markdown blo
 
 # Installation
 
+<PackageInstall client:load packages={["@llm-ui/markdown"]} />
+
+# Quick start
+
+<CopyOrGithub
+  codeToCopy={fullMarkdownQuickStart}
+  githubUrl={markdownGithubExampleUrl}
+/>
+
+## Install dependencies
+
 <PackageInstall
   client:load
   packages={[
@@ -41,13 +52,6 @@ The markdown block displays markdown content in the LLM output. The markdown blo
     "react-markdown",
     "remark-gfm",
   ]}
-/>
-
-# Quick start
-
-<CopyOrGithub
-  codeToCopy={fullMarkdownQuickStart}
-  githubUrl={markdownGithubExampleUrl}
 />
 
 ## Step 1: Create a markdown component

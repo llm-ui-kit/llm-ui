@@ -55,4 +55,7 @@ import {
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useStreamExample } from "@llm-ui/react/examples";`;
 
-export const fullMarkdownQuickStart = `${fullImports}\n\n${markdownComponent}\n\n${getLlmUiOutputUsage()}`;
+const step1Comment = "// -------Step 1: Create a markdown component-------";
+const step2Comment = "// -------Step 2: Render markdown with llm-ui-------";
+
+export const fullMarkdownQuickStart = `${fullImports}\n\n${step1Comment}\n\n${markdownComponent}\n\n${step2Comment}\n\n${getLlmUiOutputUsage()}`;
