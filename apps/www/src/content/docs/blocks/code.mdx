@@ -32,16 +32,28 @@ The code block displays markdown code blocks in the LLM output using [shiki](htt
 
 # Installation
 
-<PackageInstall
-  client:load
-  packages={["@llm-ui/react", "@llm-ui/code", "shiki"]}
-/>
+<PackageInstall client:load packages={["@llm-ui/code", "shiki"]} />
 
 # Quick start
 
 <CopyOrGithub
   codeToCopy={fullQuickStart}
   githubUrl={markdownAndCodeGithubExampleUrl}
+/>
+
+Install dependencies for quick start:
+
+<PackageInstall
+  client:load
+  packages={[
+    "@llm-ui/code",
+    "shiki",
+    "@llm-ui/react",
+    "@llm-ui/markdown",
+    "react-markdown",
+    "remark-gfm",
+    "html-react-parser",
+  ]}
 />
 
 ## Step 1: Create a markdown component
