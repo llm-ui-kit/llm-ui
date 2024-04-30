@@ -41,7 +41,7 @@ export const docsConfig: DocsConfig = {
       title: "Examples",
       items: [
         {
-          title: "Getting started",
+          title: "Setup examples",
           href: "/docs/examples",
         },
         {
