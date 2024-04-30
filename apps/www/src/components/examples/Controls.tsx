@@ -30,6 +30,19 @@ const inverseTransformSliderValue = (y: number): number => {
   return 5;
 };
 
+const formatDelayMultiplier = (
+  delayMultiplier: number,
+  max: number,
+): string => {
+  if (delayMultiplier === 0) {
+    return `${max}x`;
+  }
+  const value = 1 / delayMultiplier;
+  const isCloseToWholeNumber = Math.abs(value - Math.round(value)) < 0.01;
+  const decimalPlaces = isCloseToWholeNumber ? 0 : 1;
+  return `${value.toFixed(decimalPlaces)}x`;
+};
+
 export const Controls: React.FC<{
   className?: string;
   delayMultiplier: number;
@@ -101,7 +114,7 @@ export const Controls: React.FC<{
             }}
           />
           <p className="text-foreground text-sm w-10 max-sm:hidden">
-            {delayMultiplier === 0 ? max : (1 / delayMultiplier).toFixed(1)}x
+            {formatDelayMultiplier(delayMultiplier, max)}
           </p>
         </div>
       )}
