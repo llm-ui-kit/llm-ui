@@ -268,6 +268,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
         }}
         showPlayPause={showPlayPause}
         showSlider={showSlider}
+        isAutoStart={loop}
         isPlaying={isPlaying}
         desktopTabs={tabs}
         onDesktopTabIndexChange={setTabIndex}
@@ -297,7 +298,8 @@ export const ExampleSideBySideTokenArray: React.FC<
   throttle,
   loop = true,
   showSlider = true,
-  ...props
+  tokenArray,
+  options,
 }) => {
   const [hasLooped, setHasLooped] = useState(false);
   if (!tabs.includes("llm-ui")) {
@@ -317,7 +319,7 @@ export const ExampleSideBySideTokenArray: React.FC<
     isPlaying,
     setDelayMultiplier,
     delayMultiplier,
-  } = useExampleTokenArray(props);
+  } = useExampleTokenArray({ tokenArray, options });
   const { finishCount, restart, blockMatches, isFinished, visibleText } =
     useLLMOutput({
       llmOutput: output,
@@ -407,6 +409,7 @@ export const ExampleSideBySideTokenArray: React.FC<
         isPlaying={isPlaying}
         showPlayPause={showPlayPause}
         showSlider={showSlider}
+        isAutoStart={loop}
         onPause={pause}
         onStart={() => {
           if (isFinished) {
