@@ -37,6 +37,7 @@ export const Controls: React.FC<{
   isPlaying: boolean;
   showPlayPause: boolean;
   showSlider: boolean;
+  isAutoStart: boolean;
   onPause: () => void;
   onStart: () => void;
   desktopTabs: Tab[];
@@ -50,6 +51,7 @@ export const Controls: React.FC<{
   isPlaying,
   showPlayPause,
   showSlider,
+  isAutoStart,
   onPause,
   onStart,
   desktopTabs,
@@ -104,10 +106,10 @@ export const Controls: React.FC<{
         </div>
       )}
       {showPlayPause && (
-        <div className="sm:justify-self-end justify-self-auto flex justify-end">
+        <div className="sm:justify-self-end justify-self-auto flex justify-end py-1">
           <Button
-            className="w-20 md:h-8 md:px-2 max-md:size-8 "
-            variant="outline"
+            className="w-20 md:h-7 md:px-2 max-md:size-8 mr-[3px]"
+            variant={isAutoStart ? "outline" : "default"}
             size={"xs"}
             onClick={() => {
               if (isPlaying) {
