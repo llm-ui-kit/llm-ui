@@ -1,5 +1,14 @@
 # @llm-ui/markdown
 
+## 0.0.9
+
+### Patch Changes
+
+- [#137](https://github.com/llm-ui-kit/llm-ui/pull/137) [`2fc9626`](https://github.com/llm-ui-kit/llm-ui/commit/2fc9626070a8743c531db5ae51fc60a6054e009d) Thanks [@richardgill](https://github.com/richardgill)! - fix require typescript types
+
+- Updated dependencies [[`2fc9626`](https://github.com/llm-ui-kit/llm-ui/commit/2fc9626070a8743c531db5ae51fc60a6054e009d)]:
+  - @llm-ui/react@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes
