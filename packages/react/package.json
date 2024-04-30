@@ -3,20 +3,36 @@
   "version": "0.0.8",
   "type": "module",
   "exports": {
+    "./package.json": "./package.json",
     "./core": {
-      "import": "./dist/core/index.js",
-      "require": "./dist/core/index.cjs",
-      "types": "./dist/core/index.d.ts"
+      "import": {
+        "types": "./dist/core/index.d.ts",
+        "default": "./dist/core/index.js"
+      },
+      "require": {
+        "types": "./dist/core/index.d.cts",
+        "default": "./dist/core/index.cjs"
+      }
     },
     "./examples": {
-      "import": "./dist/examples/index.js",
-      "require": "./dist/examples/index.cjs",
-      "types": "./dist/examples/index.d.ts"
+      "import": {
+        "types": "./dist/examples/index.d.ts",
+        "default": "./dist/examples/index.js"
+      },
+      "require": {
+        "types": "./dist/examples/index.d.cts",
+        "default": "./dist/examples/index.cjs"
+      }
     },
     "./throttle": {
-      "import": "./dist/throttle/index.js",
-      "require": "./dist/throttle/index.cjs",
-      "types": "./dist/throttle/index.d.ts"
+      "import": {
+        "types": "./dist/throttle/index.d.ts",
+        "default": "./dist/throttle/index.js"
+      },
+      "require": {
+        "types": "./dist/throttle/index.d.cts",
+        "default": "./dist/throttle/index.cjs"
+      }
     }
   },
   "files": [
