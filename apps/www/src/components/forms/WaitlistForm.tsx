@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/Button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -10,6 +9,7 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -40,11 +40,7 @@ export const WaitlistForm = () => {
     const data = await response.json();
 
     if (data.message === "success") {
-      toast.success("Thanks for your support!", {
-        description: (
-          <span>{"We're added <b>{values.email}</b> to the waitlist!"}</span>
-        ),
-      });
+      toast.success("Subscribed");
       form.reset();
     } else {
       toast.error("Something wrong!", {
@@ -54,28 +50,40 @@ export const WaitlistForm = () => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="jonhdoe@example.com" {...field} />
-              </FormControl>
-              <FormDescription className="text-[13px]">
-                <i>Save in Astro DB. Static page with react form!</i>
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button className="w-full" type="submit">
-          Submit
-        </Button>
-      </form>
-    </Form>
+    <div className="relative flex w-full items-center justify-center">
+      <div className="bg-background rounded-xl border px-4 py-5 sm:p-6">
+        <div className="flex w-full max-w-sm flex-col gap-y-5">
+          <div className="space-y-3">
+            <Mail className="size-10" />
+            <h1 className="font-heading text-2xl tracking-wide">
+              Subscribe for email updates
+            </h1>
+            <p className="text-muted-foreground text-sm">
+              Keep up to date with llm-ui
+            </p>
+          </div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className="w-full" type="submit">
+                Subscribe
+              </Button>
+            </form>
+          </Form>
+        </div>
+      </div>
+    </div>
   );
 };

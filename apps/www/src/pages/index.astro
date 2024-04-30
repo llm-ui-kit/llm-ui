@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import HeaderSection from "@/components/HeaderSection.astro";
 import { ModelCards } from "@/components/ModelCards";
+import { WaitlistForm } from "@/components/forms/WaitlistForm";
 import { marketingConfig } from "@/config/marketing";
 ---
 
@@ -178,7 +179,7 @@ import { marketingConfig } from "@/config/marketing";
 
   <section id="waitlist" class="bg-background-200 py-8 md:py-12 lg:py-24">
     <div class="container space-y-6">
-      <WaitList />
+      <WaitlistForm client:load />
     </div>
   </section>
 </MainLayout>
