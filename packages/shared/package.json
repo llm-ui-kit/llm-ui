@@ -1,6 +1,6 @@
 {
   "name": "@llm-ui/shared",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

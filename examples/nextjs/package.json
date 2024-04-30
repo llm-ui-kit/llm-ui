@@ -19,10 +19,10 @@
     "shiki": "^1.2.4"
   },
   "devDependencies": {
-    "@llm-ui/buttons": "0.0.8",
-    "@llm-ui/code": "0.0.8",
-    "@llm-ui/markdown": "0.0.8",
-    "@llm-ui/react": "0.0.8",
+    "@llm-ui/buttons": "0.0.9",
+    "@llm-ui/code": "0.0.9",
+    "@llm-ui/markdown": "0.0.9",
+    "@llm-ui/react": "0.0.9",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20",
     "@types/react": "^18",
