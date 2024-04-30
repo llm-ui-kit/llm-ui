@@ -6,20 +6,36 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
+    "./package.json": "./package.json",
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./shikiBundles/allLangs": {
-      "import": "./dist/shikiBundles/allLangs.js",
-      "require": "./dist/shikiBundles/allLangs.cjs",
-      "types": "./dist/shikiBundles/allLangs.d.ts"
+      "import": {
+        "types": "./dist/shikiBundles/allLangs.d.ts",
+        "default": "./dist/shikiBundles/allLangs.js"
+      },
+      "require": {
+        "types": "./dist/shikiBundles/allLangs.d.cts",
+        "default": "./dist/shikiBundles/allLangs.cjs"
+      }
     },
     "./shikiBundles/allThemes": {
-      "import": "./dist/shikiBundles/allThemes.js",
-      "require": "./dist/shikiBundles/allThemes.cjs",
-      "types": "./dist/shikiBundles/allThemes.d.ts"
+      "import": {
+        "types": "./dist/shikiBundles/allThemes.d.ts",
+        "default": "./dist/shikiBundles/allThemes.js"
+      },
+      "require": {
+        "types": "./dist/shikiBundles/allThemes.d.cts",
+        "default": "./dist/shikiBundles/allThemes.cjs"
+      }
     }
   },
   "files": [
