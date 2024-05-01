@@ -24,6 +24,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
 
       - name: Create git branch
         run: |
@@ -89,6 +91,7 @@ jobs:
         if: ${{ steps.secrets.outputs.exist == 'true' && github.event_name == 'pull_request' }}
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CHANGESET_GITHUB_TOKEN }}
         run: |
           cat << EOF > .changeset/force-canary-build.md
           ---
