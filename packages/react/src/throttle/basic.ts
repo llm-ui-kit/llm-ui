@@ -3,17 +3,17 @@ import type { ThrottleFunction } from "../core";
 export type ThrottleBasicOptions = {
   readAheadChars: number;
   targetBufferChars: number;
-  frameLookbackMs: number;
   adjustPercentage: number;
-  windowCount: number;
+  frameLookBackMs: number;
+  windowLookBackMs: number;
 };
 
 export const defaultOptions: ThrottleBasicOptions = {
   readAheadChars: 15,
   targetBufferChars: 15,
   adjustPercentage: 0.2,
-  frameLookbackMs: 10000,
-  windowCount: 5,
+  frameLookBackMs: 10000,
+  windowLookBackMs: 2000,
 };
 
 const calcPercentage = ({
@@ -36,43 +36,54 @@ const calcPercentage = ({
 
 const getVisibleTextEveryNFrames = (
   lookbackFrameCount: number,
-  windowCount: number,
-  visibleTextLengthsAll: number[],
+  windowLookBackCount: number,
+  visibleTextLengthsAllOriginal: number[],
 ) => {
+  const visibleTextLengthsAll = [0, ...visibleTextLengthsAllOriginal];
   const lookbackFrames = Math.min(
     lookbackFrameCount,
+    visibleTextLengthsAll.length,
+  );
+  const windowFrames = Math.min(
+    windowLookBackCount,
     visibleTextLengthsAll.length,
   );
   const recentVisibleTextLengths = visibleTextLengthsAll.slice(
     -1 * lookbackFrames,
   );
-  const windowSize = Math.floor(lookbackFrames / windowCount);
 
   const textAddedCounts = [];
 
-  for (let i = 0; i < recentVisibleTextLengths.length - windowSize; i++) {
-    const start = i;
-    const end = i + windowSize;
-    const textAddedCount =
-      recentVisibleTextLengths[end] - recentVisibleTextLengths[start];
-    textAddedCounts.push(textAddedCount);
+  if (windowFrames > 0) {
+    for (
+      let start = 0;
+      start < recentVisibleTextLengths.length - windowFrames + 1;
+      start++
+    ) {
+      const end = start + windowFrames - 1;
+      const textAddedCount =
+        recentVisibleTextLengths[end] - recentVisibleTextLengths[start];
+      textAddedCounts.push(textAddedCount);
+    }
   }
 
   const avgTextAddedCount =
-    textAddedCounts.reduce((a, b) => a + b, 0) / textAddedCounts.length;
+    textAddedCounts.reduce((a, b) => a + b, 0) / textAddedCounts.length ?? 0;
+  const result =
+    avgTextAddedCount > 0 ? windowFrames / avgTextAddedCount : windowFrames;
 
-  return avgTextAddedCount > 0 ? windowSize / avgTextAddedCount : windowSize;
+  return result;
 };
 
 export const throttleBasic = (
   userOptions: Partial<ThrottleBasicOptions> = {},
 ): ThrottleFunction => {
   const {
-    frameLookbackMs,
+    frameLookBackMs,
     targetBufferChars,
     readAheadChars,
     adjustPercentage,
-    windowCount,
+    windowLookBackMs,
   } = {
     ...defaultOptions,
     ...userOptions,
@@ -92,11 +103,12 @@ export const throttleBasic = (
     const fps = frameCount / timeSinceStartSec;
 
     const bufferSize = visibleTextAll.length - visibleTextLengthTarget;
-    const lookbackFrameCount = Math.ceil(frameLookbackMs / (1000 / fps));
+    const lookbackFrameCount = Math.ceil(frameLookBackMs / (1000 / fps));
+    const windowLookBackCount = Math.ceil(windowLookBackMs / (1000 / fps));
 
     const visibleTextEveryNFrames = getVisibleTextEveryNFrames(
       lookbackFrameCount,
-      windowCount,
+      windowLookBackCount,
       visibleTextLengthsAll,
     );
 
@@ -121,9 +133,8 @@ export const throttleBasic = (
       const targetFrameEveryN =
         visibleTextEveryNFrames *
         calcPercentage({ adjustPercentage, isBehind, isStreamFinished });
-
       visibleTextIncrement =
-        framesSinceLastIncrement > targetFrameEveryN ? 1 : 0;
+        framesSinceLastIncrement >= targetFrameEveryN ? 1 : 0;
     }
     return {
       visibleTextIncrement,
