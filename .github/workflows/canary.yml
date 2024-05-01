@@ -10,6 +10,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  pull-requests: write
+
 env:
   FORCE_COLOR: 3
   OPENAI_API_KEY: "sk-xyz"
