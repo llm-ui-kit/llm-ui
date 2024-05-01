@@ -12,13 +12,17 @@ export const parseCompleteButtons: ParseFunction = (buttonsString) => {
     return undefined;
   }
   const parsed = parser.parse(buttonsString);
-  if (
-    !parsed.buttons ||
-    !parsed.buttons.button ||
-    !Array.isArray(parsed.buttons.button) ||
-    parsed.buttons.button.length <= 0
-  ) {
+  if (!parsed.buttons || !parsed.buttons.button) {
     return undefined;
   }
-  return parsed.buttons.button;
+  if (
+    Array.isArray(parsed.buttons.button) &&
+    parsed.buttons.button.length <= 0
+  ) {
+    return parsed.buttons.button;
+  }
+  if (typeof parsed.buttons.button === "string") {
+    return [parsed.buttons.button];
+  }
+  return undefined;
 };

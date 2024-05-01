@@ -14,15 +14,15 @@ It renders **bold**, *italic*, ~strikethrough~ and [links](https://llm-ui.com/do
 
 Add your own custom components to your LLM output.
 
-Lets add some buttons:
+Lets add a custom button:
 
 <buttons>
-  <button>See raw LLM output</button>
   <button>Star explosion ⭐</button>
 </buttons>
+
+This works by prompting the LLM to let it know it can use buttons by replying like this:
 \`\`\`xml
 <buttons>
-  <button>See raw LLM output</button>
   <button>Star explosion ⭐</button>
 </buttons>
 \`\`\`
@@ -34,11 +34,18 @@ This text is streaming tokens which are 3 characters long, but llm-ui smooths th
 
 ### Removes pauses
 
-It can also smooth out pauses in the LLM's response
+llm-ui smooths out pauses in the LLM's response
 
 Like this one: in 3...2...1`;
 
-const ctaAfterPause = `without users noticing.`;
+const ctaAfterPause = `without users noticing.
+
+<buttons>
+  <button>See raw LLM output</button>
+</buttons>
+
+^^^ check out the raw LLM output to see the tokens being streamed.
+`;
 export const ctaExample: TokenWithDelay[] = [
   ...stringToTokenArray(ctaBeforePause, defaultExampleProbs),
   { token: " ", delayMs: 1500 },
