@@ -1,4 +1,5 @@
 import type { MarketingConfig } from "@/types";
+import { siteConfig } from "./site";
 
 export const marketingConfig: MarketingConfig = {
   mainNav: [
@@ -9,11 +10,7 @@ export const marketingConfig: MarketingConfig = {
     },
     {
       title: "Changelog",
-      href: "/changelog",
-    },
-    {
-      title: "Blog",
-      href: "/blog",
+      href: `${siteConfig.links.github}/releases`,
     },
     {
       title: "About",
