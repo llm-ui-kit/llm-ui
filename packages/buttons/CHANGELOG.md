@@ -1,5 +1,15 @@
 # @llm-ui/buttons
 
+## 0.0.11
+
+### Patch Changes
+
+- [#146](https://github.com/llm-ui-kit/llm-ui/pull/146) [`ada1b51`](https://github.com/llm-ui-kit/llm-ui/commit/ada1b51dcd734bd37d939a8afab908882be0f826) Thanks [@richardgill](https://github.com/richardgill)! - bug fix: <buttons></buttons> matcher is no longer 'greedy' and consumes the first set of xml tags only
+
+- Updated dependencies [[`c0834d5`](https://github.com/llm-ui-kit/llm-ui/commit/c0834d54d1a048d74b2e70b74391715a385f4b5a)]:
+  - @llm-ui/react@0.0.11
+  - @llm-ui/shared@0.0.11
+
 ## 0.0.10
 
 ### Patch Changes
