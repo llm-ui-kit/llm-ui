@@ -15,7 +15,7 @@ const highlighter = await shikiConfig.highlighter.highlighterPromise;
 const codeToRender = visibleCode ?? code;
 const shikiHtml = highlighter.codeToHtml(codeToRender, {
   lang,
-  ...shikiConfig.codeToHtmlProps,
+  ...shikiConfig.codeToHtmlOptions,
 });
 ---
 

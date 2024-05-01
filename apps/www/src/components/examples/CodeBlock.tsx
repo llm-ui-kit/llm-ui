@@ -19,7 +19,7 @@ const ShikiBlockComponent: LLMOutputComponent = ({ blockMatch }) => {
     <CodeBlock
       className="my-4"
       code={code}
-      codeToHtmlProps={{ lang: language }}
+      codeToHtmlOptions={{ lang: language }}
     />
   );
 };

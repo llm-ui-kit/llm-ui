@@ -1,6 +1,6 @@
 import { shikiConfig } from "@/components/shikiConfig";
 import { cn } from "@/lib/utils";
-import { useCodeToHtml, type CodeToHtmlProps } from "@llm-ui/code";
+import { useCodeToHtml, type CodeToHtmlOptions } from "@llm-ui/code";
 import parseHtml from "html-react-parser";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { CopyButton } from "./CopyButton";
@@ -53,14 +53,14 @@ const ShikiOrFallback: React.FC<{ html: string; code: string }> = ({
 export const CodeBlock: React.FC<{
   className?: string;
   code: string;
-  codeToHtmlProps?: Partial<CodeToHtmlProps>;
-}> = ({ className, code, codeToHtmlProps = {} }) => {
+  codeToHtmlOptions?: Partial<CodeToHtmlOptions>;
+}> = ({ className, code, codeToHtmlOptions = {} }) => {
   const html = useCodeToHtml({
     code,
     highlighter: shikiConfig.highlighter,
-    codeToHtmlProps: {
-      ...shikiConfig.codeToHtmlProps,
-      ...codeToHtmlProps,
+    codeToHtmlOptions: {
+      ...shikiConfig.codeToHtmlOptions,
+      ...codeToHtmlOptions,
     },
   });
   return (
