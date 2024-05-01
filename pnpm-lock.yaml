@@ -284,16 +284,16 @@ importers:
         version: 1.2.4
     devDependencies:
       '@llm-ui/buttons':
-        specifier: 0.0.9
+        specifier: 0.0.10
         version: link:../../packages/buttons
       '@llm-ui/code':
-        specifier: 0.0.9
+        specifier: 0.0.10
         version: link:../../packages/code
       '@llm-ui/markdown':
-        specifier: 0.0.9
+        specifier: 0.0.10
         version: link:../../packages/markdown
       '@llm-ui/react':
-        specifier: 0.0.9
+        specifier: 0.0.10
         version: link:../../packages/react
       '@tailwindcss/typography':
         specifier: ^0.5.10

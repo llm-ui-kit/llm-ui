@@ -1,5 +1,15 @@
 # @llm-ui/code
 
+## 0.0.10
+
+### Patch Changes
+
+- [#141](https://github.com/llm-ui-kit/llm-ui/pull/141) [`341e1cb`](https://github.com/llm-ui-kit/llm-ui/commit/341e1cb873aeb794168b548adef0ce4a13331854) Thanks [@richardgill](https://github.com/richardgill)! - Breaking change: codeToHtmlProps -> codeToHtmlOptions (pre-release so patching)
+
+- Updated dependencies []:
+  - @llm-ui/react@0.0.10
+  - @llm-ui/shared@0.0.10
+
 ## 0.0.9
 
 ### Patch Changes
