@@ -20,9 +20,6 @@ Lets add some buttons:
   <button>See raw LLM output</button>
   <button>Fire confetti 🎉</button>
 </buttons>
-
-This works by telling the LLM to reply with buttons like this:
-
 \`\`\`xml
 <buttons>
   <button>See raw LLM output</button>
