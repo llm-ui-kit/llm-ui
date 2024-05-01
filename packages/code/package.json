@@ -60,7 +60,6 @@
     "@types/react": "18.2.60",
     "@types/react-dom": "18.2.19",
     "tsup": "^8.0.2",
-    "type-fest": "^4.15.0",
     "typescript": "^5.4.3"
   },
   "peerDependencies": {
