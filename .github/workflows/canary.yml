@@ -1,0 +1,135 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  pull-requests: write
+
+env:
+  FORCE_COLOR: 3
+  OPENAI_API_KEY: "sk-xyz"
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create git branch
+        run: |
+          # Create a git branch from the detached HEAD.
+          # We need this for some integration tests.
+          # This branch is not pushed, it's just local to the workflow environment.
+          git checkout -b test-branch-${{ github.sha }}
+
+      - uses: ./.github/shared
+
+      - name: Set build version
+        run: echo "TAG=0.0.0-${{ github.ref_name == 'changeset-release/main' && 'beta' || 'alpha' }}.v$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        id: version
+
+      - name: Check secrets exist
+        run: echo "exist=${{ secrets.GITHUB_TOKEN != '' && 'true' || 'false' }}" >> $GITHUB_OUTPUT
+        id: secrets
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v1
+        if: ${{ github.repository == 'llm-ui-kit/llm-ui' && github.event_name == 'pull_request' }}
+        id: find-comment-1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: Your pull request has been published to npm
+
+      - name: Update existing comment with stale state of npm release
+        uses: peter-evans/create-or-update-comment@v1
+        id: update-existing
+        if: ${{ github.repository == 'llm-ui-kit/llm-ui' && github.event_name == 'pull_request' && steps.find-comment-1.outputs.comment-id != '' }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.find-comment-1.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          edit-mode: replace
+          body: |
+            Your pull request has been published to npm.
+
+            You can install @llm-ui/react by running:
+
+            ```
+            npm install @llm-ui/react@${{ steps.version.outputs.TAG }}
+            ```
+
+            [Pull request has been updated, please wait for latest changes to be pushed to npm...]
+
+      - name: Build
+        run: pnpm build
+
+      - name: Configure npm registry token
+        if: ${{ steps.secrets.outputs.exist == 'true' }}
+        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Exit pre-mode if set
+        continue-on-error: true
+        run: npx changeset pre exit
+
+      - name: Publish build
+        if: ${{ steps.secrets.outputs.exist == 'true' && github.event_name == 'pull_request' }}
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          cat << EOF > .changeset/force-canary-build.md
+          ---
+          '@llm-ui/buttons': patch
+          '@llm-ui/code': patch
+          '@llm-ui/markdown': patch
+          '@llm-ui/react': patch
+          '@llm-ui/shared': patch
+          ---
+          Force canary build
+
+          EOF
+
+          npx changeset version --snapshot ${{ github.ref_name == 'changeset-release/main' && 'beta' || 'alpha' }}
+          npx changeset publish --tag ${{ github.ref_name == 'changeset-release/main' && 'dev' || 'canary' }} --no-git-tag
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v1
+        if: ${{ steps.secrets.outputs.exist == 'true' && github.event_name == 'pull_request' }}
+        id: find-comment-2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: Your pull request has been published to npm
+
+      - name: Create or update comment of npm release
+        uses: peter-evans/create-or-update-comment@v1
+        if: ${{ steps.secrets.outputs.exist == 'true' && github.event_name == 'pull_request' }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.find-comment-2.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          edit-mode: replace
+          body: |
+            Your pull request has been published to npm.
+
+            You can install @llm-ui/react by running:
+
+            ```
+            npm install @llm-ui/react@${{ steps.version.outputs.TAG }}
+            ```
+
+            [Pull request has been updated, please wait for latest changes to be pushed to npm...]
