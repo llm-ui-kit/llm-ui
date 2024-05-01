@@ -1,5 +1,12 @@
 # @llm-ui/shared
 
+## 0.0.11
+
+### Patch Changes
+
+- Updated dependencies [[`c0834d5`](https://github.com/llm-ui-kit/llm-ui/commit/c0834d54d1a048d74b2e70b74391715a385f4b5a)]:
+  - @llm-ui/react@0.0.11
+
 ## 0.0.10
 
 ### Patch Changes

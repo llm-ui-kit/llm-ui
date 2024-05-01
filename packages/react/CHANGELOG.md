@@ -1,5 +1,11 @@
 # @llm-ui/react
 
+## 0.0.11
+
+### Patch Changes
+
+- [#144](https://github.com/llm-ui-kit/llm-ui/pull/144) [`c0834d5`](https://github.com/llm-ui-kit/llm-ui/commit/c0834d54d1a048d74b2e70b74391715a385f4b5a) Thanks [@richardgill](https://github.com/richardgill)! - frameLookbackMs -> frameLookBackMs AND windowCount -> windowLookBackMs (breaking but prerelease)
+
 ## 0.0.10
 
 ## 0.0.9
