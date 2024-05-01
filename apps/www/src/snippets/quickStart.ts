@@ -11,7 +11,7 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 
 export const markdownQuickStart = `${markdownImports}\n\n${markdownComponent}`;
 
-export const codeblockImports = `import type { CodeToHtmlProps } from "@llm-ui/code";
+export const codeblockImports = `import type { CodeToHtmlOptions } from "@llm-ui/code";
 import { loadHighlighter, useCodeBlockToHtml } from "@llm-ui/code";
 import { allLangs, allLangsAlias } from "@llm-ui/code/shikiBundles/allLangs";
 // WARNING: Importing allThemes increases your bundle size
@@ -31,8 +31,7 @@ export const codeblockComponent = `const highlighter = loadHighlighter(
   }),
 );
 
-const codeToHtmlProps: CodeToHtmlProps = {
-  // @ts-ignore
+const codeToHtmlOptions: CodeToHtmlOptions = {
   theme: "github-dark",
 };
 
@@ -41,7 +40,7 @@ const CodeBlock: LLMOutputComponent = ({ blockMatch }) => {
   const { html, code } = useCodeBlockToHtml({
     markdownCodeBlock: blockMatch.output,
     highlighter,
-    codeToHtmlProps,
+    codeToHtmlOptions,
   });
   if (!html) {
     // fallback to <pre> if Shiki is not loaded yet
@@ -142,7 +141,7 @@ export const llmUiOutputQuickStart = `${llmUiOutputImports}\n\n${llmUiOutputUsag
 export const llmUiOutputQuickStartStep = `${llmUiOutputImports}\n\n${llmUiOutputUsageStep}`;
 
 export const markdownAndCodeblockImports = `"use client";
-import type { CodeToHtmlProps } from "@llm-ui/code";
+import type { CodeToHtmlOptions } from "@llm-ui/code";
 import {
   codeBlockLookBack,
   findCompleteCodeBlock,

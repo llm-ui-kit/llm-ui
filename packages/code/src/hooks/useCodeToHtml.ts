@@ -8,14 +8,14 @@ export type UseCodeToHtmlParams = {
 export const useCodeToHtml = ({
   code,
   highlighter,
-  codeToHtmlProps,
+  codeToHtmlOptions,
 }: UseCodeToHtmlParams): string => {
   const shikiHighlighter = useLoadHighlighter(highlighter);
   if (!shikiHighlighter) {
     return "";
   }
   return shikiHighlighter.codeToHtml(code, {
-    ...codeToHtmlProps,
-    lang: codeToHtmlProps.lang ?? "plain",
+    ...codeToHtmlOptions,
+    lang: codeToHtmlOptions.lang ?? "plain",
   });
 };

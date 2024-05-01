@@ -15,15 +15,15 @@ export type UseCodeBlockToHtmlReturn = {
 export const useCodeBlockToHtml = ({
   markdownCodeBlock,
   highlighter,
-  codeToHtmlProps,
+  codeToHtmlOptions,
   parser = parseCompleteMarkdownCodeBlock,
 }: UseCodeBlockToHtmlParams) => {
   const { code = "\n", language } = parser(markdownCodeBlock);
-  const lang = codeToHtmlProps.lang ?? language ?? "plain";
+  const lang = codeToHtmlOptions.lang ?? language ?? "plain";
   const html = useCodeToHtml({
     code,
     highlighter,
-    codeToHtmlProps: { ...codeToHtmlProps, lang },
+    codeToHtmlOptions: { ...codeToHtmlOptions, lang },
   });
   return { html, code };
 };

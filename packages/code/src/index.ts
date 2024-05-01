@@ -22,4 +22,4 @@ export type { UseCodeToHtmlParams } from "./hooks/useCodeToHtml";
 
 export { loadHighlighter } from "./hooks/useLoadHighlighter";
 
-export type { CodeToHtmlProps, LLMUIHighlighter, ShikiProps } from "./types";
+export type { CodeToHtmlOptions, LLMUIHighlighter, ShikiProps } from "./types";

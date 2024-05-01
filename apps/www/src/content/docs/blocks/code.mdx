@@ -260,7 +260,7 @@ const MyComponent = () => {
   const { html, code } = useCodeBlockToHtml({
     markdownCodeBlock: "```typescript\nconsole.log('llm-ui');\n```",
     highlighter, // highlighter from loadHighlighter function
-    codeToHtmlProps, // Shiki codeToHtmlProps
+    codeToHtmlOptions, // Shiki codeToHtmlOptions
   });
   console.log(html);
   // => "<pre class="shiki"...>...</pre>"
@@ -288,7 +288,7 @@ const MyComponent = () => {
   const html = useCodeToHtml({
     code: "console.log('llm-ui');",
     highlighter, // highlighter from loadHighlighter function
-    codeToHtmlProps: { lang: 'typescript' }, // Shiki codeToHtmlProps
+    codeToHtmlOptions: { lang: 'typescript' }, // Shiki codeToHtmlOptions
   });
 
   console.log(html);

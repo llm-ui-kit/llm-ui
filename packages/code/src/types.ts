@@ -1,14 +1,17 @@
-import { HighlighterCore } from "shiki/core";
-import { SetOptional } from "type-fest";
+import { CodeToHastOptions, HighlighterCore } from "shiki/core";
 
-export type CodeToHtmlProps = SetOptional<
-  Parameters<HighlighterCore["codeToHtml"]>[1],
-  "lang"
->;
+type OmitWithExclude<T, ToOmit> = {
+  [P in keyof T as Exclude<P, ToOmit>]: T[P];
+};
+
+// Using Omit or SetOptional from type-fest removed other keys from CodeToHastOptions.
+export type CodeToHtmlOptions = OmitWithExclude<CodeToHastOptions, "lang"> & {
+  lang?: CodeToHastOptions["lang"];
+};
 
 export type ShikiProps = {
   highlighter: LLMUIHighlighter;
-  codeToHtmlProps: CodeToHtmlProps;
+  codeToHtmlOptions: CodeToHtmlOptions;
 };
 
 export type LLMUIHighlighter = {

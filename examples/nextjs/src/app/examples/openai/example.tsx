@@ -1,5 +1,5 @@
 "use client";
-import type { CodeToHtmlProps } from "@llm-ui/code";
+import type { CodeToHtmlOptions } from "@llm-ui/code";
 import {
   codeBlockLookBack,
   findCompleteCodeBlock,
@@ -43,8 +43,7 @@ const highlighter = loadHighlighter(
   }),
 );
 
-const codeToHtmlProps: CodeToHtmlProps = {
-  // @ts-ignore
+const codeToHtmlOptions: CodeToHtmlOptions = {
   theme: "github-dark",
 };
 
@@ -53,7 +52,7 @@ const CodeBlock: LLMOutputComponent = ({ blockMatch }) => {
   const { html, code } = useCodeBlockToHtml({
     markdownCodeBlock: blockMatch.output,
     highlighter,
-    codeToHtmlProps,
+    codeToHtmlOptions,
   });
   if (!html) {
     // fallback to <pre> if Shiki is not loaded yet

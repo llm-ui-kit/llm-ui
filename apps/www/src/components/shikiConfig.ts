@@ -15,5 +15,5 @@ export const shikiConfig: ShikiProps = {
       loadWasm: getWasm,
     }),
   ),
-  codeToHtmlProps: { themes: { light: "github-light", dark: "github-dark" } },
+  codeToHtmlOptions: { themes: { light: "github-light", dark: "github-dark" } },
 };
