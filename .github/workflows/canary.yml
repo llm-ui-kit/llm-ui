@@ -72,9 +72,6 @@ jobs:
 
             [Pull request has been updated, please wait for latest changes to be pushed to npm...]
 
-      # - name: Install dependencies
-      #   run: pnpm install --frozen-lockfile
-
       - name: Build
         run: pnpm build
 
@@ -91,7 +88,6 @@ jobs:
       - name: Publish build
         if: ${{ steps.secrets.outputs.exist == 'true' && github.event_name == 'pull_request' }}
         env:
-          # GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cat << EOF > .changeset/force-canary-build.md
