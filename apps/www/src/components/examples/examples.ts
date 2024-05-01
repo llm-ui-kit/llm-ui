@@ -4,78 +4,46 @@ import {
 } from "@llm-ui/react/examples";
 import { defaultExampleProbs } from "./contants";
 
-export const ctaExample = `### Install
-\`\`\`bash
-pnpm add @llm-ui/react @llm-ui/markdown
-\`\`\`
+const ctaBeforePause = `# llm-ui
 
-[Docs](/docs)
+### Removes broken markdown syntax
 
-- *italic*, **bold**, ~strikethrough~
-`;
+It renders **bold**, *italic*, and ~strikethrough~ without showing any markdown syntax.
 
-export const markdownExample = `### Header
+Here's a link to the [docs](https://llm-ui.com/docs).
 
+### Matches your display's frame rate
+This text is streaming tokens which are 3 characters long, but llm-ui smooths this out by rendering characters at the native frame rate of your display.
 
-~abc~
+### Removes pauses
 
+It can also smooth our pauses in the LLM's response
 
-**bold**
+Like this one: in 3...2...1`;
 
+const ctaAfterPause = `without users noticing
 
-*italic*
+### Custom components
 
+Add your own custom components to your LLM output.
 
-***bold and italic***
+Lets add some buttons:
 
-[Link](https://llm-ui.com/docs)
+<buttons><button>Something</button><button>Else</button></buttons>
 
----
+This works by telling the LLM to reply with buttons like this:
 
-- bullet 1
-2. ordered list
-3. three
-`;
-
-export const codeBlockExample = `#### Python
-\`\`\`python
-def hello_llm_ui():
-    print("Hello llm-ui")
-\`\`\`
-
-#### Typescript
-\`\`\`ts
-const helloLlmUi = () => {
-  console.log("Hello llm-ui")
-}
-\`\`\`
-
-#### Haskell
-\`\`\`haskell
-main = putStrLn "Hello llm-ui"
-\`\`\``;
-
-export const customComponentExample = `### Custom Component
-
-Quick actions:
-
+\`\`\`xml
 <buttons>
-  <button>Option 1</button>
-  <button>Option 2</button>
+  <button>See raw LLM output</button>
+  <button>Fire confetti</button>
 </buttons>
+\`\`\`
+
+^^^ It also has code blocks with syntax highlighting for over 100 languages with [Shiki](https://shiki.style/).
 `;
-
-const throttleBeforePause = `### Throttling
-
-Sometimes model outputs stop for a couple of seconds. llm-ui can throttle the output to make it look more natural.
-
-
-Pausing in 3...2...1`;
-
-const throttleAfterPause = `and now we resume smoothly 🚀`;
-
-export const throttleExample: TokenWithDelay[] = [
-  ...stringToTokenArray(throttleBeforePause, defaultExampleProbs),
+export const ctaExample: TokenWithDelay[] = [
+  ...stringToTokenArray(ctaBeforePause, defaultExampleProbs),
   { token: " ", delayMs: 1500 },
-  ...stringToTokenArray(throttleAfterPause, defaultExampleProbs),
+  ...stringToTokenArray(ctaAfterPause, defaultExampleProbs),
 ];
