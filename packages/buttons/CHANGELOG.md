@@ -1,5 +1,13 @@
 # @llm-ui/buttons
 
+## 0.0.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.0.10
+  - @llm-ui/shared@0.0.10
+
 ## 0.0.9
 
 ### Patch Changes
