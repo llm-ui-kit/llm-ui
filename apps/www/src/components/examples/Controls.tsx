@@ -57,6 +57,7 @@ export const Controls: React.FC<{
   mobileTabs: Tab[];
   onDesktopTabIndexChange: (index: number) => void;
   onMobileTabIndexChange: (index: number) => void;
+  tabIndex: number;
 }> = ({
   className,
   delayMultiplier,
@@ -71,6 +72,7 @@ export const Controls: React.FC<{
   mobileTabs,
   onDesktopTabIndexChange,
   onMobileTabIndexChange,
+  tabIndex,
 }) => {
   return (
     <div
@@ -87,6 +89,7 @@ export const Controls: React.FC<{
               text: tab,
             }))}
             onIndexChange={onMobileTabIndexChange}
+            tabIndex={tabIndex}
           />
         )}
         {desktopTabs.length > 1 && (
@@ -96,6 +99,7 @@ export const Controls: React.FC<{
               text: tab,
             }))}
             onIndexChange={onDesktopTabIndexChange}
+            tabIndex={tabIndex}
           />
         )}
       </div>

@@ -284,6 +284,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
         onDesktopTabIndexChange={setTabIndex}
         mobileTabs={tabs}
         onMobileTabIndexChange={setTabIndex}
+        tabIndex={tabIndex}
       />
     </div>
   );
@@ -433,6 +434,7 @@ export const ExampleSideBySideTokenArray: React.FC<
         mobileTabs={mobileTabs}
         onDesktopTabIndexChange={setDesktopTabIndex}
         onMobileTabIndexChange={setMobileTabIndex}
+        tabIndex={tabIndex}
       />
     </div>
   );

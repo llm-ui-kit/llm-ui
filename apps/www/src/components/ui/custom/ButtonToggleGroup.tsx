@@ -10,6 +10,7 @@ type ButtonGroupProps = {
     props?: ButtonProps;
   }[];
   defaultActiveIndex?: number;
+  tabIndex?: number;
   onIndexChange?: (index: number) => void;
 };
 
@@ -17,9 +18,12 @@ export const ButtonToggleGroup: React.FC<ButtonGroupProps> = ({
   className,
   buttons,
   onIndexChange = () => null,
+  tabIndex,
   defaultActiveIndex = 0,
 }) => {
-  const [activeIndex, setActiveIndex] = useState(defaultActiveIndex);
+  const [activeIndexInternal, setActiveIndexInternal] =
+    useState(defaultActiveIndex);
+  const activeIndex = tabIndex ?? activeIndexInternal;
   return (
     <div className={cn("flex flex-row", className)}>
       {buttons.map(({ text, props = {} }, index) => (
@@ -31,7 +35,7 @@ export const ButtonToggleGroup: React.FC<ButtonGroupProps> = ({
           className={cn("rounded-sm bg-transparent text-foreground")}
           {...props}
           onClick={(event) => {
-            setActiveIndex(index);
+            setActiveIndexInternal(index);
             onIndexChange(index);
             if (props.onClick) props.onClick(event);
           }}

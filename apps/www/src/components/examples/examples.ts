@@ -8,9 +8,7 @@ const ctaBeforePause = `# llm-ui
 
 ### Removes broken markdown syntax
 
-It renders **bold**, *italic*, and ~strikethrough~ without showing any markdown syntax.
-
-Here's a link to the [docs](https://llm-ui.com/docs).
+It renders **bold**, *italic*, ~strikethrough~ and [links](https://llm-ui.com/docs) without showing any markdown syntax.
 
 ### Custom components
 
@@ -18,18 +16,21 @@ Add your own custom components to your LLM output.
 
 Lets add some buttons:
 
-<buttons><button>Something</button><button>Else</button></buttons>
+<buttons>
+  <button>See raw LLM output</button>
+  <button>Fire confetti 🎉</button>
+</buttons>
 
 This works by telling the LLM to reply with buttons like this:
 
 \`\`\`xml
 <buttons>
   <button>See raw LLM output</button>
-  <button>Fire confetti</button>
+  <button>Fire confetti 🎉</button>
 </buttons>
 \`\`\`
 
-^^^ It also has code blocks with syntax highlighting for over 100 languages with [Shiki](https://shiki.style/).
+^^^ llm-ui also has code blocks with syntax highlighting for over 100 languages with [Shiki](https://shiki.style/).
 
 ### Matches your display's frame rate
 This text is streaming tokens which are 3 characters long, but llm-ui smooths this out by rendering characters at the native frame rate of your display.
