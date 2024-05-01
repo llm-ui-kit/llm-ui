@@ -1,3 +1,4 @@
+import { multipleStars } from "@/animations/stars";
 import { cn, delay } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
@@ -198,8 +199,8 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
 
   const [tabIndex, setTabIndex] = useState(0);
   const onButtonClick = useCallback((buttonText: string) => {
-    if (buttonText.toLowerCase().includes("confetti")) {
-      console.log("confetti!!!");
+    if (buttonText.toLowerCase().includes("star")) {
+      multipleStars();
     } else if (buttonText.toLowerCase().includes("raw")) {
       const rawTab = tabs.indexOf("raw");
       setTabIndex(rawTab);

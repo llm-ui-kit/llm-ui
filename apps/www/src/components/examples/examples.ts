@@ -18,12 +18,12 @@ Lets add some buttons:
 
 <buttons>
   <button>See raw LLM output</button>
-  <button>Fire confetti 🎉</button>
+  <button>Star explosion ⭐</button>
 </buttons>
 \`\`\`xml
 <buttons>
   <button>See raw LLM output</button>
-  <button>Fire confetti 🎉</button>
+  <button>Star explosion ⭐</button>
 </buttons>
 \`\`\`
 
