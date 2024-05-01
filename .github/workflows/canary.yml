@@ -1,4 +1,4 @@
-name: Canary
+name: Release
 
 on:
   push:
@@ -15,7 +15,7 @@ env:
   OPENAI_API_KEY: "sk-xyz"
 
 jobs:
-  build:
+  canary:
     runs-on: ubuntu-latest
     timeout-minutes: 14
 
@@ -88,7 +88,8 @@ jobs:
       - name: Publish build
         if: ${{ steps.secrets.outputs.exist == 'true' && github.event_name == 'pull_request' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          # GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cat << EOF > .changeset/force-canary-build.md
           ---
