@@ -1,5 +1,14 @@
 # @llm-ui/shared
 
+## 0.0.12
+
+### Patch Changes
+
+- [#150](https://github.com/llm-ui-kit/llm-ui/pull/150) [`9634d5c`](https://github.com/llm-ui-kit/llm-ui/commit/9634d5c59105aff912ebee19ce9adf77f7d02a36) Thanks [@richardgill](https://github.com/richardgill)! - MIT License
+
+- Updated dependencies [[`9634d5c`](https://github.com/llm-ui-kit/llm-ui/commit/9634d5c59105aff912ebee19ce9adf77f7d02a36)]:
+  - @llm-ui/react@0.0.12
+
 ## 0.0.11
 
 ### Patch Changes

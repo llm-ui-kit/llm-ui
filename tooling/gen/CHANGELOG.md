@@ -1,5 +1,11 @@
 # @llm-ui/gen
 
+## 0.0.4
+
+### Patch Changes
+
+- [#150](https://github.com/llm-ui-kit/llm-ui/pull/150) [`9634d5c`](https://github.com/llm-ui-kit/llm-ui/commit/9634d5c59105aff912ebee19ce9adf77f7d02a36) Thanks [@richardgill](https://github.com/richardgill)! - MIT License
+
 ## 0.0.3
 
 ### Patch Changes
