@@ -126,6 +126,15 @@ export const useLLMOutput = ({
       return;
     }
 
+    // make sure throttle has the last text lengths when the stream finishes
+    const visibleTextLengthsAll = isStreamFinished
+      ? [...visibleTextAllLengthsRef.current, visibleTextAll.length]
+      : visibleTextAllLengthsRef.current;
+
+    const outputLengths = isStreamFinished
+      ? [...outputLengthsRef.current, outputAll.length]
+      : outputLengthsRef.current;
+
     const { visibleTextIncrement } = throttle({
       outputRaw: llmOutput,
       outputRendered,
@@ -138,8 +147,8 @@ export const useLLMOutput = ({
       frameTime,
       frameTimePrevious: previousFrameTimeRef.current,
       finishStreamTime: finishTimeRef.current,
-      visibleTextLengthsAll: visibleTextAllLengthsRef.current,
-      outputLengths: outputLengthsRef.current,
+      visibleTextLengthsAll,
+      outputLengths,
       visibleTextIncrements: visibleTextIncrementsRef.current,
       visibleTextLengthTarget: visibleTextLengthTargetRef.current,
     });

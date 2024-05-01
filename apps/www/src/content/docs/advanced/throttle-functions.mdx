@@ -41,9 +41,9 @@ import { throttleBasic } from "@llm-ui/react/throttle";
 const throttle = throttleBasic({
   readAheadChars: 10,
   targetBufferChars: 7,
-  frameLookbackMs: 200,
   adjustPercentage: 0.35,
-  windowCount: 5,
+  frameLookBackMs: 10000,
+  windowLookBackMs: 2000,
 });
 
 const { blockMatches } = useLLMOutput({
@@ -71,7 +71,7 @@ The target number of characters behind the actual LLM output `useLLMOutput` shou
 
 `readAheadChars` is already taken into account when calculating this value.
 
-### `frameLookbackMs` (number)
+### `frameLookBackMs` (number)
 
 default: `10000`
 
@@ -85,11 +85,11 @@ When the throttle is behind the target number of visible characters, the throttl
 
 When the throttle is ahead of the target number of visible characters, the throttle will decrease the number of visible characters displayed by this factor to slow down and get back to the target.
 
-### `windowCount` (number)
+### `windowLookBackMs` (number)
 
-Default: `5`
+Default: `2000`
 
-How many windows to break the `frameLookbackMs` into when calculating the average visible text per frame.
+Calculates the window size to break the `frameLookBackMs` into when calculating the average visible text per frame.
 
 # Writing your own throttle function
 

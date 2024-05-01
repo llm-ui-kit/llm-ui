@@ -4,7 +4,6 @@ export type ThrottleType = "buffered" | "low-lag";
 
 export const throttleLowLag = throttleBasic({
   adjustPercentage: 0.35,
-  frameLookbackMs: 500,
   readAheadChars: 10,
   targetBufferChars: 9,
 });
