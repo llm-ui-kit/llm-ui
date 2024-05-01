@@ -4,78 +4,50 @@ import {
 } from "@llm-ui/react/examples";
 import { defaultExampleProbs } from "./contants";
 
-export const ctaExample = `### Install
-\`\`\`bash
-pnpm add @llm-ui/react @llm-ui/markdown
-\`\`\`
+const ctaBeforePause = `# llm-ui
 
-[Docs](/docs)
+### Removes broken markdown syntax
 
-- *italic*, **bold**, ~strikethrough~
-`;
+It renders **bold**, *italic*, ~strikethrough~ and [links](https://llm-ui.com/docs) without showing any markdown syntax.
 
-export const markdownExample = `### Header
+### Custom components
 
+Add your own custom components to your LLM output.
 
-~abc~
-
-
-**bold**
-
-
-*italic*
-
-
-***bold and italic***
-
-[Link](https://llm-ui.com/docs)
-
----
-
-- bullet 1
-2. ordered list
-3. three
-`;
-
-export const codeBlockExample = `#### Python
-\`\`\`python
-def hello_llm_ui():
-    print("Hello llm-ui")
-\`\`\`
-
-#### Typescript
-\`\`\`ts
-const helloLlmUi = () => {
-  console.log("Hello llm-ui")
-}
-\`\`\`
-
-#### Haskell
-\`\`\`haskell
-main = putStrLn "Hello llm-ui"
-\`\`\``;
-
-export const customComponentExample = `### Custom Component
-
-Quick actions:
+Lets add a custom button:
 
 <buttons>
-  <button>Option 1</button>
-  <button>Option 2</button>
+  <button>Star explosion ⭐</button>
 </buttons>
+
+This works by prompting the LLM to let it know it can use buttons by replying like this:
+\`\`\`xml
+<buttons>
+  <button>Star explosion ⭐</button>
+</buttons>
+\`\`\`
+
+^^^ llm-ui also has code blocks with syntax highlighting for over 100 languages with [Shiki](https://shiki.style/).
+
+### Matches your display's frame rate
+This text is streaming tokens which are 3 characters long, but llm-ui smooths this out by rendering characters at the native frame rate of your display.
+
+### Removes pauses
+
+llm-ui smooths out pauses in the LLM's response
+
+Like this one: in 3...2...1`;
+
+const ctaAfterPause = `without users noticing.
+
+<buttons>
+  <button>See raw LLM output</button>
+</buttons>
+
+^^^ check out the raw LLM output to see the tokens being streamed.
 `;
-
-const throttleBeforePause = `### Throttling
-
-Sometimes model outputs stop for a couple of seconds. llm-ui can throttle the output to make it look more natural.
-
-
-Pausing in 3...2...1`;
-
-const throttleAfterPause = `and now we resume smoothly 🚀`;
-
-export const throttleExample: TokenWithDelay[] = [
-  ...stringToTokenArray(throttleBeforePause, defaultExampleProbs),
+export const ctaExample: TokenWithDelay[] = [
+  ...stringToTokenArray(ctaBeforePause, defaultExampleProbs),
   { token: " ", delayMs: 1500 },
-  ...stringToTokenArray(throttleAfterPause, defaultExampleProbs),
+  ...stringToTokenArray(ctaAfterPause, defaultExampleProbs),
 ];

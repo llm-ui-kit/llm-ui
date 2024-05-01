@@ -2,7 +2,7 @@ import { LLMOutputMatcher } from "@llm-ui/react/core";
 import { regexMatcher } from "@llm-ui/shared";
 
 export const findCompleteButtons = (): LLMOutputMatcher => {
-  const regex = /<buttons>[\s\S]*<\/buttons>/;
+  const regex = /<buttons>[\s\S]*?<\/buttons>/;
   return regexMatcher(regex);
 };
 

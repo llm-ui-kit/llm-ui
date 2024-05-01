@@ -2,18 +2,8 @@
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { siteConfig } from "@/config/site";
 import MainLayout from "@/layouts/MainLayout.astro";
-import {
-  ExampleSideBySide,
-  ExampleSideBySideTokenArray,
-  ExampleTabs,
-} from "@/components/examples/Example";
-import {
-  ctaExample,
-  codeBlockExample,
-  markdownExample,
-  customComponentExample,
-  throttleExample,
-} from "@/components/examples/examples";
+import { ExampleTabsTokenArray } from "@/components/examples/Example";
+import { ctaExample } from "@/components/examples/examples";
 import { cn } from "@/lib/utils";
 import { Icon } from "astro-icon/components";
 import HeaderSection from "@/components/HeaderSection.astro";
@@ -38,7 +28,9 @@ import { marketingConfig } from "@/config/marketing";
       <p
         class="text-muted-foreground mb-3 max-w-[42rem] text-balance leading-normal sm:text-xl sm:leading-8"
       >
-        {"Display language model outputs in your React project"}
+        <span class="md:whitespace-nowrap">Renders LLM Outputs smoothly.</span>
+        <span class="md:whitespace-nowrap">Removes broken markdown syntax.</span
+        >
       </p>
 
       <div class="flex justify-center space-x-2 md:space-x-4">
@@ -58,13 +50,12 @@ import { marketingConfig } from "@/config/marketing";
     </div>
   </section>
 
-  <section id="example" class="bg-background-200">
-    <div class="container flex min-h-[500px] max-w-[80rem] flex-col space-y-6">
-      <ExampleSideBySide
+  <section id="example" class="bg-background-200 space-y-16">
+    <div class="container flex min-h-[500px] max-w-[50rem] flex-col">
+      <ExampleTabsTokenArray
         client:load
-        example={ctaExample}
-        tabs={["llm-ui", "markdown", "raw"]}
-        showHeaders
+        tokenArray={ctaExample}
+        tabs={["llm-ui", "raw"]}
         options={{ delayMultiplier: 0.4 }}
         hideFirstLoop
         throttle="low-lag"
@@ -72,89 +63,23 @@ import { marketingConfig } from "@/config/marketing";
         showPlayPause={false}
       />
     </div>
+
+    <div class="flex justify-center space-x-2 md:space-x-4">
+      <a href="/docs" class={cn(buttonVariants({ size: "lg" }))}>
+        Get Started
+      </a>
+      <a
+        href={siteConfig.links.github}
+        target="_blank"
+        rel="noreferrer"
+        class={cn(buttonVariants({ variant: "outline", size: "lg" }), "px-4")}
+      >
+        <Icon name="github" class="mr-2 size-5" />
+        Github
+      </a>
+    </div>
   </section>
 
-  <section
-    id="markdown"
-    class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
-  >
-    <div class="container space-y-6">
-      <HeaderSection
-        title="Advanced Markdown"
-        subtitle="Markdown is rendered from left to right, markdown syntax is never visible"
-      />
-      <ExampleSideBySide
-        client:load
-        example={markdownExample}
-        tabs={["llm-ui", "raw"]}
-        options={{ delayMultiplier: 0.6 }}
-        hideFirstLoop
-        throttle="low-lag"
-      />
-    </div>
-  </section>
-  <section
-    id="codeblock"
-    class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
-  >
-    <div class="container space-y-6">
-      <HeaderSection title="Codeblocks">
-        <Fragment slot="subtitle">
-          Beautiful syntax highlighting for every language with <a
-            class="text-primary"
-            target="_blank"
-            href="https://shiki.style/">Shiki</a
-          >.</Fragment
-        >
-      </HeaderSection>
-      <div class="container max-w-[600px]">
-        <ExampleTabs
-          client:load
-          example={codeBlockExample}
-          tabs={["llm-ui", "raw"]}
-          hideFirstLoop
-          throttle="buffered"
-        />
-      </div>
-    </div>
-  </section>
-  <section
-    id="custom"
-    class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
-  >
-    <div class="container space-y-6">
-      <HeaderSection
-        title="Custom Components"
-        subtitle="Render the model's output using your own custom 'blocks'"
-      />
-      <ExampleSideBySide
-        client:load
-        example={customComponentExample}
-        options={{ delayMultiplier: 0.2 }}
-        tabs={["llm-ui", "raw"]}
-        throttle="buffered"
-        hideFirstLoop
-      />
-    </div>
-  </section>
-  <section
-    id="throttling"
-    class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
-  >
-    <div class="container space-y-6">
-      <HeaderSection
-        title="Throttling"
-        subtitle="Smooth out pauses in the model's output"
-      />
-      <ExampleSideBySideTokenArray
-        client:only
-        tokenArray={throttleExample}
-        tabs={["llm-ui", "raw"]}
-        hideFirstLoop
-        throttle="buffered"
-      />
-    </div>
-  </section>
   <section
     id="all-llms"
     class="bg-background-200 py-8 text-center md:py-12 lg:py-24"
@@ -175,7 +100,6 @@ import { marketingConfig } from "@/config/marketing";
       </div>
     </div>
   </section>
-
   <section id="waitlist" class="bg-background-200 py-8 md:py-12 lg:py-24">
     <div class="container space-y-6">
       <WaitlistForm client:load />

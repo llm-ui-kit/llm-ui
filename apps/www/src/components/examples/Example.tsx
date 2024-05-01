@@ -1,8 +1,10 @@
+import { multipleStars } from "@/animations/stars";
 import { cn, delay } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
   useLLMOutput,
   type BlockMatch,
+  type LLMOutputBlock,
   type UseLLMOutputReturn,
 } from "@llm-ui/react/core";
 import {
@@ -12,7 +14,7 @@ import {
   type UseStreamTokenArrayOptions,
   type UseStreamWithProbabilitiesOptions,
 } from "@llm-ui/react/examples";
-import React, { useState, type ReactNode } from "react";
+import React, { useCallback, useRef, useState, type ReactNode } from "react";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
 import { buttonsBlock } from "./Buttons";
@@ -196,6 +198,15 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   const [hasLooped, setHasLooped] = useState(false);
 
   const [tabIndex, setTabIndex] = useState(0);
+  const onButtonClick = useCallback((buttonText: string) => {
+    if (buttonText.toLowerCase().includes("star")) {
+      multipleStars();
+    } else if (buttonText.toLowerCase().includes("raw")) {
+      const rawTab = tabs.indexOf("raw");
+      setTabIndex(rawTab);
+    }
+  }, []);
+  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsBlock(onButtonClick));
 
   const {
     output,
@@ -211,7 +222,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   const { finishCount, restart, blockMatches, isFinished, visibleText } =
     useLLMOutput({
       llmOutput: output,
-      blocks: [codeBlockBlock, buttonsBlock],
+      blocks: [codeBlockBlock, buttonsBlockRef.current],
       fallbackBlock: {
         component: Markdown,
         lookBack: markdownLookBack(),
@@ -274,6 +285,8 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
         onDesktopTabIndexChange={setTabIndex}
         mobileTabs={tabs}
         onMobileTabIndexChange={setTabIndex}
+        desktopTabIndex={tabIndex}
+        mobileTabIndex={tabIndex}
       />
     </div>
   );
@@ -323,7 +336,7 @@ export const ExampleSideBySideTokenArray: React.FC<
   const { finishCount, restart, blockMatches, isFinished, visibleText } =
     useLLMOutput({
       llmOutput: output,
-      blocks: [codeBlockBlock, buttonsBlock],
+      blocks: [codeBlockBlock, buttonsBlock(() => null)],
       fallbackBlock: {
         component: Markdown,
         lookBack: markdownLookBack(),
@@ -423,6 +436,8 @@ export const ExampleSideBySideTokenArray: React.FC<
         mobileTabs={mobileTabs}
         onDesktopTabIndexChange={setDesktopTabIndex}
         onMobileTabIndexChange={setMobileTabIndex}
+        desktopTabIndex={desktopTabIndex}
+        mobileTabIndex={mobileTabIndex}
       />
     </div>
   );
