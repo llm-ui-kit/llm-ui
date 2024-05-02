@@ -38,7 +38,9 @@
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-gfm": "^3.0.0",
     "mdast-util-to-markdown": "^2.1.0",
-    "micromark-extension-gfm": "^3.0.0"
+    "micromark-extension-gfm": "^3.0.0",
+    "unist-util-visit": "^5.0.0",
+    "remeda": "^1.57.0"
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",

@@ -160,12 +160,16 @@ describe("removePartialAmbiguousMarkdown", () => {
     { markdown: "* abc\n  * def", expected: "* abc\n  * def\n" },
     { markdown: "*", expected: "" },
     { markdown: "* ", expected: "*\n" },
+    { markdown: "* def ", expected: "* def\n" },
+    { markdown: "* **abc**", expected: "* **abc**\n" },
+    { markdown: "* abc def", expected: "* abc def\n" }, // spaces
 
     // numbered list items
     { markdown: "1. abc", expected: "1. abc\n" },
     { markdown: "1. abc\n2. def", expected: "1. abc\n2. def\n" },
     { markdown: "1.", expected: "1.\n" },
     { markdown: "2. ", expected: "2.\n" },
+    { markdown: "1. **abc**", expected: "1. **abc**\n" },
 
     // links
     { markdown: "[", expected: "" },
@@ -318,6 +322,9 @@ describe("markdownToVisibleText", () => {
       isFinished: false,
       expected: "*abc*def",
     },
+    { input: "* **abc**", isFinished: false, expected: "*abc" }, // since "* " is rendered as a bullet point, but "*" isn't, so it's 1 char
+    { input: "* xyz ", isFinished: false, expected: "*xyz" },
+    { input: "* abc def", isFinished: false, expected: "*abc def" }, // space
 
     // numbered list items
     { input: "1. abc", isFinished: false, expected: "*abc" },
@@ -329,6 +336,7 @@ describe("markdownToVisibleText", () => {
       isFinished: false,
       expected: "*abc*def",
     },
+    { input: "1. **abc**", isFinished: false, expected: "*abc" },
 
     // links
     { input: "[", isFinished: false, expected: "" },
@@ -639,6 +647,58 @@ describe("markdownWithVisibleChars", () => {
       visibleChars: 6,
       expected: "* abc\n  * d\n",
     },
+    {
+      markdown: "* **abc**",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "* **abc**\n",
+    },
+    {
+      markdown: "* **abc**",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "* **abc**\n",
+    },
+    // spaces in bullet
+    {
+      markdown: "* abc def",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "* abc\n",
+    },
+    {
+      markdown: "* abc def",
+      isFinished: false,
+      visibleChars: 5,
+      expected: `* abc&#x20;\n`,
+    },
+    {
+      markdown: "* abc def",
+      isFinished: false,
+      visibleChars: 6,
+      expected: "* abc d\n",
+    },
+    {
+      markdown: "* abc ",
+      isFinished: false,
+      visibleChars: 6,
+      expected: "* abc\n",
+    },
+    // {
+    //   markdown:
+    //     "3. **Lists:**\n\n- Item 1\n- Item 2\n  - Subitem 1\n  - Subitem 2\n",
+    //   isFinished: false,
+    //   visibleChars: 4,
+    //   expected: "3. **Lis**\n",
+    // },
+    // {
+    //   markdown:
+    //     "3. **Lists:**\n\n- Item 1\n- Item 2\n  - Subitem 1\n  - Subitem 2\n",
+    //   isFinished: false,
+    //   visibleChars: 40,
+    //   expected:
+    //     "3. **Lists:**\n\n* Item 1\n* Item 2\n  * Subitem 1\n  * Subitem 2\n",
+    // },
 
     // links
     { markdown: "[", isFinished: false, visibleChars: 1, expected: "" },

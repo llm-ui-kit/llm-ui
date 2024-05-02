@@ -411,6 +411,12 @@ importers:
       react:
         specifier: ^18.0.0
         version: 18.2.0
+      remeda:
+        specifier: ^1.57.0
+        version: 1.57.0
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
     devDependencies:
       '@llm-ui/tsconfig':
         specifier: workspace:*
