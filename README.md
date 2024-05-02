@@ -1,6 +1,6 @@
 # llm-ui
 
-The React library for LLMs. 
+The React library for LLMs.
 
 ![](/media/demo.webp)
 
@@ -13,6 +13,7 @@ The React library for LLMs.
 - Throtting smooths out pauses in the LLM’s streamed output
 - Renders output at native frame rate
 - Code blocks for every language with [Shiki](https://shiki.style)
+- Headless: Bring your own styles
 
 ## License
 
