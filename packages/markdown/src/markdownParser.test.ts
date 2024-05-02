@@ -743,21 +743,6 @@ describe("markdownWithVisibleChars", () => {
       visibleChars: 6,
       expected: "* abc\n",
     },
-    // {
-    //   markdown:
-    //     "3. **Lists:**\n\n- Item 1\n- Item 2\n  - Subitem 1\n  - Subitem 2\n",
-    //   isFinished: false,
-    //   visibleChars: 4,
-    //   expected: "3. **Lis**\n",
-    // },
-    // {
-    //   markdown:
-    //     "3. **Lists:**\n\n- Item 1\n- Item 2\n  - Subitem 1\n  - Subitem 2\n",
-    //   isFinished: false,
-    //   visibleChars: 40,
-    //   expected:
-    //     "3. **Lists:**\n\n* Item 1\n* Item 2\n  * Subitem 1\n  * Subitem 2\n",
-    // },
 
     // links
     { markdown: "[", isFinished: false, visibleChars: 1, expected: "" },
