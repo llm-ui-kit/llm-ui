@@ -21,7 +21,7 @@ export const buttonsLookBack = (): LookBackFunction => {
       }
       return [
         ...acc,
-        button.slice(0, visibleTextLengthTarget - visibleTextSoFar.length - 1), // 1 is for the space
+        button.slice(0, visibleTextLengthTarget - visibleTextSoFar.length),
       ];
     }, [] as Button[]);
     return {

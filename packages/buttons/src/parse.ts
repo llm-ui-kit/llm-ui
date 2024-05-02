@@ -4,9 +4,7 @@ const parser = new XMLParser();
 export type Button = string;
 export type Buttons = Button[] | undefined;
 
-export type ParseFunction = (buttonsString: string) => Buttons;
-
-export const parseCompleteButtons: ParseFunction = (buttonsString) => {
+export const parseCompleteButtons = (buttonsString: string): Buttons => {
   const validationResult = XMLValidator.validate(buttonsString);
   if (validationResult !== true) {
     return undefined;
@@ -17,7 +15,7 @@ export const parseCompleteButtons: ParseFunction = (buttonsString) => {
   }
   if (
     Array.isArray(parsed.buttons.button) &&
-    parsed.buttons.button.length <= 0
+    parsed.buttons.button.length >= 0
   ) {
     return parsed.buttons.button;
   }

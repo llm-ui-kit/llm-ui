@@ -1,3 +1,4 @@
+import { HIDDEN_CHAR } from "@/constants/constants";
 import {
   stringToTokenArray,
   type TokenWithDelay,
@@ -22,7 +23,7 @@ Lets add a custom button:
 
 This works by prompting the LLM to let it know it can use buttons by replying like this:
 \`\`\`xml
-<buttons>
+<${HIDDEN_CHAR}buttons>
   <button>Star explosion ⭐</button>
 </buttons>
 \`\`\`
