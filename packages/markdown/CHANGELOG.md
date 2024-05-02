@@ -1,5 +1,14 @@
 # @llm-ui/markdown
 
+## 0.0.13
+
+### Patch Changes
+
+- [#154](https://github.com/llm-ui-kit/llm-ui/pull/154) [`2806126`](https://github.com/llm-ui-kit/llm-ui/commit/280612684738f64fbed7c70e546513e814a8289b) Thanks [@richardgill](https://github.com/richardgill)! - Markdown bugfixes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.0.13
+
 ## 0.0.12
 
 ### Patch Changes
