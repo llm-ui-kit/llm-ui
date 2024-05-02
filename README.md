@@ -1,24 +1,20 @@
 # llm-ui
 
-Display language model outputs in your React project.
+The React library for LLMs.
 
-![readmeDemo](https://github.com/llm-ui-kit/llm-ui/assets/6640874/bd37553f-5259-4f47-88f5-8ff8702f679d)
+![](/media/demo.webp)
 
-More examples: https://llm-ui.com.
+[Documentation](http://llm-ui.com/docs)
 
 ## Features
 
-- Markdown blocks
-  - Streamed markdown support
-  - Markdown syntax hidden from users e.g. ## for headers
-  - Show’s one visible character at a time.
-- Code blocks
-  - Beautiful syntax highlighting for every language with Shiki
-- Build your own custom blocks
+- Removes broken markdown syntax
+- Add your own custom components to LLM output.
 - Throtting smooths out pauses in the LLM’s streamed output
-- Renders the correct number of characters per frame for a smooth user experience
-- Headless: Unopinionated about styling -> bring your own styles
+- Renders output at native frame rate
+- Code blocks for every language with [Shiki](https://shiki.style)
+- Headless: Bring your own styles
 
-## Documentation
+## License
 
-Visit http://llm-ui.com/docs to view the documentation.
+[MIT](/LICENSE)
