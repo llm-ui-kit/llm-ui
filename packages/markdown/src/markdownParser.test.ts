@@ -244,6 +244,53 @@ describe("markdownToVisibleText", () => {
       isFinished: false,
       expected: "b a c  ",
     },
+    {
+      input: `*b a c  ${ZERO_WIDTH_SPACE}*`,
+      isFinished: false,
+      expected: "b a c  ",
+    },
+    // spaces inside
+    { input: "**b a c**", isFinished: false, expected: "b a c" },
+    // we insert zero width spaces into emphasis to preserve trailing whitespace, but zero width spaces should not be in visible text
+    {
+      input: `**b a c ${ZERO_WIDTH_SPACE}**`,
+      isFinished: false,
+      expected: "b a c ",
+    },
+    {
+      input: `**b a c  ${ZERO_WIDTH_SPACE}**`,
+      isFinished: false,
+      expected: "b a c  ",
+    },
+
+    // spaces inside
+    { input: "***b a c***", isFinished: false, expected: "b a c" },
+    // we insert zero width spaces into emphasis to preserve trailing whitespace, but zero width spaces should not be in visible text
+    {
+      input: `***b a c ${ZERO_WIDTH_SPACE}***`,
+      isFinished: false,
+      expected: "b a c ",
+    },
+    {
+      input: `***b a c  ${ZERO_WIDTH_SPACE}***`,
+      isFinished: false,
+      expected: "b a c  ",
+    },
+
+    // spaces inside
+    { input: "~b a c~", isFinished: false, expected: "b a c" },
+    // we insert zero width spaces into emphasis to preserve trailing whitespace, but zero width spaces should not be in visible text
+    {
+      input: `~b a c ${ZERO_WIDTH_SPACE}~`,
+      isFinished: false,
+      expected: "b a c ",
+    },
+    {
+      input: `~b a c  ${ZERO_WIDTH_SPACE}~`,
+      isFinished: false,
+      expected: "b a c  ",
+    },
+
     // ambiguous so we don't show it yet.
     { input: "*", isFinished: false, expected: "" },
     { input: "abc\n*", isFinished: false, expected: "abc\n" },
@@ -474,6 +521,18 @@ describe("markdownWithVisibleChars", () => {
       visibleChars: 4,
       isFinished: false,
       expected: "*abc*&#x20;\n",
+    },
+    {
+      markdown: "**tyr def**",
+      visibleChars: 4,
+      isFinished: false,
+      expected: `**tyr ${ZERO_WIDTH_SPACE}**\n`,
+    },
+    {
+      markdown: "~str def~",
+      visibleChars: 4,
+      isFinished: false,
+      expected: `~~str ${ZERO_WIDTH_SPACE}~~\n`,
     },
     {
       markdown: "*abc  def*",

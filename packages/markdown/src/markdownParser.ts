@@ -68,7 +68,7 @@ const removeZeroWidthSpaces = (text: string): string => {
 
 const preserveWhitespaceInAst = (root: Root): Root => {
   visit(root, "text", (node, index, parent) => {
-    if (parent && ["emphasis"].includes(parent.type)) {
+    if (parent && ["emphasis", "strong", "delete"].includes(parent.type)) {
       const indexWithinParent = parent.children.findIndex((n) => {
         return isDeepEqual(n.position, node.position);
       });
