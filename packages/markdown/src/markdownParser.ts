@@ -3,6 +3,8 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { gfmFromMarkdown, gfmToMarkdown } from "mdast-util-gfm";
 import { toMarkdown } from "mdast-util-to-markdown";
 import { gfm } from "micromark-extension-gfm";
+import { isDeepEqual } from "remeda";
+import { visit } from "unist-util-visit";
 
 export const ZERO_WIDTH_SPACE = "\u200b";
 
@@ -47,6 +49,7 @@ const markdownToAst = (markdown: string): Root => {
 };
 
 const astToMarkdown = (markdownAst: Root): string => {
+  preserveWhitespaceInAst(markdownAst);
   return toMarkdown(markdownAst, { extensions: [gfmToMarkdown()] });
 };
 
@@ -55,8 +58,27 @@ const afterLastNewline = (markdown: string): string => {
   return markdown.slice(lastNewlineIndex + 1);
 };
 
-const replaceTrailingSpaces = (text: string): string => {
-  return text.replace(/\s$/, ` ${ZERO_WIDTH_SPACE}`);
+const addZeroWidthSpaceAfterTrailingWhitespace = (text: string): string => {
+  return text.replace(/ $/, ` ${ZERO_WIDTH_SPACE}`);
+};
+
+const removeZeroWidthSpaces = (text: string): string => {
+  return text.replaceAll(ZERO_WIDTH_SPACE, "");
+};
+
+const preserveWhitespaceInAst = (root: Root): Root => {
+  visit(root, "text", (node, index, parent) => {
+    if (parent && ["emphasis", "strong", "delete"].includes(parent.type)) {
+      const indexWithinParent = parent.children.findIndex((n) => {
+        return isDeepEqual(n.position, node.position);
+      });
+      const isLastChild = indexWithinParent === parent.children.length - 1;
+      if (isLastChild) {
+        node.value = addZeroWidthSpaceAfterTrailingWhitespace(node.value);
+      }
+    }
+  });
+  return root;
 };
 
 const removeRegexesFromParagraph = (
@@ -175,10 +197,7 @@ const markdownAstToVisibleText = (markdownAst: Root, isFinished: boolean) => {
   if (!isFinished) {
     removePartialAmbiguousMarkdownFromAst(markdownAst);
   }
-  return markdownAstToVisibleTextHelper(markdownAst).replaceAll(
-    ZERO_WIDTH_SPACE,
-    "",
-  );
+  return removeZeroWidthSpaces(markdownAstToVisibleTextHelper(markdownAst));
 };
 
 export const markdownToVisibleText = (
@@ -197,9 +216,7 @@ const removeVisibleCharsFromAstHelper = (
     if (node.value.length <= visibleCharsToRemove) {
       return { charsRemoved: node.value.length, toDelete: true };
     } else {
-      node.value = replaceTrailingSpaces(
-        node.value.slice(0, -1 * visibleCharsToRemove),
-      );
+      node.value = node.value.slice(0, -1 * visibleCharsToRemove);
       return { charsRemoved: visibleCharsToRemove, toDelete: false };
     }
   }

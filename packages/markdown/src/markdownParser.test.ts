@@ -160,12 +160,16 @@ describe("removePartialAmbiguousMarkdown", () => {
     { markdown: "* abc\n  * def", expected: "* abc\n  * def\n" },
     { markdown: "*", expected: "" },
     { markdown: "* ", expected: "*\n" },
+    { markdown: "* def ", expected: "* def\n" },
+    { markdown: "* **abc**", expected: "* **abc**\n" },
+    { markdown: "* abc def", expected: "* abc def\n" }, // spaces
 
     // numbered list items
     { markdown: "1. abc", expected: "1. abc\n" },
     { markdown: "1. abc\n2. def", expected: "1. abc\n2. def\n" },
     { markdown: "1.", expected: "1.\n" },
     { markdown: "2. ", expected: "2.\n" },
+    { markdown: "1. **abc**", expected: "1. **abc**\n" },
 
     // links
     { markdown: "[", expected: "" },
@@ -240,6 +244,53 @@ describe("markdownToVisibleText", () => {
       isFinished: false,
       expected: "b a c  ",
     },
+    {
+      input: `*b a c  ${ZERO_WIDTH_SPACE}*`,
+      isFinished: false,
+      expected: "b a c  ",
+    },
+    // spaces inside
+    { input: "**b a c**", isFinished: false, expected: "b a c" },
+    // we insert zero width spaces into emphasis to preserve trailing whitespace, but zero width spaces should not be in visible text
+    {
+      input: `**b a c ${ZERO_WIDTH_SPACE}**`,
+      isFinished: false,
+      expected: "b a c ",
+    },
+    {
+      input: `**b a c  ${ZERO_WIDTH_SPACE}**`,
+      isFinished: false,
+      expected: "b a c  ",
+    },
+
+    // spaces inside
+    { input: "***b a c***", isFinished: false, expected: "b a c" },
+    // we insert zero width spaces into emphasis to preserve trailing whitespace, but zero width spaces should not be in visible text
+    {
+      input: `***b a c ${ZERO_WIDTH_SPACE}***`,
+      isFinished: false,
+      expected: "b a c ",
+    },
+    {
+      input: `***b a c  ${ZERO_WIDTH_SPACE}***`,
+      isFinished: false,
+      expected: "b a c  ",
+    },
+
+    // spaces inside
+    { input: "~b a c~", isFinished: false, expected: "b a c" },
+    // we insert zero width spaces into emphasis to preserve trailing whitespace, but zero width spaces should not be in visible text
+    {
+      input: `~b a c ${ZERO_WIDTH_SPACE}~`,
+      isFinished: false,
+      expected: "b a c ",
+    },
+    {
+      input: `~b a c  ${ZERO_WIDTH_SPACE}~`,
+      isFinished: false,
+      expected: "b a c  ",
+    },
+
     // ambiguous so we don't show it yet.
     { input: "*", isFinished: false, expected: "" },
     { input: "abc\n*", isFinished: false, expected: "abc\n" },
@@ -318,6 +369,9 @@ describe("markdownToVisibleText", () => {
       isFinished: false,
       expected: "*abc*def",
     },
+    { input: "* **abc**", isFinished: false, expected: "*abc" }, // since "* " is rendered as a bullet point, but "*" isn't, so it's 1 char
+    { input: "* xyz ", isFinished: false, expected: "*xyz" },
+    { input: "* abc def", isFinished: false, expected: "*abc def" }, // space
 
     // numbered list items
     { input: "1. abc", isFinished: false, expected: "*abc" },
@@ -329,6 +383,7 @@ describe("markdownToVisibleText", () => {
       isFinished: false,
       expected: "*abc*def",
     },
+    { input: "1. **abc**", isFinished: false, expected: "*abc" },
 
     // links
     { input: "[", isFinished: false, expected: "" },
@@ -466,6 +521,18 @@ describe("markdownWithVisibleChars", () => {
       visibleChars: 4,
       isFinished: false,
       expected: "*abc*&#x20;\n",
+    },
+    {
+      markdown: "**tyr def**",
+      visibleChars: 4,
+      isFinished: false,
+      expected: `**tyr ${ZERO_WIDTH_SPACE}**\n`,
+    },
+    {
+      markdown: "~str def~",
+      visibleChars: 4,
+      isFinished: false,
+      expected: `~~str ${ZERO_WIDTH_SPACE}~~\n`,
     },
     {
       markdown: "*abc  def*",
@@ -638,6 +705,43 @@ describe("markdownWithVisibleChars", () => {
       isFinished: false,
       visibleChars: 6,
       expected: "* abc\n  * d\n",
+    },
+    {
+      markdown: "* **abc**",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "* **abc**\n",
+    },
+    {
+      markdown: "* **abc**",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "* **abc**\n",
+    },
+    // spaces in bullet
+    {
+      markdown: "* abc def",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "* abc\n",
+    },
+    {
+      markdown: "* abc def",
+      isFinished: false,
+      visibleChars: 5,
+      expected: `* abc&#x20;\n`,
+    },
+    {
+      markdown: "* abc def",
+      isFinished: false,
+      visibleChars: 6,
+      expected: "* abc d\n",
+    },
+    {
+      markdown: "* abc ",
+      isFinished: false,
+      visibleChars: 6,
+      expected: "* abc\n",
     },
 
     // links

@@ -164,10 +164,12 @@ const fallbacksInGaps = ({
 };
 
 const matchesWithLookback = ({
+  llmOutputRaw,
   matches,
   visibleTextLengthTarget,
   isStreamFinished,
 }: {
+  llmOutputRaw: string;
   matches: BlockMatchNoLookback[];
   visibleTextLengthTarget: number;
   isStreamFinished: boolean;
@@ -190,8 +192,8 @@ const matchesWithLookback = ({
       output: match.match.outputRaw,
     });
     if (visibleText.length > localVisibleTextLengthTarget) {
-      throw new Error(
-        `Visible text length exceeded target for: ${visibleText} has length ${visibleText.length} target: ${localVisibleTextLengthTarget}`,
+      console.warn(
+        `Visible text length exceeded target for: ${visibleText} has length ${visibleText.length} target: ${localVisibleTextLengthTarget}. Raw output: ${llmOutputRaw}`,
       );
     }
     const matchWithLookback: BlockMatch = {
@@ -259,6 +261,7 @@ export const matchBlocks = ({
   }
   matches.sort(byMatchStartIndex);
   return matchesWithLookback({
+    llmOutputRaw: llmOutput,
     matches,
     isStreamFinished,
     visibleTextLengthTarget,
