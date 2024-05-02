@@ -1,6 +1,8 @@
 # llm-ui
 
-A React library for LLMs. 
+The React library for LLMs. 
+
+![](/media/demo.webp)
 
 [Documentation](http://llm-ui.com/docs)
 
