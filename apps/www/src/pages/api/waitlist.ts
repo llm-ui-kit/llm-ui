@@ -44,7 +44,7 @@ export const POST: APIRoute = async ({ request }) => {
       // return error if user insert same email. email is unique!
       return new Response(
         JSON.stringify({
-          message: "error",
+          message: "Already subscribed",
         }),
         { status: 400 },
       );
