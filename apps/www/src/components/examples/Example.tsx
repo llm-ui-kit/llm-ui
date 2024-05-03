@@ -14,7 +14,13 @@ import {
   type UseStreamTokenArrayOptions,
   type UseStreamWithProbabilitiesOptions,
 } from "@llm-ui/react/examples";
-import React, { useCallback, useRef, useState, type ReactNode } from "react";
+import React, {
+  Fragment,
+  useCallback,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
 import { buttonsBlock } from "./Buttons";
@@ -77,7 +83,7 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
       {tabs.map((tab, index) => {
         const isActive = index === tabIndex;
         return (
-          <>
+          <Fragment key={index}>
             {tab === "markdown" && isActive && (
               <Markdown
                 className={cn(!isVisible && "invisible")}
@@ -102,7 +108,7 @@ const OutputTabs: React.FC<OutputTabsProps> = ({
                 {llmUi}
               </div>
             )}
-          </>
+          </Fragment>
         );
       })}
     </OutputBackground>
