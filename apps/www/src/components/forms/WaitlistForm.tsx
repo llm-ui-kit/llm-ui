@@ -43,8 +43,8 @@ export const WaitlistForm = () => {
       toast.success("Subscribed");
       form.reset();
     } else {
-      toast.error("Something wrong!", {
-        description: "Please try again!",
+      toast.error("Something went wrong", {
+        description: data.message ?? "Please try again!",
       });
     }
   };
