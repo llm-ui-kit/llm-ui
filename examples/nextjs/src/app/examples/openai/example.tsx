@@ -1,4 +1,5 @@
 "use client";
+import { MARKDOWN_PROMPT, NEWLINE } from "@/constants";
 import type { CodeToHtmlOptions } from "@llm-ui/code";
 import {
   codeBlockLookBack,
@@ -17,8 +18,6 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
 import getWasm from "shiki/wasm";
-
-const NEWLINE = "$NEWLINE$";
 
 // -------Step 1: Create a markdown component-------
 
@@ -69,8 +68,10 @@ const CodeBlock: LLMOutputComponent = ({ blockMatch }) => {
 
 const Example = () => {
   const [output, setOutput] = useState<string>("");
+  const [isStarted, setIsStarted] = useState(false);
   const [isStreamFinished, setIsStreamFinished] = useState<boolean>(false);
   const startChat = useCallback(() => {
+    setIsStarted(true);
     setOutput("");
     // Change the prompt in: examples/nextjs/src/app/api/openai/route.ts
     const eventSource = new EventSource(`/api/openai`);
@@ -111,7 +112,8 @@ const Example = () => {
 
   return (
     <div>
-      {output.length === 0 && <button onClick={startChat}>Start</button>}
+      <p>Prompt: {MARKDOWN_PROMPT}</p>
+      {!isStarted && <button onClick={startChat}>Start</button>}
       {blockMatches.map((blockMatch, index) => {
         const Component = blockMatch.block.component;
         return <Component key={index} blockMatch={blockMatch} />;
