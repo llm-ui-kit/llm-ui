@@ -10,7 +10,7 @@ The React library for LLMs.
 
 - Removes broken markdown syntax
 - Add your own custom components to LLM output.
-- Throtting smooths out pauses in the LLM’s streamed output
+- Throttling smooths out pauses in the LLM’s streamed output
 - Renders output at native frame rate
 - Code blocks for every language with [Shiki](https://shiki.style)
 - Headless: Bring your own styles
