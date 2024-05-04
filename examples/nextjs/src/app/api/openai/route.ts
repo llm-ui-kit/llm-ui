@@ -1,13 +1,12 @@
+import { MARKDOWN_PROMPT, NEWLINE } from "@/constants";
 import OpenAI from "openai";
-
-const NEWLINE = "$NEWLINE$";
 
 const openai = new OpenAI();
 
 // should be declared (!)
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request) {
+export const GET = async (request: Request) => {
   let responseStream = new TransformStream();
   const writer = responseStream.writable.getWriter();
   const encoder = new TextEncoder();
@@ -18,7 +17,7 @@ export async function GET(request: Request) {
       { role: "system", content: "You are a helpful assistant." },
       {
         role: "user",
-        content: "Show me a demo of all the markdown header sizes",
+        content: MARKDOWN_PROMPT,
       },
     ],
     stream: true,
@@ -45,4 +44,4 @@ export async function GET(request: Request) {
       "Cache-Control": "no-cache, no-transform",
     },
   });
-}
+};
