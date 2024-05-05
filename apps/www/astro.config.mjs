@@ -13,6 +13,7 @@ export default defineConfig({
   site: "https://llm-ui.com",
   redirects: {
     "/docs": "/docs/introduction",
+    "/demo/presentation": "/demo/presentation/1",
   },
   integrations: [
     mdx({
