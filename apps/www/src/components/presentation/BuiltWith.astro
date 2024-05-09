@@ -1,0 +1,12 @@
+---
+import { Icon } from "astro-icon/components";
+import { siteConfig } from "@/config/site";
+---
+
+<span class="flex items-center space-x-2 pt-6 text-2xl">
+  <span class="inline-block text-xl"> Built with</span>
+  <Icon name="mark" class="size-7" color="#6366f1" />
+  <span class="inline-block text-xl font-bold">
+    {siteConfig.name}
+  </span>
+</span>

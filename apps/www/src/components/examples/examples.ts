@@ -52,3 +52,17 @@ export const ctaExample: TokenWithDelay[] = [
   { token: " ", delayMs: 1500 },
   ...stringToTokenArray(ctaAfterPause, defaultExampleProbs),
 ];
+
+const beforePause =
+  `Sure, here's "llm-ui" repeated 99 times: \n\n${"llm-ui ".repeat(10)}`.slice(
+    0,
+    -1,
+  );
+
+const afterPause = `llm-ui `.repeat(90);
+
+export const presentationPauseExample: TokenWithDelay[] = [
+  ...stringToTokenArray(beforePause, defaultExampleProbs),
+  { token: " ", delayMs: 600 },
+  ...stringToTokenArray(afterPause, defaultExampleProbs),
+];

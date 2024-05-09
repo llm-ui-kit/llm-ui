@@ -1,0 +1,23 @@
+---
+import PresentationLayout from "@/layouts/PresentationLayout.astro";
+import BuiltWith from "@/components/presentation/BuiltWith.astro";
+import { ExampleTabs } from "@/components/examples/Example";
+
+const example = `In the world of LLMs, a star does shine bright,\n
+llm-ui's the champ, a true coding delight.\n
+It solves token tangles with nary a strife,\n
+Rendering each char as it springs into life.\n
+A library supreme, in tech's vast domain's frame!`;
+---
+
+<PresentationLayout title="LLM UI">
+  <ExampleTabs
+    client:load
+    className="min-w-[650px]"
+    example={example}
+    tabs={["raw", "llm-ui"]}
+    showPlayPause={false}
+    options={{ delayMultiplier: 2 }}
+  />
+  <BuiltWith />
+</PresentationLayout>

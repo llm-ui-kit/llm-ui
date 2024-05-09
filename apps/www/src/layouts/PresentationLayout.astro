@@ -1,0 +1,60 @@
+---
+import { cn } from "@/lib/utils";
+import BaseLayout from "./BaseLayout.astro";
+
+type Props = {
+  title: string;
+  description?: string;
+  mainClass?: string;
+  bodyClass?: string;
+};
+
+const { title, description, mainClass, bodyClass } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} bodyClass={bodyClass}>
+  <script>
+    const goToNextRoute = (): void => {
+      updateRoute(1);
+    };
+
+    const goToPreviousRoute = (): void => {
+      updateRoute(-1);
+    };
+
+    const updateRoute = (change: number): void => {
+      const path: string = window.location.pathname;
+      const segments: string[] = path.split("/");
+      const currentNumber: number = parseInt(segments.pop()!, 10);
+
+      if (!isNaN(currentNumber)) {
+        const nextNumber: number = currentNumber + change;
+        if (nextNumber < 1) {
+          return;
+        }
+        const nextRoute: string = `${segments.join("/")}/${nextNumber}`;
+        window.location.pathname = nextRoute;
+      } else {
+        console.error("The current route does not contain a valid number.");
+      }
+    };
+
+    const handleKeyPress = (event: KeyboardEvent): void => {
+      if (event.key === "ArrowRight" || event.key === " ") {
+        goToNextRoute();
+      } else if (event.key === "ArrowLeft") {
+        goToPreviousRoute();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+  </script>
+  <main
+    class={cn(
+      "container flex h-screen flex-col items-center justify-center gap-6 text-center",
+      mainClass,
+    )}
+  >
+    <slot />
+  </main>
+</BaseLayout>

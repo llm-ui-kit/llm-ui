@@ -1,0 +1,17 @@
+---
+import { CodeBlock } from "@/components/ui/custom/CodeBlock";
+import PresentationLayout from "@/layouts/PresentationLayout.astro";
+
+const code = `const throttle = (params) => {
+  const charactersToRender = 1;
+  return charactersToRender;
+}`;
+---
+
+<PresentationLayout title="LLM UI" mainClass="text-left">
+  <CodeBlock
+    className="w-[900px] text-3xl"
+    code={code}
+    codeToHtmlOptions={{ lang: "ts" }}
+  />
+</PresentationLayout>

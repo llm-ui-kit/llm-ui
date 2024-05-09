@@ -1,0 +1,17 @@
+---
+import { ExampleTabsTokenArray } from "@/components/examples/Example";
+import { presentationPauseExample } from "@/components/examples/examples";
+import BuiltWith from "@/components/presentation/BuiltWith.astro";
+import PresentationLayout from "@/layouts/PresentationLayout.astro";
+---
+
+<PresentationLayout title="LLM UI">
+  <ExampleTabsTokenArray
+    client:load
+    className="w-[650px]"
+    tokenArray={presentationPauseExample}
+    tabs={["raw", "llm-ui"]}
+    showPlayPause={false}
+  />
+  <BuiltWith />
+</PresentationLayout>

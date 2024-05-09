@@ -1,0 +1,15 @@
+---
+// Import the PresentationLayout component from the layouts directory
+import PresentationLayout from "@/layouts/PresentationLayout.astro";
+
+// Receive videoSrc as a prop from the parent component
+export interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+---
+
+<PresentationLayout title="LLM UI">
+  <img class="max-h-full" src={src} />
+</PresentationLayout>
