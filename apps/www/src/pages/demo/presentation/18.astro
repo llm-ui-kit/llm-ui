@@ -1,0 +1,23 @@
+---
+import { CodeBlock } from "@/components/ui/custom/CodeBlock";
+import PresentationLayout from "@/layouts/PresentationLayout.astro";
+
+const code = `\n[link](https://llm-ui.com) keeps going\n\n`;
+const codeAfter = `\n[lin](https://llm-ui.com)\n\n`;
+---
+
+<PresentationLayout title="LLM UI">
+  <CodeBlock
+    className="w-[900px] text-3xl"
+    code={code}
+    codeToHtmlOptions={{ lang: "plain" }}
+  />
+  <h2 class="my-8 text-3xl">
+    Throttle function decides to display 3 visible characters
+  </h2>
+  <CodeBlock
+    className="w-[900px] text-3xl"
+    code={codeAfter}
+    codeToHtmlOptions={{ lang: "plain" }}
+  />
+</PresentationLayout>

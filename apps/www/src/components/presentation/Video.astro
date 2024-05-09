@@ -1,0 +1,20 @@
+---
+// Import the PresentationLayout component from the layouts directory
+import PresentationLayout from "@/layouts/PresentationLayout.astro";
+
+// Receive videoSrc as a prop from the parent component
+export interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+---
+
+<!-- Use the PresentationLayout component to wrap the video element, passing the title as a prop -->
+<PresentationLayout title="LLM UI">
+  <!-- Video element set to autoplay, loop, and muted -->
+  <video class="max-h-full w-full" autoplay loop muted playsinline>
+    <!-- Video source URL is now dynamic, based on the videoSrc prop -->
+    <source src={src} type="video/mp4" />
+  </video>
+</PresentationLayout>
