@@ -1,3 +1,4 @@
+import { fireConfetti } from "@/animations/confetti";
 import { multipleStars } from "@/animations/stars";
 import { cn, delay } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
@@ -207,6 +208,8 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   const onButtonClick = useCallback((buttonText: string) => {
     if (buttonText.toLowerCase().includes("star")) {
       multipleStars();
+    } else if (buttonText.toLowerCase().includes("confetti")) {
+      fireConfetti();
     } else if (buttonText.toLowerCase().includes("raw")) {
       const rawTab = tabs.indexOf("raw");
       setTabIndex(rawTab);
@@ -329,6 +332,14 @@ export const ExampleSideBySideTokenArray: React.FC<
 
   const [mobileTabIndex, setMobileTabIndex] = useState(0);
   const [desktopTabIndex, setDesktopTabIndex] = useState(0);
+  const onButtonClick = useCallback((buttonText: string) => {
+    if (buttonText.toLowerCase().includes("star")) {
+      multipleStars();
+    } else if (buttonText.toLowerCase().includes("confetti")) {
+      fireConfetti();
+    }
+  }, []);
+  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsBlock(onButtonClick));
   const {
     output,
     isStreamFinished,
@@ -342,7 +353,7 @@ export const ExampleSideBySideTokenArray: React.FC<
   const { finishCount, restart, blockMatches, isFinished, visibleText } =
     useLLMOutput({
       llmOutput: output,
-      blocks: [codeBlockBlock, buttonsBlock(() => null)],
+      blocks: [codeBlockBlock, buttonsBlockRef.current],
       fallbackBlock: {
         component: Markdown,
         lookBack: markdownLookBack(),
