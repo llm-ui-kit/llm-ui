@@ -3,10 +3,10 @@ import PresentationLayout from "@/layouts/PresentationLayout.astro";
 import BuiltWith from "@/components/presentation/BuiltWith.astro";
 import { ExampleTabs } from "@/components/examples/Example";
 
-const example = `## Header 2\n\n* Bullet\n\`\`\`python\nprint("Hello llm-ui")\n\`\`\`
-- [link](https://llm-ui.com)
+const example = `## Header 2\n\n\`\`\`python\nprint("Hello llm-ui")\n\`\`\`
 - *italics*
 - **bold**
+- [link](https://llm-ui.com)
 - ~~strikethrough~~
 `;
 ---
@@ -19,7 +19,12 @@ const example = `## Header 2\n\n* Bullet\n\`\`\`python\nprint("Hello llm-ui")\n\
     tabs={["raw", "markdown", "llm-ui"]}
     showPlayPause
     loop={false}
-    options={{ delayMultiplier: 2, autoStart: false }}
+    throttle="buffered"
+    options={{
+      delayMultiplier: 2,
+      autoStart: false,
+      tokenCharsProbabilities: [{ tokenChars: 1, prob: 1 }],
+    }}
   />
   <BuiltWith />
 </PresentationLayout>
