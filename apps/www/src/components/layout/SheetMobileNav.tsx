@@ -52,7 +52,7 @@ export const SheetMobileNav = ({
                         href={item.href}
                         className="text-muted-foreground"
                         onClick={() =>
-                          item.href.startsWith("/#")
+                          item.href?.startsWith("/#")
                             ? setOpen(false)
                             : undefined
                         }
@@ -77,22 +77,27 @@ export const SheetMobileNav = ({
                   return (
                     <div key={index} className="flex flex-col space-y-3 pt-6">
                       <h4 className="font-medium">{item.title}</h4>
-                      {activeItems.map((subItem, idx) => (
-                        <React.Fragment key={subItem.href + idx}>
-                          {subItem.href ? (
-                            <a
-                              href={subItem.href}
-                              target={subItem?.external ? "_blank" : undefined}
-                              rel="noreferrer"
-                              className="text-muted-foreground"
-                            >
-                              {subItem.title}
-                            </a>
-                          ) : (
-                            subItem.title
-                          )}
-                        </React.Fragment>
-                      ))}
+                      {activeItems.map((subItem, idx) => {
+                        if (!subItem.href) return null;
+                        return (
+                          <React.Fragment key={subItem.href + idx}>
+                            {subItem.href ? (
+                              <a
+                                href={subItem.href}
+                                target={
+                                  subItem?.external ? "_blank" : undefined
+                                }
+                                rel="noreferrer"
+                                className="text-muted-foreground"
+                              >
+                                {subItem.title}
+                              </a>
+                            ) : (
+                              subItem.title
+                            )}
+                          </React.Fragment>
+                        );
+                      })}
                     </div>
                   );
                 })}

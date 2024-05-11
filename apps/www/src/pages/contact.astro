@@ -1,0 +1,19 @@
+---
+import { SubLinks } from "@/components/SubLinks";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { marketingConfig } from "@/config/marketing";
+const contact = marketingConfig.mainNav.find((n) => n.title === "Contact");
+if (!contact) {
+  throw new Error("Contact nav item not found");
+}
+---
+
+<MainLayout title="Contact">
+  <section class="h-full space-y-5">
+    <section
+      class="container relative mb-28 mt-40 max-w-screen-md sm:mt-20 lg:mt-28"
+    >
+      <SubLinks navItem={contact} />
+    </section>
+  </section>
+</MainLayout>
