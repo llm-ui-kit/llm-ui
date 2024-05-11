@@ -12,6 +12,28 @@ export const marketingConfig: MarketingConfig = {
       title: "Changelog",
       href: `${siteConfig.links.github}/releases`,
     },
+
+    {
+      title: "Contact",
+      href: "/contact",
+      subLinks: [
+        {
+          title: "Email us",
+          description: "richard@llm-ui.com",
+          href: `mailto:richard@llm-ui.com`,
+        },
+        {
+          title: "Open a Github issue",
+          description: "For a bug or feature request",
+          href: `${siteConfig.links.github}/issues/new`,
+        },
+        {
+          title: "Get help on Discord",
+          description: "Ask questions on Discord",
+          href: siteConfig.links.discord,
+        },
+      ],
+    },
     {
       title: "About",
       href: "/about",

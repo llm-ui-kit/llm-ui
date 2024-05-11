@@ -10,7 +10,7 @@ import { siteConfig } from "@/config/site";
 import { Icon } from "astro-icon/components";
 import { marketingConfig } from "@/config/marketing";
 import { docsConfig } from "@/config/docs";
-import MainNav from "@/components/layout/MainNav.astro";
+import { MainNav } from "@/components/layout/MainNav";
 
 type Props = {
   title: string;
@@ -24,7 +24,12 @@ const { title, description, mainClass, bodyClass } = Astro.props;
 
 <BaseLayout title={title} description={description} bodyClass={bodyClass}>
   <Header className="border-b">
-    <MainNav items={marketingConfig.mainNav} slot="left-header" />
+    <MainNav
+      items={marketingConfig.mainNav}
+      pathname={Astro.url.pathname}
+      slot="left-header"
+      client:load
+    />
     <SheetMobileNav
       mainNavItems={marketingConfig.mainNav}
       sidebarNavItems={docsConfig.sidebarNav}

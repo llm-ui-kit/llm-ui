@@ -2,9 +2,10 @@ import type { ReactNode } from "react";
 
 export type NavItem = {
   title: string;
-  href: string;
+  href?: string;
   disabled?: boolean;
   isDesktopOnly?: boolean;
+  subLinks?: { title: string; description: string; href: string }[];
 };
 export type MenuItem = NavItem & {
   image?: string;
