@@ -12,8 +12,9 @@ const example = `Buttons example\n<buttons>\n  <button>Star ⭐</button>\n  <but
     className="min-w-[650px]"
     example={example}
     tabs={["raw", "llm-ui"]}
-    showPlayPause={false}
-    options={{ delayMultiplier: 0.5 }}
+    showPlayPause
+    loop={false}
+    options={{ delayMultiplier: 0.5, autoStart: false }}
   />
   <BuiltWith />
 </PresentationLayout>
