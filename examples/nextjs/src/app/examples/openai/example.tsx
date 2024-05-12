@@ -4,13 +4,15 @@ import type { CodeToHtmlOptions } from "@llm-ui/code";
 import {
   allLangs,
   allLangsAlias,
+  // WARNING: Importing allThemes will increase your bundle size
+  // see: https://llm-ui.com/docs/blocks/code#bundle-size
+  allThemes,
   codeBlockLookBack,
   findCompleteCodeBlock,
   findPartialCodeBlock,
   loadHighlighter,
   useCodeBlockToHtml,
 } from "@llm-ui/code";
-import { allThemes } from "@llm-ui/code/shikiBundles/allThemes"; // WARNING: This import will increase your bundle size, see: https://llm-ui.com/docs/blocks/code#bundle-size
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
 import parseHtml from "html-react-parser";

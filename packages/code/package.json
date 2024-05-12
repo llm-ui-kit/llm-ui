@@ -16,16 +16,6 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
-    },
-    "./shikiBundles/allThemes": {
-      "import": {
-        "types": "./dist/shikiBundles/allThemes.d.ts",
-        "default": "./dist/shikiBundles/allThemes.js"
-      },
-      "require": {
-        "types": "./dist/shikiBundles/allThemes.d.cts",
-        "default": "./dist/shikiBundles/allThemes.cjs"
-      }
     }
   },
   "files": [
