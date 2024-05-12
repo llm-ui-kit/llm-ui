@@ -14,7 +14,7 @@ import {
   useCodeBlockToHtml,
 } from "@llm-ui/code";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
+import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react";
 import parseHtml from "html-react-parser";
 import { useCallback, useState } from "react";
 import ReactMarkdown from "react-markdown";

@@ -3,18 +3,16 @@ import { multipleStars } from "@/animations/stars";
 import { cn, delay } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
+  stringToTokenArray,
   useLLMOutput,
+  useStreamTokenArray,
   type BlockMatch,
   type LLMOutputBlock,
-  type UseLLMOutputReturn,
-} from "@llm-ui/react/core";
-import {
-  stringToTokenArray,
-  useStreamTokenArray,
   type TokenWithDelay,
+  type UseLLMOutputReturn,
   type UseStreamTokenArrayOptions,
   type UseStreamWithProbabilitiesOptions,
-} from "@llm-ui/react/examples";
+} from "@llm-ui/react";
 import React, {
   Fragment,
   useCallback,

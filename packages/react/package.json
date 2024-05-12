@@ -4,34 +4,14 @@
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
-    "./core": {
+    ".": {
       "import": {
-        "types": "./dist/core/index.d.ts",
-        "default": "./dist/core/index.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       },
       "require": {
-        "types": "./dist/core/index.d.cts",
-        "default": "./dist/core/index.cjs"
-      }
-    },
-    "./examples": {
-      "import": {
-        "types": "./dist/examples/index.d.ts",
-        "default": "./dist/examples/index.js"
-      },
-      "require": {
-        "types": "./dist/examples/index.d.cts",
-        "default": "./dist/examples/index.cjs"
-      }
-    },
-    "./throttle": {
-      "import": {
-        "types": "./dist/throttle/index.d.ts",
-        "default": "./dist/throttle/index.js"
-      },
-      "require": {
-        "types": "./dist/throttle/index.d.cts",
-        "default": "./dist/throttle/index.cjs"
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       }
     }
   },

@@ -1,6 +1,6 @@
 export const markdownImports = `import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { type LLMOutputComponent } from "@llm-ui/react/core";
+import { type LLMOutputComponent } from "@llm-ui/react";
 `;
 
 export const markdownComponent = `// Customize this component with your own styling
@@ -21,7 +21,7 @@ import {
   // see: https://llm-ui.com/docs/blocks/code#bundle-size
   allThemes
 } from "@llm-ui/code";
-import { type LLMOutputComponent } from "@llm-ui/react/core";
+import { type LLMOutputComponent } from "@llm-ui/react";
 import parseHtml from "html-react-parser";
 import { getHighlighterCore } from "shiki/core";
 import getWasm from "shiki/wasm";`;
@@ -65,8 +65,7 @@ export const llmUiOutputImports = `import {
   findPartialCodeBlock,
 } from "@llm-ui/code";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput } from "@llm-ui/react/core";
-import { useStreamExample } from "@llm-ui/react/examples";`;
+import { useLLMOutput, useStreamExample } from "@llm-ui/react";`;
 
 export const introExampleHidden = `## Python
 
@@ -159,8 +158,7 @@ import {
   allThemes,
 } from "@llm-ui/code";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
-import { useStreamExample } from "@llm-ui/react/examples";
+import { useLLMOutput, type LLMOutputComponent, useStreamExample } from "@llm-ui/react";
 import parseHtml from "html-react-parser";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";

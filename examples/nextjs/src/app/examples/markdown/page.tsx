@@ -1,7 +1,10 @@
 "use client";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
-import { useStreamExample } from "@llm-ui/react/examples";
+import {
+  useLLMOutput,
+  useStreamExample,
+  type LLMOutputComponent,
+} from "@llm-ui/react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 

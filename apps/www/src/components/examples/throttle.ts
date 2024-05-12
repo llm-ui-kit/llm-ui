@@ -1,4 +1,4 @@
-import { throttleBasic } from "@llm-ui/react/throttle";
+import { throttleBasic } from "@llm-ui/react";
 
 export type ThrottleType = "buffered" | "low-lag";
 
