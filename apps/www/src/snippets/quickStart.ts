@@ -12,8 +12,7 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 export const markdownQuickStart = `${markdownImports}\n\n${markdownComponent}`;
 
 export const codeblockImports = `import type { CodeToHtmlOptions } from "@llm-ui/code";
-import { loadHighlighter, useCodeBlockToHtml } from "@llm-ui/code";
-import { allLangs, allLangsAlias } from "@llm-ui/code/shikiBundles/allLangs";
+import { loadHighlighter, useCodeBlockToHtml, allLangs, allLangsAlias } from "@llm-ui/code";
 // WARNING: Importing allThemes increases your bundle size
 // see: https://llm-ui.com/docs/blocks/code#bundle-size
 import { allThemes } from "@llm-ui/code/shikiBundles/allThemes";
@@ -148,8 +147,9 @@ import {
   findPartialCodeBlock,
   loadHighlighter,
   useCodeBlockToHtml,
+  allLangs,
+  allLangsAlias
 } from "@llm-ui/code";
-import { allLangs, allLangsAlias } from "@llm-ui/code/shikiBundles/allLangs";
 import { allThemes } from "@llm-ui/code/shikiBundles/allThemes"; // WARNING: This import will increase your bundle size, see: https://llm-ui.com/docs/blocks/code#bundle-size
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";

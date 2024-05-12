@@ -23,3 +23,7 @@ export type { UseCodeToHtmlParams } from "./hooks/useCodeToHtml";
 export { loadHighlighter } from "./hooks/useLoadHighlighter";
 
 export type { CodeToHtmlOptions, LLMUIHighlighter, ShikiProps } from "./types";
+
+export { allLangs, allLangsAlias } from "./shikiBundles/allLangs";
+
+export { allThemes } from "./shikiBundles/allThemes";

@@ -1,6 +1,5 @@
 import type { ShikiProps } from "@llm-ui/code";
-import { loadHighlighter } from "@llm-ui/code";
-import { allLangs, allLangsAlias } from "@llm-ui/code/shikiBundles/allLangs";
+import { allLangs, allLangsAlias, loadHighlighter } from "@llm-ui/code";
 import { getHighlighterCore } from "shiki/core";
 import githubDark from "shiki/themes/github-dark.mjs";
 import githubLight from "shiki/themes/github-light.mjs";
