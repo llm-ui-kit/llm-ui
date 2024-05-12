@@ -17,13 +17,6 @@ type CommandMenuProps = DialogProps;
 
 const defaultSearchResults: PagefindResultWithData[] = [
   {
-    id: "introduction",
-    data: {
-      meta: { title: "Introduction" },
-      url: "/docs/introduction",
-    },
-  },
-  {
     id: "quick-start",
     data: {
       meta: { title: "Quick start" },
