@@ -1,5 +1,20 @@
 # @llm-ui/code
 
+## 0.1.0
+
+### Minor Changes
+
+- [#168](https://github.com/llm-ui-kit/llm-ui/pull/168) [`999004c`](https://github.com/llm-ui-kit/llm-ui/commit/999004cb10d62ec956e8b6873cae938d76e5fe0d) Thanks [@richardgill](https://github.com/richardgill)! - @llm-ui/react/{core,examples,throttle} -> @llm-ui/react
+  @llm-ui/code/shikiBundles/{allLangs,allThemes} -> @llm-ui/code
+
+  Removes exports more than one level deep (e.g. @llm-ui/react/core) since they don't work with older moduleResolution settings in TypeScript (which react-script uses by default).
+
+### Patch Changes
+
+- Updated dependencies [[`999004c`](https://github.com/llm-ui-kit/llm-ui/commit/999004cb10d62ec956e8b6873cae938d76e5fe0d)]:
+  - @llm-ui/react@0.1.0
+  - @llm-ui/shared@0.1.0
+
 ## 0.0.13
 
 ### Patch Changes
