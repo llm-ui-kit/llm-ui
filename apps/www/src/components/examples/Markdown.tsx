@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { type LLMOutputComponent } from "@llm-ui/react/core";
+import { type LLMOutputComponent } from "@llm-ui/react";
 import ReactMarkdown, { type Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 

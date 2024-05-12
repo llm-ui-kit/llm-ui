@@ -1,4 +1,4 @@
-import type { ProbabilityOptions } from "@llm-ui/react/examples";
+import type { ProbabilityOptions } from "@llm-ui/react";
 
 export const defaultExampleProbs: ProbabilityOptions = {
   delayMsProbabilities: [{ delayMs: 90, prob: 1 }],

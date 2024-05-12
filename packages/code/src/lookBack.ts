@@ -1,4 +1,4 @@
-import { LookBackFunction } from "@llm-ui/react/core";
+import { LookBackFunction } from "@llm-ui/react";
 import { CodeBlockOptions, getOptions } from "./options";
 import {
   parseCompleteMarkdownCodeBlock,

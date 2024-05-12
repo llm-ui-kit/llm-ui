@@ -1,11 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: [
-    "src/core/index.ts",
-    "src/examples/index.ts",
-    "src/throttle/index.ts",
-  ],
+  entry: ["src/index.ts"],
   splitting: false,
   sourcemap: true,
   clean: true,

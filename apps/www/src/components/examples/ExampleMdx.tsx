@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { UseStreamWithProbabilitiesOptions } from "@llm-ui/react/examples";
+import type { UseStreamWithProbabilitiesOptions } from "@llm-ui/react";
 import {
   ExampleSideBySide as ExampleSideBySideOriginal,
   ExampleTabs as ExampleTabsOriginal,

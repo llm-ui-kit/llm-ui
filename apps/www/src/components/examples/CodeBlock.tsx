@@ -5,10 +5,7 @@ import {
   findPartialCodeBlock,
   parseCompleteMarkdownCodeBlock,
 } from "@llm-ui/code";
-import {
-  type LLMOutputBlock,
-  type LLMOutputComponent,
-} from "@llm-ui/react/core";
+import { type LLMOutputBlock, type LLMOutputComponent } from "@llm-ui/react";
 import { CodeBlock } from "../ui/custom/CodeBlock";
 
 const ShikiBlockComponent: LLMOutputComponent = ({ blockMatch }) => {

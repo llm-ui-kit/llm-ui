@@ -1,4 +1,4 @@
-import { LookBack } from "@llm-ui/react/core";
+import { LookBack } from "@llm-ui/react";
 import { describe, expect, it } from "vitest";
 import { buttonsLookBack } from "./lookBack";
 

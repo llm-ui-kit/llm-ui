@@ -1,6 +1,6 @@
 export const markdownImports = `import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { type LLMOutputComponent } from "@llm-ui/react/core";
+import { type LLMOutputComponent } from "@llm-ui/react";
 `;
 
 export const markdownComponent = `// Customize this component with your own styling
@@ -12,12 +12,16 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 export const markdownQuickStart = `${markdownImports}\n\n${markdownComponent}`;
 
 export const codeblockImports = `import type { CodeToHtmlOptions } from "@llm-ui/code";
-import { loadHighlighter, useCodeBlockToHtml } from "@llm-ui/code";
-import { allLangs, allLangsAlias } from "@llm-ui/code/shikiBundles/allLangs";
-// WARNING: Importing allThemes increases your bundle size
-// see: https://llm-ui.com/docs/blocks/code#bundle-size
-import { allThemes } from "@llm-ui/code/shikiBundles/allThemes";
-import { type LLMOutputComponent } from "@llm-ui/react/core";
+import {
+  loadHighlighter,
+  useCodeBlockToHtml,
+  allLangs,
+  allLangsAlias,
+  // WARNING: Importing allThemes increases your bundle size
+  // see: https://llm-ui.com/docs/blocks/code#bundle-size
+  allThemes
+} from "@llm-ui/code";
+import { type LLMOutputComponent } from "@llm-ui/react";
 import parseHtml from "html-react-parser";
 import { getHighlighterCore } from "shiki/core";
 import getWasm from "shiki/wasm";`;
@@ -61,8 +65,7 @@ export const llmUiOutputImports = `import {
   findPartialCodeBlock,
 } from "@llm-ui/code";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput } from "@llm-ui/react/core";
-import { useStreamExample } from "@llm-ui/react/examples";`;
+import { useLLMOutput, useStreamExample } from "@llm-ui/react";`;
 
 export const introExampleHidden = `## Python
 
@@ -148,12 +151,14 @@ import {
   findPartialCodeBlock,
   loadHighlighter,
   useCodeBlockToHtml,
+  allLangs,
+  allLangsAlias,
+  // WARNING: Importing allThemes will increase your bundle size
+  // See: https://llm-ui.com/docs/blocks/code#bundle-size
+  allThemes,
 } from "@llm-ui/code";
-import { allLangs, allLangsAlias } from "@llm-ui/code/shikiBundles/allLangs";
-import { allThemes } from "@llm-ui/code/shikiBundles/allThemes"; // WARNING: This import will increase your bundle size, see: https://llm-ui.com/docs/blocks/code#bundle-size
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type LLMOutputComponent } from "@llm-ui/react/core";
-import { useStreamExample } from "@llm-ui/react/examples";
+import { useLLMOutput, type LLMOutputComponent, useStreamExample } from "@llm-ui/react";
 import parseHtml from "html-react-parser";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";

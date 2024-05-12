@@ -1,8 +1,5 @@
 import { HIDDEN_CHAR } from "@/constants/constants";
-import {
-  stringToTokenArray,
-  type TokenWithDelay,
-} from "@llm-ui/react/examples";
+import { stringToTokenArray, type TokenWithDelay } from "@llm-ui/react";
 import { defaultExampleProbs } from "./contants";
 
 const ctaBeforePause = `# llm-ui
