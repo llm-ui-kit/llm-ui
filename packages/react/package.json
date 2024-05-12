@@ -2,6 +2,7 @@
   "name": "@llm-ui/react",
   "version": "0.0.13",
   "type": "module",
+  "license": "MIT",
   "exports": {
     "./package.json": "./package.json",
     ".": {
