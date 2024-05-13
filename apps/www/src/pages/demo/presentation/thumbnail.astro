@@ -1,0 +1,27 @@
+---
+import Slide from "@/components/presentation/Slide.astro";
+import { AvatarComponent } from "@/components/ui/custom/AvatarComponent";
+import { siteConfig } from "@/config/site";
+import { Icon } from "astro-icon/components";
+---
+
+<Slide>
+  <h1 class="font-heading mt-52 text-7xl">Improving the ChatGPT UI</h1>
+  <span class="flex items-center space-x-2 pt-6 text-5xl">
+    <span class="inline-block text-5xl">with</span>
+    <Icon name="mark" class="size-12" color="#6366f1" />
+    <span class="inline-block text-5xl font-bold">
+      {siteConfig.name}
+    </span>
+  </span>
+  <div class="flex flex-row items-center gap-4 pt-40">
+    <AvatarComponent
+      client:load
+      src="https://github.com/richardgill.png"
+      alt="Richard Gill"
+      fallbackText="RG"
+      className="size-18"
+    />
+    <span class="text-5xl">Richard Gill</span>
+  </div>
+</Slide>
