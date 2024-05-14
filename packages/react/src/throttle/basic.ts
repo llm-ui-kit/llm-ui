@@ -133,8 +133,12 @@ export const throttleBasic = (
       const targetFrameEveryN =
         visibleTextEveryNFrames *
         calcPercentage({ adjustPercentage, isBehind, isStreamFinished });
-      visibleTextIncrement =
-        framesSinceLastIncrement >= targetFrameEveryN ? 1 : 0;
+      if (targetFrameEveryN > 1) {
+        visibleTextIncrement =
+          framesSinceLastIncrement >= targetFrameEveryN ? 1 : 0;
+      } else {
+        visibleTextIncrement = Math.round(1 / targetFrameEveryN);
+      }
     }
     return {
       visibleTextIncrement,
