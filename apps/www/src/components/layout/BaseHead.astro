@@ -14,7 +14,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const {
   title,
   description = siteConfig.description,
-  image = "/og.jpg",
+  image = "/og.png",
 } = Astro.props;
 
 const calcFullTitle = (title: string | undefined) => {

@@ -1,0 +1,21 @@
+---
+import Slide from "@/components/presentation/Slide.astro";
+import { siteConfig } from "@/config/site";
+import { Icon } from "astro-icon/components";
+---
+
+<Slide>
+  <span class="mt-40 flex items-center space-x-2 text-5xl">
+    <Icon name="mark" class="size-16" color="#6366f1" />
+    <span class="inline-block text-6xl font-bold">
+      {siteConfig.name}
+    </span>
+  </span>
+  <h1
+    class="font-heading mt-12 text-balance text-4xl font-bold !leading-[1.1] sm:text-5xl md:text-6xl lg:text-7xl"
+  >
+    The <span class="text-gradient_indigo-purple">React</span> library<br />
+    for
+    <span class="text-gradient_indigo-purple">LLMs</span>
+  </h1>
+</Slide>
