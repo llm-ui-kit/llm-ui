@@ -4,7 +4,7 @@ export const siteConfig: SiteConfig = {
   name: "llm-ui",
   description: "LLM UI components for React",
   url: "https://llm-ui.com",
-  ogImage: "https://llm-ui.com/og.jpg",
+  ogImage: "https://llm-ui.com/og.png",
   links: {
     discord: "https://discord.gg/gSgpjMxyT9",
     github: "https://github.com/llm-ui-kit/llm-ui",
