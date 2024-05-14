@@ -1,5 +1,11 @@
 # @llm-ui/react
 
+## 0.1.1
+
+### Patch Changes
+
+- [#174](https://github.com/llm-ui-kit/llm-ui/pull/174) [`836b147`](https://github.com/llm-ui-kit/llm-ui/commit/836b14753b44db41d35d1cd4820834c01cc4b7a2) Thanks [@richardgill](https://github.com/richardgill)! - Basic Throttle: Multiple character per render for fast streams
+
 ## 0.1.0
 
 ### Minor Changes
