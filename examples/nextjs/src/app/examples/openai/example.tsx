@@ -17,7 +17,7 @@ import { useCallback, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
-import { bundledLanguages } from "shiki/langs";
+import { bundledLanguagesInfo } from "shiki/langs";
 // WARNING: Importing bundledThemes will increase your bundle size
 // see: https://llm-ui.com/docs/blocks/code#bundle-size
 import { bundledThemes } from "shiki/themes";
@@ -39,8 +39,8 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 
 const highlighter = loadHighlighter(
   getHighlighterCore({
-    langs: allLangs(bundledLanguages),
-    langAlias: allLangsAlias(bundledLanguages),
+    langs: allLangs(bundledLanguagesInfo),
+    langAlias: allLangsAlias(bundledLanguagesInfo),
     themes: Object.values(bundledThemes),
     loadWasm: getWasm,
   }),

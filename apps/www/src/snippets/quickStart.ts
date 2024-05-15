@@ -24,14 +24,14 @@ import { bundledThemes } from "shiki/themes";
 import { type LLMOutputComponent } from "@llm-ui/react";
 import parseHtml from "html-react-parser";
 import { getHighlighterCore } from "shiki/core";
-import { bundledLanguages } from "shiki/langs";
+import { bundledLanguagesInfo } from "shiki/langs";
 
 import getWasm from "shiki/wasm";`;
 
 export const codeblockComponent = `const highlighter = loadHighlighter(
   getHighlighterCore({
-    langs: allLangs(bundledLanguages),
-    langAlias: allLangsAlias(bundledLanguages),
+    langs: allLangs(bundledLanguagesInfo),
+    langAlias: allLangsAlias(bundledLanguagesInfo),
     themes: Object.values(bundledThemes),
     loadWasm: getWasm,
   }),
@@ -162,10 +162,10 @@ import parseHtml from "html-react-parser";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
-// WARNING: Importing bundledLanguages will increase your bundle size
+// WARNING: Importing bundledLanguagesInfo will increase your bundle size
 // See: https://llm-ui.com/docs/blocks/code#bundle-size
 import { bundledThemes } from "shiki/themes";
-import { bundledLanguages } from "shiki/langs";
+import { bundledLanguagesInfo } from "shiki/langs";
 import getWasm from "shiki/wasm";
 `;
 const step1Comment = "// -------Step 1: Create a markdown component-------";
