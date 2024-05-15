@@ -158,7 +158,7 @@ Change the import:
 
 ```tsx
 // Before:
-import { allThemes } from "@llm-ui/code";
+import { bundledThemes } from "shiki/themes";
 
 // After:
 import githubDark from "shiki/themes/github-dark.mjs";
@@ -173,8 +173,8 @@ Pass the theme to the shiki highlighter:
 ```tsx
 const highlighter = loadHighlighter(
   getHighlighterCore({
-    langs: allLangs,
-    langAlias: allLangsAlias,
+    langs: allLangs(bundledLanguages),
+    langAlias: allLangsAlias(bundledLanguages),
     themes: [githubDark], // <- fixed!
     loadWasm: getWasm,
   }),
