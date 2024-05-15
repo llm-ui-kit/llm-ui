@@ -1,5 +1,17 @@
 # @llm-ui/code
 
+## 0.2.0
+
+### Minor Changes
+
+- [#176](https://github.com/llm-ui-kit/llm-ui/pull/176) [`01f5566`](https://github.com/llm-ui-kit/llm-ui/commit/01f556602f3c0da20902ab09c0105eca14bafd39) Thanks [@richardgill](https://github.com/richardgill)! - llm-ui no longer depends on shiki/langs or shiki/themes
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.2.0
+  - @llm-ui/shared@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes
