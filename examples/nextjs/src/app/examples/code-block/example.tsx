@@ -3,9 +3,6 @@ import type { CodeToHtmlOptions } from "@llm-ui/code";
 import {
   allLangs,
   allLangsAlias,
-  // WARNING: Importing allThemes will increase your bundle size
-  // see: https://llm-ui.com/docs/blocks/code#bundle-size
-  allThemes,
   codeBlockLookBack,
   findCompleteCodeBlock,
   findPartialCodeBlock,
@@ -23,6 +20,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
 import { bundledLanguages } from "shiki/langs";
+// WARNING: Importing bundledThemes will increase your bundle size
+// see: https://llm-ui.com/docs/blocks/code#bundle-size
+import { bundledThemes } from "shiki/themes";
 import getWasm from "shiki/wasm";
 
 // -------Step 1: Create a markdown component-------
@@ -43,7 +43,7 @@ const highlighter = loadHighlighter(
   getHighlighterCore({
     langs: allLangs(bundledLanguages),
     langAlias: allLangsAlias(bundledLanguages),
-    themes: allThemes,
+    themes: Object.values(bundledThemes),
     loadWasm: getWasm,
   }),
 );

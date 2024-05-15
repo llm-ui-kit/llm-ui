@@ -17,21 +17,22 @@ import {
   useCodeBlockToHtml,
   allLangs,
   allLangsAlias,
-  // WARNING: Importing allThemes increases your bundle size
-  // see: https://llm-ui.com/docs/blocks/code#bundle-size
-  allThemes
 } from "@llm-ui/code";
+// WARNING: Importing bundledThemes increases your bundle size
+// see: https://llm-ui.com/docs/blocks/code#bundle-size
+import { bundledThemes } from "shiki/themes";
 import { type LLMOutputComponent } from "@llm-ui/react";
 import parseHtml from "html-react-parser";
 import { getHighlighterCore } from "shiki/core";
 import { bundledLanguages } from "shiki/langs";
+
 import getWasm from "shiki/wasm";`;
 
 export const codeblockComponent = `const highlighter = loadHighlighter(
   getHighlighterCore({
     langs: allLangs(bundledLanguages),
     langAlias: allLangsAlias(bundledLanguages),
-    themes: allThemes,
+    themes: Object.values(bundledThemes),
     loadWasm: getWasm,
   }),
 );
@@ -154,9 +155,6 @@ import {
   useCodeBlockToHtml,
   allLangs,
   allLangsAlias,
-  // WARNING: Importing allThemes will increase your bundle size
-  // See: https://llm-ui.com/docs/blocks/code#bundle-size
-  allThemes,
 } from "@llm-ui/code";
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent, useStreamExample } from "@llm-ui/react";
@@ -164,6 +162,9 @@ import parseHtml from "html-react-parser";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
+// WARNING: Importing bundledLanguages will increase your bundle size
+// See: https://llm-ui.com/docs/blocks/code#bundle-size
+import { bundledLanguages } from "shiki/langs";
 import getWasm from "shiki/wasm";
 `;
 const step1Comment = "// -------Step 1: Create a markdown component-------";
