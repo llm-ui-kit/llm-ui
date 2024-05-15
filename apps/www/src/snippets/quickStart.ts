@@ -164,6 +164,7 @@ import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
 // WARNING: Importing bundledLanguages will increase your bundle size
 // See: https://llm-ui.com/docs/blocks/code#bundle-size
+import { bundledThemes } from "shiki/themes";
 import { bundledLanguages } from "shiki/langs";
 import getWasm from "shiki/wasm";
 `;
