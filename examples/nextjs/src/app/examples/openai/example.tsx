@@ -20,6 +20,7 @@ import { useCallback, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getHighlighterCore } from "shiki/core";
+import { bundledLanguages } from "shiki/langs";
 import getWasm from "shiki/wasm";
 
 // -------Step 1: Create a markdown component-------
@@ -38,8 +39,8 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 
 const highlighter = loadHighlighter(
   getHighlighterCore({
-    langs: allLangs,
-    langAlias: allLangsAlias,
+    langs: allLangs(bundledLanguages),
+    langAlias: allLangsAlias(bundledLanguages),
     themes: allThemes,
     loadWasm: getWasm,
   }),

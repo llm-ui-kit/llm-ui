@@ -24,12 +24,13 @@ import {
 import { type LLMOutputComponent } from "@llm-ui/react";
 import parseHtml from "html-react-parser";
 import { getHighlighterCore } from "shiki/core";
+import { bundledLanguages } from "shiki/langs";
 import getWasm from "shiki/wasm";`;
 
 export const codeblockComponent = `const highlighter = loadHighlighter(
   getHighlighterCore({
-    langs: allLangs,
-    langAlias: allLangsAlias,
+    langs: allLangs(bundledLanguages),
+    langAlias: allLangsAlias(bundledLanguages),
     themes: allThemes,
     loadWasm: getWasm,
   }),
