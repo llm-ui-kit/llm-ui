@@ -2,16 +2,10 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import { setupNextjs } from "../shared/nextjs";
+import { CommonParams, Example } from "../types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const llmUiVersion = "0.2.0";
-const dependencies = [
-  `@llm-ui/react@${llmUiVersion}`,
-  `@llm-ui/markdown@${llmUiVersion}`,
-  "react-markdown",
-  "remark-gfm",
-];
 const devDependencies = ["@tailwindcss/typography"];
 
 const appendToFile = async (filePath: string, content: string) => {
@@ -20,12 +14,18 @@ const appendToFile = async (filePath: string, content: string) => {
   await fs.writeFile(filePath, newContents);
 };
 
-type Params = {
-  repoRoot: string;
+export const markdownNextJsConfig: Example = {
+  folder: "",
 };
 
-export const nextjs = async ({ repoRoot }: Params) => {
+export const nextjs = async ({ repoRoot, llmUiVersion }: CommonParams) => {
   const examplesFolder = path.join(repoRoot, "/examples");
+  const dependencies = [
+    `@llm-ui/react@${llmUiVersion}`,
+    `@llm-ui/markdown@${llmUiVersion}`,
+    "react-markdown",
+    "remark-gfm",
+  ];
 
   const exampleFolder = "nextjstest/markdown";
   const folder = path.join(examplesFolder, exampleFolder);
