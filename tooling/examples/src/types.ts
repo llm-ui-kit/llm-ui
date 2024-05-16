@@ -7,6 +7,5 @@ export type CommonParams = {
 export type Example = {
   folder: string;
   exampleName: string;
-  dependencies: string[];
-  devDependencies: string[];
+  generate: (params: CommonParams) => Promise<void>;
 };

@@ -1,7 +1,7 @@
 import path from "path";
 import { rimraf } from "rimraf";
 import { fileURLToPath } from "url";
-import { nextjs } from "./markdown";
+import { examples } from "./examples";
 import { CommonParams } from "./types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -15,5 +15,8 @@ const commonParams: CommonParams = {
 
 (async () => {
   rimraf.sync(path.join(repoRoot, "/examples"));
-  await nextjs(commonParams);
+  for (const example of examples) {
+    console.log(`Generating: ${example.folder}`);
+    await example.generate(commonParams);
+  }
 })();

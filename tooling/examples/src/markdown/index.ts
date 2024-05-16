@@ -14,11 +14,7 @@ const appendToFile = async (filePath: string, content: string) => {
   await fs.writeFile(filePath, newContents);
 };
 
-export const markdownNextJsConfig: Example = {
-  folder: "",
-};
-
-export const nextjs = async ({ repoRoot, llmUiVersion }: CommonParams) => {
+const nextjs = async ({ repoRoot, llmUiVersion }: CommonParams) => {
   const examplesFolder = path.join(repoRoot, "/examples");
   const dependencies = [
     `@llm-ui/react@${llmUiVersion}`,
@@ -52,4 +48,10 @@ export const nextjs = async ({ repoRoot, llmUiVersion }: CommonParams) => {
     path.join(folder, "src/app/globals.css"),
     taiwindMarkdownCss,
   );
+};
+
+export const markdownNextJs: Example = {
+  folder: "markdown/nextjs",
+  exampleName: "llm-ui-markdown-nextjs-example",
+  generate: nextjs,
 };
