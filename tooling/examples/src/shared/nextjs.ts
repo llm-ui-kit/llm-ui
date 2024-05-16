@@ -15,9 +15,8 @@ type SetupNextjsOptions = {
   exampleName: string;
   dependencies: string[];
   devDependencies: string[];
+  nextjsVersion: string;
 };
-
-const nextjsVersion = "14.2.3";
 
 export const setupNextjs = async ({
   folder,
@@ -25,6 +24,7 @@ export const setupNextjs = async ({
   exampleName,
   dependencies,
   devDependencies,
+  nextjsVersion,
 }: SetupNextjsOptions) => {
   await $`mkdir -p ${folder}`;
 

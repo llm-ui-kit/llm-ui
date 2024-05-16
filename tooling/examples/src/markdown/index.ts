@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
+import { folderToExampleName } from "../shared/folderToExampleName";
 import { setupNextjs } from "../shared/nextjs";
 import { CommonParams, Example } from "../types";
 
@@ -14,7 +15,14 @@ const appendToFile = async (filePath: string, content: string) => {
   await fs.writeFile(filePath, newContents);
 };
 
-const nextjs = async ({ repoRoot, llmUiVersion }: CommonParams) => {
+const folder = "markdown/nextjs";
+const exampleName = folderToExampleName(folder);
+
+const nextjs = async ({
+  repoRoot,
+  llmUiVersion,
+  nextjsVersion,
+}: CommonParams) => {
   const examplesFolder = path.join(repoRoot, "/examples");
   const dependencies = [
     `@llm-ui/react@${llmUiVersion}`,
@@ -32,6 +40,7 @@ const nextjs = async ({ repoRoot, llmUiVersion }: CommonParams) => {
     dependencies,
     devDependencies,
     exampleFolder,
+    nextjsVersion,
   });
 
   await fs.copyFile(
@@ -51,7 +60,7 @@ const nextjs = async ({ repoRoot, llmUiVersion }: CommonParams) => {
 };
 
 export const markdownNextJs: Example = {
-  folder: "markdown/nextjs",
-  exampleName: "llm-ui-markdown-nextjs-example",
+  folder,
+  exampleName,
   generate: nextjs,
 };
