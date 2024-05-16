@@ -22,7 +22,9 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "@llm-ui/www",
-    "llm-ui-*-example"
+    "llm-ui-*-example",
+    "@llm-ui/examples",
+    "@llm-ui/gen"
   ],
   "snapshot": {
     "prereleaseTemplate": "{tag}.v{commit}"
