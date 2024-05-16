@@ -268,11 +268,11 @@ importers:
   examples/nextjstest/markdown:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.1.1
-        version: 0.1.1(react@18.2.0)
+        specifier: ^0.2.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.1.1
-        version: 0.1.1(react@18.2.0)
+        specifier: ^0.2.0
+        version: link:../../../packages/react
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -2175,32 +2175,6 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
-
-  /@llm-ui/markdown@0.1.1(react@18.2.0):
-    resolution: {integrity: sha512-WTy1276aEFlJ9bxeDzP4+DXovrtlsQPBrB3ZAY3aTldCa4VL/i0IeBaveOGjKjjet0GCwSMauJuBjYenUpK4mw==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      '@llm-ui/react': 0.1.1(react@18.2.0)
-      mdast-util-from-markdown: 2.0.0
-      mdast-util-gfm: 3.0.0
-      mdast-util-to-markdown: 2.1.0
-      micromark-extension-gfm: 3.0.0
-      react: 18.2.0
-      remeda: 1.57.0
-      unist-util-visit: 5.0.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@llm-ui/react@0.1.1(react@18.2.0):
-    resolution: {integrity: sha512-pRsIFD9rHWePZ23ad7dXXOAei/o2WDBRNggUQQ41ntEBx4eKzCLRZ/F+cFMPucm7OwYSppjLi94GU5jD+xvyEg==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      react: 18.2.0
-      remeda: 1.57.0
-    dev: false
 
   /@manypkg/find-root@1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
