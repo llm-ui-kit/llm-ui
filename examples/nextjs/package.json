@@ -16,7 +16,7 @@
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
     "remark-gfm": "^4.0.0",
-    "shiki": "^1.2.4"
+    "shiki": "^1.5.2"
   },
   "devDependencies": {
     "@llm-ui/buttons": "0.2.0",
