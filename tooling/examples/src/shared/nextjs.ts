@@ -13,6 +13,7 @@ type SetupNextjsOptions = {
   folder: string;
   exampleFolder: string;
   exampleName: string;
+  exampleDescription: string;
   dependencies: string[];
   devDependencies: string[];
   nextjsVersion: string;
@@ -22,6 +23,7 @@ export const setupNextjs = async ({
   folder,
   exampleFolder,
   exampleName,
+  exampleDescription,
   dependencies,
   devDependencies,
   nextjsVersion,
@@ -84,6 +86,6 @@ export const setupNextjs = async ({
   const template = Handlebars.compile(readMeTemplate);
   await fs.writeFile(
     path.join(folder, "readme.md"),
-    template({ exampleFolder, exampleName }),
+    template({ exampleFolder, exampleName, exampleDescription }),
   );
 };

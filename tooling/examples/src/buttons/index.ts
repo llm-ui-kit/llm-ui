@@ -14,6 +14,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const exampleFolder = "buttons/nextjs";
 const exampleName = folderToExampleName(exampleFolder);
+const exampleDescription = "Buttons example (Next.js)";
 
 const nextjs = async ({
   examplesFolder,
@@ -25,6 +26,7 @@ const nextjs = async ({
   await setupNextjs({
     folder,
     exampleName,
+    exampleDescription,
     dependencies: [
       ...markdownDependencies(llmUiVersion),
       `@llm-ui/buttons@${llmUiVersion}`,
@@ -45,5 +47,6 @@ const nextjs = async ({
 export const buttonsNextJs: Example = {
   folder: exampleFolder,
   exampleName,
+  exampleDescription,
   generate: nextjs,
 };

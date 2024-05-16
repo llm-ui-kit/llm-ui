@@ -14,6 +14,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const exampleFolder = "code/nextjs";
 const exampleName = folderToExampleName(exampleFolder);
+const exampleDescription = "Code block example (Next.js)";
 
 const nextjs = async ({
   examplesFolder,
@@ -30,6 +31,7 @@ const nextjs = async ({
   await setupNextjs({
     folder,
     exampleName,
+    exampleDescription,
     dependencies,
     devDependencies: markdownDevDependencies,
     exampleFolder,
@@ -51,5 +53,6 @@ const nextjs = async ({
 export const codeNextJs: Example = {
   folder: exampleFolder,
   exampleName,
+  exampleDescription,
   generate: nextjs,
 };
