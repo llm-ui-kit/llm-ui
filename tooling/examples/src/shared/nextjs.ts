@@ -30,8 +30,6 @@ export const setupNextjs = async ({
 
   await shell()`pnpm create next-app@${nextjsVersion} --ts --tailwind --eslint --app --src-dir --import-alias=@/* --use-npm ${folder}`;
 
-  await fs.rm(path.join(folder, "package-lock.json"));
-
   await replace({
     files: [path.join(folder, "package.json")],
     from: /"name": ".*",/,
@@ -45,6 +43,8 @@ export const setupNextjs = async ({
   await shell({
     cwd: folder,
   })`npm install --save-dev ${devDependencies}`;
+
+  await fs.rm(path.join(folder, "package-lock.json"));
 
   await fs.rm(path.join(folder, "src/app/favicon.ico"));
   await rimraf(path.join(folder, "public"));

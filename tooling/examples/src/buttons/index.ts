@@ -25,7 +25,10 @@ const nextjs = async ({
   await setupNextjs({
     folder,
     exampleName,
-    dependencies: markdownDependencies(llmUiVersion),
+    dependencies: [
+      ...markdownDependencies(llmUiVersion),
+      `@llm-ui/buttons@${llmUiVersion}`,
+    ],
     devDependencies: markdownDevDependencies,
     exampleFolder,
     nextjsVersion,

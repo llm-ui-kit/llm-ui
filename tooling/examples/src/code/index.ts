@@ -25,6 +25,7 @@ const nextjs = async ({
     ...markdownDependencies(llmUiVersion),
     "html-react-parser",
     "shiki",
+    `@llm-ui/code@${llmUiVersion}`,
   ];
   await setupNextjs({
     folder,

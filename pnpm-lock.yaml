@@ -267,6 +267,9 @@ importers:
 
   examples/buttons/nextjs:
     dependencies:
+      '@llm-ui/buttons':
+        specifier: ^0.2.0
+        version: link:../../../packages/buttons
       '@llm-ui/markdown':
         specifier: ^0.2.0
         version: link:../../../packages/markdown
@@ -319,6 +322,9 @@ importers:
 
   examples/code/nextjs:
     dependencies:
+      '@llm-ui/code':
+        specifier: ^0.2.0
+        version: link:../../../packages/code
       '@llm-ui/markdown':
         specifier: ^0.2.0
         version: link:../../../packages/markdown
