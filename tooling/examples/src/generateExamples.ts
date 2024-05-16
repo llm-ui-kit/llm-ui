@@ -9,12 +9,13 @@ const repoRoot = path.resolve(path.join(__dirname, "../../.."));
 
 const commonParams: CommonParams = {
   repoRoot,
+  examplesFolder: path.join(repoRoot, "examples"),
   nextjsVersion: "14.2.3",
   llmUiVersion: "0.2.0",
 };
 
 (async () => {
-  rimraf.sync(path.join(repoRoot, "/examples"));
+  rimraf.sync(commonParams.examplesFolder);
   for (const example of examples) {
     console.log(`Generating: ${example.folder}`);
     await example.generate(commonParams);

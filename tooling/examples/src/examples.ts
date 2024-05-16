@@ -1,3 +1,4 @@
+import { buttonsNextJs } from "./buttons";
 import { markdownNextJs } from "./markdown";
 
-export const examples = [markdownNextJs];
+export const examples = [markdownNextJs, buttonsNextJs];
