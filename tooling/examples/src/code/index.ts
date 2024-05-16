@@ -51,5 +51,6 @@ const nextjs = async ({
 export const codeNextJs: Example = {
   folder: exampleFolder,
   exampleName,
+  description: "Code block example (Next.js)",
   generate: nextjs,
 };

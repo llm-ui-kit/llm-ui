@@ -45,5 +45,6 @@ const nextjs = async ({
 export const buttonsNextJs: Example = {
   folder: exampleFolder,
   exampleName,
+  description: "Buttons example (Next.js)",
   generate: nextjs,
 };

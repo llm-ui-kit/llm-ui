@@ -8,5 +8,6 @@ export type CommonParams = {
 export type Example = {
   folder: string;
   exampleName: string;
+  description: string;
   generate: (params: CommonParams) => Promise<void>;
 };

@@ -66,4 +66,5 @@ export const openaiNextJs: Example = {
   folder: exampleFolder,
   exampleName,
   generate: nextjs,
+  description: "OpenAI example (Next.js)",
 };

@@ -60,4 +60,5 @@ export const markdownNextJs: Example = {
   folder: exampleFolder,
   exampleName,
   generate: nextjs,
+  description: "Markdown example (Next.js)",
 };
