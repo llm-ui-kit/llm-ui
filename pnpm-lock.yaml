@@ -271,13 +271,13 @@ importers:
   examples/buttons/nextjs:
     dependencies:
       '@llm-ui/buttons':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/buttons
       '@llm-ui/markdown':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/react
       next:
         specifier: 14.2.3
@@ -326,13 +326,13 @@ importers:
   examples/code/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
@@ -387,10 +387,10 @@ importers:
   examples/markdown/nextjs:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/react
       next:
         specifier: 14.2.3
@@ -439,13 +439,13 @@ importers:
   examples/openai/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
+        specifier: ^0.3.0
         version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10

@@ -1,5 +1,11 @@
 # create-llm-ui
 
+## 0.2.2
+
+### Patch Changes
+
+- [#188](https://github.com/llm-ui-kit/llm-ui/pull/188) [`0f5daba`](https://github.com/llm-ui-kit/llm-ui/commit/0f5daba7846003a74c3e1e913432eda7d2a5ef85) Thanks [@richardgill](https://github.com/richardgill)! - copy .env.example -> .env and log instructions
+
 ## 0.2.1
 
 ### Patch Changes
