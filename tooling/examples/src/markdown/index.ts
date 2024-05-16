@@ -15,8 +15,8 @@ const appendToFile = async (filePath: string, content: string) => {
   await fs.writeFile(filePath, newContents);
 };
 
-const folder = "markdown/nextjs";
-const exampleName = folderToExampleName(folder);
+const exampleFolder = "markdown/nextjs";
+const exampleName = folderToExampleName(exampleFolder);
 
 const nextjs = async ({
   repoRoot,
@@ -31,12 +31,11 @@ const nextjs = async ({
     "remark-gfm",
   ];
 
-  const exampleFolder = "nextjstest/markdown";
   const folder = path.join(examplesFolder, exampleFolder);
 
   await setupNextjs({
     folder,
-    exampleName: `llm-ui-${exampleFolder.split("/").join("-")}-example`,
+    exampleName,
     dependencies,
     devDependencies,
     exampleFolder,
@@ -60,7 +59,7 @@ const nextjs = async ({
 };
 
 export const markdownNextJs: Example = {
-  folder,
+  folder: exampleFolder,
   exampleName,
   generate: nextjs,
 };
