@@ -4,7 +4,10 @@ import Handlebars from "handlebars";
 import path from "path";
 import replace from "replace-in-file";
 import { rimraf } from "rimraf";
+import { fileURLToPath } from "url";
 import { shell } from "./shell";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 type SetupNextjsOptions = {
   folder: string;
@@ -29,11 +32,11 @@ export const setupNextjs = async ({
 
   await shell({
     cwd: folder,
-  })`npm install --save ${dependencies.join(" ")}`;
+  })`npm install --save ${dependencies}`;
 
   await shell({
     cwd: folder,
-  })`npm install --save-dev ${devDependencies.join(" ")}`;
+  })`npm install --save-dev ${devDependencies}`;
 
   await fs.rm(path.join(folder, "package-lock.json"));
 
@@ -75,7 +78,7 @@ export const setupNextjs = async ({
   });
 
   const readMeTemplate = await fs.readFile(
-    "src/examples/shared/readme.md.hbs",
+    path.join(__dirname, "readme.md.hbs"),
     "utf8",
   );
   const template = Handlebars.compile(readMeTemplate);

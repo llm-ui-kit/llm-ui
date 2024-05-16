@@ -1,9 +1,11 @@
 import fs from "fs/promises";
 import path from "path";
+import { fileURLToPath } from "url";
 import { setupNextjs } from "../shared/nextjs";
 
-const examplesFolder = path.join(process.cwd(), "../../", "/examples");
-const llmUiVersion = "0.1.1";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const llmUiVersion = "0.2.1";
 const dependencies = [
   `@llm-ui/react@${llmUiVersion}`,
   `@llm-ui/markdown@${llmUiVersion}`,
@@ -18,7 +20,13 @@ const appendToFile = async (filePath: string, content: string) => {
   await fs.writeFile(filePath, newContents);
 };
 
-export const nextjs = async () => {
+type Params = {
+  repoRoot: string;
+};
+
+export const nextjs = async ({ repoRoot }: Params) => {
+  const examplesFolder = path.join(repoRoot, "/examples");
+
   const exampleFolder = "nextjstest/markdown";
   const folder = path.join(examplesFolder, exampleFolder);
 
@@ -31,12 +39,12 @@ export const nextjs = async () => {
   });
 
   await fs.copyFile(
-    path.join(process.cwd(), "src/examples/markdown/markdownExample.ts.hbs"),
+    path.join(__dirname, "markdownExample.ts.hbs"),
     path.join(folder, "src/app/page.tsx"),
   );
 
   const taiwindMarkdownCss = await fs.readFile(
-    path.join(process.cwd(), "src/examples/markdown/tailwindMarkdown.css.hbs"),
+    path.join(__dirname, "tailwindMarkdown.css.hbs"),
     "utf8",
   );
 
