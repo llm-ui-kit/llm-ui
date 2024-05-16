@@ -5,7 +5,7 @@
     "ci": "pnpm lint && pnpm format-check && pnpm typecheck && pnpm test && pnpm build",
     "lint": "eslint .",
     "gen-package": "nx run @llm-ui/gen:gen-package",
-    "gen-examples": "nx run @llm-ui/examples:gen-examples && pnpm format-write",
+    "gen-examples": "nx run @llm-ui/examples:gen-examples && pnpm format-write && pnpm i",
     "dev": "nx run-many --targets=dev,build-watch",
     "build": "nx run-many -t build",
     "typecheck": "nx run-many -t typecheck",
