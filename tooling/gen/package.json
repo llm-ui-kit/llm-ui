@@ -4,12 +4,13 @@
   "name": "@llm-ui/gen",
   "private": true,
   "scripts": {
-    "gen": "tsx src/generatePackage.ts"
+    "gen-package": "tsx src/generatePackage.ts",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",
-    "fast-glob": "^3.3.2",
     "handlebars": "^4.7.8",
+    "fast-glob": "^3.3.2",
     "tsx": "^4.7.2",
     "typescript": "^5.4.3"
   }

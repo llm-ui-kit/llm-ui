@@ -1,23 +1,11 @@
 {
-  "name": "{{packageName}}",
+  "name": "@llm-ui/examples",
   "version": "0.0.1",
   "type": "module",
+  "private": true,
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
-    }
-  },
   "files": [
     "dist"
   ],
@@ -25,13 +13,18 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup",
+    "gen-examples": "tsx src/generateExamples.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest"
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",
     "tsup": "^8.0.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "handlebars": "^4.7.8",
+    "execa": "^9.1.0",
+    "rimraf": "^5.0.7",
+    "replace-in-file": "^7.1.0",
+    "tsx": "^4.7.2"
   }
 }

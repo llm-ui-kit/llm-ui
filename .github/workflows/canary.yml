@@ -100,6 +100,7 @@ jobs:
           '@llm-ui/markdown': patch
           '@llm-ui/react': patch
           '@llm-ui/shared': patch
+          'create-llm-ui': patch
           ---
           Force canary build
 

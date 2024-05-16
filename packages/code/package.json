@@ -32,7 +32,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "shiki": "^1.2.4",
+    "shiki": "^1.5.2",
     "@llm-ui/react": "workspace:*",
     "@llm-ui/shared": "workspace:*"
   },

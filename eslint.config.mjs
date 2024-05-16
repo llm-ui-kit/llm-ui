@@ -24,6 +24,7 @@ const packageShared = "packages/shared";
 const packageCli = "packages/create-llm-ui";
 
 const toolingGen = "tooling/gen";
+const toolingExamples = "tooling/examples";
 
 const reactProjects = [
   appWww,
@@ -34,7 +35,12 @@ const reactProjects = [
   packageShared,
 ];
 const reactProjectsGlob = `{${reactProjects.join(",")}}`;
-const typescriptProjects = [...reactProjects, toolingGen, packageCli];
+const typescriptProjects = [
+  ...reactProjects,
+  toolingGen,
+  packageCli,
+  toolingExamples,
+];
 
 const foldersToLint = fastGlob.sync([`apps/*`, `packages/*`, `tooling/*`], {
   onlyDirectories: true,
