@@ -1,4 +1,8 @@
-# llm-ui-markdown-nextjs-example
+# Markdown example (Next.js)
+
+## How to use
+
+Execute create-llm-ui with pnpm, npm, bun, or yarn to setup the example:
 
 ```bash
 pnpx create-llm-ui example markdown/nextjs llm-ui-markdown-nextjs-example

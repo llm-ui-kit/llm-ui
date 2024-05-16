@@ -14,6 +14,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const exampleFolder = "openai/nextjs";
 const exampleName = folderToExampleName(exampleFolder);
+const exampleDescription = "OpenAI example (Next.js)";
 
 const nextjs = async ({
   examplesFolder,
@@ -31,6 +32,7 @@ const nextjs = async ({
   await setupNextjs({
     folder,
     exampleName,
+    exampleDescription,
     dependencies,
     devDependencies: markdownDevDependencies,
     exampleFolder,
@@ -65,6 +67,6 @@ const nextjs = async ({
 export const openaiNextJs: Example = {
   folder: exampleFolder,
   exampleName,
+  exampleDescription,
   generate: nextjs,
-  description: "OpenAI example (Next.js)",
 };

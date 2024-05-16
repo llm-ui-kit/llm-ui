@@ -10,6 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const exampleFolder = "markdown/nextjs";
 const exampleName = folderToExampleName(exampleFolder);
+const exampleDescription = "Markdown example (Next.js)";
 
 export const markdownDependencies = (llmUiVersion: string) => [
   `@llm-ui/react@${llmUiVersion}`,
@@ -43,6 +44,7 @@ const nextjs = async ({
   await setupNextjs({
     folder,
     exampleName,
+    exampleDescription,
     dependencies: markdownDependencies(llmUiVersion),
     devDependencies: markdownDevDependencies,
     exampleFolder,
@@ -59,6 +61,6 @@ const nextjs = async ({
 export const markdownNextJs: Example = {
   folder: exampleFolder,
   exampleName,
+  exampleDescription,
   generate: nextjs,
-  description: "Markdown example (Next.js)",
 };
