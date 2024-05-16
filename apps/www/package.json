@@ -64,7 +64,7 @@
     "remark-gfm": "^4.0.0",
     "remeda": "^1.57.0",
     "sharp": "^0.33.2",
-    "shiki": "^1.2.4",
+    "shiki": "^1.5.2",
     "simple-stack-form": "^0.1.12",
     "sonner": "^1.4.3",
     "tailwind-merge": "^2.2.1",
