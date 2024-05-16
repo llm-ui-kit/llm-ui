@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",
+    "handlebars": "^4.7.8",
     "fast-glob": "^3.3.2",
     "tsx": "^4.7.2",
     "typescript": "^5.4.3"
