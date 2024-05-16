@@ -1,12 +1,5 @@
 {
   "extends": "@llm-ui/tsconfig/base",
-  "include": [
-    "src/**/*",
-    "*.ts",
-    "test",
-    "../examples/src/markdown",
-    "../examples/src/shared",
-    "../examples/src/generateExamples.ts"
-  ],
+  "include": ["src/**/*", "*.ts", "test"],
   "exclude": ["node_modules"]
 }
