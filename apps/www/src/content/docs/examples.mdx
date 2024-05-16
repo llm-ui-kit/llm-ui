@@ -3,68 +3,35 @@ title: Examples
 description: ""
 ---
 
+import { GithubLinkButton } from "@/components/ui/custom/GithubLinkButton";
+import { examplesUrl } from "@/constants/constants";
+
 llm-ui provides example code to get you started.
 
-# Browse the code
+# Browse the examples
 
-Our example code is in the [github repo](https://github.com/llm-ui-kit/llm-ui/tree/main/examples/nextjs/src/app/examples).
+<GithubLinkButton href={examplesUrl} />
 
-# Running the examples
+# Markdown example
 
-llm-ui's includes examples for Next.js.
+An example of how to use the markdown fallback block.
 
-Clone the llm-ui repo and navigate to the Next.js examples directory:
+<GithubLinkButton href={`${examplesUrl}/markdown`} />
 
-```bash
-git clone https://github.com/llm-ui-kit/llm-ui.git
-cd llm-ui/examples/nextjs
-rm ../../package.json ../../pnpm-workspace.yaml
-```
+# Code block example
 
-Install the dependencies using your package manager:
+An example of how to use the code block with Shiki.
 
-```bash
-pnpm install
-# or
-npm install
-# or
-yarn install
-# or
-bun install
-```
+<GithubLinkButton href={`${examplesUrl}/code`} />
 
-Then, run the development server:
+# Buttons example
 
-```bash
-pnpm dev
-# or
-npm run dev
-# or
-yarn dev
-# or
-bun dev
-```
+An example of how to use the code block with Shiki.
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+<GithubLinkButton href={`${examplesUrl}/code`} />
 
-<Callout icon="⚠️" type="warning">
+# OpenAI example
 
-Some examples require environment variables, see below for details.
+An example of how to use llm-ui with OpenAI.
 
-</Callout>
-
-# Environment variables
-
-Some examples require environment variables to run.
-
-Create an empty file in: `examples/nextjs/.env`
-
-## Set the environment variables
-
-You can see example environment variables in: [examples/nextjs/.env.example](https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/.env.example)
-
-# OpenAI
-
-[The OpenAI example](https://github.com/llm-ui-kit/llm-ui/tree/main/examples/nextjs/src/app/examples/openai) requires you to set the `OPENAI_API_KEY` [environment variable](#environment-variables) in `examples/nextjs/.env`.
-
-You can generate/find your OpenAI key in their dashboard: https://platform.openai.com/api-keys
+<GithubLinkButton href={`${examplesUrl}/openai`} />

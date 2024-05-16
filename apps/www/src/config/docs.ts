@@ -34,15 +34,11 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: "Examples",
+      title: "Guides",
       items: [
         {
-          title: "Setup examples",
+          title: "Examples",
           href: "/docs/examples",
-        },
-        {
-          title: "OpenAI",
-          href: "/docs/examples#openai",
         },
       ],
     },

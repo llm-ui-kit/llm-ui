@@ -11,11 +11,11 @@ import {
   llmUiOutputQuickStart,
   llmUiOutputQuickStartStep,
   fullQuickStart,
-  markdownAndCodeGithubExampleUrl,
 } from "../../../snippets/quickStart";
 import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
 import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
 import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
+import { examplesUrl } from "@/constants/constants";
 
 The code block displays markdown code blocks in the LLM output using [shiki](https://shiki.style).
 
@@ -36,10 +36,7 @@ The code block displays markdown code blocks in the LLM output using [shiki](htt
 
 # Quick start
 
-<CopyOrGithub
-  codeToCopy={fullQuickStart}
-  githubUrl={markdownAndCodeGithubExampleUrl}
-/>
+<CopyOrGithub codeToCopy={fullQuickStart} githubUrl={`${examplesUrl}/code`} />
 
 ## Install dependencies
 

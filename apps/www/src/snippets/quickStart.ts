@@ -174,6 +174,3 @@ const step3Comment =
   "// -------Step 3: Render markdown and code with llm-ui-------";
 
 export const fullQuickStart = `${markdownAndCodeblockImports}\n\n${step1Comment}\n\n${markdownComponent}\n\n${step2Comment}\n\n${codeblockComponent}\n\n${step3Comment}\n\n${llmUiOutputUsage}\n\nexport default Example`;
-
-export const markdownAndCodeGithubExampleUrl =
-  "https://github.com/llm-ui-kit/llm-ui/blob/main/examples/nextjs/src/app/examples/code-block/example.tsx";
