@@ -28,9 +28,19 @@ program
     await downloadAndExtractExample(folder, exampleName);
 
     await install(getPackageManager(), folder);
+    const dotEnv = path.join(folder, ".env.example");
+
+    const isDotEnv = fs.existsSync(dotEnv);
+    if (isDotEnv) {
+      fs.renameSync(dotEnv, path.join(folder, ".env"));
+    }
+
+    const dotEnvInstructions = isDotEnv
+      ? "\n\nPlease set the environment variables in .env"
+      : "";
 
     console.log(
-      `To start the example:\n\ncd ${folder}\n\n${getPackageManager()} run dev`,
+      `To start the example:\n\ncd ${folder}${dotEnvInstructions}\n\n${getPackageManager()} run dev`,
     );
   });
 
