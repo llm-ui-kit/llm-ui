@@ -16,9 +16,9 @@ import {
   llmUiOutputQuickStartStep,
   introExampleAllDisplay,
   fullQuickStart,
-  markdownAndCodeGithubExampleUrl,
 } from "../../snippets/quickStart";
 import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
+import { examplesUrl } from "@/constants/constants";
 
 Setup llm-ui with code and markdown blocks:
 
@@ -45,10 +45,7 @@ Setup llm-ui with code and markdown blocks:
 
 # Setup
 
-<CopyOrGithub
-  codeToCopy={fullQuickStart}
-  githubUrl={markdownAndCodeGithubExampleUrl}
-/>
+<CopyOrGithub codeToCopy={fullQuickStart} githubUrl={`${examplesUrl}/code`} />
 
 ## Step 1: Create a markdown component
 

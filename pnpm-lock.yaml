@@ -110,6 +110,9 @@ importers:
       '@llm-ui/code':
         specifier: workspace:*
         version: link:../../packages/code
+      '@llm-ui/examples':
+        specifier: workspace:*
+        version: link:../../tooling/examples
       '@llm-ui/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown

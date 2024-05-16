@@ -16,6 +16,7 @@ import {
 import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
 import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
 import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
+import { examplesUrl } from "@/constants/constants";
 
 The markdown block displays markdown content in the LLM output. The markdown block is designed to be used as the [fallback block](/docs/llm-output-hook#fallbackblock-object) in `useLLMOutput` which is used if no other block matches.
 
@@ -39,7 +40,7 @@ The markdown block displays markdown content in the LLM output. The markdown blo
 
 <CopyOrGithub
   codeToCopy={fullMarkdownQuickStart}
-  githubUrl={markdownGithubExampleUrl}
+  githubUrl={`${examplesUrl}/markdown`}
 />
 
 ## Install dependencies

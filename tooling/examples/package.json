@@ -3,12 +3,8 @@
   "version": "0.0.1",
   "type": "module",
   "private": true,
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "main": "./src/examples.ts",
+  "module": "./src/examples.ts",
   "publishConfig": {
     "access": "public"
   },
