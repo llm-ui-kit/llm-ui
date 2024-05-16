@@ -1,5 +1,17 @@
 # llm-ui-nextjstest-markdown-example
 
 ```bash
-pnpm create-llm-ui example nextjstest/markdown llm-ui-nextjstest-markdown-example
+pnpx create-llm-ui example nextjstest/markdown llm-ui-nextjstest-markdown-example
+```
+
+```bash
+npx create-llm-ui example nextjstest/markdown llm-ui-nextjstest-markdown-example
+```
+
+```bash
+bunx create-llm-ui example nextjstest/markdown llm-ui-nextjstest-markdown-example
+```
+
+```bash
+yarn create llm-ui example nextjstest/markdown llm-ui-nextjstest-markdown-example
 ```

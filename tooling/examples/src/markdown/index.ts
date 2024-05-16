@@ -5,7 +5,7 @@ import { setupNextjs } from "../shared/nextjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const llmUiVersion = "0.2.1";
+const llmUiVersion = "0.2.0";
 const dependencies = [
   `@llm-ui/react@${llmUiVersion}`,
   `@llm-ui/markdown@${llmUiVersion}`,
