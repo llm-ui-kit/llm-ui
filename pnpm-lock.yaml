@@ -271,14 +271,14 @@ importers:
   examples/buttons/nextjs:
     dependencies:
       '@llm-ui/buttons':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/buttons
       '@llm-ui/markdown':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/react
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -326,14 +326,14 @@ importers:
   examples/code/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -387,14 +387,14 @@ importers:
   examples/code/vite:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -460,11 +460,11 @@ importers:
   examples/markdown/nextjs:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/react
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -512,11 +512,11 @@ importers:
   examples/markdown/vite:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/react
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -576,14 +576,14 @@ importers:
   examples/openai/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.2.0
-        version: 0.2.0(react@18.2.0)
+        specifier: ^0.3.0
+        version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -2476,62 +2476,6 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
-
-  /@llm-ui/buttons@0.2.0(react@18.2.0):
-    resolution: {integrity: sha512-32nBoy8UcDjcMA6j8rt14H6FVx7gRdKAsgVhS8Z5YGg3aXKBB3GXm1HwG2JM2MCys8WKaKDhSGggFX4+bnohwA==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      '@llm-ui/react': 0.2.0(react@18.2.0)
-      '@llm-ui/shared': 0.2.0(react@18.2.0)
-      fast-xml-parser: 4.3.6
-      react: 18.2.0
-    dev: false
-
-  /@llm-ui/code@0.2.0(react@18.2.0):
-    resolution: {integrity: sha512-jRXpJCIUYVIuKcnVYNWG9p0gOb/2A/d3JPNzQoLy9ehJL9XDfRyh5qBCc6uM3020qCWM9k6y6LUmcYmSWdtLFg==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      '@llm-ui/react': 0.2.0(react@18.2.0)
-      '@llm-ui/shared': 0.2.0(react@18.2.0)
-      react: 18.2.0
-      shiki: 1.5.2
-    dev: false
-
-  /@llm-ui/markdown@0.2.0(react@18.2.0):
-    resolution: {integrity: sha512-Pgi9x7lbyGMgLLlB7Ei9Ipy423jYvVNhz4y77uTZsfa6I4rkOA0styqbc7m4UdqMYsutkYZ7Bn7VtprqVBkCuA==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      '@llm-ui/react': 0.2.0(react@18.2.0)
-      mdast-util-from-markdown: 2.0.0
-      mdast-util-gfm: 3.0.0
-      mdast-util-to-markdown: 2.1.0
-      micromark-extension-gfm: 3.0.0
-      react: 18.2.0
-      remeda: 1.57.0
-      unist-util-visit: 5.0.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@llm-ui/react@0.2.0(react@18.2.0):
-    resolution: {integrity: sha512-VqCE9NWfR9DYqUxocdGcQyMZBaioOx7uwaqTfWaKkFy2mSB6hTn52h30jFjQkWga9LxZ7+HCECcPq+UXzlQ/EA==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      react: 18.2.0
-      remeda: 1.57.0
-    dev: false
-
-  /@llm-ui/shared@0.2.0(react@18.2.0):
-    resolution: {integrity: sha512-mt4nUbMAsycWE3Q9Y80k1brbMFJyAIX9r4Da/E5+dMlaMW+ECygsF6K75p/3uBN1QaXbQgyTb0TdtaQsAKS1Xg==}
-    dependencies:
-      '@llm-ui/react': 0.2.0(react@18.2.0)
-    transitivePeerDependencies:
-      - react
-    dev: false
 
   /@manypkg/find-root@1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
