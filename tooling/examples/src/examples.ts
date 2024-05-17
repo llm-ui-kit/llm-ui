@@ -8,7 +8,7 @@ export const examples = [
   markdownVite,
   buttonsNextJs,
   buttonsVite,
-  codeVite,
   codeNextJs,
+  codeVite,
   openaiNextJs,
 ];
