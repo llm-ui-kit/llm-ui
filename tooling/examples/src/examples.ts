@@ -1,7 +1,7 @@
 import { buttonsNextJs, buttonsVite } from "./buttons";
 import { codeNextJs, codeVite } from "./code";
 import { markdownNextJs, markdownVite } from "./markdown";
-import { openaiNextJs } from "./openai";
+import { openaiNextJs, openaiVite } from "./openai";
 
 export const examples = [
   markdownNextJs,
@@ -11,4 +11,5 @@ export const examples = [
   codeNextJs,
   codeVite,
   openaiNextJs,
+  openaiVite,
 ];

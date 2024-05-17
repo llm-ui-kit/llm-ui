@@ -1,5 +1,5 @@
-import { MARKDOWN_PROMPT, NEWLINE } from "@/constants";
 import OpenAI from "openai";
+import { MARKDOWN_PROMPT, NEWLINE } from "../constants";
 
 const openai = new OpenAI();
 
