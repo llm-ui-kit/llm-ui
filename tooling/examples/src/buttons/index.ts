@@ -5,34 +5,42 @@ import {
   markdownDependencies,
   markdownDevDependencies,
   setupMarkdownTailwindCssNext,
+  setupMarkdownTailwindCssVite,
 } from "../markdown";
 import { folderToExampleName } from "../shared/folderToExampleName";
 import { setupNextjs } from "../shared/nextjs";
+import { setupVite } from "../shared/vite";
 import { CommonParams, Example } from "../types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const exampleFolder = "buttons/nextjs";
-const exampleName = folderToExampleName(exampleFolder);
-const exampleDescription = "Buttons example (Next.js)";
+const exampleFolderNextJs = "buttons/nextjs";
+const exampleNameNextJs = folderToExampleName(exampleFolderNextJs);
+const exampleDescriptionNextJs = "Buttons example (Next.js)";
+
+const exampleFolderVite = "buttons/vite";
+const exampleNameVite = folderToExampleName(exampleFolderVite);
+const exampleDescriptionVite = "Buttons example (Vite)";
+
+const getDependencies = (llmUiVersion: string) => [
+  ...markdownDependencies(llmUiVersion),
+  `@llm-ui/buttons@${llmUiVersion}`,
+];
 
 const nextjs = async ({
   examplesFolder,
   llmUiVersion,
   nextjsVersion,
 }: CommonParams) => {
-  const folder = path.join(examplesFolder, exampleFolder);
+  const folder = path.join(examplesFolder, exampleFolderNextJs);
 
   await setupNextjs({
     folder,
-    exampleName,
-    exampleDescription,
-    dependencies: [
-      ...markdownDependencies(llmUiVersion),
-      `@llm-ui/buttons@${llmUiVersion}`,
-    ],
+    exampleName: exampleNameNextJs,
+    exampleDescription: exampleDescriptionNextJs,
+    dependencies: getDependencies(llmUiVersion),
     devDependencies: markdownDevDependencies,
-    exampleFolder,
+    exampleFolder: exampleFolderNextJs,
     nextjsVersion,
   });
 
@@ -44,9 +52,41 @@ const nextjs = async ({
   await setupMarkdownTailwindCssNext(folder);
 };
 
+const vite = async ({
+  examplesFolder,
+  llmUiVersion,
+  viteVersion,
+}: CommonParams) => {
+  const folder = path.join(examplesFolder, exampleFolderVite);
+
+  await setupVite({
+    folder,
+    exampleName: exampleNameVite,
+    exampleDescription: exampleDescriptionVite,
+    dependencies: getDependencies(llmUiVersion),
+    devDependencies: markdownDevDependencies,
+    exampleFolder: exampleFolderVite,
+    viteVersion,
+  });
+
+  await fs.copyFile(
+    path.join(__dirname, "buttonsExample.ts.hbs"),
+    path.join(folder, "src/App.tsx"),
+  );
+
+  await setupMarkdownTailwindCssVite(folder);
+};
+
 export const buttonsNextJs: Example = {
-  folder: exampleFolder,
-  exampleName,
-  exampleDescription,
+  folder: exampleFolderNextJs,
+  exampleName: exampleNameNextJs,
+  exampleDescription: exampleDescriptionNextJs,
   generate: nextjs,
+};
+
+export const buttonsVite: Example = {
+  folder: exampleFolderVite,
+  exampleName: exampleNameVite,
+  exampleDescription: exampleDescriptionVite,
+  generate: vite,
 };
