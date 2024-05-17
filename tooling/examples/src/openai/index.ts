@@ -58,11 +58,11 @@ const nextjs = async ({
     path.join(folder, "src/app/page.tsx"),
   );
 
-  await fs.mkdir(path.join(folder, "src/app/api"));
+  await fs.mkdir(path.join(folder, "src/app/api/openai"), { recursive: true });
 
   await fs.copyFile(
     path.join(__dirname, "route.ts.hbs"),
-    path.join(folder, "src/app/api/route.ts"),
+    path.join(folder, "src/app/api/openai/route.ts"),
   );
 
   await fs.copyFile(
