@@ -4,13 +4,18 @@ import { fileURLToPath } from "url";
 import { appendToFile } from "../shared/appendToFile";
 import { folderToExampleName } from "../shared/folderToExampleName";
 import { setupNextjs } from "../shared/nextjs";
+import { setupVite } from "../shared/vite";
 import { CommonParams, Example } from "../types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const exampleFolder = "markdown/nextjs";
-const exampleName = folderToExampleName(exampleFolder);
-const exampleDescription = "Markdown example (Next.js)";
+const exampleFolderNextJs = "markdown/nextjs";
+const exampleNameNextJs = folderToExampleName(exampleFolderNextJs);
+const exampleDescriptionNextjs = "Markdown example (Next.js)";
+
+const exampleFolderVite = "markdown/vite";
+const exampleNameVite = folderToExampleName(exampleFolderVite);
+const exampleDescriptionVite = "Markdown example (Vite)";
 
 export const markdownDependencies = (llmUiVersion: string) => [
   `@llm-ui/react@${llmUiVersion}`,
@@ -34,20 +39,24 @@ export const setupMarkdownTailwindCssNext = (folder: string) => {
   return setupMarkdownTailwindCss(path.join(folder, "src/app/globals.css"));
 };
 
+export const setupMarkdownTailwindCssVite = (folder: string) => {
+  return setupMarkdownTailwindCss(path.join(folder, "src/index.css"));
+};
+
 const nextjs = async ({
   examplesFolder,
   llmUiVersion,
   nextjsVersion,
 }: CommonParams) => {
-  const folder = path.join(examplesFolder, exampleFolder);
+  const folder = path.join(examplesFolder, exampleFolderNextJs);
 
   await setupNextjs({
     folder,
-    exampleName,
-    exampleDescription,
+    exampleName: exampleNameNextJs,
+    exampleDescription: exampleDescriptionNextjs,
     dependencies: markdownDependencies(llmUiVersion),
     devDependencies: markdownDevDependencies,
-    exampleFolder,
+    exampleFolder: exampleFolderNextJs,
     nextjsVersion,
   });
 
@@ -58,9 +67,40 @@ const nextjs = async ({
   await setupMarkdownTailwindCssNext(folder);
 };
 
+const vite = async ({
+  examplesFolder,
+  llmUiVersion,
+  viteVersion,
+}: CommonParams) => {
+  const folder = path.join(examplesFolder, exampleFolderVite);
+
+  await setupVite({
+    folder,
+    exampleName: exampleNameVite,
+    exampleDescription: exampleDescriptionNextjs,
+    dependencies: markdownDependencies(llmUiVersion),
+    devDependencies: markdownDevDependencies,
+    exampleFolder: exampleFolderVite,
+    viteVersion,
+  });
+
+  await fs.copyFile(
+    path.join(__dirname, "markdownExample.ts.hbs"),
+    path.join(folder, "src/App.tsx"),
+  );
+  await setupMarkdownTailwindCssVite(folder);
+};
+
 export const markdownNextJs: Example = {
-  folder: exampleFolder,
-  exampleName,
-  exampleDescription,
+  folder: exampleFolderNextJs,
+  exampleName: exampleNameNextJs,
+  exampleDescription: exampleDescriptionNextjs,
   generate: nextjs,
+};
+
+export const markdownVite: Example = {
+  folder: exampleFolderVite,
+  exampleName: exampleNameVite,
+  exampleDescription: exampleDescriptionVite,
+  generate: vite,
 };

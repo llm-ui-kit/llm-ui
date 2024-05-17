@@ -2,6 +2,7 @@ export type CommonParams = {
   repoRoot: string;
   examplesFolder: string;
   nextjsVersion: string;
+  viteVersion: string;
   llmUiVersion: string;
 };
 
