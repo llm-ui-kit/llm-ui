@@ -5,7 +5,6 @@ import { ChatRequest, db } from "astro:db";
 
 export const POST: APIRoute = async ({ request }) => {
   const { userContent, systemContent } = await request.json();
-
   if (!userContent) {
     return new Response(
       JSON.stringify({
@@ -16,7 +15,18 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    await db.insert(ChatRequest).values({ userContent, systemContent });
+    const newChatEntry = await db
+      .insert(ChatRequest)
+      .values({ userContent, systemContent })
+      .returning();
+    const { id } = newChatEntry[0];
+    return new Response(
+      JSON.stringify({
+        message: "success",
+        id,
+      }),
+      { status: 200 },
+    );
   } catch (error) {
     return new Response(
       JSON.stringify({
@@ -25,11 +35,4 @@ export const POST: APIRoute = async ({ request }) => {
       { status: 400 },
     );
   }
-
-  return new Response(
-    JSON.stringify({
-      message: "success",
-    }),
-    { status: 200 },
-  );
 };

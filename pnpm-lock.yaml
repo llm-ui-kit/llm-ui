@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      openai:
+        specifier: ^4.38.5
+        version: 4.38.5
     devDependencies:
       '@changesets/changelog-github':
         specifier: ^0.5.0

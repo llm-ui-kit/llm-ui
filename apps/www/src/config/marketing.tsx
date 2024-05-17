@@ -38,6 +38,10 @@ export const marketingConfig: MarketingConfig = {
       title: "About",
       href: "/about",
     },
+    {
+      title: "Chat",
+      href: "/chat",
+    },
   ],
   models: [
     {
