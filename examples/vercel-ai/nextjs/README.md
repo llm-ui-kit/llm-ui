@@ -5,17 +5,17 @@
 Execute create-llm-ui with pnpm, npm, bun, or yarn to setup the example:
 
 ```bash
-pnpx create-llm-ui example code/nextjs llm-ui-vercel-ai-nextjs-example
+pnpx create-llm-ui example vercel-ai/nextjs llm-ui-vercel-ai-nextjs-example
 ```
 
 ```bash
-npx create-llm-ui example code/nextjs llm-ui-vercel-ai-nextjs-example
+npx create-llm-ui example vercel-ai/nextjs llm-ui-vercel-ai-nextjs-example
 ```
 
 ```bash
-bunx create-llm-ui example code/nextjs llm-ui-vercel-ai-nextjs-example
+bunx create-llm-ui example vercel-ai/nextjs llm-ui-vercel-ai-nextjs-example
 ```
 
 ```bash
-yarn create llm-ui example code/nextjs llm-ui-vercel-ai-nextjs-example
+yarn create llm-ui example vercel-ai/nextjs llm-ui-vercel-ai-nextjs-example
 ```
