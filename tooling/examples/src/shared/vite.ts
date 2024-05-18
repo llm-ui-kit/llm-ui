@@ -4,6 +4,7 @@ import Handlebars from "handlebars";
 import path from "path";
 import replace from "replace-in-file";
 import { fileURLToPath } from "url";
+import { setupGitIgnore } from "./gitIgnore";
 import { shell } from "./shell";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -114,4 +115,6 @@ export const setupVite = async ({
     path.join(folder, "readme.md"),
     template({ exampleFolder, exampleName, exampleDescription }),
   );
+
+  await setupGitIgnore(folder);
 };
