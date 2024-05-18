@@ -34,15 +34,19 @@ export const nextjsShared = async ({
   nextjsVersion,
   dependencies,
   relativeFolder,
+  exampleName,
+  exampleDescription,
 }: Pick<CommonParams, "examplesFolder" | "nextjsVersion"> & {
+  exampleName: string;
+  exampleDescription: string;
   dependencies: string[];
   relativeFolder: string;
 }) => {
   const folder = path.join(examplesFolder, relativeFolder);
   await setupNextjs({
     folder,
-    exampleName: exampleNameNextJs,
-    exampleDescription: exampleDescriptionNextJs,
+    exampleName,
+    exampleDescription,
     dependencies,
     devDependencies: markdownDevDependencies,
     exampleFolder: exampleFolderNextJs,
@@ -68,6 +72,8 @@ const nextjs = async ({
 }: CommonParams) => {
   const dependencies = getCodeDependencies(llmUiVersion);
   await nextjsShared({
+    exampleName: exampleNameNextJs,
+    exampleDescription: exampleDescriptionNextJs,
     examplesFolder,
     nextjsVersion,
     dependencies,

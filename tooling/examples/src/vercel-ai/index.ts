@@ -27,6 +27,8 @@ const nextjs = async ({
   ];
 
   await nextjsShared({
+    exampleName: exampleNameVercelAi,
+    exampleDescription: exampleDescriptionVercelAi,
     examplesFolder,
     nextjsVersion,
     dependencies,

@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "llm-ui-code-nextjs-example",
-  description: "llm-ui-code-nextjs-example",
+  title: "llm-ui-vercel-ai-nextjs-example",
+  description: "llm-ui-vercel-ai-nextjs-example",
 };
 
 export default function RootLayout({

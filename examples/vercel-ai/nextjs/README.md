@@ -1,21 +1,21 @@
-# Code block example (Next.js)
+# vercel.ai (Next.js)
 
 ## How to use
 
 Execute create-llm-ui with pnpm, npm, bun, or yarn to setup the example:
 
 ```bash
-pnpx create-llm-ui example code/nextjs llm-ui-code-nextjs-example
+pnpx create-llm-ui example code/nextjs llm-ui-vercel-ai-nextjs-example
 ```
 
 ```bash
-npx create-llm-ui example code/nextjs llm-ui-code-nextjs-example
+npx create-llm-ui example code/nextjs llm-ui-vercel-ai-nextjs-example
 ```
 
 ```bash
-bunx create-llm-ui example code/nextjs llm-ui-code-nextjs-example
+bunx create-llm-ui example code/nextjs llm-ui-vercel-ai-nextjs-example
 ```
 
 ```bash
-yarn create llm-ui example code/nextjs llm-ui-code-nextjs-example
+yarn create llm-ui example code/nextjs llm-ui-vercel-ai-nextjs-example
 ```
