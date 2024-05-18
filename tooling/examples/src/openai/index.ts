@@ -31,6 +31,13 @@ const getDependencies = (llmUiVersion: string) => [
   "openai",
 ];
 
+export const openaiDotEnv = async (folder: string) => {
+  await fs.copyFile(
+    path.join(__dirname, ".env.example.hbs"),
+    path.join(folder, ".env.example"),
+  );
+};
+
 const nextjs = async ({
   examplesFolder,
   llmUiVersion,
@@ -70,10 +77,7 @@ const nextjs = async ({
     path.join(folder, "src/app/constants.ts"),
   );
 
-  await fs.copyFile(
-    path.join(__dirname, ".env.example.hbs"),
-    path.join(folder, ".env.example"),
-  );
+  await openaiDotEnv(folder);
 
   await setupMarkdownTailwindCssNext(folder);
 };
