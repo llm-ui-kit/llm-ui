@@ -49,7 +49,7 @@ export const nextjsShared = async ({
     exampleDescription,
     dependencies,
     devDependencies: markdownDevDependencies,
-    exampleFolder: exampleFolderNextJs,
+    exampleFolder: relativeFolder,
     nextjsVersion,
   });
 
