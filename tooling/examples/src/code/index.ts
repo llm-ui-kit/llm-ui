@@ -22,20 +22,23 @@ const exampleFolderVite = "code/vite";
 const exampleNameVite = folderToExampleName(exampleFolderVite);
 const exampleDescriptionVite = "Code block example (Vite)";
 
-const getDependencies = (llmUiVersion: string) => [
+export const getCodeDependencies = (llmUiVersion: string) => [
   ...markdownDependencies(llmUiVersion),
   "html-react-parser",
   "shiki@^1.5.2",
   `@llm-ui/code@${llmUiVersion}`,
 ];
 
-const nextjs = async ({
+export const nextjsShared = async ({
   examplesFolder,
-  llmUiVersion,
   nextjsVersion,
-}: CommonParams) => {
-  const folder = path.join(examplesFolder, exampleFolderNextJs);
-  const dependencies = getDependencies(llmUiVersion);
+  dependencies,
+  relativeFolder,
+}: Pick<CommonParams, "examplesFolder" | "nextjsVersion"> & {
+  dependencies: string[];
+  relativeFolder: string;
+}) => {
+  const folder = path.join(examplesFolder, relativeFolder);
   await setupNextjs({
     folder,
     exampleName: exampleNameNextJs,
@@ -58,13 +61,27 @@ const nextjs = async ({
   await setupMarkdownTailwindCssNext(folder);
 };
 
+const nextjs = async ({
+  examplesFolder,
+  llmUiVersion,
+  nextjsVersion,
+}: CommonParams) => {
+  const dependencies = getCodeDependencies(llmUiVersion);
+  await nextjsShared({
+    examplesFolder,
+    nextjsVersion,
+    dependencies,
+    relativeFolder: exampleFolderNextJs,
+  });
+};
+
 const vite = async ({
   examplesFolder,
   llmUiVersion,
   viteVersion,
 }: CommonParams) => {
   const folder = path.join(examplesFolder, exampleFolderVite);
-  const dependencies = getDependencies(llmUiVersion);
+  const dependencies = getCodeDependencies(llmUiVersion);
   await setupVite({
     folder,
     exampleName: exampleNameVite,
