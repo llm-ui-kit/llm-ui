@@ -19,7 +19,7 @@ export const GET: APIRoute = async ({ request }) => {
   const id = Number(params.get("id"));
   const apiKey = params.get("apiKey") || "";
 
-  if (!id && !apiKey) {
+  if (!id || !apiKey) {
     return new Response(JSON.stringify({ message: "Missing id or apiKey" }), {
       status: 400,
     });
