@@ -1,3 +1,5 @@
+import { fireConfetti } from "@/animations/confetti";
+import { multipleStars } from "@/animations/stars";
 import {
   buttonsLookBack,
   findCompleteButtons,
@@ -28,7 +30,17 @@ const buttonsComponent = (onClick: OnClick) => {
   return ButtonsComponent;
 };
 
-export const buttonsBlock = (onClick: OnClick): LLMOutputBlock => ({
+export const starsAndConfetti = (buttonText: string) => {
+  if (buttonText.toLowerCase().includes("star")) {
+    multipleStars();
+  } else if (buttonText.toLowerCase().includes("confetti")) {
+    fireConfetti();
+  }
+};
+
+export const buttonsBlock = (
+  onClick: OnClick = starsAndConfetti,
+): LLMOutputBlock => ({
   findCompleteMatch: findCompleteButtons(),
   findPartialMatch: findPartialButtons(),
   lookBack: buttonsLookBack(),
