@@ -1,5 +1,17 @@
 # @llm-ui/code
 
+## 0.4.0
+
+### Minor Changes
+
+- [#200](https://github.com/llm-ui-kit/llm-ui/pull/200) [`28c4547`](https://github.com/llm-ui-kit/llm-ui/commit/28c4547ae5f5f8c50e300c862c9613ddd931c28e) Thanks [@richardgill](https://github.com/richardgill)! - @llm-ui/code move shiki to peer dependency
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.4.0
+  - @llm-ui/shared@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes

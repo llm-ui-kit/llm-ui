@@ -271,13 +271,13 @@ importers:
   examples/buttons/nextjs:
     dependencies:
       '@llm-ui/buttons':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/buttons
       '@llm-ui/markdown':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/react
       next:
         specifier: 14.2.3
@@ -326,13 +326,13 @@ importers:
   examples/buttons/vite:
     dependencies:
       '@llm-ui/buttons':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/buttons
       '@llm-ui/markdown':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/react
       react:
         specifier: ^18.2.0
@@ -393,13 +393,13 @@ importers:
   examples/code/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
@@ -454,13 +454,13 @@ importers:
   examples/code/vite:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
@@ -527,10 +527,10 @@ importers:
   examples/markdown/nextjs:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/react
       next:
         specifier: 14.2.3
@@ -579,10 +579,10 @@ importers:
   examples/markdown/vite:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/react
       react:
         specifier: ^18.2.0
@@ -643,13 +643,13 @@ importers:
   examples/openai/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
@@ -707,13 +707,13 @@ importers:
   examples/openai/vite-and-express:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/react
       dotenv:
         specifier: ^16.4.5
@@ -801,13 +801,13 @@ importers:
         specifier: ^0.0.13
         version: 0.0.13(zod@3.23.8)
       '@llm-ui/code':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../../../packages/react
       ai:
         specifier: ^3.1.12
@@ -12100,7 +12100,7 @@ packages:
       estree-walker: 3.0.3
       is-reference: 3.0.2
       locate-character: 3.0.0
-      magic-string: 0.30.8
+      magic-string: 0.30.10
       periscopic: 3.1.0
     dev: false
 
