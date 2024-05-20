@@ -1,12 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import {
-  markdownDependencies,
-  markdownDevDependencies,
-  setupMarkdownTailwindCssNext,
-  setupMarkdownTailwindCssVite,
-} from "../markdown";
+import { markdownDependencies, markdownDevDependencies } from "../markdown";
 import { folderToExampleName } from "../shared/folderToExampleName";
 import { setupNextjs } from "../shared/nextjs";
 import { setupVite } from "../shared/vite";
@@ -61,8 +56,6 @@ export const nextjsShared = async ({
     path.join(__dirname, "page.tsx.hbs"),
     path.join(folder, "src/app/page.tsx"),
   );
-
-  await setupMarkdownTailwindCssNext(folder);
 };
 
 const nextjs = async ({
@@ -102,8 +95,6 @@ const vite = async ({
     path.join(__dirname, "example.tsx.hbs"),
     path.join(folder, "src/App.tsx"),
   );
-
-  await setupMarkdownTailwindCssVite(folder);
 };
 
 export const codeNextJs: Example = {

@@ -2,28 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply text-white;
+  @apply bg-gray-950;
 }
 
 @layer utilities {
@@ -33,7 +14,7 @@ body {
 }
 
 button {
-  @apply rounded bg-blue-500 px-4 py-2 font-semibold text-white;
+  @apply mr-4 rounded bg-blue-500 px-4 py-2 font-semibold text-white;
 }
 
 a {
@@ -41,9 +22,18 @@ a {
 }
 
 pre {
+  @apply p-4;
+  @apply rounded-lg;
   @apply overflow-x-auto;
+  @apply border;
+  @apply border-gray-800;
+  background-color: black !important;
 }
 
 .markdown {
   @apply prose prose-invert;
+}
+
+body > div {
+  @apply m-8 mx-auto max-w-screen-md rounded-lg bg-black p-8 pt-1;
 }

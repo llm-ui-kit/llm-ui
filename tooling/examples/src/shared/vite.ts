@@ -5,9 +5,14 @@ import path from "path";
 import replace from "replace-in-file";
 import { fileURLToPath } from "url";
 import { setupGitIgnore } from "./gitIgnore";
+import { setupCss } from "./setupCss";
 import { shell } from "./shell";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+export const setupCssVite = (folder: string) => {
+  return setupCss(path.join(folder, "src/index.css"));
+};
 
 type SetupViteOptions = {
   folder: string;
@@ -98,11 +103,6 @@ export const setupVite = async ({
     to: `import typography from "@tailwindcss/typography";\n\nexport default {`,
   });
 
-  await fs.copyFile(
-    path.join(__dirname, "vite.css.hbs"),
-    path.join(folder, "src/index.css"),
-  );
-
   await fs.rm(path.join(folder, "src/App.css"));
 
   const readMeTemplate = await fs.readFile(
@@ -117,4 +117,5 @@ export const setupVite = async ({
   );
 
   await setupGitIgnore(folder);
+  await setupCssVite(folder);
 };
