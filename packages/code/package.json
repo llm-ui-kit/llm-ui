@@ -44,6 +44,6 @@
   },
   "peerDependencies": {
     "react": "^18.0.0",
-    "shiki": "^1.5.2"
+    "shiki": "^1.6.0"
   }
 }

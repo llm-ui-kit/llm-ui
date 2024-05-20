@@ -222,8 +222,8 @@ importers:
         specifier: ^0.33.2
         version: 0.33.3
       shiki:
-        specifier: ^1.5.2
-        version: 1.5.2
+        specifier: ^1.6.0
+        version: 1.6.0
       simple-stack-form:
         specifier: ^0.1.12
         version: 0.1.12(astro@4.5.12)(zod@3.22.4)
@@ -908,8 +908,8 @@ importers:
         specifier: ^18.0.0
         version: 18.2.0
       shiki:
-        specifier: ^1.5.2
-        version: 1.5.2
+        specifier: ^1.6.0
+        version: 1.6.0
     devDependencies:
       '@llm-ui/tsconfig':
         specifier: workspace:*
@@ -3986,10 +3986,6 @@ packages:
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
     dev: true
 
-  /@shikijs/core@1.5.2:
-    resolution: {integrity: sha512-wSAOgaz48GmhILFElMCeQypSZmj6Ru6DttOOtl3KNkdJ17ApQuGNCfzpk4cClasVrnIu45++2DBwG4LNMQAfaA==}
-    dev: false
-
   /@shikijs/core@1.6.0:
     resolution: {integrity: sha512-NIEAi5U5R7BLkbW1pG/ZKu3eb1lzc3/+jD0lFsuxMT7zjaf9bbNwdNyMr7zh/Zl8EXQtQ+MYBAt5G+JLu+5DlA==}
     dev: false
@@ -5401,7 +5397,7 @@ packages:
       rehype: 13.0.1
       resolve: 1.22.8
       semver: 7.6.0
-      shiki: 1.5.2
+      shiki: 1.6.0
       string-width: 7.1.0
       strip-ansi: 7.1.0
       tsconfck: 3.0.3(typescript@5.4.3)
@@ -11588,12 +11584,6 @@ packages:
   /shebang-regex@3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
-
-  /shiki@1.5.2:
-    resolution: {integrity: sha512-fpPbuSaatinmdGijE7VYUD3hxLozR3ZZ+iAx8Iy2X6REmJGyF5hQl94SgmiUNTospq346nXUVZx0035dyGvIVw==}
-    dependencies:
-      '@shikijs/core': 1.5.2
-    dev: false
 
   /shiki@1.6.0:
     resolution: {integrity: sha512-P31ROeXcVgW/k3Z+vUUErcxoTah7ZRaimctOpzGuqAntqnnSmx1HOsvnbAB8Z2qfXPRhw61yptAzCsuKOhTHwQ==}
