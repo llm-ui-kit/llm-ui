@@ -77,11 +77,7 @@ export const Chat = () => {
         />
         <label>Enter Your API Key</label>
         <Input onChange={handleUpdateApiKey} />
-        <Message
-          message={output}
-          isStreamFinished={isStreamFinished}
-          throttle="low-lag"
-        />
+        <Message message={output} isStreamFinished={isStreamFinished} />
         <Button type="submit">Start</Button>
       </form>
     </div>

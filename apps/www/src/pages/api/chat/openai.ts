@@ -12,7 +12,7 @@ export const GET: APIRoute = async ({ request }) => {
   const { url } = await request;
   const params = new URL(url).searchParams;
   const id = Number(params.get("id"));
-  const apiKey = params.get("apiKey");
+  const apiKey = params.get("apiKey") || "";
   const openai = new OpenAI({
     apiKey,
   });
