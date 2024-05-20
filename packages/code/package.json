@@ -32,7 +32,6 @@
     "test": "vitest"
   },
   "dependencies": {
-    "shiki": "^1.5.2",
     "@llm-ui/react": "workspace:*",
     "@llm-ui/shared": "workspace:*"
   },
@@ -44,6 +43,7 @@
     "typescript": "^5.4.3"
   },
   "peerDependencies": {
-    "react": "^18.0.0"
+    "react": "^18.0.0",
+    "shiki": "^1.5.2"
   }
 }
