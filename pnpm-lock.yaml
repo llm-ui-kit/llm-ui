@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      openai:
-        specifier: ^4.38.5
-        version: 4.47.1
     devDependencies:
       '@changesets/changelog-github':
         specifier: ^0.5.0
@@ -201,6 +197,9 @@ importers:
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.2.0)(react@18.2.0)
+      openai:
+        specifier: ^4.47.1
+        version: 4.47.1
       pagefind:
         specifier: ^1.0.4
         version: 1.0.4
@@ -815,7 +814,7 @@ importers:
         version: link:../../../packages/react
       ai:
         specifier: ^3.1.12
-        version: 3.1.12(openai@4.47.1)(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
+        version: 3.1.12(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -5048,7 +5047,7 @@ packages:
       humanize-ms: 1.2.1
     dev: false
 
-  /ai@3.1.12(openai@4.47.1)(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
+  /ai@3.1.12(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
     resolution: {integrity: sha512-XlurBw1sdgQCFmCTPYjKjpm+fPS6iY+tLb/PYNUEjZn3bhqosAkcqUkGJTsFP49OMAWO1Lm2oPthCakKcn6Lzw==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -5078,7 +5077,6 @@ packages:
       json-schema: 0.4.0
       jsondiffpatch: 0.6.0
       nanoid: 3.3.6
-      openai: 4.47.1
       react: 18.2.0
       secure-json-parse: 2.7.0
       solid-js: 1.8.17

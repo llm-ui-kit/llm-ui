@@ -6,8 +6,6 @@ import OpenAI from "openai";
 
 const NEWLINE = "$NEWLINE$";
 
-// export const dynamic = "force-dynamic";
-
 export const GET: APIRoute = async ({ request }) => {
   const { url } = await request;
   const params = new URL(url).searchParams;
