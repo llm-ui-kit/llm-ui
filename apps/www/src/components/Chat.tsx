@@ -7,35 +7,10 @@ import * as React from "react";
 
 export const Chat = () => {
   const [userContent, setUserContent] = React.useState<string>("");
-  const [currentId, setCurrentId] = React.useState<number>();
   const [currentApiKey, setCurrentApiKey] = React.useState<string>();
   const [output, setOutput] = React.useState<string>("");
   const [isStreamFinished, setIsStreamFinished] =
     React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    setOutput("");
-    if (currentId && currentApiKey) {
-      const eventSource = new EventSource(
-        `/api/chat/openai?id=${currentId}&apiKey=${currentApiKey}`,
-      );
-
-      eventSource.addEventListener("error", () => eventSource.close());
-
-      eventSource.addEventListener("token", (e) => {
-        const token = e.data.replaceAll("$NEWLINE$", "\n");
-        setOutput((prevResponse) => `${prevResponse}${token}`);
-      });
-
-      eventSource.addEventListener("finished", (e) => {
-        console.log("finished", e);
-        eventSource.close();
-        setIsStreamFinished(true);
-      });
-
-      () => eventSource.close();
-    }
-  }, [currentId, currentApiKey]);
 
   const handleUpdateUserContent = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
@@ -62,7 +37,28 @@ export const Chat = () => {
     });
     const data = await response.json();
     const { id } = data;
-    setCurrentId(id);
+    setOutput("");
+    if (id && currentApiKey) {
+      const eventSource = new EventSource(
+        `/api/chat/openai?id=${id}&apiKey=${currentApiKey}`,
+      );
+
+      eventSource.addEventListener("error", () => eventSource.close());
+
+      eventSource.addEventListener("token", (e) => {
+        // avoid newlines getting messed up
+        const token = e.data.replaceAll("$NEWLINE$", "\n");
+        setOutput((prevResponse) => `${prevResponse}${token}`);
+      });
+
+      eventSource.addEventListener("finished", (e) => {
+        console.log("finished", e);
+        eventSource.close();
+        setIsStreamFinished(true);
+      });
+
+      () => eventSource.close();
+    }
   };
 
   return (

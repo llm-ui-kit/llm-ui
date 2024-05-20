@@ -21,7 +21,7 @@ export const GET: APIRoute = async ({ request }) => {
     .from(ChatRequest)
     .where(eq(ChatRequest.id, id));
   const { userContent, systemContent } = chat[0];
-  if (!chat) {
+  if (!chat || !chat.length) {
     return new Response(
       JSON.stringify({
         message: "Not found",
