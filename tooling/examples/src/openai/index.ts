@@ -2,12 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import replace from "replace-in-file";
 import { fileURLToPath } from "url";
-import {
-  markdownDependencies,
-  markdownDevDependencies,
-  setupMarkdownTailwindCssNext,
-  setupMarkdownTailwindCssVite,
-} from "../markdown";
+import { markdownDependencies, markdownDevDependencies } from "../markdown";
 import { folderToExampleName } from "../shared/folderToExampleName";
 import { setupNextjs } from "../shared/nextjs";
 import { setupVite } from "../shared/vite";
@@ -78,8 +73,6 @@ const nextjs = async ({
   );
 
   await openaiDotEnv(folder);
-
-  await setupMarkdownTailwindCssNext(folder);
 };
 
 const vite = async ({
@@ -121,7 +114,6 @@ const vite = async ({
     from: `import ViteExpress from "vite-express";`,
     to: `import ViteExpress from "vite-express";\n\n${await fs.readFile(path.join(__dirname, "express.ts.hbs"))}`,
   });
-  await setupMarkdownTailwindCssVite(folder);
 };
 
 export const openaiNextJs: Example = {

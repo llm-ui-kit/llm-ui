@@ -6,9 +6,14 @@ import replace from "replace-in-file";
 import { rimraf } from "rimraf";
 import { fileURLToPath } from "url";
 import { setupGitIgnore } from "./gitIgnore";
+import { setupCss } from "./setupCss";
 import { shell } from "./shell";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+export const setupCssNext = (folder: string) => {
+  return setupCss(path.join(folder, "src/app/globals.css"));
+};
 
 type SetupNextjsOptions = {
   folder: string;
@@ -90,4 +95,5 @@ export const setupNextjs = async ({
     template({ exampleFolder, exampleName, exampleDescription }),
   );
   await setupGitIgnore(folder);
+  await setupCssNext(folder);
 };

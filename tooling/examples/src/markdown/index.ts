@@ -1,7 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import { appendToFile } from "../shared/appendToFile";
 import { folderToExampleName } from "../shared/folderToExampleName";
 import { setupNextjs } from "../shared/nextjs";
 import { setupVite } from "../shared/vite";
@@ -26,23 +25,6 @@ export const markdownDependencies = (llmUiVersion: string) => [
 
 export const markdownDevDependencies = ["@tailwindcss/typography"];
 
-export const setupMarkdownTailwindCss = async (cssFilePath: string) => {
-  const taiwindMarkdownCss = await fs.readFile(
-    path.join(__dirname, "tailwindMarkdown.css.hbs"),
-    "utf8",
-  );
-
-  await appendToFile(cssFilePath, taiwindMarkdownCss);
-};
-
-export const setupMarkdownTailwindCssNext = (folder: string) => {
-  return setupMarkdownTailwindCss(path.join(folder, "src/app/globals.css"));
-};
-
-export const setupMarkdownTailwindCssVite = (folder: string) => {
-  return setupMarkdownTailwindCss(path.join(folder, "src/index.css"));
-};
-
 const nextjs = async ({
   examplesFolder,
   llmUiVersion,
@@ -64,7 +46,6 @@ const nextjs = async ({
     path.join(__dirname, "markdownExample.ts.hbs"),
     path.join(folder, "src/app/page.tsx"),
   );
-  await setupMarkdownTailwindCssNext(folder);
 };
 
 const vite = async ({
@@ -88,7 +69,6 @@ const vite = async ({
     path.join(__dirname, "markdownExample.ts.hbs"),
     path.join(folder, "src/App.tsx"),
   );
-  await setupMarkdownTailwindCssVite(folder);
 };
 
 export const markdownNextJs: Example = {
