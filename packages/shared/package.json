@@ -1,6 +1,6 @@
 {
   "name": "@llm-ui/shared",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "license": "MIT",
   "main": "./dist/index.cjs",
