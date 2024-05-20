@@ -1,0 +1,10 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { HomeDemo } from "@/components/demo/Home";
+---
+
+<MainLayout title="llm-ui | React library for LLMs" mainClass="min-h-screen">
+  <div class="container mt-10 flex max-w-[64rem] flex-col items-start gap-6">
+    <HomeDemo client:load />
+  </div>
+</MainLayout>
