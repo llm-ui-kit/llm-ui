@@ -197,6 +197,9 @@ importers:
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.2.0)(react@18.2.0)
+      openai:
+        specifier: ^4.47.1
+        version: 4.47.1
       pagefind:
         specifier: ^1.0.4
         version: 1.0.4

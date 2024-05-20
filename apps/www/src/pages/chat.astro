@@ -1,0 +1,10 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Chat as ChatComponent } from "@/components/Chat";
+---
+
+<MainLayout title="Chat">
+  <section class="h-full space-y-5">
+    <ChatComponent client:load />
+  </section>
+</MainLayout>
