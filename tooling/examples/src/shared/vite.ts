@@ -4,6 +4,7 @@ import Handlebars from "handlebars";
 import path from "path";
 import replace from "replace-in-file";
 import { fileURLToPath } from "url";
+import { setupGitIgnore } from "./gitIgnore";
 import { shell } from "./shell";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -16,6 +17,7 @@ type SetupViteOptions = {
   dependencies: string[];
   devDependencies: string[];
   viteVersion: string;
+  withExpress?: boolean;
 };
 
 const tailwindDependencies = ["tailwindcss", "postcss", "autoprefixer"];
@@ -27,6 +29,7 @@ export const setupVite = async ({
   dependencies,
   devDependencies,
   viteVersion,
+  withExpress,
 }: SetupViteOptions) => {
   await $`mkdir -p ${folder}`;
 
@@ -39,6 +42,22 @@ export const setupVite = async ({
     from: /"name": ".*",/,
     to: `"name": "${exampleName}",\n  "license": "MIT",`,
   });
+
+  if (withExpress) {
+    dependencies.push("express");
+    dependencies.push("vite-express");
+    devDependencies.push("@types/express");
+    devDependencies.push("tsx");
+    await fs.cp(
+      path.join(__dirname, "viteExpress.ts.hbs"),
+      path.join(folder, "src/server.ts"),
+    );
+    await replace({
+      files: [path.join(folder, "package.json")],
+      from: /"dev": ".*",/,
+      to: `"dev": "tsx src/server.ts",`,
+    });
+  }
 
   await shell({
     cwd: folder,
@@ -96,4 +115,6 @@ export const setupVite = async ({
     path.join(folder, "readme.md"),
     template({ exampleFolder, exampleName, exampleDescription }),
   );
+
+  await setupGitIgnore(folder);
 };

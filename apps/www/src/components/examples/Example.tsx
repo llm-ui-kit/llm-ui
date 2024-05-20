@@ -1,5 +1,3 @@
-import { fireConfetti } from "@/animations/confetti";
-import { multipleStars } from "@/animations/stars";
 import { cn, delay } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
@@ -22,7 +20,7 @@ import React, {
 } from "react";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
-import { buttonsBlock } from "./Buttons";
+import { buttonsBlock, starsAndConfetti } from "./Buttons";
 import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
@@ -204,13 +202,11 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
 
   const [tabIndex, setTabIndex] = useState(0);
   const onButtonClick = useCallback((buttonText: string) => {
-    if (buttonText.toLowerCase().includes("star")) {
-      multipleStars();
-    } else if (buttonText.toLowerCase().includes("confetti")) {
-      fireConfetti();
-    } else if (buttonText.toLowerCase().includes("raw")) {
+    if (buttonText.toLowerCase().includes("raw")) {
       const rawTab = tabs.indexOf("raw");
       setTabIndex(rawTab);
+    } else {
+      starsAndConfetti(buttonText);
     }
   }, []);
   const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsBlock(onButtonClick));
@@ -330,14 +326,7 @@ export const ExampleSideBySideTokenArray: React.FC<
 
   const [mobileTabIndex, setMobileTabIndex] = useState(0);
   const [desktopTabIndex, setDesktopTabIndex] = useState(0);
-  const onButtonClick = useCallback((buttonText: string) => {
-    if (buttonText.toLowerCase().includes("star")) {
-      multipleStars();
-    } else if (buttonText.toLowerCase().includes("confetti")) {
-      fireConfetti();
-    }
-  }, []);
-  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsBlock(onButtonClick));
+  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsBlock());
   const {
     output,
     isStreamFinished,
