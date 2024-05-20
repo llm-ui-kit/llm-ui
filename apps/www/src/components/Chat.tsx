@@ -23,7 +23,6 @@ export const Chat = () => {
       eventSource.addEventListener("error", () => eventSource.close());
 
       eventSource.addEventListener("token", (e) => {
-        // avoid newlines getting messed up
         const token = e.data.replaceAll("$NEWLINE$", "\n");
         setOutput((prevResponse) => `${prevResponse}${token}`);
       });
