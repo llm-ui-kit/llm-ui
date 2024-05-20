@@ -1,6 +1,8 @@
+import { Message } from "@/components/demo/message/Message";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
+
 import * as React from "react";
 
 export const Chat = () => {
@@ -8,8 +10,8 @@ export const Chat = () => {
   const [currentId, setCurrentId] = React.useState<number>();
   const [currentApiKey, setCurrentApiKey] = React.useState<string>();
   const [output, setOutput] = React.useState<string>("");
-  // const [isStreamFinished, setIsStreamFinished] =
-  //   React.useState<boolean>(false);
+  const [isStreamFinished, setIsStreamFinished] =
+    React.useState<boolean>(false);
 
   React.useEffect(() => {
     setOutput("");
@@ -29,7 +31,7 @@ export const Chat = () => {
       eventSource.addEventListener("finished", (e) => {
         console.log("finished", e);
         eventSource.close();
-        // setIsStreamFinished(true);
+        setIsStreamFinished(true);
       });
 
       () => eventSource.close();
@@ -64,8 +66,6 @@ export const Chat = () => {
     setCurrentId(id);
   };
 
-  console.log(output);
-
   return (
     <div>
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -73,9 +73,15 @@ export const Chat = () => {
           placeholder="What would you like to know?"
           value={userContent}
           onChange={handleUpdateUserContent}
+          className="mb-2"
         />
-        <label>API Key</label>
+        <label>Enter Your API Key</label>
         <Input onChange={handleUpdateApiKey} />
+        <Message
+          message={output}
+          isStreamFinished={isStreamFinished}
+          throttle="low-lag"
+        />
         <Button type="submit">Start</Button>
       </form>
     </div>
