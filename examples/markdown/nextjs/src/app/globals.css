@@ -14,7 +14,7 @@ body {
 }
 
 button {
-  @apply rounded bg-blue-500 px-4 py-2 font-semibold text-white;
+  @apply mr-4 rounded bg-blue-500 px-4 py-2 font-semibold text-white;
 }
 
 a {
