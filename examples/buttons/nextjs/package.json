@@ -10,9 +10,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@llm-ui/buttons": "^0.3.0",
-    "@llm-ui/markdown": "^0.3.0",
-    "@llm-ui/react": "^0.3.0",
+    "@llm-ui/buttons": "^0.4.0",
+    "@llm-ui/markdown": "^0.4.0",
+    "@llm-ui/react": "^0.4.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
