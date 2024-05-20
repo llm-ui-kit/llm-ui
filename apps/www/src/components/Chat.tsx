@@ -43,7 +43,9 @@ export const Chat = () => {
         `/api/chat/openai?id=${id}&apiKey=${currentApiKey}`,
       );
 
-      eventSource.addEventListener("error", () => eventSource.close());
+      eventSource.addEventListener("error", () => {
+        eventSource.close();
+      });
 
       eventSource.addEventListener("token", (e) => {
         // avoid newlines getting messed up
