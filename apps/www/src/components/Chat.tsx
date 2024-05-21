@@ -7,7 +7,7 @@ import * as React from "react";
 
 export const Chat = () => {
   const [userContent, setUserContent] = React.useState<string>("");
-  const [currentApiKey, setCurrentApiKey] = React.useState<string>();
+  const [currentApiKey, setCurrentApiKey] = React.useState<string>("");
   const [output, setOutput] = React.useState<string>("");
   const [isStreamFinished, setIsStreamFinished] =
     React.useState<boolean>(false);
@@ -65,7 +65,7 @@ export const Chat = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form autoComplete="off" onSubmit={handleSubmit} className="space-y-8">
         <Textarea
           placeholder="What would you like to know?"
           value={userContent}
@@ -73,7 +73,7 @@ export const Chat = () => {
           className="mb-2"
         />
         <label>Enter Your API Key</label>
-        <Input onChange={handleUpdateApiKey} />
+        <Input value={currentApiKey} onChange={handleUpdateApiKey} />
         <Message message={output} isStreamFinished={isStreamFinished} />
         <Button type="submit">Start</Button>
       </form>
