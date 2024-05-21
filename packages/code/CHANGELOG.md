@@ -1,5 +1,17 @@
 # @llm-ui/code
 
+## 0.5.0
+
+### Minor Changes
+
+- [#199](https://github.com/llm-ui-kit/llm-ui/pull/199) [`305bb8a`](https://github.com/llm-ui-kit/llm-ui/commit/305bb8a40b0789c485bcfb8a5ee985a4d700dddf) Thanks [@richardgill](https://github.com/richardgill)! - shiki 1.5.2 -> shiki 1.6.0
+
+### Patch Changes
+
+- Updated dependencies [[`cfc8e84`](https://github.com/llm-ui-kit/llm-ui/commit/cfc8e84d532919440d4ac82f898ab09c8710ac47)]:
+  - @llm-ui/react@0.5.0
+  - @llm-ui/shared@0.5.0
+
 ## 0.4.0
 
 ### Minor Changes
