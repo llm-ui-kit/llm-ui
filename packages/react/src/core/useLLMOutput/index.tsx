@@ -72,7 +72,7 @@ export const useLLMOutput = ({
     }),
   });
 
-  const restart = useCallback(() => {
+  const reset = useCallback(() => {
     setState((state) => ({ ...state, ...initialState }));
     startTime.current = performance.now();
     finishTimeRef.current = undefined;
@@ -84,13 +84,18 @@ export const useLLMOutput = ({
     frameCountRef.current = 0;
     if (frameRef.current) {
       cancelAnimationFrame(frameRef.current);
+      frameRef.current = undefined;
     }
+  }, [setState]);
+
+  const restart = useCallback(() => {
+    reset();
     setTimeout(() => {
       if (renderLoopRef.current) {
         frameRef.current = requestAnimationFrame(renderLoopRef.current);
       }
     }, 10);
-  }, [setState]);
+  }, [reset]);
 
   const renderLoop = (frameTime: DOMHighResTimeStamp) => {
     if (!renderLoopRef.current) {
@@ -190,9 +195,19 @@ export const useLLMOutput = ({
 
   useEffect(() => {
     renderLoopRef.current = renderLoop;
-    if (!frameRef.current) {
+    // start the render loop
+    if (!frameRef.current && llmOutput && llmOutput.length > 0) {
       frameRef.current = requestAnimationFrame(renderLoopRef.current);
+    } else if (
+      // reset the render loop if user clears the llmOutput
+      visibleTextIncrementsRef.current.length > 0 &&
+      llmOutput.length === 0
+    ) {
+      reset();
     }
+  }, [llmOutput]);
+
+  useEffect(() => {
     () => {
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current);
