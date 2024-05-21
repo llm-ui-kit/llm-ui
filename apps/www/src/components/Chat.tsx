@@ -26,6 +26,8 @@ export const Chat = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setOutput("");
+    setIsStreamFinished(false);
     const body = { userContent, systemContent: "You are a helpful assistant." };
     const response = await fetch("/api/chatRequest", {
       method: "POST",
@@ -37,7 +39,6 @@ export const Chat = () => {
     });
     const data = await response.json();
     const { id } = data;
-    setOutput("");
     if (id && currentApiKey) {
       const eventSource = new EventSource(
         `/api/chat/openai?id=${id}&apiKey=${currentApiKey}`,
@@ -75,7 +76,12 @@ export const Chat = () => {
         <label>Enter Your API Key</label>
         <Input value={currentApiKey} onChange={handleUpdateApiKey} />
         <Message message={output} isStreamFinished={isStreamFinished} />
-        <Button type="submit">Start</Button>
+        <Button
+          disabled={output.length != 0 && !isStreamFinished}
+          type="submit"
+        >
+          Start
+        </Button>
       </form>
     </div>
   );
