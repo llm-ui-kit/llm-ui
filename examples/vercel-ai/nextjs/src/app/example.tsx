@@ -106,30 +106,36 @@ const Example = () => {
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat();
   return (
-    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-      {messages.map((m, index) => {
-        m.role === "assistant";
-        m.role === "system";
-        const isStreamFinished =
-          ["user", "system"].includes(m.role) ||
-          index < messages.length - 1 ||
-          !isLoading;
-        return (
-          <div key={m.id} className="whitespace-pre-wrap">
-            {m.role === "user" ? "User: " : "AI: "}
-            <Message message={m.content} isStreamFinished={isStreamFinished} />
-          </div>
-        );
-      })}
-
-      <form onSubmit={handleSubmit}>
-        <input
-          className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl text-black"
-          value={input}
-          placeholder="Say something..."
-          onChange={handleInputChange}
-        />
-      </form>
+    <div className="flex flex-col w-full h-screen my-0 bg-transparent">
+      <div className="flex flex-col flex-1 my-2 rounded-lg bg-black p-8">
+        <div className="flex flex-col stretch flex-1 overflow-y-auto">
+          {messages.map((m, index) => {
+            m.role === "assistant";
+            m.role === "system";
+            const isStreamFinished =
+              ["user", "system"].includes(m.role) ||
+              index < messages.length - 1 ||
+              !isLoading;
+            return (
+              <div key={m.id} className="whitespace-pre-wrap">
+                {m.role === "user" ? "User: " : "AI: "}
+                <Message
+                  message={m.content}
+                  isStreamFinished={isStreamFinished}
+                />
+              </div>
+            );
+          })}
+        </div>
+        <form className="flex justify-center" onSubmit={handleSubmit}>
+          <input
+            className="w-full p-2 border border-gray-300 rounded shadow-xl text-black"
+            value={input}
+            placeholder="Say something..."
+            onChange={handleInputChange}
+          />
+        </form>
+      </div>
     </div>
   );
 };
