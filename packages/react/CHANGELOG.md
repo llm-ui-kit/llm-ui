@@ -1,5 +1,14 @@
 # @llm-ui/react
 
+## 0.5.0
+
+### Minor Changes
+
+- [#205](https://github.com/llm-ui-kit/llm-ui/pull/205) [`cfc8e84`](https://github.com/llm-ui-kit/llm-ui/commit/cfc8e84d532919440d4ac82f898ab09c8710ac47) Thanks [@richardgill](https://github.com/richardgill)! - - `useLLMOutput` only starts streaming when llmOutput is not empty.
+  - This fixes bugs where the streamed output is slow
+  - `useLLMOutput` reset its state if `llmOutput` is later set to `""`.
+    - This allows `useLLMOutput` to be reused more than once
+
 ## 0.4.0
 
 ## 0.3.0
