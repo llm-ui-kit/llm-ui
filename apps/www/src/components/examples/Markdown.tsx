@@ -22,7 +22,10 @@ export const Markdown: LLMOutputComponent<Options> = (props) => {
   return (
     <MarkdownComponent
       {...props}
-      className={cn("prose dark:prose-invert", props.className)}
+      className={cn(
+        "prose dark:prose-invert prose-code:before:hidden prose-code:after:hidden",
+        props.className,
+      )}
       components={{
         pre: ({ children }) => <pre className="not-prose">{children}</pre>,
       }}

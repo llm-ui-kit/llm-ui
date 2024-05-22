@@ -171,6 +171,9 @@ const markdownAstToVisibleTextHelper = (
       if (child.type === "text") {
         return child.value;
       }
+      if (child.type === "inlineCode") {
+        return child.value;
+      }
       if (child.type === "thematicBreak") {
         return THEMATIC_BREAK_VISIBLE;
       }
@@ -212,7 +215,7 @@ const removeVisibleCharsFromAstHelper = (
   node: RootContent | Root,
   visibleCharsToRemove: number,
 ): { charsRemoved: number; toDelete: boolean } => {
-  if (node.type === "text") {
+  if (node.type === "text" || node.type === "inlineCode") {
     if (node.value.length <= visibleCharsToRemove) {
       return { charsRemoved: node.value.length, toDelete: true };
     } else {
