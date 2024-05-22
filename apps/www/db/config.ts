@@ -7,15 +7,7 @@ const WaitingList = defineTable({
   },
 });
 
-const ChatRequest = defineTable({
-  columns: {
-    id: column.number({ primaryKey: true }),
-    systemContent: column.text({ unique: false }),
-    userContent: column.text({ unique: false }),
-  },
-});
-
 // https://astro.build/db/config
 export default defineDb({
-  tables: { WaitingList, ChatRequest },
+  tables: { WaitingList },
 });
