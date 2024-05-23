@@ -186,6 +186,11 @@ describe("removePartialAmbiguousMarkdown", () => {
       markdown: "[abc](https://a.com)",
       expected: "[abc](https://a.com)\n",
     },
+
+    // inline code blocks
+    { markdown: "`", expected: "\\`\n" },
+    { markdown: "`a", expected: "\\`a\n" },
+    { markdown: "`a`", expected: "`a`\n" },
   ];
 
   testCases.forEach(({ markdown, expected }) => {
@@ -409,6 +414,10 @@ describe("markdownToVisibleText", () => {
       isFinished: false,
       expected: "def abc ghi",
     },
+
+    // inline code blocks
+    { input: "`abc`", isFinished: true, expected: "abc" },
+    { input: "a `abc` b", isFinished: false, expected: "a abc b" },
   ];
   testCases.forEach(({ input, isFinished, expected }) => {
     it(`should convert "${input}" isFinished:${isFinished} to "${expected}"`, () => {
@@ -775,6 +784,20 @@ describe("markdownWithVisibleChars", () => {
       isFinished: false,
       visibleChars: 5,
       expected: "def [a](https://a.com)\n",
+    },
+
+    // inline code blocks
+    {
+      markdown: "`abc`",
+      isFinished: true,
+      visibleChars: 3,
+      expected: "`abc`\n",
+    },
+    {
+      markdown: "`abc`",
+      isFinished: true,
+      visibleChars: 2,
+      expected: "`ab`\n",
     },
   ];
 
