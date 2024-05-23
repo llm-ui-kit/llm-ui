@@ -1,13 +1,13 @@
 export type CustomBlockOptions = {
   startChar: string;
   endChar: string;
-  excludeVisibleKeys: string[];
+  invisibleKeyPaths: string[];
 };
 
 export const defaultOptions: CustomBlockOptions = {
   startChar: "【",
   endChar: "】",
-  excludeVisibleKeys: [],
+  invisibleKeyPaths: [],
 };
 
 export const getOptions = (userOptions?: Partial<CustomBlockOptions>) => {
