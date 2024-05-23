@@ -964,10 +964,32 @@ importers:
         version: 5.4.3
 
   packages/custom:
+    dependencies:
+      '@llm-ui/react':
+        specifier: workspace:*
+        version: link:../react
+      '@llm-ui/shared':
+        specifier: workspace:*
+        version: link:../shared
+      jsonrepair:
+        specifier: ^3.8.0
+        version: 3.8.0
+      react:
+        specifier: ^18.0.0
+        version: 18.2.0
+      remeda:
+        specifier: ^1.57.0
+        version: 1.57.0
     devDependencies:
       '@llm-ui/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/tsconfig
+      '@types/react':
+        specifier: 18.2.60
+        version: 18.2.60
+      '@types/react-dom':
+        specifier: 18.2.19
+        version: 18.2.19
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(typescript@5.4.3)
@@ -8927,6 +8949,11 @@ packages:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
+
+  /jsonrepair@3.8.0:
+    resolution: {integrity: sha512-89lrxpwp+IEcJ6kwglF0HH3Tl17J08JEpYfXnvvjdp4zV4rjSoGu2NdQHxBs7yTOk3ETjTn9du48pBy8iBqj1w==}
+    hasBin: true
+    dev: false
 
   /jsx-ast-utils@3.3.5:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
