@@ -201,7 +201,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   const [hasLooped, setHasLooped] = useState(false);
 
   const [tabIndex, setTabIndex] = useState(0);
-  const onButtonClick = useCallback((buttonText: string) => {
+  const onButtonClick = useCallback((buttonText: string = "") => {
     if (buttonText.toLowerCase().includes("raw")) {
       const rawTab = tabs.indexOf("raw");
       setTabIndex(rawTab);

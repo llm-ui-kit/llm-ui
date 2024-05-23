@@ -8,8 +8,8 @@ import { Button } from "../ui/Button";
 type OnClick = (buttonText: string | undefined) => void;
 
 const schema = z.object({
-  t: z.literal("b"),
-  b: z.array(z.object({ v: z.string() })),
+  t: z.literal("btn"),
+  btns: z.array(z.object({ text: z.string() })),
 });
 
 const partialSchema = schema.deepPartial();
@@ -23,9 +23,9 @@ const buttonsComponent = (onClick: OnClick) => {
     }
     return (
       <div className="flex flex-row my-4 gap-2">
-        {buttons?.b?.map((button, index) => (
-          <Button key={index} onClick={() => onClick(button?.v)}>
-            {button?.v}
+        {buttons?.btns?.map((button, index) => (
+          <Button key={index} onClick={() => onClick(button?.text)}>
+            {button?.text}
           </Button>
         ))}
       </div>
@@ -34,7 +34,7 @@ const buttonsComponent = (onClick: OnClick) => {
   return ButtonsComponent;
 };
 
-export const starsAndConfetti = (buttonText: string) => {
+export const starsAndConfetti = (buttonText: string = "") => {
   if (buttonText.toLowerCase().includes("star")) {
     multipleStars();
   } else if (buttonText.toLowerCase().includes("confetti")) {
@@ -45,6 +45,6 @@ export const starsAndConfetti = (buttonText: string) => {
 export const buttonsBlock = (
   onClick: OnClick = starsAndConfetti,
 ): LLMOutputBlock => ({
-  ...customBlock("b"),
+  ...customBlock("btn"),
   component: buttonsComponent(onClick),
 });

@@ -1,4 +1,3 @@
-import { HIDDEN_CHAR } from "@/constants/constants";
 import { stringToTokenArray, type TokenWithDelay } from "@llm-ui/react";
 import { defaultExampleProbs } from "./contants";
 
@@ -14,15 +13,11 @@ Add your own custom components to your LLM output.
 
 Lets add a custom button:
 
-<buttons>
-  <button>Star explosion ⭐</button>
-</buttons>
+【{t:"btn",btns:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
 
 This works by prompting the LLM to let it know it can use buttons by replying like this:
-\`\`\`xml
-<${HIDDEN_CHAR}buttons>
-  <button>Star explosion ⭐</button>
-</buttons>
+\`\`\`plain
+【{t:"btn",b:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
 \`\`\`
 
 ^^^ llm-ui also has code blocks with syntax highlighting for over 100 languages with [Shiki](https://shiki.style/).
@@ -38,9 +33,7 @@ Like this one: in 3...2...1`;
 
 const ctaAfterPause = `without users noticing.
 
-<buttons>
-  <button>See raw LLM output</button>
-</buttons>
+【{t:"b",b:[{v:"See raw LLM output"}]}】
 
 ^^^ check out the raw LLM output to see the tokens being streamed.
 `;
