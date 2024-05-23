@@ -13,7 +13,8 @@
       "@llm-ui/markdown",
       "@llm-ui/code",
       "@llm-ui/buttons",
-      "@llm-ui/shared"
+      "@llm-ui/shared",
+      "@llm-ui/custom"
     ]
   ],
   "linked": [],
