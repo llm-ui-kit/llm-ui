@@ -16,7 +16,6 @@ const partialSchema = schema.deepPartial();
 
 const buttonsComponent = (onClick: OnClick) => {
   const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-    console.log("blockMatch.output", blockMatch.output);
     const buttons = partialSchema.parse(parseJson5(blockMatch.output));
     if (!buttons) {
       return undefined;
