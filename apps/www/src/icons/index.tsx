@@ -2,6 +2,7 @@ import {
   Bot,
   Calendar,
   Clock,
+  CornerDownLeft,
   Flame,
   Tv2,
   User,
@@ -18,6 +19,7 @@ export const Icons = {
   clock: Clock,
   user: User,
   bot: Bot,
+  return: CornerDownLeft,
   logo: ({ ...props }: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
