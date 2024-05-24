@@ -174,3 +174,68 @@ const step3Comment =
   "// -------Step 3: Render markdown and code with llm-ui-------";
 
 export const fullQuickStart = `${markdownAndCodeblockImports}\n\n${step1Comment}\n\n${markdownComponent}\n\n${step2Comment}\n\n${codeblockComponent}\n\n${step3Comment}\n\n${llmUiOutputUsage}\n\nexport default Example`;
+
+export const customJsonSchema = `// buttonsSchema.ts
+import z from "zod";
+
+const buttonsSchema = z.object({
+  t: z.literal("btn"),
+  btns: z.array(z.object({ text: z.string() })),
+});
+`;
+
+export const customButtonsComponent = `//imports here
+const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
+  if (!blockMatch.isComplete) {
+    return <div>Buttons loading...</div>;
+  }
+  // use buttonsSchema from step 2
+  // todo parse safe
+  const buttons = buttonsSchema.parse(parseJson5(blockMatch.output));
+
+  return (
+    <div>
+      {buttons.btns.map((button, index) => (
+        <button key={index}>{button.text}</button>
+      ))}
+    </div>
+  );
+};
+`;
+
+export const customButtonsUseLlmOutput = `//imports here
+const { blockMatches } = useLLMOutput({
+  llmOutput: output,
+  blocks: [
+    {
+      ...customBlock("btn"),
+      component: ButtonsComponent, // from step 3
+    },
+  ],
+  fallbackBlock: {
+    lookBack: markdownLookBack(),
+    component: MarkdownComponent, // from step 2
+  },
+  isStreamFinished,
+});
+
+return (
+  <div>
+    {blockMatches.map((blockMatch, index) => {
+      const Component = blockMatch.block.component;
+      return <Component key={index} blockMatch={blockMatch} />;
+    })}
+  </div>
+);
+
+`;
+
+export const generateButtonsPrompt = `import { customBlockPrompt } from "@llm-ui/custom";
+
+// use buttonsSchema from step 2
+customBlockPrompt("Button", buttonsSchema, [
+  { t: "btn", btns: [{ text: "Button 1" }, { text: "Button 2" }] },
+]);
+`;
+
+export const fullCustomQuickStart = ``;

@@ -1,4 +1,6 @@
+import { customBlockPrompt } from "@llm-ui/custom";
 import { stringToTokenArray, type TokenWithDelay } from "@llm-ui/react";
+import { buttonsSchema } from "./buttonsSchema";
 import { defaultExampleProbs } from "./contants";
 
 const ctaBeforePause = `# llm-ui
@@ -56,3 +58,7 @@ export const presentationPauseExample: TokenWithDelay[] = [
   { token: " ", delayMs: 600 },
   ...stringToTokenArray(afterPause, defaultExampleProbs),
 ];
+
+export const buttonPrompt = customBlockPrompt("Button", buttonsSchema, [
+  { t: "btn", btns: [{ text: "Button 1" }, { text: "Button 2" }] },
+]);

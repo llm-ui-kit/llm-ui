@@ -2,21 +2,16 @@ import { fireConfetti } from "@/animations/confetti";
 import { multipleStars } from "@/animations/stars";
 import { customBlock, parseJson5 } from "@llm-ui/custom";
 import type { LLMOutputBlock, LLMOutputComponent } from "@llm-ui/react";
-import z from "zod";
 import { Button } from "../ui/Button";
+import { buttonsSchema } from "./buttonsSchema";
 
 type OnClick = (buttonText: string | undefined) => void;
 
-const schema = z.object({
-  t: z.literal("btn"),
-  btns: z.array(z.object({ text: z.string() })),
-});
-
-const partialSchema = schema.deepPartial();
+const buttonsPartialSchema = buttonsSchema.deepPartial();
 
 const buttonsComponent = (onClick: OnClick) => {
   const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-    const buttons = partialSchema.parse(parseJson5(blockMatch.output));
+    const buttons = buttonsPartialSchema.parse(parseJson5(blockMatch.output));
     if (!buttons) {
       return undefined;
     }

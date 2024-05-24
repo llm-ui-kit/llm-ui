@@ -3,6 +3,120 @@ title: Custom blocks
 description: ""
 ---
 
-llm-ui provides some built-in blocks, but you can also create your own custom blocks.
+import { buttonPrompt } from "@/components/examples/examples";
+import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
+import { PackageInstall } from "@/components/docs/PackageInstall";
+import {
+  markdownQuickStart,
+  codeblockQuickstart,
+  llmUiOutputQuickStart,
+  llmUiOutputQuickStartStep,
+  fullCustomQuickStart,
+  customJsonSchema,
+  customButtonsComponent,
+  customButtonsUseLlmOutput,
+} from "../../snippets/quickStart";
+import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
+import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
+import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
+import { examplesUrl } from "@/constants/constants";
 
-This is relatively advanced, if you need a create a custom block, please feel free to come chat with us on Discord.
+Allow LLM to reply with custom components by creating your own custom blocks.
+
+# Features
+
+**Prompt:**
+
+<CodeBlock code={buttonPrompt} />
+
+**LLM Output:**
+
+<ExampleSideBySide
+  client:load
+  example={`Buttons:\n【{t:"btn",btns:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】`}
+  options={{ delayMultiplier: 0.2 }}
+/>
+
+- Allow LLM to reply with custom components
+- Streaming support (1 visible character at a time)
+
+# Installation
+
+<PackageInstall client:load packages={["@llm-ui/custom"]} />
+
+# Quick start
+
+<CopyOrGithub
+  codeToCopy={fullCustomQuickStart}
+  githubUrl={`${examplesUrl}/custom-components`}
+/>
+
+## Install dependencies
+
+<PackageInstall
+  client:load
+  packages={[
+    "@llm-ui/custom",
+    "@llm-ui/react",
+    "@llm-ui/markdown",
+    "react-markdown",
+    "remark-gfm",
+    "html-react-parser",
+    "zod",
+  ]}
+/>
+
+## Step 1: Create a markdown component
+
+Create a component to render markdown using `react-markdown`.
+
+<CodeBlock code={markdownQuickStart} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCustomQuickStart} />
+  Read more in the [markdown block docs](/docs/blocks/markdown)
+</CopyDocsContainer>
+
+## Step 2: Setup your custom block's JSON schema
+
+Use [zod](https://zod.dev/?id=objects) to create a schema for your custom block.
+
+We'll set up a 'buttons' block:
+
+<CodeBlock code={customJsonSchema} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCustomQuickStart} />
+</CopyDocsContainer>
+
+Example JSON for your block:
+
+<CodeBlockInline>
+
+```json
+{ "t": "btn", "btns": [{ "text": "Button 1" }, { "text": "Button 2" }] }
+```
+
+</CodeBlockInline>
+
+## Step 3: Create a custom block component
+
+<CodeBlock code={customButtonsComponent} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCustomQuickStart} />
+</CopyDocsContainer>
+
+## Step 4: Render custom blocks with llm-ui
+
+Now we’ve created our components, we’re ready to use useLLMOutput to render language model output which contains markdown and buttons components.
+
+<CodeBlock code={customButtonsUseLlmOutput} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCustomQuickStart} />
+</CopyDocsContainer>
+
+## Step 5: Prompt LLM with your custom block
+
+Prompt LLM with your custom block:
+
+<CodeBlock code={buttonPrompt} />
+
+You can generate the prompt:

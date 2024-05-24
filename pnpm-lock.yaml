@@ -163,7 +163,7 @@ importers:
         version: 18.2.23
       ai:
         specifier: ^3.1.12
-        version: 3.1.12(openai@4.47.1)(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.22.4)
+        version: 3.1.12(openai@4.47.1)(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
       astro:
         specifier: ^4.5.12
         version: 4.5.12(typescript@5.4.3)
@@ -232,7 +232,7 @@ importers:
         version: 1.6.0
       simple-stack-form:
         specifier: ^0.1.12
-        version: 0.1.12(astro@4.5.12)(zod@3.22.4)
+        version: 0.1.12(astro@4.5.12)(zod@3.23.8)
       sonner:
         specifier: ^1.4.3
         version: 1.4.41(react-dom@18.2.0)(react@18.2.0)
@@ -246,8 +246,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.3)
       zod:
-        specifier: ^3.22.4
-        version: 3.22.4
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@astrojs/check':
         specifier: ^0.5.10
@@ -1145,7 +1145,7 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@ai-sdk/provider-utils@0.0.8(zod@3.22.4):
+  /@ai-sdk/provider-utils@0.0.8(zod@3.23.8):
     resolution: {integrity: sha512-J/ZNvFhORd3gCeK3jFvNrxp1Dnvy6PvPq21RJ+OsIEjsoHeKQaHALCWG0aJunXDuzd+Mck/lCg7LqA0qmIbHIg==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -1158,7 +1158,7 @@ packages:
       eventsource-parser: 1.1.2
       nanoid: 3.3.6
       secure-json-parse: 2.7.0
-      zod: 3.22.4
+      zod: 3.23.8
     dev: false
 
   /@ai-sdk/provider-utils@0.0.9(zod@3.23.8):
@@ -1251,7 +1251,7 @@ packages:
       prompts: 2.4.2
       strip-ansi: 7.1.0
       yargs-parser: 21.1.1
-      zod: 3.22.4
+      zod: 3.23.8
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
       - '@cloudflare/workers-types'
@@ -1406,7 +1406,7 @@ packages:
     resolution: {integrity: sha512-FxOJldIl5ltZ5CNjocQxHkAO9orwHBjqtaU28o4smobp9vowS0nbGp+I9CrPxkzWdl1crSDm9vjL9tnvG1DSug==}
     dependencies:
       sitemap: 7.1.1
-      zod: 3.22.4
+      zod: 3.23.8
     dev: false
 
   /@astrojs/tailwind@5.1.0(astro@4.5.12)(tailwindcss@3.4.3):
@@ -5109,7 +5109,7 @@ packages:
       humanize-ms: 1.2.1
     dev: false
 
-  /ai@3.1.12(openai@4.47.1)(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.22.4):
+  /ai@3.1.12(openai@4.47.1)(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
     resolution: {integrity: sha512-XlurBw1sdgQCFmCTPYjKjpm+fPS6iY+tLb/PYNUEjZn3bhqosAkcqUkGJTsFP49OMAWO1Lm2oPthCakKcn6Lzw==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -5134,7 +5134,7 @@ packages:
         optional: true
     dependencies:
       '@ai-sdk/provider': 0.0.5
-      '@ai-sdk/provider-utils': 0.0.8(zod@3.22.4)
+      '@ai-sdk/provider-utils': 0.0.8(zod@3.23.8)
       eventsource-parser: 1.1.2
       json-schema: 0.4.0
       jsondiffpatch: 0.6.0
@@ -5150,8 +5150,8 @@ packages:
       swr-store: 0.10.6
       swrv: 1.0.4(vue@3.4.27)
       vue: 3.4.27(typescript@5.4.3)
-      zod: 3.22.4
-      zod-to-json-schema: 3.22.5(zod@3.22.4)
+      zod: 3.23.8
+      zod-to-json-schema: 3.22.5(zod@3.23.8)
     dev: false
 
   /ai@3.1.13(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
@@ -5517,8 +5517,8 @@ packages:
       vitefu: 0.2.5(vite@5.2.7)
       which-pm: 2.1.1
       yargs-parser: 21.1.1
-      zod: 3.22.4
-      zod-to-json-schema: 3.22.5(zod@3.22.4)
+      zod: 3.23.8
+      zod-to-json-schema: 3.22.5(zod@3.23.8)
     optionalDependencies:
       sharp: 0.32.6
     transitivePeerDependencies:
@@ -11757,7 +11757,7 @@ packages:
     dev: false
     optional: true
 
-  /simple-stack-form@0.1.12(astro@4.5.12)(zod@3.22.4):
+  /simple-stack-form@0.1.12(astro@4.5.12)(zod@3.23.8):
     resolution: {integrity: sha512-cqxiA0/91WddM9Jya8Es1wfDurBfm8pUOmgMb08OB32wpmQLz2JQpjcarFNYkj5ZXfmE3qkGqakvx+6TCwxqUQ==}
     hasBin: true
     peerDependencies:
@@ -11769,7 +11769,7 @@ packages:
       fs-extra: 11.2.0
       just-map-values: 3.2.0
       kleur: 4.1.5
-      zod: 3.22.4
+      zod: 3.23.8
     dev: false
 
   /simple-swizzle@0.2.2:
@@ -13569,14 +13569,6 @@ packages:
     engines: {node: '>=18'}
     dev: true
 
-  /zod-to-json-schema@3.22.5(zod@3.22.4):
-    resolution: {integrity: sha512-+akaPo6a0zpVCCseDed504KBJUQpEW5QZw7RMneNmKw+fGaML1Z9tUNLnHHAC8x6dzVRO1eB2oEMyZRnuBZg7Q==}
-    peerDependencies:
-      zod: ^3.22.4
-    dependencies:
-      zod: 3.22.4
-    dev: false
-
   /zod-to-json-schema@3.22.5(zod@3.23.8):
     resolution: {integrity: sha512-+akaPo6a0zpVCCseDed504KBJUQpEW5QZw7RMneNmKw+fGaML1Z9tUNLnHHAC8x6dzVRO1eB2oEMyZRnuBZg7Q==}
     peerDependencies:
@@ -13591,10 +13583,6 @@ packages:
       zod: ^3.23.3
     dependencies:
       zod: 3.23.8
-    dev: false
-
-  /zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
   /zod@3.23.8:
