@@ -5,12 +5,17 @@ import { CustomBlockOptions, getOptions } from "./options";
 
 export const customBlockPrompt = <
   Schema extends ZodTypeAny = ZodSchema<undefined>,
->(
-  name: string,
-  schema: Schema,
-  examples: z.infer<Schema>[],
-  userOptions?: Partial<CustomBlockOptions>,
-): string => {
+>({
+  name,
+  schema,
+  examples,
+  userOptions,
+}: {
+  name: string;
+  schema: Schema;
+  examples: z.infer<Schema>[];
+  userOptions?: Partial<CustomBlockOptions>;
+}): string => {
   const { startChar, endChar } = getOptions(userOptions);
   const schemaPrompt = customBlockSchema(schema);
   const examplePrompts = examples.map((example) =>

@@ -17,7 +17,7 @@ const buttonsComponent = (onClick: OnClick) => {
     }
     return (
       <div className="flex flex-row my-4 gap-2">
-        {buttons?.btns?.map((button, index) => (
+        {buttons?.buttons?.map((button, index) => (
           <Button key={index} onClick={() => onClick(button?.text)}>
             {button?.text}
           </Button>
@@ -39,6 +39,6 @@ export const starsAndConfetti = (buttonText: string = "") => {
 export const buttonsBlock = (
   onClick: OnClick = starsAndConfetti,
 ): LLMOutputBlock => ({
-  ...customBlock("btn"),
+  ...customBlock("buttons"),
   component: buttonsComponent(onClick),
 });

@@ -12,8 +12,8 @@ import remarkGfm from "remark-gfm";
 import z from "zod";
 
 const buttonsSchema = z.object({
-  t: z.literal("btn"),
-  btns: z.array(z.object({ text: z.string() })),
+  type: z.literal("buttons"),
+  buttons: z.array(z.object({ text: z.string() })),
 });
 
 const buttonsPartialSchema = buttonsSchema.deepPartial();
@@ -43,9 +43,10 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
   }
   return (
     <div>
-      {buttons.btns.map((button, index) => (
-        <button key={index}>{button.text}</button>
-      ))}
+      {buttons?.buttons?.map(
+        (button, index) =>
+          button?.text && <button key={index}>{button.text}</button>,
+      )}
     </div>
   );
 };
@@ -55,7 +56,7 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
 const example = `
 ## Example
 
-【{t:"btn",btns:[{text:"Button 1"}, {text:"Button 2"}]}】
+【{type:"buttons",buttons:[{text:"Button 1"}, {text:"Button 2"}]}】
 `;
 
 const Example = () => {
