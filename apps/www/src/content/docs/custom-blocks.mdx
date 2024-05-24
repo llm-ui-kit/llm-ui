@@ -33,7 +33,7 @@ Allow LLM to reply with custom components by creating your own custom blocks.
 
 <ExampleSideBySide
   client:load
-  example={`Buttons:\n【{t:"btn",btns:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】`}
+  example={`Buttons:\n【{type:"buttons",buttons:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】`}
   options={{ delayMultiplier: 0.2 }}
 />
 
@@ -92,7 +92,10 @@ Example JSON for your block:
 <CodeBlockInline>
 
 ```json
-{ "t": "btn", "btns": [{ "text": "Button 1" }, { "text": "Button 2" }] }
+{
+  "type": "buttons",
+  "buttons": [{ "text": "Button 1" }, { "text": "Button 2" }]
+}
 ```
 
 </CodeBlockInline>
