@@ -29,7 +29,7 @@ export const docsConfig: DocsConfig = {
         },
         {
           title: "Custom components",
-          href: "/docs/custom-block",
+          href: "/docs/custom-blocks",
         },
       ],
     },
