@@ -1,5 +1,14 @@
 # @llm-ui/markdown
 
+## 0.6.0
+
+### Patch Changes
+
+- [#209](https://github.com/llm-ui-kit/llm-ui/pull/209) [`2905cd8`](https://github.com/llm-ui-kit/llm-ui/commit/2905cd8dd29d37f02e59869c47a5ea7cec1b81ab) Thanks [@richardgill](https://github.com/richardgill)! - Markdown inline code handled correctly
+
+- Updated dependencies []:
+  - @llm-ui/react@0.6.0
+
 ## 0.5.0
 
 ### Patch Changes

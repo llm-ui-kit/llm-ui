@@ -1,5 +1,13 @@
 # @llm-ui/code
 
+## 0.6.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.6.0
+  - @llm-ui/shared@0.6.0
+
 ## 0.5.0
 
 ### Minor Changes
