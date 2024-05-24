@@ -37,9 +37,6 @@
 
     --radius: 0.5rem;
     --ds-shadow-border: 0 0 0 1px rgba(0, 0, 0, 0.08);
-
-    --warning: 38 92% 50%;
-    --warning-foreground: 48 96% 89%;
   }
 
   .dark {
@@ -76,9 +73,6 @@
 
     --radius: 0.5rem;
     --ds-shadow-border: 0 0 0 1px hsla(0, 0%, 100%, 0.145);
-
-    --warning: 48 96% 89%;
-    --warning-foreground: 38 92% 50%;
   }
 }
 
