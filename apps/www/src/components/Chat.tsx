@@ -15,7 +15,11 @@ const ChatMessage: React.FC<{
   return (
     <div className="group relative flex items-start m-2">
       <div className="bg-background flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border shadow-sm">
-        {role === "user" ? <Icons.user className="size-4" /> : <Icons.bot />}
+        {role === "user" ? (
+          <Icons.user className="size-4" />
+        ) : (
+          <Icons.bot className="size-4" />
+        )}
       </div>
       <div className="ml-4 flex-1 space-y-2 overflow-hidden">
         <MessageComponent
