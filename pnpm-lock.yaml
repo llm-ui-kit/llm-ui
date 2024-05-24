@@ -411,8 +411,8 @@ importers:
   examples/custom/nextjs:
     dependencies:
       '@llm-ui/custom':
-        specifier: workspace:*
-        version: link:../../../packages/custom
+        specifier: ^0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7
+        version: 0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7
       '@llm-ui/markdown':
         specifier: ^0.4.0
         version: 0.4.0(react@18.2.0)
@@ -7067,7 +7067,7 @@ packages:
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.2.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.4.0)(eslint@8.57.0)
       fast-glob: 3.3.2
-      get-tsconfig: 4.7.3
+      get-tsconfig: 4.7.5
       is-core-module: 2.13.1
       is-glob: 4.0.3
     transitivePeerDependencies:
