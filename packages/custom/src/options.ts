@@ -9,7 +9,7 @@ export const defaultOptions: CustomBlockOptions = {
   startChar: "【",
   endChar: "】",
   invisibleKeyPaths: [],
-  typeKey: "t",
+  typeKey: "type",
 };
 
 export const getOptions = (userOptions?: Partial<CustomBlockOptions>) => {
