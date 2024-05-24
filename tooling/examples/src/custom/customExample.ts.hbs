@@ -40,9 +40,10 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
   }
   return (
     <div>
-      {buttons?.btns?.map((button, index) => (
-        <button key={index}>{button?.text}</button>
-      ))}
+      {buttons?.btns?.map(
+        (button, index) =>
+          button?.text && <button key={index}>{button.text}</button>,
+      )}
     </div>
   );
 };

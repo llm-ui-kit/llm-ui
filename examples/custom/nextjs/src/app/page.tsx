@@ -35,14 +35,16 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 // Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
   const buttons = buttonsPartialSchema.parse(parseJson5(blockMatch.output));
+  console.log("zzz", buttons);
   if (!buttons) {
     return undefined;
   }
   return (
     <div>
-      {buttons?.btns?.map((button, index) => (
-        <button key={index}>{button?.text}</button>
-      ))}
+      {buttons?.btns?.map(
+        (button, index) =>
+          button?.text && <button key={index}>{button.text}</button>,
+      )}
     </div>
   );
 };
