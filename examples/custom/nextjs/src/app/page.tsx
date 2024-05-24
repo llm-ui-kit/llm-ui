@@ -1,18 +1,22 @@
 "use client";
-import {
-  buttonsLookBack,
-  findCompleteButtons,
-  findPartialButtons,
-  parseCompleteButtons,
-} from "@llm-ui/buttons";
+import { customBlock, parseJson5 } from "@llm-ui/custom";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
   useLLMOutput,
   useStreamExample,
   type LLMOutputComponent,
 } from "@llm-ui/react";
+
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import z from "zod";
+
+const buttonsSchema = z.object({
+  t: z.literal("btn"),
+  btns: z.array(z.string()),
+});
+
+const buttonsPartialSchema = buttonsSchema.deepPartial();
 
 // -------Step 1: Create a markdown component-------
 
@@ -30,13 +34,13 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 
 // Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-  const buttons = parseCompleteButtons(blockMatch.output);
+  const buttons = buttonsPartialSchema.parse(parseJson5(blockMatch.output));
   if (!buttons) {
     return undefined;
   }
   return (
     <div>
-      {buttons.map((button, index) => (
+      {buttons?.btns?.map((button, index) => (
         <button key={index}>{button}</button>
       ))}
     </div>
@@ -48,7 +52,7 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
 const example = `
 ## Example
 
-<buttons><button>Button 1</button><button>Button 2</button></buttons>
+【{t:"b",b:[{v:"Button 1"}, {v:"Button 2"}]}】
 `;
 
 const Example = () => {
@@ -58,10 +62,8 @@ const Example = () => {
     llmOutput: output,
     blocks: [
       {
+        ...customBlock("btn"),
         component: ButtonsComponent,
-        findPartialMatch: findPartialButtons(),
-        findCompleteMatch: findCompleteButtons(),
-        lookBack: buttonsLookBack(),
       },
     ],
     fallbackBlock: {

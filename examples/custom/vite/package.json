@@ -1,5 +1,5 @@
 {
-  "name": "llm-ui-buttons-vite-example",
+  "name": "llm-ui-custom-vite-example",
   "license": "MIT",
   "private": true,
   "version": "0.0.0",
@@ -11,13 +11,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@llm-ui/buttons": "^0.5.0",
-    "@llm-ui/markdown": "^0.5.0",
-    "@llm-ui/react": "^0.5.0",
+    "@llm-ui/custom": "^0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7",
+    "@llm-ui/markdown": "^0.4.0",
+    "@llm-ui/react": "^0.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^9.0.1",
-    "remark-gfm": "^4.0.0"
+    "remark-gfm": "^4.0.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",

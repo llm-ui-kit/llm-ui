@@ -19,7 +19,9 @@ const exampleDescriptionVite = "Custom block example (Vite)";
 
 const getDependencies = (llmUiVersion: string) => [
   ...markdownDependencies(llmUiVersion),
-  `@llm-ui/custom@${llmUiVersion}`,
+  "zod",
+  // `@llm-ui/custom@${llmUiVersion}`,
+  `@llm-ui/custom@0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7`,
 ];
 
 const nextjs = async ({
@@ -68,14 +70,14 @@ const vite = async ({
   );
 };
 
-export const buttonsNextJs: Example = {
+export const customNextJs: Example = {
   folder: exampleFolderNextJs,
   exampleName: exampleNameNextJs,
   exampleDescription: exampleDescriptionNextJs,
   generate: nextjs,
 };
 
-export const buttonsVite: Example = {
+export const customVite: Example = {
   folder: exampleFolderVite,
   exampleName: exampleNameVite,
   exampleDescription: exampleDescriptionVite,

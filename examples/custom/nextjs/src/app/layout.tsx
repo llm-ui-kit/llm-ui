@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "llm-ui-buttons-nextjs-example",
-  description: "llm-ui-buttons-nextjs-example",
+  title: "llm-ui-custom-nextjs-example",
+  description: "llm-ui-custom-nextjs-example",
 };
 
 export default function RootLayout({

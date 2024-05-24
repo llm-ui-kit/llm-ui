@@ -11,9 +11,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@llm-ui/code": "^0.5.0",
-    "@llm-ui/markdown": "^0.5.0",
-    "@llm-ui/react": "^0.5.0",
+    "@llm-ui/code": "^0.4.0",
+    "@llm-ui/markdown": "^0.4.0",
+    "@llm-ui/react": "^0.4.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "html-react-parser": "^5.1.10",
@@ -39,7 +39,7 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
-    "tsx": "^4.10.5",
+    "tsx": "^4.11.0",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   }

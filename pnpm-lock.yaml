@@ -274,139 +274,17 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
 
-  examples/buttons/nextjs:
-    dependencies:
-      '@llm-ui/buttons':
-        specifier: ^0.5.0
-        version: 0.5.0(react@18.2.0)
-      '@llm-ui/markdown':
-        specifier: ^0.5.0
-        version: link:../../../packages/markdown
-      '@llm-ui/react':
-        specifier: ^0.5.0
-        version: link:../../../packages/react
-      next:
-        specifier: 14.2.3
-        version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
-      react:
-        specifier: ^18
-        version: 18.2.0
-      react-dom:
-        specifier: ^18
-        version: 18.2.0(react@18.2.0)
-      react-markdown:
-        specifier: ^9.0.1
-        version: 9.0.1(@types/react@18.2.73)(react@18.2.0)
-      remark-gfm:
-        specifier: ^4.0.0
-        version: 4.0.0
-    devDependencies:
-      '@tailwindcss/typography':
-        specifier: ^0.5.13
-        version: 0.5.13(tailwindcss@3.4.3)
-      '@types/node':
-        specifier: ^20
-        version: 20.12.7
-      '@types/react':
-        specifier: ^18
-        version: 18.2.73
-      '@types/react-dom':
-        specifier: ^18
-        version: 18.2.23
-      eslint:
-        specifier: ^8
-        version: 8.57.0
-      eslint-config-next:
-        specifier: 14.2.3
-        version: 14.2.3(eslint@8.57.0)(typescript@5.4.3)
-      postcss:
-        specifier: ^8
-        version: 8.4.38
-      tailwindcss:
-        specifier: ^3.4.1
-        version: 3.4.3
-      typescript:
-        specifier: ^5
-        version: 5.4.3
-
-  examples/buttons/vite:
-    dependencies:
-      '@llm-ui/buttons':
-        specifier: ^0.5.0
-        version: 0.5.0(react@18.2.0)
-      '@llm-ui/markdown':
-        specifier: ^0.5.0
-        version: link:../../../packages/markdown
-      '@llm-ui/react':
-        specifier: ^0.5.0
-        version: link:../../../packages/react
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      react-markdown:
-        specifier: ^9.0.1
-        version: 9.0.1(@types/react@18.2.73)(react@18.2.0)
-      remark-gfm:
-        specifier: ^4.0.0
-        version: 4.0.0
-    devDependencies:
-      '@tailwindcss/typography':
-        specifier: ^0.5.13
-        version: 0.5.13(tailwindcss@3.4.3)
-      '@types/react':
-        specifier: ^18.2.66
-        version: 18.2.73
-      '@types/react-dom':
-        specifier: ^18.2.22
-        version: 18.2.23
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^7.2.0
-        version: 7.4.0(@typescript-eslint/parser@7.4.0)(eslint@8.57.0)(typescript@5.4.3)
-      '@typescript-eslint/parser':
-        specifier: ^7.2.0
-        version: 7.4.0(eslint@8.57.0)(typescript@5.4.3)
-      '@vitejs/plugin-react':
-        specifier: ^4.2.1
-        version: 4.2.1(vite@5.2.7)
-      autoprefixer:
-        specifier: ^10.4.19
-        version: 10.4.19(postcss@8.4.38)
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
-      eslint-plugin-react-hooks:
-        specifier: ^4.6.0
-        version: 4.6.0(eslint@8.57.0)
-      eslint-plugin-react-refresh:
-        specifier: ^0.4.6
-        version: 0.4.7(eslint@8.57.0)
-      postcss:
-        specifier: ^8.4.38
-        version: 8.4.38
-      tailwindcss:
-        specifier: ^3.4.3
-        version: 3.4.3
-      typescript:
-        specifier: ^5.2.2
-        version: 5.4.3
-      vite:
-        specifier: ^5.2.0
-        version: 5.2.7
-
   examples/code/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.5.0
-        version: link:../../../packages/code
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
-        specifier: ^0.5.0
-        version: link:../../../packages/markdown
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       '@llm-ui/react':
-        specifier: ^0.5.0
-        version: link:../../../packages/react
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -460,14 +338,14 @@ importers:
   examples/code/vite:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.5.0
-        version: link:../../../packages/code
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
-        specifier: ^0.5.0
-        version: link:../../../packages/markdown
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       '@llm-ui/react':
-        specifier: ^0.5.0
-        version: link:../../../packages/react
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -530,14 +408,142 @@ importers:
         specifier: ^5.2.0
         version: 5.2.7
 
+  examples/custom/nextjs:
+    dependencies:
+      '@llm-ui/custom':
+        specifier: ^0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7
+        version: 0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7
+      '@llm-ui/markdown':
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
+      '@llm-ui/react':
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
+      next:
+        specifier: 14.2.3
+        version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18
+        version: 18.2.0
+      react-dom:
+        specifier: ^18
+        version: 18.2.0(react@18.2.0)
+      react-markdown:
+        specifier: ^9.0.1
+        version: 9.0.1(@types/react@18.2.73)(react@18.2.0)
+      remark-gfm:
+        specifier: ^4.0.0
+        version: 4.0.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@tailwindcss/typography':
+        specifier: ^0.5.13
+        version: 0.5.13(tailwindcss@3.4.3)
+      '@types/node':
+        specifier: ^20
+        version: 20.12.7
+      '@types/react':
+        specifier: ^18
+        version: 18.2.73
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.2.23
+      eslint:
+        specifier: ^8
+        version: 8.57.0
+      eslint-config-next:
+        specifier: 14.2.3
+        version: 14.2.3(eslint@8.57.0)(typescript@5.4.3)
+      postcss:
+        specifier: ^8
+        version: 8.4.38
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.3
+      typescript:
+        specifier: ^5
+        version: 5.4.3
+
+  examples/custom/vite:
+    dependencies:
+      '@llm-ui/custom':
+        specifier: ^0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7
+        version: 0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7
+      '@llm-ui/markdown':
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
+      '@llm-ui/react':
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-markdown:
+        specifier: ^9.0.1
+        version: 9.0.1(@types/react@18.2.73)(react@18.2.0)
+      remark-gfm:
+        specifier: ^4.0.0
+        version: 4.0.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@tailwindcss/typography':
+        specifier: ^0.5.13
+        version: 0.5.13(tailwindcss@3.4.3)
+      '@types/react':
+        specifier: ^18.2.66
+        version: 18.2.73
+      '@types/react-dom':
+        specifier: ^18.2.22
+        version: 18.2.23
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^7.2.0
+        version: 7.4.0(@typescript-eslint/parser@7.4.0)(eslint@8.57.0)(typescript@5.4.3)
+      '@typescript-eslint/parser':
+        specifier: ^7.2.0
+        version: 7.4.0(eslint@8.57.0)(typescript@5.4.3)
+      '@vitejs/plugin-react':
+        specifier: ^4.2.1
+        version: 4.2.1(vite@5.2.7)
+      autoprefixer:
+        specifier: ^10.4.19
+        version: 10.4.19(postcss@8.4.38)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      eslint-plugin-react-hooks:
+        specifier: ^4.6.0
+        version: 4.6.0(eslint@8.57.0)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.6
+        version: 0.4.7(eslint@8.57.0)
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
+      tailwindcss:
+        specifier: ^3.4.3
+        version: 3.4.3
+      typescript:
+        specifier: ^5.2.2
+        version: 5.4.3
+      vite:
+        specifier: ^5.2.0
+        version: 5.2.7
+
   examples/markdown/nextjs:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.5.0
-        version: link:../../../packages/markdown
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       '@llm-ui/react':
-        specifier: ^0.5.0
-        version: link:../../../packages/react
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -585,11 +591,11 @@ importers:
   examples/markdown/vite:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.5.0
-        version: link:../../../packages/markdown
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       '@llm-ui/react':
-        specifier: ^0.5.0
-        version: link:../../../packages/react
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -649,14 +655,14 @@ importers:
   examples/openai/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.5.0
-        version: link:../../../packages/code
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
-        specifier: ^0.5.0
-        version: link:../../../packages/markdown
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       '@llm-ui/react':
-        specifier: ^0.5.0
-        version: link:../../../packages/react
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -713,14 +719,14 @@ importers:
   examples/openai/vite-and-express:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.5.0
-        version: link:../../../packages/code
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
-        specifier: ^0.5.0
-        version: link:../../../packages/markdown
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       '@llm-ui/react':
-        specifier: ^0.5.0
-        version: link:../../../packages/react
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -792,8 +798,8 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
       tsx:
-        specifier: ^4.10.5
-        version: 4.10.5
+        specifier: ^4.11.0
+        version: 4.11.0
       typescript:
         specifier: ^5.2.2
         version: 5.4.3
@@ -804,20 +810,20 @@ importers:
   examples/vercel-ai/nextjs:
     dependencies:
       '@ai-sdk/openai':
-        specifier: ^0.0.13
-        version: 0.0.13(zod@3.23.8)
+        specifier: ^0.0.14
+        version: 0.0.14(zod@3.23.8)
       '@llm-ui/code':
-        specifier: ^0.5.0
-        version: link:../../../packages/code
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
-        specifier: ^0.5.0
-        version: link:../../../packages/markdown
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       '@llm-ui/react':
-        specifier: ^0.5.0
-        version: link:../../../packages/react
+        specifier: ^0.4.0
+        version: 0.4.0(react@18.2.0)
       ai:
-        specifier: ^3.1.12
-        version: 3.1.12(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
+        specifier: ^3.1.13
+        version: 3.1.13(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -1125,8 +1131,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /@ai-sdk/openai@0.0.13(zod@3.23.8):
-    resolution: {integrity: sha512-V5Jjem+83sVxFNzhNUV25c7uXC33VKIhoo1qN098EMqTriEp9oNCRAaNXf95eVFbFs2bDLVZtkoACv++Go0BUA==}
+  /@ai-sdk/openai@0.0.14(zod@3.23.8):
+    resolution: {integrity: sha512-ZiW2ETP2/K9eBUBZBAAnjLC0sJwViFPsRWpgRTy+KzMOYqkwkRScdQlFreczvfvi8M8ahzx+cavMd64O9pg2AA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -1134,8 +1140,8 @@ packages:
       zod:
         optional: true
     dependencies:
-      '@ai-sdk/provider': 0.0.5
-      '@ai-sdk/provider-utils': 0.0.8(zod@3.23.8)
+      '@ai-sdk/provider': 0.0.6
+      '@ai-sdk/provider-utils': 0.0.9(zod@3.23.8)
       zod: 3.23.8
     dev: false
 
@@ -1155,8 +1161,8 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@ai-sdk/provider-utils@0.0.8(zod@3.23.8):
-    resolution: {integrity: sha512-J/ZNvFhORd3gCeK3jFvNrxp1Dnvy6PvPq21RJ+OsIEjsoHeKQaHALCWG0aJunXDuzd+Mck/lCg7LqA0qmIbHIg==}
+  /@ai-sdk/provider-utils@0.0.9(zod@3.23.8):
+    resolution: {integrity: sha512-bZFTVp/GIZ3Yz4VejYs0B93bmnwfk+RoSHAQxAe9WamkQFrZLuNgd2ngAFjF6b4naLynWe1ZCk+dLWEtozCciw==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -1164,7 +1170,7 @@ packages:
       zod:
         optional: true
     dependencies:
-      '@ai-sdk/provider': 0.0.5
+      '@ai-sdk/provider': 0.0.6
       eventsource-parser: 1.1.2
       nanoid: 3.3.6
       secure-json-parse: 2.7.0
@@ -1173,6 +1179,13 @@ packages:
 
   /@ai-sdk/provider@0.0.5:
     resolution: {integrity: sha512-TZDldBZ5clAsNwJ2PSeo/b1uILj9a2lvi0rnOj2RCNZDgaVqFRVIAnKyeHusCRv2lzhPIw03B3fiGI6VoLzOAA==}
+    engines: {node: '>=18'}
+    dependencies:
+      json-schema: 0.4.0
+    dev: false
+
+  /@ai-sdk/provider@0.0.6:
+    resolution: {integrity: sha512-kiPqIsSnUimckaUn87WepxfjPNdy8SXlPP7P6yWuG3e1NmyFHcyuH6EBBZxXLmu0oZtkb+QEeP3UDWGSc+wwKQ==}
     engines: {node: '>=18'}
     dependencies:
       json-schema: 0.4.0
@@ -2801,19 +2814,41 @@ packages:
     dev: false
     optional: true
 
-  /@llm-ui/buttons@0.5.0(react@18.2.0):
-    resolution: {integrity: sha512-B32Kh5eL1rGHQbb4sMfOi+uzcvdMrClzLU8C382lg5bnmhVQmNga39ccAiUH3iIEvBidyWix7Q3paDkDxewU2g==}
+  /@llm-ui/code@0.4.0(react@18.2.0)(shiki@1.6.0):
+    resolution: {integrity: sha512-5dpBZstatzKeMxcJz4JR5+on0asP0Q24pl5N9p/9cH4fIghavhVUa2cBDYJGZ149EMSTEEjM8dtsUQW8ssol7Q==}
+    peerDependencies:
+      react: ^18.0.0
+      shiki: ^1.5.2
+    dependencies:
+      '@llm-ui/react': 0.4.0(react@18.2.0)
+      '@llm-ui/shared': 0.4.0(react@18.2.0)
+      react: 18.2.0
+      shiki: 1.6.0
+    dev: false
+
+  /@llm-ui/custom@0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7:
+    resolution: {integrity: sha512-2EeBR6SwMquHoUqIu2xD0hel1A7jbUWcjCzqRrkxNikif2xEbtQhIOt5oterRe3XlCu92G8EHLPtSj3ny2oweA==}
+    dev: false
+
+  /@llm-ui/markdown@0.4.0(react@18.2.0):
+    resolution: {integrity: sha512-5v9sGReSr7MjT9kZk921zrlET7srT3eJ26eavtJfHJN7v1cEa/WSanpxRswv5jZig1SSpbLd5Gy47CtxGLYvQA==}
     peerDependencies:
       react: ^18.0.0
     dependencies:
-      '@llm-ui/react': 0.5.0(react@18.2.0)
-      '@llm-ui/shared': 0.5.0(react@18.2.0)
-      fast-xml-parser: 4.3.6
+      '@llm-ui/react': 0.4.0(react@18.2.0)
+      mdast-util-from-markdown: 2.0.0
+      mdast-util-gfm: 3.0.0
+      mdast-util-to-markdown: 2.1.0
+      micromark-extension-gfm: 3.0.0
       react: 18.2.0
+      remeda: 1.57.0
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
-  /@llm-ui/react@0.5.0(react@18.2.0):
-    resolution: {integrity: sha512-yOLyb3cBY6dzLkpXMPNeImKZiijEu6M0cpOfij3CTIIwOa8Oe5NFRuHOKCGEdnS+OMYshacC4kvreaRW7ajEcw==}
+  /@llm-ui/react@0.4.0(react@18.2.0):
+    resolution: {integrity: sha512-tgjo/bd9kNvWAk4TzYW2cLCD4u2VenmMX/DJsOwkbLaitpfIo6IOTF1wpM+DBJkmuOOGNqepuUAT6++0XIUq1A==}
     peerDependencies:
       react: ^18.0.0
     dependencies:
@@ -2821,10 +2856,10 @@ packages:
       remeda: 1.57.0
     dev: false
 
-  /@llm-ui/shared@0.5.0(react@18.2.0):
-    resolution: {integrity: sha512-id2EdZRy56ReHYC8tjbLLTkFmvU5ZfDb0gp5LRJB5lCANPOeECPoziOoTxY9n/CvDE8LhrGWD5rSivJjX+WjiA==}
+  /@llm-ui/shared@0.4.0(react@18.2.0):
+    resolution: {integrity: sha512-tqaVGTS1kfo/wFJJobaMlK1FZu4Khe7IjGowmJTYER3vKCe8ejNOakuTFSe9i/Pjb4qdVZm1V0FkajhJzoEJzg==}
     dependencies:
-      '@llm-ui/react': 0.5.0(react@18.2.0)
+      '@llm-ui/react': 0.4.0(react@18.2.0)
     transitivePeerDependencies:
       - react
     dev: false
@@ -4151,7 +4186,7 @@ packages:
   /@types/babel__core@7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
     dependencies:
-      '@babel/parser': 7.24.1
+      '@babel/parser': 7.24.5
       '@babel/types': 7.24.0
       '@types/babel__generator': 7.6.8
       '@types/babel__template': 7.4.4
@@ -4227,8 +4262,8 @@ packages:
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
-  /@types/express-serve-static-core@4.19.0:
-    resolution: {integrity: sha512-bGyep3JqPCRry1wq+O5n7oiBgGWmeIJXPjXXCo8EK0u8duZGSYar7cGqd3ML2JUsLGeB7fmc06KYo9fLGWqPvQ==}
+  /@types/express-serve-static-core@4.19.1:
+    resolution: {integrity: sha512-ej0phymbFLoCB26dbbq5PGScsf2JAJ4IJHjG10LalgUV36XKTmA4GdA+PVllKvRk0sEKt64X8975qFnkSi0hqA==}
     dependencies:
       '@types/node': 20.12.7
       '@types/qs': 6.9.15
@@ -4240,7 +4275,7 @@ packages:
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
     dependencies:
       '@types/body-parser': 1.19.5
-      '@types/express-serve-static-core': 4.19.0
+      '@types/express-serve-static-core': 4.19.1
       '@types/qs': 6.9.15
       '@types/serve-static': 1.15.7
     dev: true
@@ -5169,12 +5204,12 @@ packages:
       zod-to-json-schema: 3.22.5(zod@3.22.4)
     dev: false
 
-  /ai@3.1.12(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
-    resolution: {integrity: sha512-XlurBw1sdgQCFmCTPYjKjpm+fPS6iY+tLb/PYNUEjZn3bhqosAkcqUkGJTsFP49OMAWO1Lm2oPthCakKcn6Lzw==}
+  /ai@3.1.13(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
+    resolution: {integrity: sha512-1DVdKv2MgkBe7OLa+S4uKFVXNZPWFFaW0rjcNi1bH8nH8b3vqurby0McWUUY77r/RA1i/QY4LnWobn/dPO0Qcg==}
     engines: {node: '>=18'}
     peerDependencies:
       openai: ^4.42.0
-      react: ^18.2.0
+      react: ^18 || ^19
       solid-js: ^1.7.7
       svelte: ^3.0.0 || ^4.0.0
       vue: ^3.3.4
@@ -5193,8 +5228,8 @@ packages:
       zod:
         optional: true
     dependencies:
-      '@ai-sdk/provider': 0.0.5
-      '@ai-sdk/provider-utils': 0.0.8(zod@3.23.8)
+      '@ai-sdk/provider': 0.0.6
+      '@ai-sdk/provider-utils': 0.0.9(zod@3.23.8)
       eventsource-parser: 1.1.2
       json-schema: 0.4.0
       jsondiffpatch: 0.6.0
@@ -9031,15 +9066,15 @@ packages:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
     dev: false
 
-  /language-subtag-registry@0.3.22:
-    resolution: {integrity: sha512-tN0MCzyWnoz/4nHS6uxdlFWoUZT7ABptwKPQ52Ea7URk6vll88bWBVhodtnlfEuCcKWNGoc+uGbw1cwa9IKh/w==}
+  /language-subtag-registry@0.3.23:
+    resolution: {integrity: sha512-0K65Lea881pHotoGEa5gDlMxt3pctLi2RplBb7Ezh4rRdLEOtgi7n4EwK9lamnUCkKBqaeKRVebTq6BAxSkpXQ==}
     dev: true
 
   /language-tags@1.0.9:
     resolution: {integrity: sha512-MbjN408fEndfiQXbFQ1vnd+1NoLDsnQW41410oQBXiyXDMYH5z505juWa4KUE1LqxRC7DgOgZDbKLxHIwm27hA==}
     engines: {node: '>=0.10'}
     dependencies:
-      language-subtag-registry: 0.3.22
+      language-subtag-registry: 0.3.23
     dev: true
 
   /levn@0.4.1:
@@ -12579,8 +12614,8 @@ packages:
       - ts-node
     dev: true
 
-  /tsx@4.10.5:
-    resolution: {integrity: sha512-twDSbf7Gtea4I2copqovUiNTEDrT8XNFXsuHpfGbdpW/z9ZW4fTghzzhAG0WfrCuJmJiOEY1nLIjq4u3oujRWQ==}
+  /tsx@4.11.0:
+    resolution: {integrity: sha512-vzGGELOgAupsNVssAmZjbUDfdm/pWP4R+Kg8TVdsonxbXk0bEpE1qh0yV6/QxUVXaVlNemgcPajGdJJ82n3stg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
