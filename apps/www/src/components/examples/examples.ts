@@ -59,6 +59,10 @@ export const presentationPauseExample: TokenWithDelay[] = [
   ...stringToTokenArray(afterPause, defaultExampleProbs),
 ];
 
-export const buttonPrompt = customBlockPrompt("Button", buttonsSchema, [
-  { t: "btn", btns: [{ text: "Button 1" }, { text: "Button 2" }] },
-]);
+export const buttonPrompt = customBlockPrompt({
+  name: "Button",
+  schema: buttonsSchema,
+  examples: [
+    { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
+  ],
+});
