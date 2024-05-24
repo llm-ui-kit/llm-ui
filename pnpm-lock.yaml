@@ -104,9 +104,6 @@ importers:
       '@iconify-json/ri':
         specifier: ^1.1.20
         version: 1.1.20
-      '@llm-ui/buttons':
-        specifier: workspace:*
-        version: link:../../packages/buttons
       '@llm-ui/code':
         specifier: workspace:*
         version: link:../../packages/code
@@ -281,7 +278,7 @@ importers:
     dependencies:
       '@llm-ui/buttons':
         specifier: ^0.5.0
-        version: link:../../../packages/buttons
+        version: 0.5.0(react@18.2.0)
       '@llm-ui/markdown':
         specifier: ^0.5.0
         version: link:../../../packages/markdown
@@ -336,7 +333,7 @@ importers:
     dependencies:
       '@llm-ui/buttons':
         specifier: ^0.5.0
-        version: link:../../../packages/buttons
+        version: 0.5.0(react@18.2.0)
       '@llm-ui/markdown':
         specifier: ^0.5.0
         version: link:../../../packages/markdown
@@ -872,37 +869,6 @@ importers:
         version: 3.4.3
       typescript:
         specifier: ^5
-        version: 5.4.3
-
-  packages/buttons:
-    dependencies:
-      '@llm-ui/react':
-        specifier: workspace:*
-        version: link:../react
-      '@llm-ui/shared':
-        specifier: workspace:*
-        version: link:../shared
-      fast-xml-parser:
-        specifier: ^4.3.6
-        version: 4.3.6
-      react:
-        specifier: ^18.0.0
-        version: 18.2.0
-    devDependencies:
-      '@llm-ui/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/tsconfig
-      '@types/react':
-        specifier: 18.2.60
-        version: 18.2.60
-      '@types/react-dom':
-        specifier: 18.2.19
-        version: 18.2.19
-      tsup:
-        specifier: ^8.0.2
-        version: 8.0.2(typescript@5.4.3)
-      typescript:
-        specifier: ^5.4.3
         version: 5.4.3
 
   packages/code:
@@ -2834,6 +2800,34 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@llm-ui/buttons@0.5.0(react@18.2.0):
+    resolution: {integrity: sha512-B32Kh5eL1rGHQbb4sMfOi+uzcvdMrClzLU8C382lg5bnmhVQmNga39ccAiUH3iIEvBidyWix7Q3paDkDxewU2g==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@llm-ui/react': 0.5.0(react@18.2.0)
+      '@llm-ui/shared': 0.5.0(react@18.2.0)
+      fast-xml-parser: 4.3.6
+      react: 18.2.0
+    dev: false
+
+  /@llm-ui/react@0.5.0(react@18.2.0):
+    resolution: {integrity: sha512-yOLyb3cBY6dzLkpXMPNeImKZiijEu6M0cpOfij3CTIIwOa8Oe5NFRuHOKCGEdnS+OMYshacC4kvreaRW7ajEcw==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      react: 18.2.0
+      remeda: 1.57.0
+    dev: false
+
+  /@llm-ui/shared@0.5.0(react@18.2.0):
+    resolution: {integrity: sha512-id2EdZRy56ReHYC8tjbLLTkFmvU5ZfDb0gp5LRJB5lCANPOeECPoziOoTxY9n/CvDE8LhrGWD5rSivJjX+WjiA==}
+    dependencies:
+      '@llm-ui/react': 0.5.0(react@18.2.0)
+    transitivePeerDependencies:
+      - react
+    dev: false
 
   /@manypkg/find-root@1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}

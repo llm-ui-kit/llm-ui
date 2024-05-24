@@ -10,20 +10,38 @@
     "isolatedModules": true,
     "strict": true,
     "checkJs": true,
-    "lib": ["dom", "dom.iterable", "ES2022"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ES2022"
+    ],
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "preserve",
     "baseUrl": "../..",
     "paths": {
-      "@llm-ui/react/*": ["packages/react/src/*"],
-      "@llm-ui/markdown/*": ["packages/markdown/src/*"],
-      "@llm-ui/code/*": ["packages/code/src/*"],
-      "@llm-ui/buttons/*": ["packages/buttons/src/*"],
-      "@llm-ui/shared/*": ["packages/shared/src/*"]
+      "@llm-ui/react/*": [
+        "packages/react/src/*"
+      ],
+      "@llm-ui/markdown/*": [
+        "packages/markdown/src/*"
+      ],
+      "@llm-ui/code/*": [
+        "packages/code/src/*"
+      ],
+      "@llm-ui/custom/*": [
+        "packages/custom/src/*"
+      ],
+      "@llm-ui/shared/*": [
+        "packages/shared/src/*"
+      ]
     }
   },
-  "include": ["*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -9,17 +9,17 @@ import { CommonParams, Example } from "../types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const exampleFolderNextJs = "buttons/nextjs";
+const exampleFolderNextJs = "custom/nextjs";
 const exampleNameNextJs = folderToExampleName(exampleFolderNextJs);
-const exampleDescriptionNextJs = "Buttons example (Next.js)";
+const exampleDescriptionNextJs = "Custom block example (Next.js)";
 
-const exampleFolderVite = "buttons/vite";
+const exampleFolderVite = "custom/vite";
 const exampleNameVite = folderToExampleName(exampleFolderVite);
-const exampleDescriptionVite = "Buttons example (Vite)";
+const exampleDescriptionVite = "Custom block example (Vite)";
 
 const getDependencies = (llmUiVersion: string) => [
   ...markdownDependencies(llmUiVersion),
-  `@llm-ui/buttons@${llmUiVersion}`,
+  `@llm-ui/custom@${llmUiVersion}`,
 ];
 
 const nextjs = async ({
@@ -40,7 +40,7 @@ const nextjs = async ({
   });
 
   await fs.copyFile(
-    path.join(__dirname, "buttonsExample.ts.hbs"),
+    path.join(__dirname, "customExample.ts.hbs"),
     path.join(folder, "src/app/page.tsx"),
   );
 };
@@ -63,7 +63,7 @@ const vite = async ({
   });
 
   await fs.copyFile(
-    path.join(__dirname, "buttonsExample.ts.hbs"),
+    path.join(__dirname, "customExample.ts.hbs"),
     path.join(folder, "src/App.tsx"),
   );
 };
