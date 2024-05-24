@@ -9,19 +9,18 @@ import { CommonParams, Example } from "../types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const exampleFolderNextJs = "custom/nextjs";
+const exampleFolderNextJs = "custom-components/nextjs";
 const exampleNameNextJs = folderToExampleName(exampleFolderNextJs);
 const exampleDescriptionNextJs = "Custom block example (Next.js)";
 
-const exampleFolderVite = "custom/vite";
+const exampleFolderVite = "custom-components/vite";
 const exampleNameVite = folderToExampleName(exampleFolderVite);
 const exampleDescriptionVite = "Custom block example (Vite)";
 
 const getDependencies = (llmUiVersion: string) => [
   ...markdownDependencies(llmUiVersion),
   "zod",
-  // `@llm-ui/custom@${llmUiVersion}`,
-  `@llm-ui/custom@0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7`,
+  `@llm-ui/custom@${llmUiVersion}`,
 ];
 
 const nextjs = async ({
