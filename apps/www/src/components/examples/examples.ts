@@ -13,11 +13,11 @@ Add your own custom components to your LLM output.
 
 Lets add a custom button:
 
-【{t:"btn",btns:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
+【{type:"buttons",buttons:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
 
 This works by prompting the LLM to let it know it can use buttons by replying like this:
 \`\`\`plain
-【{t:"btn",b:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
+【{type:"buttons",buttons:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
 \`\`\`
 
 ^^^ llm-ui also has code blocks with syntax highlighting for over 100 languages with [Shiki](https://shiki.style/).
@@ -33,7 +33,7 @@ Like this one: in 3...2...1`;
 
 const ctaAfterPause = `without users noticing.
 
-【{t:"btn",btns:[{text:"See raw LLM output"}]}】
+【{ty[e]:"buttons",buttons:[{text:"See raw LLM output"}]}】
 
 ^^^ check out the raw LLM output to see the tokens being streamed.
 `;
