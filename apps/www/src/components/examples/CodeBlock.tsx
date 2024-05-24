@@ -1,4 +1,3 @@
-import { HIDDEN_CHAR } from "@/constants/constants";
 import {
   codeBlockLookBack,
   findCompleteCodeBlock,
@@ -9,9 +8,7 @@ import { type LLMOutputBlock, type LLMOutputComponent } from "@llm-ui/react";
 import { CodeBlock } from "../ui/custom/CodeBlock";
 
 const ShikiBlockComponent: LLMOutputComponent = ({ blockMatch }) => {
-  const { code, language } = parseCompleteMarkdownCodeBlock(
-    blockMatch.output.replaceAll(HIDDEN_CHAR, ""),
-  );
+  const { code, language } = parseCompleteMarkdownCodeBlock(blockMatch.output);
   if (!code) {
     return undefined;
   }

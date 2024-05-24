@@ -10,11 +10,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^0.0.13",
-    "@llm-ui/code": "^0.5.0",
-    "@llm-ui/markdown": "^0.5.0",
-    "@llm-ui/react": "^0.5.0",
-    "ai": "^3.1.12",
+    "@ai-sdk/openai": "^0.0.14",
+    "@llm-ui/code": "^0.4.0",
+    "@llm-ui/markdown": "^0.4.0",
+    "@llm-ui/react": "^0.4.0",
+    "ai": "^3.1.13",
     "html-react-parser": "^5.1.10",
     "next": "14.2.3",
     "react": "^18",

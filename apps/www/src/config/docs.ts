@@ -28,8 +28,8 @@ export const docsConfig: DocsConfig = {
           href: "/docs/blocks/code",
         },
         {
-          title: "Buttons block",
-          href: "/docs/blocks/buttons",
+          title: "Custom blocks",
+          href: "/docs/custom-blocks",
         },
       ],
     },
@@ -45,10 +45,6 @@ export const docsConfig: DocsConfig = {
     {
       title: "Advanced",
       items: [
-        {
-          title: "Custom blocks",
-          href: "/docs/advanced/custom-blocks",
-        },
         {
           title: "Throttle functions",
           href: "/docs/advanced/throttle-functions",
