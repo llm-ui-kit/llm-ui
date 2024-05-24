@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.14",
-    "@llm-ui/code": "^0.6.0",
-    "@llm-ui/markdown": "^0.6.0",
-    "@llm-ui/react": "^0.6.0",
+    "@llm-ui/code": "^0.7.0",
+    "@llm-ui/markdown": "^0.7.0",
+    "@llm-ui/react": "^0.7.0",
     "ai": "^3.1.13",
     "html-react-parser": "^5.1.10",
     "next": "14.2.3",
