@@ -55,18 +55,21 @@ export const Chat = () => {
 
   const messagesWithoutSystem = messages.slice(1);
   return (
-    <div className="bg-muted/50 w-full min-h-[calc(100vh-theme(spacing.18))]">
-      <form
-        autoComplete="off"
-        onSubmit={handleSubmit}
-        className="p-2 flex flex-col max-w-2xl mx-auto w-screen"
-      >
+    <div className="bg-muted/50 relative w-full min-h-[calc(100vh-theme(spacing.18))]">
+      <div className="absolute top-4 left-4">
         <Input
           value={currentApiKey}
+          className="focus-within:border-white"
           placeholder="Enter Your API Key"
           onChange={handleUpdateApiKey}
         />
-        <div className="pb-[200px] pt-4 md:pt-10">
+      </div>
+      <form
+        autoComplete="off"
+        onSubmit={handleSubmit}
+        className="p-2 flex flex-col max-w-2xl mx-auto"
+      >
+        <div className="pb-[200px] pt-4 md:pt-20">
           {messagesWithoutSystem.map((message, index) => {
             const isStreamFinished =
               ["user", "system"].includes(message.role) ||
@@ -88,22 +91,20 @@ export const Chat = () => {
         </div>
         <div className="w-full fixed bottom-0">
           <div className="sm:max-w-2xl">
-            <div className="border-t bg-background px-4 py-2 shadow-lg sm:rounded-t-xl sm:border md:py-4">
-              <div className="bg-background relative flex max-h-60 w-full grow flex-col overflow-hidden pr-8 sm:rounded-md sm:border sm:pr-12">
-                <Textarea
-                  placeholder="What would you like to know?"
-                  value={input}
-                  onChange={handleInputChange}
-                  className="min-h-[60px] w-[calc(100%-theme(spacing.6))] focus-visible:ring-0 resize-none bg-transparent pr-4 py-[1.1rem] focus-within:outline-none sm:text-sm border-none"
-                />
-                <Button
-                  disabled={isLoading || !input}
-                  className="absolute right-0 top-[20px] sm:right-4"
-                  type="submit"
-                >
-                  Start
-                </Button>
-              </div>
+            <div className="bg-background flex flex-col overflow-hidden max-h-60 focus-within:border-white relative px-4 py-2 shadow-lg mb-2 sm:rounded-xl sm:border md:py-4">
+              <Textarea
+                placeholder="What would you like to know?"
+                value={input}
+                onChange={handleInputChange}
+                className="min-h-[60px] w-[calc(100%-theme(spacing.18))] focus-visible:ring-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
+              />
+              <Button
+                disabled={isLoading || !input}
+                className="absolute right-0 bottom-2 sm:right-4"
+                type="submit"
+              >
+                Run <Icons.return className="size-4 ml-2" />
+              </Button>
             </div>
           </div>
         </div>
