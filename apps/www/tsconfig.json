@@ -10,7 +10,7 @@
       "@llm-ui/react/*": ["packages/react/src/*"],
       "@llm-ui/markdown/*": ["packages/markdown/src/*"],
       "@llm-ui/code/*": ["packages/code/src/*"],
-      "@llm-ui/custom/*": ["packages/code/src/*"],
+      "@llm-ui/custom/*": ["packages/custom/src/*"],
       "@llm-ui/shared/*": ["packages/shared/src/*"]
     }
   }

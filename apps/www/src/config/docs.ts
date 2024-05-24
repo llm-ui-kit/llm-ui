@@ -20,16 +20,16 @@ export const docsConfig: DocsConfig = {
       items: [
         { title: "LLM output hook", href: "/docs/llm-output-hook" },
         {
-          title: "Markdown block",
+          title: "Markdown component",
           href: "/docs/blocks/markdown",
         },
         {
-          title: "Code block",
+          title: "Code component",
           href: "/docs/blocks/code",
         },
         {
-          title: "Custom blocks",
-          href: "/docs/custom-blocks",
+          title: "Custom components",
+          href: "/docs/custom-block",
         },
       ],
     },
