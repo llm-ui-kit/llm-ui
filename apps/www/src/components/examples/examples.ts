@@ -33,7 +33,7 @@ Like this one: in 3...2...1`;
 
 const ctaAfterPause = `without users noticing.
 
-【{ty[e]:"buttons",buttons:[{text:"See raw LLM output"}]}】
+【{type:"buttons",buttons:[{text:"See raw LLM output"}]}】
 
 ^^^ check out the raw LLM output to see the tokens being streamed.
 `;
