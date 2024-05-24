@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@llm-ui/custom": "^0.0.0-alpha.v5b6cf098f5d684c05baeb1dce6691c66356900c7",
+    "@llm-ui/custom": "workspace:*",
     "@llm-ui/markdown": "^0.4.0",
     "@llm-ui/react": "^0.4.0",
     "next": "14.2.3",

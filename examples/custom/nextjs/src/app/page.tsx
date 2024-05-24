@@ -13,7 +13,7 @@ import z from "zod";
 
 const buttonsSchema = z.object({
   t: z.literal("btn"),
-  btns: z.array(z.string()),
+  btns: z.array(z.object({ text: z.string() })),
 });
 
 const buttonsPartialSchema = buttonsSchema.deepPartial();
@@ -41,7 +41,7 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
   return (
     <div>
       {buttons?.btns?.map((button, index) => (
-        <button key={index}>{button}</button>
+        <button key={index}>{button?.text}</button>
       ))}
     </div>
   );
@@ -52,7 +52,7 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
 const example = `
 ## Example
 
-【{t:"b",b:[{v:"Button 1"}, {v:"Button 2"}]}】
+【{t:"btn",btns:[{text:"Button 1"}, {text:"Button 2"}]}】
 `;
 
 const Example = () => {
