@@ -1,5 +1,5 @@
 {
-  "name": "llm-ui-code-vite-example",
+  "name": "llm-ui-custom-components-vite-example",
   "license": "MIT",
   "private": true,
   "version": "0.0.0",
@@ -11,15 +11,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@llm-ui/code": "^0.6.0",
+    "@llm-ui/custom": "^0.6.0",
     "@llm-ui/markdown": "^0.6.0",
     "@llm-ui/react": "^0.6.0",
-    "html-react-parser": "^5.1.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^9.0.1",
     "remark-gfm": "^4.0.0",
-    "shiki": "^1.6.0"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
