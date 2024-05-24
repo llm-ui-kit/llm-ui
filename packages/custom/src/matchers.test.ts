@@ -29,47 +29,35 @@ describe("findCompleteCustomBlock", () => {
     },
     {
       name: "start of type",
-      input: "【{t:",
+      input: "【{type:",
       expected: undefined,
     },
     {
       name: "start of type",
-      input: '【{t:"buttons"',
+      input: '【{type:"buttons"',
       expected: undefined,
     },
     {
       name: "full custom component",
-      input: '【{t:"buttons"}】',
+      input: '【{type:"buttons"}】',
       expected: {
         startIndex: 0,
-        endIndex: 15,
-        outputRaw: '【{t:"buttons"}】',
+        endIndex: 18,
+        outputRaw: '【{type:"buttons"}】',
       },
     },
     {
       name: "full custom component sandwiched",
-      input: 'abc【{t:"buttons"}】def',
+      input: 'abc【{type:"buttons"}】def',
       expected: {
         startIndex: 3,
-        endIndex: 18,
-        outputRaw: '【{t:"buttons"}】',
+        endIndex: 21,
+        outputRaw: '【{type:"buttons"}】',
       },
     },
     {
       name: "full custom component with fields",
-      input: '【{t:"buttons", something: "something", else: "else"}】',
-      expected: {
-        startIndex: 0,
-        endIndex: 53,
-        outputRaw: '【{t:"buttons", something: "something", else: "else"}】',
-      },
-    },
-    {
-      name: "custom type key",
       input: '【{type:"buttons", something: "something", else: "else"}】',
-      options: {
-        typeKey: "type",
-      },
       expected: {
         startIndex: 0,
         endIndex: 56,
@@ -77,16 +65,28 @@ describe("findCompleteCustomBlock", () => {
       },
     },
     {
+      name: "custom type key",
+      input: '【{t:"buttons", something: "something", else: "else"}】',
+      options: {
+        typeKey: "t",
+      },
+      expected: {
+        startIndex: 0,
+        endIndex: 53,
+        outputRaw: '【{t:"buttons", something: "something", else: "else"}】',
+      },
+    },
+    {
       name: "with custom start and end",
-      input: '±{t:"buttons", something: "something", else: "else"}§',
+      input: '±{type:"buttons", something: "something", else: "else"}§',
       options: {
         startChar: "±",
         endChar: "§",
       },
       expected: {
         startIndex: 0,
-        endIndex: 53,
-        outputRaw: '±{t:"buttons", something: "something", else: "else"}§',
+        endIndex: 56,
+        outputRaw: '±{type:"buttons", something: "something", else: "else"}§',
       },
     },
   ];
@@ -123,29 +123,29 @@ describe("findPartialCustomBlock", () => {
     },
     {
       name: "start of type",
-      input: '【{t:"buttons"',
+      input: '【{type:"buttons"',
       expected: {
         startIndex: 0,
-        endIndex: 13,
-        outputRaw: '【{t:"buttons"',
+        endIndex: 16,
+        outputRaw: '【{type:"buttons"',
       },
     },
     {
       name: "with prefix",
-      input: 'other stuff【{t:"buttons"',
+      input: 'other stuff【{type:"buttons"',
       expected: {
         startIndex: 11,
-        endIndex: 24,
-        outputRaw: '【{t:"buttons"',
+        endIndex: 27,
+        outputRaw: '【{type:"buttons"',
       },
     },
     {
       name: "with custom start and end",
-      input: 'other stuff±{t:"buttons"',
+      input: 'other stuff±{type:"buttons"',
       expected: {
         startIndex: 11,
-        endIndex: 24,
-        outputRaw: '±{t:"buttons"',
+        endIndex: 27,
+        outputRaw: '±{type:"buttons"',
       },
       options: {
         startChar: "±",

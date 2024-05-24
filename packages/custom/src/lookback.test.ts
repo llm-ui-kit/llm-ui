@@ -17,13 +17,13 @@ describe("customBlockLookBack", () => {
   const testCases: TestCase[] = [
     {
       name: "full",
-      output: '【{t:"buttons", something: "1234", else: "5678"}】',
+      output: '【{type:"buttons", something: "1234", else: "5678"}】',
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 8,
       expected: {
         output: JSON.stringify(
-          { t: "buttons", something: "1234", else: "5678" },
+          { type: "buttons", something: "1234", else: "5678" },
           null,
           2,
         ),
@@ -32,13 +32,13 @@ describe("customBlockLookBack", () => {
     },
     {
       name: "visible text",
-      output: '【{t:"buttons", something: "1234", else: "5678"}】',
+      output: '【{type:"buttons", something: "1234", else: "5678"}】',
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 3,
       expected: {
         output: JSON.stringify(
-          { t: "buttons", something: "123", else: "" },
+          { type: "buttons", something: "123", else: "" },
           null,
           2,
         ),
@@ -47,14 +47,14 @@ describe("customBlockLookBack", () => {
     },
     {
       name: "excludeVisibleKeys",
-      output: '【{t:"buttons", something: "1234", else: "5678"}】',
+      output: '【{type:"buttons", something: "1234", else: "5678"}】',
       options: { invisibleKeyPaths: ["$.else"] },
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 3,
       expected: {
         output: JSON.stringify(
-          { t: "buttons", something: "123", else: "5678" },
+          { type: "buttons", something: "123", else: "5678" },
           null,
           2,
         ),
@@ -63,24 +63,24 @@ describe("customBlockLookBack", () => {
     },
     {
       name: "partial",
-      output: '【{t:"buttons", something: "123',
+      output: '【{type:"buttons", something: "123',
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 2,
       expected: {
-        output: JSON.stringify({ t: "buttons", something: "12" }, null, 2),
+        output: JSON.stringify({ type: "buttons", something: "12" }, null, 2),
         visibleText: "12",
       },
     },
     {
       name: "custom type key",
-      output: '【{type:"buttons", something: "123',
+      output: '【{t:"buttons", something: "123',
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 2,
-      options: { typeKey: "type" },
+      options: { typeKey: "t" },
       expected: {
-        output: JSON.stringify({ type: "buttons", something: "12" }, null, 2),
+        output: JSON.stringify({ t: "buttons", something: "12" }, null, 2),
         visibleText: "12",
       },
     },

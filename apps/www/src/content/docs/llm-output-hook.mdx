@@ -81,7 +81,7 @@ const block = {
 
   // A lookback function to look backwards in the LLM output for smooth rendering.
   lookBack: ({
-    output: '【{t:"btn",btns:[{text:"my bu"',
+    output: '【{type:"buttons",buttons:[{text:"my bu"',
     isComplete: false, // whether the match is complete or partial
     visibleTextLengthTarget: 10, // the number of visible characters to return
     isStreamFinished: true // whether the LLM has finished streaming
@@ -89,7 +89,7 @@ const block = {
     return {
       // The llm output to return. In some cases this will be the original.
       // In other cases this function may modify the output to make it 'complete'.
-      output: '{t:"btn",btns:[{text:"my bu"}]}'
+      output: '{type:"buttons",buttons:[{text:"my bu"}]}'
       visibleText: "my bu" // the visible text the user will actually see
     }
   }
@@ -173,10 +173,10 @@ console.log(blockMatches);
 
   // The LLM output for the block
   // (possibly modified by the lookback function)
-  output: '{t:"btn",btns:[{text:"my bu"}]}',
+  output: '{type:"buttons",buttons:[{text:"my bu"}]}',
 
   // The unmodified LLM output for the block
-  outputRaw: '【{t:"btn",btns:[{text:"my bu"',
+  outputRaw: '【{type:"buttons",buttons:[{text:"my bu"',
 
   // The visible text for the block
   visibleText: "my bu",
