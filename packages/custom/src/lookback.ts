@@ -10,13 +10,13 @@ export const customBlockLookBack = (
   userOptions?: Partial<CustomBlockOptions>,
 ): LookBackFunction => {
   const options = getOptions(userOptions);
-  const { invisibleKeyPaths } = options;
+  const { invisibleKeyPaths, typeKey } = options;
   return ({ output, visibleTextLengthTarget }) => {
     const object = parseJson5(removeStartEndChars(output, options));
-    if (!object || object.t !== type) {
+    if (!object || object[typeKey] !== type) {
       return { output: "", visibleText: "" };
     }
-    const invisiblePaths = ["$.t", ...invisibleKeyPaths];
+    const invisiblePaths = [`$.${typeKey}`, ...invisibleKeyPaths];
     let remainingChars = visibleTextLengthTarget;
 
     let visibleText = "";

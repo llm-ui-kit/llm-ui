@@ -72,6 +72,18 @@ describe("customBlockLookBack", () => {
         visibleText: "12",
       },
     },
+    {
+      name: "custom type key",
+      output: '【{type:"buttons", something: "123',
+      isStreamFinished: false,
+      isComplete: false,
+      visibleTextLengthTarget: 2,
+      options: { typeKey: "type" },
+      expected: {
+        output: JSON.stringify({ type: "buttons", something: "12" }, null, 2),
+        visibleText: "12",
+      },
+    },
   ];
 
   testCases.forEach(

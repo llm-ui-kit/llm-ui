@@ -14,7 +14,7 @@ const findCustomBlock = (
     const match = matcher(llmOutput);
     if (match) {
       const block = parseJson5(removeStartEndChars(match.outputRaw, options));
-      if (!block || block.t !== type) {
+      if (!block || block[options.typeKey] !== type) {
         return undefined;
       }
     }

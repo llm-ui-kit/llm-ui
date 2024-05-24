@@ -65,16 +65,28 @@ describe("findCompleteCustomBlock", () => {
       },
     },
     {
+      name: "custom type key",
+      input: '【{type:"buttons", something: "something", else: "else"}】',
+      options: {
+        typeKey: "type",
+      },
+      expected: {
+        startIndex: 0,
+        endIndex: 56,
+        outputRaw: '【{type:"buttons", something: "something", else: "else"}】',
+      },
+    },
+    {
       name: "with custom start and end",
       input: '±{t:"buttons", something: "something", else: "else"}§',
+      options: {
+        startChar: "±",
+        endChar: "§",
+      },
       expected: {
         startIndex: 0,
         endIndex: 53,
         outputRaw: '±{t:"buttons", something: "something", else: "else"}§',
-      },
-      options: {
-        startChar: "±",
-        endChar: "§",
       },
     },
   ];

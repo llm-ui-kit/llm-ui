@@ -986,6 +986,12 @@ importers:
       remeda:
         specifier: ^1.57.0
         version: 1.57.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+      zod-to-json-schema:
+        specifier: ^3.23.0
+        version: 3.23.0(zod@3.23.8)
     devDependencies:
       '@llm-ui/tsconfig':
         specifier: workspace:*
@@ -13596,6 +13602,14 @@ packages:
     resolution: {integrity: sha512-+akaPo6a0zpVCCseDed504KBJUQpEW5QZw7RMneNmKw+fGaML1Z9tUNLnHHAC8x6dzVRO1eB2oEMyZRnuBZg7Q==}
     peerDependencies:
       zod: ^3.22.4
+    dependencies:
+      zod: 3.23.8
+    dev: false
+
+  /zod-to-json-schema@3.23.0(zod@3.23.8):
+    resolution: {integrity: sha512-az0uJ243PxsRIa2x1WmNE/pnuA05gUq/JB8Lwe1EDCCL/Fz9MgjYQ0fPlyc2Tcv6aF2ZA7WM5TWaRZVEFaAIag==}
+    peerDependencies:
+      zod: ^3.23.3
     dependencies:
       zod: 3.23.8
     dev: false
