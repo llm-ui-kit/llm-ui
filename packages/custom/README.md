@@ -1,4 +1,4 @@
-# @llm-ui/code
+# @llm-ui/custom
 
 [llm-ui](https://llm-ui.com) custom blocks.
 
