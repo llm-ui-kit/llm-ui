@@ -408,6 +408,134 @@ importers:
         specifier: ^5.2.0
         version: 5.2.7
 
+  examples/json/nextjs:
+    dependencies:
+      '@llm-ui/json':
+        specifier: ^0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c
+        version: 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)(zod@3.23.8)
+      '@llm-ui/markdown':
+        specifier: ^0.7.0
+        version: 0.7.0(react@18.2.0)
+      '@llm-ui/react':
+        specifier: ^0.7.0
+        version: 0.7.0(react@18.2.0)
+      next:
+        specifier: 14.2.3
+        version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18
+        version: 18.2.0
+      react-dom:
+        specifier: ^18
+        version: 18.2.0(react@18.2.0)
+      react-markdown:
+        specifier: ^9.0.1
+        version: 9.0.1(@types/react@18.2.73)(react@18.2.0)
+      remark-gfm:
+        specifier: ^4.0.0
+        version: 4.0.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@tailwindcss/typography':
+        specifier: ^0.5.13
+        version: 0.5.13(tailwindcss@3.4.3)
+      '@types/node':
+        specifier: ^20
+        version: 20.12.7
+      '@types/react':
+        specifier: ^18
+        version: 18.2.73
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.2.23
+      eslint:
+        specifier: ^8
+        version: 8.57.0
+      eslint-config-next:
+        specifier: 14.2.3
+        version: 14.2.3(eslint@8.57.0)(typescript@5.4.3)
+      postcss:
+        specifier: ^8
+        version: 8.4.38
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.3
+      typescript:
+        specifier: ^5
+        version: 5.4.3
+
+  examples/json/vite:
+    dependencies:
+      '@llm-ui/json':
+        specifier: ^0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c
+        version: 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)(zod@3.23.8)
+      '@llm-ui/markdown':
+        specifier: ^0.7.0
+        version: 0.7.0(react@18.2.0)
+      '@llm-ui/react':
+        specifier: ^0.7.0
+        version: 0.7.0(react@18.2.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-markdown:
+        specifier: ^9.0.1
+        version: 9.0.1(@types/react@18.2.73)(react@18.2.0)
+      remark-gfm:
+        specifier: ^4.0.0
+        version: 4.0.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@tailwindcss/typography':
+        specifier: ^0.5.13
+        version: 0.5.13(tailwindcss@3.4.3)
+      '@types/react':
+        specifier: ^18.2.66
+        version: 18.2.73
+      '@types/react-dom':
+        specifier: ^18.2.22
+        version: 18.2.23
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^7.2.0
+        version: 7.4.0(@typescript-eslint/parser@7.4.0)(eslint@8.57.0)(typescript@5.4.3)
+      '@typescript-eslint/parser':
+        specifier: ^7.2.0
+        version: 7.4.0(eslint@8.57.0)(typescript@5.4.3)
+      '@vitejs/plugin-react':
+        specifier: ^4.2.1
+        version: 4.2.1(vite@5.2.7)
+      autoprefixer:
+        specifier: ^10.4.19
+        version: 10.4.19(postcss@8.4.38)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      eslint-plugin-react-hooks:
+        specifier: ^4.6.0
+        version: 4.6.0(eslint@8.57.0)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.6
+        version: 0.4.7(eslint@8.57.0)
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
+      tailwindcss:
+        specifier: ^3.4.3
+        version: 3.4.3
+      typescript:
+        specifier: ^5.2.2
+        version: 5.4.3
+      vite:
+        specifier: ^5.2.0
+        version: 5.2.7
+
   examples/markdown/nextjs:
     dependencies:
       '@llm-ui/markdown':
@@ -2698,6 +2826,22 @@ packages:
       shiki: 1.6.0
     dev: false
 
+  /@llm-ui/json@0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)(zod@3.23.8):
+    resolution: {integrity: sha512-Xcrzd4AZJb4jC/3DO9doUFF8LXPDQvH3jPSHT5bqDJWE4tP2sW3pV4IwB9KXhceNRpqOm04tlQ2YRvR+2G+27w==}
+    peerDependencies:
+      react: ^18.0.0
+      zod: ^3.23.8
+    dependencies:
+      '@llm-ui/react': 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)
+      '@llm-ui/shared': 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)
+      jsonpath-plus: 9.0.0
+      jsonrepair: 3.8.0
+      react: 18.2.0
+      remeda: 1.57.0
+      zod: 3.23.8
+      zod-to-json-schema: 3.23.0(zod@3.23.8)
+    dev: false
+
   /@llm-ui/markdown@0.7.0(react@18.2.0):
     resolution: {integrity: sha512-k6HeEC2CWkucQEyKfSqfsqzVkvhUG3UjDzEDmuqzWWdvSrqE0YVPEzYxEJ2OAT26TPbcZsL4GNQTChWf17y0lw==}
     peerDependencies:
@@ -2715,6 +2859,15 @@ packages:
       - supports-color
     dev: false
 
+  /@llm-ui/react@0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0):
+    resolution: {integrity: sha512-rGEQfCNN9aiEF57B1OHta/WOcBAezJK6gVJbuMUt1pdE6MqfOsdvObys8PhQ/N3Y4LbrDQnRnOLuuCivCearqw==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      react: 18.2.0
+      remeda: 1.57.0
+    dev: false
+
   /@llm-ui/react@0.7.0(react@18.2.0):
     resolution: {integrity: sha512-j26sa1yUYpqjAUdHJLiM2opddytgWJe4E2pc7d4cbJxxncYswZ3Ycz7A3yDaY4y8LFdmQSrzyWFZ6fe6BwjVXQ==}
     peerDependencies:
@@ -2722,6 +2875,14 @@ packages:
     dependencies:
       react: 18.2.0
       remeda: 1.57.0
+    dev: false
+
+  /@llm-ui/shared@0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0):
+    resolution: {integrity: sha512-Rv49QPEiBj1lAy5t8K3Q1aUOFTHgFS9kLa4KDL0222eMStXUjI6UMtSLlLVnshrPeBZjpaY4Zk05apPfa+Ds6g==}
+    dependencies:
+      '@llm-ui/react': 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)
+    transitivePeerDependencies:
+      - react
     dev: false
 
   /@llm-ui/shared@0.7.0(react@18.2.0):

@@ -20,6 +20,7 @@
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
+  "bumpVersionsWithWorkspaceProtocolOnly": true,
   "ignore": [
     "@llm-ui/www",
     "llm-ui-*-example",
