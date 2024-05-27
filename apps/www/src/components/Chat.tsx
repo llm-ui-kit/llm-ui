@@ -56,7 +56,6 @@ export const Chat = () => {
 
   const messagesWithoutSystem = messages.slice(1);
   const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
-  const isLastElement = (index: number) => index != 0;
   return (
     <div className="bg-muted/50 relative w-full min-h-[calc(100vh-theme(spacing.18))]">
       <div className="absolute top-4 left-4">
@@ -81,6 +80,8 @@ export const Chat = () => {
                   ["user", "system"].includes(message.role) ||
                   index > reversedMessagesWithoutSystem.length - 1 ||
                   !isLoading;
+                const isLastElement = index != 0;
+
                 return (
                   <div key={message.id}>
                     <ChatMessage
@@ -88,7 +89,7 @@ export const Chat = () => {
                       message={message}
                       isStreamFinished={isStreamFinished}
                     />
-                    {isLastElement(index) && (
+                    {isLastElement && (
                       <div className="shrink-0 bg-border h-[1px] w-full my-4"></div>
                     )}
                   </div>
