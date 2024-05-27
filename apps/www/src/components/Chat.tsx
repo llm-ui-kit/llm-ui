@@ -21,7 +21,7 @@ const ChatMessage: React.FC<{
           <Icons.bot className="size-4" />
         )}
       </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden">
+      <div className="ml-4 flex-1 space-y-2">
         <MessageComponent
           message={content}
           isStreamFinished={isStreamFinished}
@@ -47,10 +47,17 @@ export const Chat = () => {
         apiKey: currentApiKey,
       },
     });
+  const bottomOfMessagesRef = React.useRef<HTMLInputElement>(null);
 
   const handleUpdateApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newApiKey = e.target.value;
     setCurrentApiKey(newApiKey);
+  };
+
+  const handleScroll = () => {
+    if (bottomOfMessagesRef.current) {
+      bottomOfMessagesRef.current.scrollIntoView();
+    }
   };
 
   const messagesWithoutSystem = messages.slice(1);
@@ -66,32 +73,40 @@ export const Chat = () => {
       </div>
       <form
         autoComplete="off"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          // handleScroll();
+          handleSubmit(e);
+        }}
         className="p-2 flex flex-col max-w-2xl mx-auto"
       >
-        <div className="pb-[200px] pt-4 md:pt-20">
-          {messagesWithoutSystem.map((message, index) => {
-            const isStreamFinished =
-              ["user", "system"].includes(message.role) ||
-              index < messagesWithoutSystem.length - 1 ||
-              !isLoading;
-            return (
-              <div key={message.id}>
-                <ChatMessage
-                  key={message.id}
-                  message={message}
-                  isStreamFinished={isStreamFinished}
-                />
-                {index != messagesWithoutSystem.length - 1 && (
-                  <div className="shrink-0 bg-border h-[1px] w-full my-4"></div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-        <div className="w-full fixed bottom-0">
-          <div className="sm:max-w-2xl">
-            <div className="bg-background flex flex-col overflow-hidden max-h-60 focus-within:border-white relative px-4 py-2 shadow-lg mb-2 sm:rounded-xl sm:border md:py-4">
+        {messagesWithoutSystem.length != 0 && (
+          <div className="pb-[200px] h-screen pt-4 md:pt-20">
+            <div className="overflow-y-auto flex flex-col-reverse h-full">
+              <div ref={bottomOfMessagesRef}></div>
+              {messagesWithoutSystem.reverse().map((message, index) => {
+                const isStreamFinished =
+                  ["user", "system"].includes(message.role) ||
+                  index < messagesWithoutSystem.length - 1 ||
+                  !isLoading;
+                return (
+                  <div key={message.id}>
+                    <ChatMessage
+                      key={message.id}
+                      message={message}
+                      isStreamFinished={isStreamFinished}
+                    />
+                    {index != messagesWithoutSystem.length - 1 && (
+                      <div className="shrink-0 bg-border h-[1px] w-full my-4"></div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        <div className="w-2/3 m-auto inset-x-0 fixed bottom-0">
+          <div>
+            <div className="bg-background flex flex-col overflow-hidden max-h-60 focus-within:border-white relative px-4 py-2 shadow-lg mb-4 sm:rounded-xl sm:border md:py-4">
               <Textarea
                 placeholder="What would you like to know?"
                 value={input}
@@ -101,6 +116,7 @@ export const Chat = () => {
               <Button
                 disabled={isLoading || !input}
                 className="absolute right-0 bottom-2 sm:right-4"
+                onClick={handleScroll}
                 type="submit"
               >
                 Run <Icons.return className="size-4 ml-2" />
