@@ -20,7 +20,7 @@ const exampleDescriptionVite = "JSON block example (Vite)";
 const getDependencies = (llmUiVersion: string) => [
   ...markdownDependencies(llmUiVersion),
   "zod",
-  `@llm-ui/json@${llmUiVersion}`,
+  `@llm-ui/json@`,
 ];
 
 const nextjs = async ({

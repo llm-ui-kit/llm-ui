@@ -1,5 +1,5 @@
 "use client";
-import { customBlock, customBlockPrompt, parseJson5 } from "@llm-ui/json";
+import { jsonBlock, jsonBlockPrompt, parseJson5 } from "@llm-ui/json";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
   useLLMOutput,
@@ -16,7 +16,7 @@ const buttonsSchema = z.object({
   buttons: z.array(z.object({ text: z.string() })),
 });
 
-const buttonsPrompt = customBlockPrompt({
+const buttonsPrompt = jsonBlockPrompt({
   name: "buttons",
   schema: buttonsSchema,
   examples: [
@@ -74,7 +74,7 @@ const Example = () => {
     llmOutput: output,
     blocks: [
       {
-        ...customBlock("buttons"),
+        ...jsonBlock("buttons"),
         component: ButtonsComponent,
       },
     ],
