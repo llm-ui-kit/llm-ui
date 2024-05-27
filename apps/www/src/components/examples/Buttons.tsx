@@ -18,13 +18,13 @@ const partialSchema = z.object({
 const buttonsComponent = (onClick: OnClick) => {
   const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
     const buttons = partialSchema.parse(parseJson5(blockMatch.output));
-    if (!buttons) {
+    if (!buttons || !blockMatch.isVisible) {
       return undefined;
     }
     return (
       <div className="flex flex-row my-4 gap-2">
         {buttons?.buttons?.map((button, index) => (
-          <Button key={index} onClick={() => onClick(button?.text)}>
+          <Button key={index} onClick={() => onClick(button?.text ?? "")}>
             {button?.text}
           </Button>
         ))}
