@@ -1,5 +1,5 @@
 "use client";
-import { customBlock, parseJson5 } from "@llm-ui/custom";
+import { customBlock, customBlockPrompt, parseJson5 } from "@llm-ui/custom";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
   useLLMOutput,
@@ -16,8 +16,13 @@ const buttonsSchema = z.object({
   buttons: z.array(z.object({ text: z.string() })),
 });
 
-const buttonsPartialSchema = buttonsSchema.deepPartial();
-
+const buttonsPrompt = customBlockPrompt({
+  name: "buttons",
+  schema: buttonsSchema,
+  examples: [
+    { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
+  ],
+});
 // -------Step 1: Create a markdown component-------
 
 // Customize this component with your own styling
@@ -34,7 +39,11 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 
 // Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-  const buttons = buttonsPartialSchema.parse(parseJson5(blockMatch.output));
+  const isVisible = blockMatch.visibleText.length > 0;
+  if (!isVisible) {
+    return null;
+  }
+  const buttons = buttonsSchema.parse(parseJson5(blockMatch.output));
   if (!buttons) {
     return undefined;
   }
@@ -52,8 +61,10 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
 
 const example = `
 ## Example
-
+ more text 123
+ more text 123
 【{type:"buttons",buttons:[{text:"Button 1"}, {text:"Button 2"}]}】
+one more time
 `;
 
 const Example = () => {
@@ -63,7 +74,7 @@ const Example = () => {
     llmOutput: output,
     blocks: [
       {
-        ...customBlock("btn"),
+        ...customBlock("buttons"),
         component: ButtonsComponent,
       },
     ],
@@ -73,9 +84,9 @@ const Example = () => {
     },
     isStreamFinished,
   });
-
   return (
     <div>
+      <pre>Prompt: {buttonsPrompt}</pre>
       {blockMatches.map((blockMatch, index) => {
         const Component = blockMatch.block.component;
         return <Component key={index} blockMatch={blockMatch} />;
