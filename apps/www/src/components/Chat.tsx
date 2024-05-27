@@ -6,6 +6,7 @@ import { Icons } from "@/icons";
 import { nanoid, type Message } from "ai";
 import { useChat } from "ai/react";
 import * as React from "react";
+import * as R from "remeda";
 
 const ChatMessage: React.FC<{
   message: Message;
@@ -54,9 +55,8 @@ export const Chat = () => {
   };
 
   const messagesWithoutSystem = messages.slice(1);
-  const reversedMessagesWithoutSystem = messagesWithoutSystem.map(
-    (message, i) => messagesWithoutSystem[messagesWithoutSystem.length - 1 - i],
-  );
+  const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
+  const isLastElement = (index: number) => index != 0;
   return (
     <div className="bg-muted/50 relative w-full min-h-[calc(100vh-theme(spacing.18))]">
       <div className="absolute top-4 left-4">
@@ -88,7 +88,7 @@ export const Chat = () => {
                       message={message}
                       isStreamFinished={isStreamFinished}
                     />
-                    {index != 0 && (
+                    {isLastElement(index) && (
                       <div className="shrink-0 bg-border h-[1px] w-full my-4"></div>
                     )}
                   </div>
