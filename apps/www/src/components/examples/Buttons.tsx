@@ -4,7 +4,6 @@ import { jsonBlock, parseJson5 } from "@llm-ui/json";
 import type { LLMOutputBlock, LLMOutputComponent } from "@llm-ui/react";
 import { z } from "zod";
 import { Button } from "../ui/Button";
-import { buttonsSchema } from "./buttonsSchema";
 
 type OnClick = (buttonText: string | undefined) => void;
 

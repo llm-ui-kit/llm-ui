@@ -810,8 +810,8 @@ importers:
   examples/vercel-ai/nextjs:
     dependencies:
       '@ai-sdk/openai':
-        specifier: ^0.0.14
-        version: 0.0.14(zod@3.23.8)
+        specifier: ^0.0.15
+        version: 0.0.15(zod@3.23.8)
       '@llm-ui/code':
         specifier: ^0.9.0
         version: link:../../../packages/code
@@ -822,8 +822,8 @@ importers:
         specifier: ^0.9.0
         version: link:../../../packages/react
       ai:
-        specifier: ^3.1.14
-        version: 3.1.14(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
+        specifier: ^3.1.15
+        version: 3.1.15(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -1131,8 +1131,19 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /@ai-sdk/openai@0.0.14(zod@3.23.8):
-    resolution: {integrity: sha512-ZiW2ETP2/K9eBUBZBAAnjLC0sJwViFPsRWpgRTy+KzMOYqkwkRScdQlFreczvfvi8M8ahzx+cavMd64O9pg2AA==}
+  /@ai-sdk/openai@0.0.15(zod@3.23.8):
+    resolution: {integrity: sha512-WqLbR+hZRjAqh+JrI1hqP5CopeSg2kyHUOL9Vh68hY6QhRBELURxya152nlU9tcpMIE0eqZWPSK2RYu+RP7/vw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+    dependencies:
+      '@ai-sdk/provider': 0.0.7
+      '@ai-sdk/provider-utils': 0.0.10(zod@3.23.8)
+      zod: 3.23.8
+    dev: false
+
+  /@ai-sdk/provider-utils@0.0.10(zod@3.23.8):
+    resolution: {integrity: sha512-VAtWHXOKMXfo+Uz384wva5oqm6BTmtp3kVCZGcScubJYjIDApwAIER/a3WcTkeoq5ZXaN23bHT0KBfOhhBSgeg==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -1140,8 +1151,10 @@ packages:
       zod:
         optional: true
     dependencies:
-      '@ai-sdk/provider': 0.0.6
-      '@ai-sdk/provider-utils': 0.0.9(zod@3.23.8)
+      '@ai-sdk/provider': 0.0.7
+      eventsource-parser: 1.1.2
+      nanoid: 3.3.6
+      secure-json-parse: 2.7.0
       zod: 3.23.8
     dev: false
 
@@ -1161,22 +1174,6 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@ai-sdk/provider-utils@0.0.9(zod@3.23.8):
-    resolution: {integrity: sha512-bZFTVp/GIZ3Yz4VejYs0B93bmnwfk+RoSHAQxAe9WamkQFrZLuNgd2ngAFjF6b4naLynWe1ZCk+dLWEtozCciw==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      zod: ^3.0.0
-    peerDependenciesMeta:
-      zod:
-        optional: true
-    dependencies:
-      '@ai-sdk/provider': 0.0.6
-      eventsource-parser: 1.1.2
-      nanoid: 3.3.6
-      secure-json-parse: 2.7.0
-      zod: 3.23.8
-    dev: false
-
   /@ai-sdk/provider@0.0.5:
     resolution: {integrity: sha512-TZDldBZ5clAsNwJ2PSeo/b1uILj9a2lvi0rnOj2RCNZDgaVqFRVIAnKyeHusCRv2lzhPIw03B3fiGI6VoLzOAA==}
     engines: {node: '>=18'}
@@ -1184,8 +1181,8 @@ packages:
       json-schema: 0.4.0
     dev: false
 
-  /@ai-sdk/provider@0.0.6:
-    resolution: {integrity: sha512-kiPqIsSnUimckaUn87WepxfjPNdy8SXlPP7P6yWuG3e1NmyFHcyuH6EBBZxXLmu0oZtkb+QEeP3UDWGSc+wwKQ==}
+  /@ai-sdk/provider@0.0.7:
+    resolution: {integrity: sha512-PZ3L2FNvw4GHI8UFKt0ZHN5R8LFyDMtP6nlQrqT8N7yAcwBJUMTPYmq6SiWCc/S6JRhUM5pU3aUoFaycoLzxlQ==}
     engines: {node: '>=18'}
     dependencies:
       json-schema: 0.4.0
@@ -5154,8 +5151,8 @@ packages:
       zod-to-json-schema: 3.22.5(zod@3.23.8)
     dev: false
 
-  /ai@3.1.14(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
-    resolution: {integrity: sha512-yW9ipraLm2PzzWc74eWUUVUIVZbO/Ggv//83iBfDkOTndrBmFqyIk6DtVVzf+RwKNUYuZzj8v5MKcgnHQhceXw==}
+  /ai@3.1.15(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
+    resolution: {integrity: sha512-vrAiRaGjtjWkPO0g9mpYALM7L5lsHFFAv5ErEd9QQjiYUJPJGqBQhJ68bikupyX+Fkj/oTt27z9qbF0+peuEPw==}
     engines: {node: '>=18'}
     peerDependencies:
       openai: ^4.42.0
@@ -5178,8 +5175,8 @@ packages:
       zod:
         optional: true
     dependencies:
-      '@ai-sdk/provider': 0.0.6
-      '@ai-sdk/provider-utils': 0.0.9(zod@3.23.8)
+      '@ai-sdk/provider': 0.0.7
+      '@ai-sdk/provider-utils': 0.0.10(zod@3.23.8)
       eventsource-parser: 1.1.2
       json-schema: 0.4.0
       jsondiffpatch: 0.6.0
@@ -7017,7 +7014,7 @@ packages:
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.2.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.4.0)(eslint@8.57.0)
       fast-glob: 3.3.2
-      get-tsconfig: 4.7.5
+      get-tsconfig: 4.7.3
       is-core-module: 2.13.1
       is-glob: 4.0.3
     transitivePeerDependencies:

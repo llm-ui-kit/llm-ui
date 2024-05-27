@@ -1,5 +1,5 @@
 ---
-title: Custom blocks
+title: JSON Block
 description: ""
 ---
 
@@ -21,11 +21,16 @@ import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
 import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
 import { examplesUrl } from "@/constants/constants";
 
-Allow LLM to reply with custom components by creating your own custom blocks.
+Allow LLMs to reply with JSON, which can be rendered as custom components in your application.
 
 # Features
 
+- Allow LLM to reply with custom components
+- Streaming support (1 visible character at a time)
+
 **Prompt:**
+
+Let the LLM know it can reply with a JSON block:
 
 <CodeBlock code={buttonPrompt} />
 
@@ -36,9 +41,6 @@ Allow LLM to reply with custom components by creating your own custom blocks.
   example={`Buttons:\n【{type:"buttons",buttons:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】`}
   options={{ delayMultiplier: 0.2 }}
 />
-
-- Allow LLM to reply with custom components
-- Streaming support (1 visible character at a time)
 
 # Installation
 

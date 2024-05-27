@@ -43,7 +43,13 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
   if (!isVisible) {
     return null;
   }
-  const buttons = buttonsSchema.parse(parseJson5(blockMatch.output));
+  const { data: buttons, error } = buttonsSchema.safeParse(
+    parseJson5(blockMatch.output),
+  );
+
+  if (error) {
+    return <div>{error.toString()}</div>;
+  }
   if (!buttons) {
     return undefined;
   }
@@ -63,7 +69,7 @@ const example = `
 ## Example
  more text 123
  more text 123
-【{type:"buttons",buttons:[{text:"Button 1"}, {text:"Button 2"}]}】
+【{type:"buttons",buttons:null}】
 one more time
 `;
 
