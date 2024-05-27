@@ -1,4 +1,4 @@
-import { customBlockPrompt } from "@llm-ui/custom";
+import { jsonBlockPrompt } from "@llm-ui/json";
 import { stringToTokenArray, type TokenWithDelay } from "@llm-ui/react";
 import { buttonsSchema } from "./buttonsSchema";
 import { defaultExampleProbs } from "./contants";
@@ -59,7 +59,7 @@ export const presentationPauseExample: TokenWithDelay[] = [
   ...stringToTokenArray(afterPause, defaultExampleProbs),
 ];
 
-export const buttonPrompt = customBlockPrompt({
+export const buttonPrompt = jsonBlockPrompt({
   name: "Button",
   schema: buttonsSchema,
   examples: [

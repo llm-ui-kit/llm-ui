@@ -230,7 +230,7 @@ return (
 
 `;
 
-export const generateButtonsPrompt = `import { customBlockPrompt } from "@llm-ui/custom";
+export const generateButtonsPrompt = `import { jsonBlockPrompt } from "@llm-ui/json";
 
 // use buttonsSchema from step 2
 customBlockPrompt("Button", buttonsSchema, [
