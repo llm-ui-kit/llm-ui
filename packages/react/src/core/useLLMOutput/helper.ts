@@ -204,6 +204,7 @@ const matchesWithLookback = ({
       llmOutput: match.llmOutput,
       output,
       visibleText,
+      isVisible: visibleText.length > 0,
     };
 
     return [...acc, matchWithLookback];
