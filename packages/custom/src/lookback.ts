@@ -25,12 +25,14 @@ export const customBlockLookBack = (
       : isAllowed(visibleKeyPaths);
 
     traverseLeafNodes(object, shouldTraverse, (value, path) => {
-      const valueString = `${value}`;
-      const chars = Math.min(remainingChars, valueString.length);
-      const valueVisible = valueString.slice(0, chars);
-      visibleText += valueVisible;
-      setJsonPath(object, path, valueVisible);
-      remainingChars -= chars;
+      if (typeof value === "string") {
+        const valueString = `${value}`;
+        const chars = Math.min(remainingChars, valueString.length);
+        const valueVisible = valueString.slice(0, chars);
+        visibleText += valueVisible;
+        setJsonPath(object, path, valueVisible);
+        remainingChars -= chars;
+      }
     });
 
     const isStreamingKeys = defaultVisible || visibleKeyPaths.length > 0;

@@ -7,12 +7,13 @@ import { Button } from "../ui/Button";
 
 type OnClick = (buttonText: string | undefined) => void;
 
-const schema = z.object({
+const partialSchema = z.object({
   type: z.literal("buttons"),
-  buttons: z.array(z.object({ text: z.string() })),
+  buttons: z
+    .array(z.object({ text: z.string().nullable().optional() }))
+    .nullable()
+    .optional(),
 });
-
-const partialSchema = schema.deepPartial();
 
 const buttonsComponent = (onClick: OnClick) => {
   const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
@@ -44,6 +45,6 @@ export const starsAndConfetti = (buttonText: string = "") => {
 export const buttonsBlock = (
   onClick: OnClick = starsAndConfetti,
 ): LLMOutputBlock => ({
-  ...customBlock("buttons"),
+  ...customBlock("buttons", { defaultVisible: true }),
   component: buttonsComponent(onClick),
 });

@@ -121,6 +121,18 @@ describe("customBlockLookBack", () => {
       },
     },
     {
+      name: "partial excludeVisibleKeys",
+      output: '【{type:"buttons", something',
+      options: { defaultVisible: true },
+      isStreamFinished: false,
+      isComplete: false,
+      visibleTextLengthTarget: 3,
+      expected: {
+        output: JSON.stringify({ type: "buttons", something: null }, null, 2),
+        visibleText: "",
+      },
+    },
+    {
       name: "partial",
       output: '【{type:"buttons", something: "123',
       isStreamFinished: false,
