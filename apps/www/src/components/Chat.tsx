@@ -47,17 +47,10 @@ export const Chat = () => {
         apiKey: currentApiKey,
       },
     });
-  const bottomOfMessagesRef = React.useRef<HTMLInputElement>(null);
 
   const handleUpdateApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newApiKey = e.target.value;
     setCurrentApiKey(newApiKey);
-  };
-
-  const handleScroll = () => {
-    if (bottomOfMessagesRef.current) {
-      bottomOfMessagesRef.current.scrollIntoView();
-    }
   };
 
   const messagesWithoutSystem = messages.slice(1);
@@ -116,7 +109,6 @@ export const Chat = () => {
               <Button
                 disabled={isLoading || !input}
                 className="absolute right-0 bottom-2 sm:right-4"
-                onClick={handleScroll}
                 type="submit"
               >
                 Run <Icons.return className="size-4 ml-2" />
