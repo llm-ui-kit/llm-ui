@@ -200,7 +200,9 @@ const markdownAstToVisibleText = (markdownAst: Root, isFinished: boolean) => {
   if (!isFinished) {
     removePartialAmbiguousMarkdownFromAst(markdownAst);
   }
-  return removeZeroWidthSpaces(markdownAstToVisibleTextHelper(markdownAst));
+  return removeZeroWidthSpaces(
+    markdownAstToVisibleTextHelper(markdownAst),
+  ).replaceAll("\n", "");
 };
 
 export const markdownToVisibleText = (
@@ -290,7 +292,6 @@ export const markdownWithVisibleChars = (
     removePartialAmbiguousMarkdownFromAst(markdownAst);
   }
   const visibleText = markdownAstToVisibleText(markdownAst, isFinished);
-
   const charsToRemove = visibleText.length - visibleChars;
   removeVisibleCharsFromAst(markdownAst, charsToRemove);
   return astToMarkdown(markdownAst);
