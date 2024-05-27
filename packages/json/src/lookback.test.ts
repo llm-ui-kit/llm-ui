@@ -1,19 +1,19 @@
 import { LookBack } from "@llm-ui/react";
 import { describe, expect, it } from "vitest";
-import { customBlockLookBack } from "./lookback";
-import { CustomBlockOptions } from "./options";
+import { jsonBlockLookBack } from "./lookback";
+import { JsonBlockOptions } from "./options";
 
 type TestCase = {
   name: string;
   output: string;
-  options?: Partial<CustomBlockOptions>;
+  options?: Partial<JsonBlockOptions>;
   isStreamFinished: boolean;
   isComplete: boolean;
   visibleTextLengthTarget: number;
   expected: LookBack;
 };
 
-describe("customBlockLookBack", () => {
+describe("jsonBlockLookBack", () => {
   const testCases: TestCase[] = [
     {
       name: "full",
@@ -169,7 +169,7 @@ describe("customBlockLookBack", () => {
       visibleTextLengthTarget,
     }) => {
       it(name, () => {
-        const result = customBlockLookBack(
+        const result = jsonBlockLookBack(
           "buttons",
           options,
         )({ output, isStreamFinished, visibleTextLengthTarget, isComplete });

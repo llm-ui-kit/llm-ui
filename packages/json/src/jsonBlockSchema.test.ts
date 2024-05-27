@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ZodSchema, z } from "zod";
-import { customBlockSchema } from "./customBlockSchema";
+import { jsonBlockSchema } from "./jsonBlockSchema";
 
 type TestCase = {
   name: string;
@@ -8,7 +8,7 @@ type TestCase = {
   expected: string;
 };
 
-describe("customBlockSchema", () => {
+describe("jsonBlockSchema", () => {
   const testCases: TestCase[] = [
     {
       name: "top level key",
@@ -26,7 +26,7 @@ describe("customBlockSchema", () => {
 
   testCases.forEach(({ name, schema, expected }) => {
     it(name, () => {
-      expect(customBlockSchema(schema)).toEqual(expected);
+      expect(jsonBlockSchema(schema)).toEqual(expected);
     });
   });
 });

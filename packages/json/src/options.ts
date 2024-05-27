@@ -1,4 +1,4 @@
-export type CustomBlockOptions = {
+export type JsonBlockOptions = {
   startChar: string;
   endChar: string;
   defaultVisible: boolean;
@@ -7,7 +7,7 @@ export type CustomBlockOptions = {
   typeKey: string;
 };
 
-export const defaultOptions: CustomBlockOptions = {
+export const defaultOptions: JsonBlockOptions = {
   startChar: "【",
   endChar: "】",
   defaultVisible: false,
@@ -16,6 +16,6 @@ export const defaultOptions: CustomBlockOptions = {
   typeKey: "type",
 };
 
-export const getOptions = (userOptions?: Partial<CustomBlockOptions>) => {
+export const getOptions = (userOptions?: Partial<JsonBlockOptions>) => {
   return { ...defaultOptions, ...userOptions };
 };

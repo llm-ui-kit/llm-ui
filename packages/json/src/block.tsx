@@ -1,16 +1,16 @@
 import { LLMOutputBlock } from "@llm-ui/react";
-import { customBlockLookBack } from "./lookback";
-import { findCompleteCustomBlock, findPartialCustomBlock } from "./matchers";
-import { CustomBlockOptions } from "./options";
+import { jsonBlockLookBack } from "./lookback";
+import { findCompleteJsonBlock, findPartialJsonBlock } from "./matchers";
+import { JsonBlockOptions } from "./options";
 
-export const customBlock = (
+export const jsonBlock = (
   type: string,
-  userOptions?: Partial<CustomBlockOptions>,
+  userOptions?: Partial<JsonBlockOptions>,
 ): LLMOutputBlock => {
   return {
-    findCompleteMatch: findCompleteCustomBlock(type, userOptions),
-    findPartialMatch: findPartialCustomBlock(type, userOptions),
-    lookBack: customBlockLookBack(type, userOptions),
+    findCompleteMatch: findCompleteJsonBlock(type, userOptions),
+    findPartialMatch: findPartialJsonBlock(type, userOptions),
+    lookBack: jsonBlockLookBack(type, userOptions),
     component: ({ blockMatch }) => (
       <div>
         <a href="https://llm-ui.com/docs/custom-blocks">

@@ -1,13 +1,13 @@
 import { LookBackFunction } from "@llm-ui/react";
 import { setJsonPath } from "./jsonPathSet";
 import { isAllowed, isIgnored, traverseLeafNodes } from "./jsonPathTraverse";
-import { CustomBlockOptions, getOptions } from "./options";
+import { JsonBlockOptions, getOptions } from "./options";
 import { parseJson5 } from "./parseJson5";
 import { removeStartEndChars } from "./shared";
 
-export const customBlockLookBack = (
+export const jsonBlockLookBack = (
   type: string,
-  userOptions?: Partial<CustomBlockOptions>,
+  userOptions?: Partial<JsonBlockOptions>,
 ): LookBackFunction => {
   const options = getOptions(userOptions);
   const { typeKey, defaultVisible, visibleKeyPaths, invisibleKeyPaths } =

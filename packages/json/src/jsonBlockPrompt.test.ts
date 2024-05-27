@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import { customBlockPrompt } from "./customBlockPrompt";
+import { jsonBlockPrompt } from "./jsonBlockPrompt";
 
-describe("customBlockPrompt", () => {
+describe("jsonBlockPrompt", () => {
   it("simple", () => {
     expect(
-      customBlockPrompt({
+      jsonBlockPrompt({
         name: "simple",
         schema: z.object({ a: z.string() }),
         examples: [{ a: "example" }],
@@ -21,7 +21,7 @@ describe("customBlockPrompt", () => {
 
   it("complex", () => {
     expect(
-      customBlockPrompt({
+      jsonBlockPrompt({
         name: "complex",
         schema: z.object({
           a: z.array(z.object({ a: z.string(), b: z.string() })),

@@ -1,8 +1,8 @@
-export { customBlock } from "./block";
-export { customBlockExample } from "./customBlockExample";
-export { customBlockPrompt } from "./customBlockPrompt";
-export { customBlockSchema } from "./customBlockSchema";
-export { customBlockLookBack } from "./lookback";
-export { findCompleteCustomBlock, findPartialCustomBlock } from "./matchers";
-export type { CustomBlockOptions } from "./options";
+export { jsonBlock } from "./block";
+export { jsonBlockExample } from "./jsonBlockExample";
+export { jsonBlockPrompt } from "./jsonBlockPrompt";
+export { jsonBlockSchema } from "./jsonBlockSchema";
+export { jsonBlockLookBack } from "./lookback";
+export { findCompleteJsonBlock, findPartialJsonBlock } from "./matchers";
+export type { JsonBlockOptions } from "./options";
 export { parseJson5 } from "./parseJson5";

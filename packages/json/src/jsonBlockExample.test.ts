@@ -1,18 +1,18 @@
 import { describe, expect, it } from "vitest";
 import { ZodSchema, z } from "zod";
-import { customBlockExample } from "./customBlockExample";
-import { CustomBlockOptions } from "./options";
+import { jsonBlockExample } from "./jsonBlockExample";
+import { JsonBlockOptions } from "./options";
 
 type TestCase = {
   name: string;
   schema: ZodSchema;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   example: any;
-  options?: Partial<CustomBlockOptions>;
+  options?: Partial<JsonBlockOptions>;
   expected: string;
 };
 
-describe("customBlockExample", () => {
+describe("jsonBlockExample", () => {
   const testCases: TestCase[] = [
     {
       name: "top level key",
@@ -32,7 +32,7 @@ describe("customBlockExample", () => {
 
   testCases.forEach(({ name, schema, example, expected }) => {
     it(name, () => {
-      expect(customBlockExample(schema, example)).toEqual(expected);
+      expect(jsonBlockExample(schema, example)).toEqual(expected);
     });
   });
 });

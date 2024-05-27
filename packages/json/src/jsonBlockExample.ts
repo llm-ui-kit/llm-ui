@@ -1,12 +1,12 @@
 import z, { ZodSchema, ZodTypeAny } from "zod";
-import { CustomBlockOptions, getOptions } from "./options";
+import { JsonBlockOptions, getOptions } from "./options";
 
-export const customBlockExample = <
+export const jsonBlockExample = <
   Schema extends ZodTypeAny = ZodSchema<undefined>,
 >(
   schema: Schema,
   example: z.infer<Schema>,
-  userOptions?: Partial<CustomBlockOptions>,
+  userOptions?: Partial<JsonBlockOptions>,
 ): string => {
   // throw if example does not match schema
   const parsed = schema.parse(example);

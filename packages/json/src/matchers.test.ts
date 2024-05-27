@@ -1,16 +1,16 @@
 import { MaybeLLMOutputMatch } from "@llm-ui/react";
 import { describe, expect, it } from "vitest";
-import { findCompleteCustomBlock, findPartialCustomBlock } from "./matchers";
-import { CustomBlockOptions } from "./options";
+import { findCompleteJsonBlock, findPartialJsonBlock } from "./matchers";
+import { JsonBlockOptions } from "./options";
 
 type TestCase = {
   name: string;
   input: string;
   expected: MaybeLLMOutputMatch;
-  options?: Partial<CustomBlockOptions>;
+  options?: Partial<JsonBlockOptions>;
 };
 
-describe("findCompleteCustomBlock", () => {
+describe("findCompleteJsonBlock", () => {
   const testCases: TestCase[] = [
     {
       name: "opening brace",
@@ -103,13 +103,13 @@ describe("findCompleteCustomBlock", () => {
 
   testCases.forEach(({ name, input, expected, options }) => {
     it(name, () => {
-      const result = findCompleteCustomBlock("buttons", options)(input);
+      const result = findCompleteJsonBlock("buttons", options)(input);
       expect(result).toEqual(expected);
     });
   });
 });
 
-describe("findPartialCustomBlock", () => {
+describe("findPartialJsonBlock", () => {
   const testCases: TestCase[] = [
     {
       name: "opening brace",
@@ -166,7 +166,7 @@ describe("findPartialCustomBlock", () => {
 
   testCases.forEach(({ name, input, expected, options }) => {
     it(name, () => {
-      const result = findPartialCustomBlock("buttons", options)(input);
+      const result = findPartialJsonBlock("buttons", options)(input);
       expect(result).toEqual(expected);
     });
   });
