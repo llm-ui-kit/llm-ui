@@ -39,7 +39,7 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 
 // Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-  const isVisible = blockMatch.visibleText.length > 0;
+  const isVisible = blockMatch.isVisible;
   if (!isVisible) {
     return null;
   }
