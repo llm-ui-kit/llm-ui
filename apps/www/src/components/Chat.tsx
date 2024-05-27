@@ -75,6 +75,7 @@ export const Chat = () => {
           <div className="pb-[200px] h-screen pt-4 md:pt-20">
             {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
             <div className="overflow-y-auto flex flex-col-reverse h-full">
+              <div className="flex flex-1" />
               {reversedMessagesWithoutSystem.map((message, index) => {
                 const isStreamFinished =
                   ["user", "system"].includes(message.role) ||
