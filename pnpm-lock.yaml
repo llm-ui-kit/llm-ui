@@ -277,14 +277,14 @@ importers:
   examples/code/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)(shiki@1.6.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -338,14 +338,14 @@ importers:
   examples/code/vite:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)(shiki@1.6.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -414,11 +414,11 @@ importers:
         specifier: ^0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c
         version: 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)(zod@3.23.8)
       '@llm-ui/markdown':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/react
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -472,11 +472,11 @@ importers:
         specifier: ^0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c
         version: 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)(zod@3.23.8)
       '@llm-ui/markdown':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/react
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -539,11 +539,11 @@ importers:
   examples/markdown/nextjs:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/react
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -591,11 +591,11 @@ importers:
   examples/markdown/vite:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/react
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -655,14 +655,14 @@ importers:
   examples/openai/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)(shiki@1.6.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -719,14 +719,14 @@ importers:
   examples/openai/vite-and-express:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)(shiki@1.6.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/react
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -813,14 +813,14 @@ importers:
         specifier: ^0.0.14
         version: 0.0.14(zod@3.23.8)
       '@llm-ui/code':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)(shiki@1.6.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
-        version: 0.7.0(react@18.2.0)
+        specifier: ^0.8.0
+        version: link:../../../packages/react
       ai:
         specifier: ^3.1.14
         version: 3.1.14(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
@@ -2814,18 +2814,6 @@ packages:
     dev: false
     optional: true
 
-  /@llm-ui/code@0.7.0(react@18.2.0)(shiki@1.6.0):
-    resolution: {integrity: sha512-aiPAv6hTPfj8ZEpfYWQgquQ0iG/Z1g7sbE4y6B5eQ2kTDfMoUaRGGeAg3gYsmwAqhUmRVmPIvC6nr9VfIxJrbg==}
-    peerDependencies:
-      react: ^18.0.0
-      shiki: ^1.6.0
-    dependencies:
-      '@llm-ui/react': 0.7.0(react@18.2.0)
-      '@llm-ui/shared': 0.7.0(react@18.2.0)
-      react: 18.2.0
-      shiki: 1.6.0
-    dev: false
-
   /@llm-ui/json@0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)(zod@3.23.8):
     resolution: {integrity: sha512-Xcrzd4AZJb4jC/3DO9doUFF8LXPDQvH3jPSHT5bqDJWE4tP2sW3pV4IwB9KXhceNRpqOm04tlQ2YRvR+2G+27w==}
     peerDependencies:
@@ -2842,34 +2830,8 @@ packages:
       zod-to-json-schema: 3.23.0(zod@3.23.8)
     dev: false
 
-  /@llm-ui/markdown@0.7.0(react@18.2.0):
-    resolution: {integrity: sha512-k6HeEC2CWkucQEyKfSqfsqzVkvhUG3UjDzEDmuqzWWdvSrqE0YVPEzYxEJ2OAT26TPbcZsL4GNQTChWf17y0lw==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      '@llm-ui/react': 0.7.0(react@18.2.0)
-      mdast-util-from-markdown: 2.0.0
-      mdast-util-gfm: 3.0.0
-      mdast-util-to-markdown: 2.1.0
-      micromark-extension-gfm: 3.0.0
-      react: 18.2.0
-      remeda: 1.57.0
-      unist-util-visit: 5.0.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@llm-ui/react@0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0):
     resolution: {integrity: sha512-rGEQfCNN9aiEF57B1OHta/WOcBAezJK6gVJbuMUt1pdE6MqfOsdvObys8PhQ/N3Y4LbrDQnRnOLuuCivCearqw==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      react: 18.2.0
-      remeda: 1.57.0
-    dev: false
-
-  /@llm-ui/react@0.7.0(react@18.2.0):
-    resolution: {integrity: sha512-j26sa1yUYpqjAUdHJLiM2opddytgWJe4E2pc7d4cbJxxncYswZ3Ycz7A3yDaY4y8LFdmQSrzyWFZ6fe6BwjVXQ==}
     peerDependencies:
       react: ^18.0.0
     dependencies:
@@ -2881,14 +2843,6 @@ packages:
     resolution: {integrity: sha512-Rv49QPEiBj1lAy5t8K3Q1aUOFTHgFS9kLa4KDL0222eMStXUjI6UMtSLlLVnshrPeBZjpaY4Zk05apPfa+Ds6g==}
     dependencies:
       '@llm-ui/react': 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)
-    transitivePeerDependencies:
-      - react
-    dev: false
-
-  /@llm-ui/shared@0.7.0(react@18.2.0):
-    resolution: {integrity: sha512-1/VSEAWOHm+gbZBP3ZYL2CJmbj6IsbBvsrCEXHR+qzgaUEI6LmcRrWwwttvVqSxX3wlXwU42Bz4333BhcNuoyg==}
-    dependencies:
-      '@llm-ui/react': 0.7.0(react@18.2.0)
     transitivePeerDependencies:
       - react
     dev: false

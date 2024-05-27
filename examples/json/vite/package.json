@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@llm-ui/json": "^0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c",
-    "@llm-ui/markdown": "^0.7.0",
-    "@llm-ui/react": "^0.7.0",
+    "@llm-ui/markdown": "^0.8.0",
+    "@llm-ui/react": "^0.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^9.0.1",
