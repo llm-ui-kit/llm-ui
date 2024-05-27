@@ -1,5 +1,17 @@
 # @llm-ui/custom
 
+## 0.9.0
+
+### Minor Changes
+
+- [#219](https://github.com/llm-ui-kit/llm-ui/pull/219) [`fb79e2d`](https://github.com/llm-ui-kit/llm-ui/commit/fb79e2dfc065d50415fa5d8108f1fdd7fb9b93c0) Thanks [@richardgill](https://github.com/richardgill)! - @llm-ui/custom -> @llm-ui/json
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.9.0
+  - @llm-ui/shared@0.9.0
+
 ## 0.8.0
 
 ### Minor Changes
