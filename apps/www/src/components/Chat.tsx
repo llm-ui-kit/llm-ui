@@ -82,8 +82,9 @@ export const Chat = () => {
             <div className="overflow-y-auto flex flex-col-reverse h-full  mx-auto">
               <div className="flex flex-1" />
               {reversedMessagesWithoutSystem.map((message, index) => {
+                const { role } = message;
                 const isStreamFinished =
-                  ["user", "system"].includes(message.role) ||
+                  ["user", "system"].includes(role) ||
                   index > reversedMessagesWithoutSystem.length - 1 ||
                   !isLoading;
                 const isLastElement = index != 0;
@@ -94,7 +95,10 @@ export const Chat = () => {
                       key={message.id}
                       message={message}
                       isStreamFinished={isStreamFinished}
-                      className="mx-auto max-w-2xl justify-end"
+                      className={cn(
+                        "mx-auto max-w-2xl",
+                        role === "user" && "justify-end",
+                      )}
                     />
                     {isLastElement && (
                       <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div>
