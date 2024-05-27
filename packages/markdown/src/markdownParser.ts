@@ -203,6 +203,7 @@ const markdownAstToVisibleText = (markdownAst: Root, isFinished: boolean) => {
   return removeZeroWidthSpaces(
     markdownAstToVisibleTextHelper(markdownAst),
   ).replaceAll("\n", "");
+  // mdast is not reliable with \n so we remove them all
 };
 
 export const markdownToVisibleText = (
