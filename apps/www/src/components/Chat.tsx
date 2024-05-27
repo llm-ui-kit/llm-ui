@@ -3,25 +3,31 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Icons } from "@/icons";
+import { cn } from "@/lib/utils";
 import { nanoid, type Message } from "ai";
 import { useChat } from "ai/react";
 import * as React from "react";
+import * as R from "remeda";
 
 const ChatMessage: React.FC<{
   message: Message;
   isStreamFinished: boolean;
-}> = ({ message, isStreamFinished }) => {
+  className?: string;
+}> = ({ message, isStreamFinished, className }) => {
   const { role, content } = message;
   return (
-    <div className="group relative flex items-start m-2">
-      <div className="bg-background flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border shadow-sm">
-        {role === "user" ? (
-          <Icons.user className="size-4" />
-        ) : (
+    <div className={cn("group relative flex gap-4 items-start m-2", className)}>
+      {role === "assistant" && (
+        <div className="bg-background flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border shadow-sm">
           <Icons.bot className="size-4" />
+        </div>
+      )}
+      <div
+        className={cn(
+          "space-y-2",
+          role === "user" && "bg-black rounded-lg px-4 py-1",
         )}
-      </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden">
+      >
         <MessageComponent
           message={content}
           isStreamFinished={isStreamFinished}
@@ -54,8 +60,9 @@ export const Chat = () => {
   };
 
   const messagesWithoutSystem = messages.slice(1);
+  const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
   return (
-    <div className="bg-muted/50 relative w-full min-h-[calc(100vh-theme(spacing.18))]">
+    <div className="bg-muted/50 relative overflow-y-hidden w-full h-[calc(100vh-theme(spacing.18)-2px)]">
       <div className="absolute top-4 left-4">
         <Input
           value={currentApiKey}
@@ -67,31 +74,44 @@ export const Chat = () => {
       <form
         autoComplete="off"
         onSubmit={handleSubmit}
-        className="p-2 flex flex-col max-w-2xl mx-auto"
+        className="p-2 flex flex-col"
       >
-        <div className="pb-[200px] pt-4 md:pt-20">
-          {messagesWithoutSystem.map((message, index) => {
-            const isStreamFinished =
-              ["user", "system"].includes(message.role) ||
-              index < messagesWithoutSystem.length - 1 ||
-              !isLoading;
-            return (
-              <div key={message.id}>
-                <ChatMessage
-                  key={message.id}
-                  message={message}
-                  isStreamFinished={isStreamFinished}
-                />
-                {index != messagesWithoutSystem.length - 1 && (
-                  <div className="shrink-0 bg-border h-[1px] w-full my-4"></div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-        <div className="w-full fixed bottom-0">
-          <div className="sm:max-w-2xl">
-            <div className="bg-background flex flex-col overflow-hidden max-h-60 focus-within:border-white relative px-4 py-2 shadow-lg mb-2 sm:rounded-xl sm:border md:py-4">
+        {reversedMessagesWithoutSystem.length != 0 && (
+          <div className="pb-[200px] h-screen pt-4 md:pt-20">
+            {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
+            <div className="overflow-y-auto flex flex-col-reverse h-full  mx-auto">
+              <div className="flex flex-1" />
+              {reversedMessagesWithoutSystem.map((message, index) => {
+                const { role } = message;
+                const isStreamFinished =
+                  ["user", "system"].includes(role) ||
+                  index > reversedMessagesWithoutSystem.length - 1 ||
+                  !isLoading;
+                const isLastElement = index != 0;
+
+                return (
+                  <div key={message.id}>
+                    <ChatMessage
+                      key={message.id}
+                      message={message}
+                      isStreamFinished={isStreamFinished}
+                      className={cn(
+                        "mx-auto max-w-2xl",
+                        role === "user" && "justify-end",
+                      )}
+                    />
+                    {isLastElement && (
+                      <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        <div className="w-2/3 m-auto inset-x-0 fixed bottom-0 max-w-2xl mx-auto">
+          <div>
+            <div className="bg-background flex flex-col overflow-hidden max-h-60 focus-within:border-white relative px-4 py-2 shadow-lg mb-4 sm:rounded-xl sm:border md:py-4">
               <Textarea
                 placeholder="What would you like to know?"
                 value={input}
