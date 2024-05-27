@@ -61,6 +61,9 @@ export const Chat = () => {
   };
 
   const messagesWithoutSystem = messages.slice(1);
+  const reversedMessagesWithoutSystem = messagesWithoutSystem.map(
+    (message, i) => messagesWithoutSystem[messagesWithoutSystem.length - 1 - i],
+  );
   return (
     <div className="bg-muted/50 relative w-full min-h-[calc(100vh-theme(spacing.18))]">
       <div className="absolute top-4 left-4">
@@ -73,20 +76,17 @@ export const Chat = () => {
       </div>
       <form
         autoComplete="off"
-        onSubmit={(e) => {
-          // handleScroll();
-          handleSubmit(e);
-        }}
+        onSubmit={handleSubmit}
         className="p-2 flex flex-col max-w-2xl mx-auto"
       >
-        {messagesWithoutSystem.length != 0 && (
+        {reversedMessagesWithoutSystem.length != 0 && (
           <div className="pb-[200px] h-screen pt-4 md:pt-20">
             <div className="overflow-y-auto flex flex-col-reverse h-full">
               <div ref={bottomOfMessagesRef}></div>
-              {messagesWithoutSystem.reverse().map((message, index) => {
+              {reversedMessagesWithoutSystem.map((message, index) => {
                 const isStreamFinished =
                   ["user", "system"].includes(message.role) ||
-                  index < messagesWithoutSystem.length - 1 ||
+                  index > reversedMessagesWithoutSystem.length - 1 ||
                   !isLoading;
                 return (
                   <div key={message.id}>
@@ -95,7 +95,7 @@ export const Chat = () => {
                       message={message}
                       isStreamFinished={isStreamFinished}
                     />
-                    {index != messagesWithoutSystem.length - 1 && (
+                    {index != 0 && (
                       <div className="shrink-0 bg-border h-[1px] w-full my-4"></div>
                     )}
                   </div>
