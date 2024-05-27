@@ -30,7 +30,7 @@
     "@llm-ui/examples": "workspace:*",
     "@llm-ui/markdown": "workspace:*",
     "@llm-ui/react": "workspace:*",
-    "@llm-ui/custom": "workspace:*",
+    "@llm-ui/json": "workspace:*",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",

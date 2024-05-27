@@ -107,12 +107,12 @@ importers:
       '@llm-ui/code':
         specifier: workspace:*
         version: link:../../packages/code
-      '@llm-ui/custom':
-        specifier: workspace:*
-        version: link:../../packages/custom
       '@llm-ui/examples':
         specifier: workspace:*
         version: link:../../tooling/examples
+      '@llm-ui/json':
+        specifier: workspace:*
+        version: link:../../packages/json
       '@llm-ui/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
@@ -408,11 +408,11 @@ importers:
         specifier: ^5.2.0
         version: 5.2.7
 
-  examples/custom-components/nextjs:
+  examples/json/nextjs:
     dependencies:
-      '@llm-ui/custom':
-        specifier: ^0.8.0
-        version: link:../../../packages/custom
+      '@llm-ui/json':
+        specifier: ^0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c
+        version: 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)(zod@3.23.8)
       '@llm-ui/markdown':
         specifier: ^0.8.0
         version: link:../../../packages/markdown
@@ -466,11 +466,11 @@ importers:
         specifier: ^5
         version: 5.4.3
 
-  examples/custom-components/vite:
+  examples/json/vite:
     dependencies:
-      '@llm-ui/custom':
-        specifier: ^0.8.0
-        version: link:../../../packages/custom
+      '@llm-ui/json':
+        specifier: ^0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c
+        version: 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)(zod@3.23.8)
       '@llm-ui/markdown':
         specifier: ^0.8.0
         version: link:../../../packages/markdown
@@ -938,7 +938,7 @@ importers:
         specifier: ^5.4.3
         version: 5.4.3
 
-  packages/custom:
+  packages/json:
     dependencies:
       '@llm-ui/react':
         specifier: workspace:*
@@ -2813,6 +2813,39 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@llm-ui/json@0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)(zod@3.23.8):
+    resolution: {integrity: sha512-Xcrzd4AZJb4jC/3DO9doUFF8LXPDQvH3jPSHT5bqDJWE4tP2sW3pV4IwB9KXhceNRpqOm04tlQ2YRvR+2G+27w==}
+    peerDependencies:
+      react: ^18.0.0
+      zod: ^3.23.8
+    dependencies:
+      '@llm-ui/react': 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)
+      '@llm-ui/shared': 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)
+      jsonpath-plus: 9.0.0
+      jsonrepair: 3.8.0
+      react: 18.2.0
+      remeda: 1.57.0
+      zod: 3.23.8
+      zod-to-json-schema: 3.23.0(zod@3.23.8)
+    dev: false
+
+  /@llm-ui/react@0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0):
+    resolution: {integrity: sha512-rGEQfCNN9aiEF57B1OHta/WOcBAezJK6gVJbuMUt1pdE6MqfOsdvObys8PhQ/N3Y4LbrDQnRnOLuuCivCearqw==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      react: 18.2.0
+      remeda: 1.57.0
+    dev: false
+
+  /@llm-ui/shared@0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0):
+    resolution: {integrity: sha512-Rv49QPEiBj1lAy5t8K3Q1aUOFTHgFS9kLa4KDL0222eMStXUjI6UMtSLlLVnshrPeBZjpaY4Zk05apPfa+Ds6g==}
+    dependencies:
+      '@llm-ui/react': 0.0.0-alpha.vc1771883bff01cd2bb8c2198b32aef47de768a2c(react@18.2.0)
+    transitivePeerDependencies:
+      - react
+    dev: false
 
   /@manypkg/find-root@1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
