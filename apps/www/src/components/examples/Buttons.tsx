@@ -1,6 +1,6 @@
 import { fireConfetti } from "@/animations/confetti";
 import { multipleStars } from "@/animations/stars";
-import { customBlock, parseJson5 } from "@llm-ui/custom";
+import { customBlock, parseJson5 } from "@llm-ui/json";
 import type { LLMOutputBlock, LLMOutputComponent } from "@llm-ui/react";
 import z from "zod";
 import { Button } from "../ui/Button";

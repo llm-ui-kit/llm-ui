@@ -21,7 +21,7 @@ const packageMarkdown = "packages/markdown";
 const packageCodeBlocks = "packages/code";
 const packageButtons = "packages/buttons";
 const packageShared = "packages/shared";
-const packageCustom = "packages/custom";
+const packageJson = "packages/json";
 const packageCli = "packages/create-llm-ui";
 
 const toolingGen = "tooling/gen";
@@ -34,7 +34,7 @@ const reactProjects = [
   packageCodeBlocks,
   packageButtons,
   packageShared,
-  packageCustom,
+  packageJson,
 ];
 const reactProjectsGlob = `{${reactProjects.join(",")}}`;
 const typescriptProjects = [
