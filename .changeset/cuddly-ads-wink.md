@@ -2,4 +2,7 @@
 "@llm-ui/custom": minor
 ---
 
-b
+- New options:
+  - defaultVisible: false,
+  - visibleKeyPaths: [],
+  - invisibleKeyPaths: [],
