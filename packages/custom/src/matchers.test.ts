@@ -65,6 +65,16 @@ describe("findCompleteCustomBlock", () => {
       },
     },
     {
+      name: "full custom component with fields sandwiched",
+      input:
+        'the start【{type:"buttons", something: "something", else: "else"}】keeps going',
+      expected: {
+        startIndex: 9,
+        endIndex: 65,
+        outputRaw: '【{type:"buttons", something: "something", else: "else"}】',
+      },
+    },
+    {
       name: "custom type key",
       input: '【{t:"buttons", something: "something", else: "else"}】',
       options: {

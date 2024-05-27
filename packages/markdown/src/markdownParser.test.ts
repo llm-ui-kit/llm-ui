@@ -298,22 +298,22 @@ describe("markdownToVisibleText", () => {
 
     // ambiguous so we don't show it yet.
     { input: "*", isFinished: false, expected: "" },
-    { input: "abc\n*", isFinished: false, expected: "abc\n" },
+    { input: "abc\n*", isFinished: false, expected: "abc" },
     { input: "*abc", isFinished: false, expected: "" },
     { input: "__abc", isFinished: false, expected: "" },
     { input: "~~~abc", isFinished: false, expected: "" },
     // weird incorrect syntax (*a should be * a)
     { input: "*abc\n", isFinished: false, expected: "" },
-    { input: "*abc\ndef", isFinished: false, expected: "*abc\ndef" },
-    { input: "*abc\ndef*", isFinished: false, expected: "abc\ndef" },
+    { input: "*abc\ndef", isFinished: false, expected: "*abcdef" },
+    { input: "*abc\ndef*", isFinished: false, expected: "abcdef" },
     { input: "*abc\n**def*", isFinished: false, expected: "" }, // broken
     // ambiguous, but isFinished true so we don't hide things
     { input: "*", isFinished: true, expected: "*" },
     { input: "*abc", isFinished: true, expected: "*abc" },
     { input: "*abc\n", isFinished: true, expected: "*abc" },
-    { input: "*abc\ndef", isFinished: true, expected: "*abc\ndef" },
-    { input: "*abc\n**def**", isFinished: true, expected: "*abc\ndef" },
-    { input: "*abc\ndef*", isFinished: true, expected: "abc\ndef" }, // weird syntax edge case
+    { input: "*abc\ndef", isFinished: true, expected: "*abcdef" },
+    { input: "*abc\n**def**", isFinished: true, expected: "*abcdef" },
+    { input: "*abc\ndef*", isFinished: true, expected: "abcdef" }, // weird syntax edge case
     { input: "*abc* *def*", isFinished: true, expected: "abc def" },
 
     // thematic breaks
@@ -360,7 +360,7 @@ describe("markdownToVisibleText", () => {
     // paragraphs
 
     { input: "abc\n", isFinished: false, expected: "abc" },
-    { input: "abc\ndef", isFinished: false, expected: "abc\ndef" }, // mdast seems to see this as a single paragraph in the ast
+    { input: "abc\ndef", isFinished: false, expected: "abcdef" }, // mdast seems to see this as a single paragraph in the ast
     { input: "abc\n\ndef", isFinished: false, expected: "abcdef" },
 
     // list items
@@ -799,6 +799,20 @@ describe("markdownWithVisibleChars", () => {
       visibleChars: 2,
       expected: "`ab`\n",
     },
+
+    // trailing newlines
+    {
+      markdown: "abc\nd",
+      isFinished: false,
+      visibleChars: 3,
+      expected: "abc\n",
+    },
+    {
+      markdown: "abc\nd",
+      isFinished: false,
+      visibleChars: 4,
+      expected: "abc\nd\n",
+    },
   ];
 
   testCases.forEach(({ markdown, visibleChars, isFinished, expected }) => {
@@ -822,7 +836,13 @@ describe("markdownWithVisibleChars", () => {
         visibleChars,
         originalVisibleText.length,
       );
-      expect(visibleText.length).toBe(expectedVisibleChars);
+      try {
+        expect(visibleText.length).toBe(expectedVisibleChars);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        e.message = `${e.message} visibleText: ${visibleText}`;
+        throw e;
+      }
     });
   });
 });

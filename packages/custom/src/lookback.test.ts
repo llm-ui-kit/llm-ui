@@ -20,14 +20,56 @@ describe("customBlockLookBack", () => {
       output: '【{type:"buttons", something: "1234", else: "5678"}】',
       isStreamFinished: true,
       isComplete: true,
-      visibleTextLengthTarget: 8,
+      visibleTextLengthTarget: 1,
       expected: {
         output: JSON.stringify(
           { type: "buttons", something: "1234", else: "5678" },
           null,
           2,
         ),
-        visibleText: "12345678",
+        visibleText: " ",
+      },
+    },
+    {
+      name: "full no visible text",
+      output: '【{type:"buttons", something: "1234", else: "5678"}】',
+      isStreamFinished: true,
+      isComplete: true,
+      visibleTextLengthTarget: 0,
+      expected: {
+        output: JSON.stringify(
+          { type: "buttons", something: "1234", else: "5678" },
+          null,
+          2,
+        ),
+        visibleText: "",
+      },
+    },
+
+    {
+      name: "partial",
+      output: '【{type:"buttons", something: "1234", else: "',
+      isStreamFinished: false,
+      isComplete: false,
+      visibleTextLengthTarget: 1,
+      expected: {
+        output: JSON.stringify(
+          { type: "buttons", something: "1234", else: "" },
+          null,
+          2,
+        ),
+        visibleText: "",
+      },
+    },
+    {
+      name: "partial2",
+      output: '【{type:"buttons"',
+      isStreamFinished: false,
+      isComplete: false,
+      visibleTextLengthTarget: 1,
+      expected: {
+        output: JSON.stringify({ type: "buttons" }, null, 2),
+        visibleText: "",
       },
     },
     {
@@ -36,9 +78,10 @@ describe("customBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 3,
+      options: { visibleKeyPaths: ["$.something"] },
       expected: {
         output: JSON.stringify(
-          { type: "buttons", something: "123", else: "" },
+          { type: "buttons", something: "123", else: "5678" },
           null,
           2,
         ),
@@ -46,9 +89,9 @@ describe("customBlockLookBack", () => {
       },
     },
     {
-      name: "excludeVisibleKeys",
+      name: "visibleKeyPaths",
       output: '【{type:"buttons", something: "1234", else: "5678"}】',
-      options: { invisibleKeyPaths: ["$.else"] },
+      options: { visibleKeyPaths: ["$.something"] },
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 3,
@@ -62,10 +105,39 @@ describe("customBlockLookBack", () => {
       },
     },
     {
+      name: "excludeVisibleKeys",
+      output: '【{type:"buttons", something: "1234", else: "5678"}】',
+      options: { defaultVisible: true, invisibleKeyPaths: ["$.else"] },
+      isStreamFinished: true,
+      isComplete: true,
+      visibleTextLengthTarget: 3,
+      expected: {
+        output: JSON.stringify(
+          { type: "buttons", something: "123", else: "5678" },
+          null,
+          2,
+        ),
+        visibleText: "123",
+      },
+    },
+    {
+      name: "partial excludeVisibleKeys",
+      output: '【{type:"buttons", something',
+      options: { defaultVisible: true },
+      isStreamFinished: false,
+      isComplete: false,
+      visibleTextLengthTarget: 3,
+      expected: {
+        output: JSON.stringify({ type: "buttons", something: null }, null, 2),
+        visibleText: "",
+      },
+    },
+    {
       name: "partial",
       output: '【{type:"buttons", something: "123',
       isStreamFinished: false,
       isComplete: false,
+      options: { visibleKeyPaths: ["$.something"] },
       visibleTextLengthTarget: 2,
       expected: {
         output: JSON.stringify({ type: "buttons", something: "12" }, null, 2),
@@ -78,7 +150,7 @@ describe("customBlockLookBack", () => {
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 2,
-      options: { typeKey: "t" },
+      options: { typeKey: "t", visibleKeyPaths: ["$.something"] },
       expected: {
         output: JSON.stringify({ t: "buttons", something: "12" }, null, 2),
         visibleText: "12",

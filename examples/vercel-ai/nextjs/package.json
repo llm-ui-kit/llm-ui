@@ -14,7 +14,7 @@
     "@llm-ui/code": "^0.7.0",
     "@llm-ui/markdown": "^0.7.0",
     "@llm-ui/react": "^0.7.0",
-    "ai": "^3.1.13",
+    "ai": "^3.1.14",
     "html-react-parser": "^5.1.10",
     "next": "14.2.3",
     "react": "^18",

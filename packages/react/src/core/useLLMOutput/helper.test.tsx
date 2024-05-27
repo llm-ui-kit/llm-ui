@@ -79,6 +79,7 @@ describe("matchBlocks", () => {
           block: fallbackBlock,
           outputRaw: "helloWorld",
           visibleText: "helloWorld",
+          isVisible: true,
           output:
             "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
           startIndex: 0,
@@ -101,6 +102,7 @@ describe("matchBlocks", () => {
           block: fallbackBlock,
           outputRaw: "helloWorld",
           visibleText: "helloWorld",
+          isVisible: true,
           output:
             "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
           startIndex: 0,
@@ -125,6 +127,7 @@ describe("matchBlocks", () => {
             block: block,
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:99 isStreamFinished:true",
             startIndex: 0,
@@ -150,6 +153,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "hel",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
             startIndex: 0,
@@ -175,10 +179,24 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "hel",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
             startIndex: 0,
             endIndex: 10,
+            priority: 0,
+            llmOutput: "helloWorldhelloWorld",
+            isComplete: true,
+          },
+          {
+            block,
+            outputRaw: "helloWorld",
+            visibleText: "",
+            isVisible: false,
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:0 isStreamFinished:true",
+            startIndex: 10,
+            endIndex: 20,
             priority: 0,
             llmOutput: "helloWorldhelloWorld",
             isComplete: true,
@@ -200,6 +218,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
             startIndex: 0,
@@ -212,6 +231,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
             startIndex: 10,
@@ -238,6 +258,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
             startIndex: 0,
@@ -250,6 +271,7 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: "fallback",
             visibleText: "fallback",
+            isVisible: true,
             output:
               "fallback isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
             startIndex: 10,
@@ -262,6 +284,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:82 isStreamFinished:true",
             startIndex: 18,
@@ -287,6 +310,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
             startIndex: 0,
@@ -299,6 +323,7 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: " world",
             visibleText: " world",
+            isVisible: true,
             output:
               " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
             startIndex: 10,
@@ -324,6 +349,7 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
             startIndex: 0,
@@ -336,6 +362,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: " world",
             visibleText: " world",
+            isVisible: true,
             output:
               " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
             startIndex: 10,
@@ -361,11 +388,25 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: "helloWorld",
             visibleText: "hel",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:3 isStreamFinished:true",
             startIndex: 0,
             endIndex: 10,
             priority: 1,
+            llmOutput: "helloWorld world",
+            isComplete: true,
+          },
+          {
+            block: block,
+            outputRaw: " world",
+            visibleText: "",
+            isVisible: false,
+            output:
+              " world isComplete:true visibleTextLengthTarget:0 isStreamFinished:true",
+            startIndex: 10,
+            endIndex: 16,
+            priority: 0,
             llmOutput: "helloWorld world",
             isComplete: true,
           },
@@ -386,6 +427,7 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: "hell",
             visibleText: "hell",
+            isVisible: true,
             output:
               "hell isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
             startIndex: 0,
@@ -398,6 +440,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "oWo",
             visibleText: "oWo",
+            isVisible: true,
             output:
               "oWo isComplete:true visibleTextLengthTarget:96 isStreamFinished:true",
             startIndex: 4,
@@ -410,6 +453,7 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: "rld world",
             visibleText: "rld world",
+            isVisible: true,
             output:
               "rld world isComplete:true visibleTextLengthTarget:93 isStreamFinished:true",
             startIndex: 7,
@@ -435,6 +479,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
+            isVisible: true,
             output:
               "helloWorld isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
             startIndex: 0,
@@ -447,6 +492,7 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: " world",
             visibleText: " world",
+            isVisible: true,
             output:
               " world isComplete:true visibleTextLengthTarget:90 isStreamFinished:true",
             startIndex: 10,
@@ -473,6 +519,7 @@ describe("matchBlocks", () => {
             block: block1,
             outputRaw: "hello",
             visibleText: "hello",
+            isVisible: true,
             output:
               "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
             startIndex: 0,
@@ -485,6 +532,7 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: "World",
             visibleText: "World",
+            isVisible: true,
             output:
               "World isComplete:true visibleTextLengthTarget:95 isStreamFinished:true",
             startIndex: 5,
@@ -511,6 +559,7 @@ describe("matchBlocks", () => {
             block: block1,
             outputRaw: "hello",
             visibleText: "hello",
+            isVisible: true,
             output:
               "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:true",
             startIndex: 0,
@@ -523,6 +572,7 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: "World",
             visibleText: "World",
+            isVisible: true,
             output:
               "World isComplete:true visibleTextLengthTarget:95 isStreamFinished:true",
             startIndex: 5,
@@ -548,6 +598,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "helloWorld",
+            isVisible: true,
             output:
               "helloWorld isComplete:false visibleTextLengthTarget:100 isStreamFinished:false",
             startIndex: 0,
@@ -573,6 +624,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "helloWorld",
             visibleText: "hel",
+            isVisible: true,
             output:
               "helloWorld isComplete:false visibleTextLengthTarget:3 isStreamFinished:false",
             startIndex: 0,
@@ -598,6 +650,7 @@ describe("matchBlocks", () => {
             block: fallbackBlock,
             outputRaw: "hello",
             visibleText: "hello",
+            isVisible: true,
             output:
               "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:false",
             startIndex: 0,
@@ -610,6 +663,7 @@ describe("matchBlocks", () => {
             block,
             outputRaw: "World",
             visibleText: "World",
+            isVisible: true,
             output:
               "World isComplete:false visibleTextLengthTarget:95 isStreamFinished:false",
             startIndex: 5,
@@ -636,6 +690,7 @@ describe("matchBlocks", () => {
             block: completeBlock,
             outputRaw: "hello",
             visibleText: "hello",
+            isVisible: true,
             output:
               "hello isComplete:true visibleTextLengthTarget:100 isStreamFinished:false",
             startIndex: 0,
@@ -648,6 +703,7 @@ describe("matchBlocks", () => {
             block: partialBlock,
             outputRaw: "World",
             visibleText: "World",
+            isVisible: true,
             output:
               "World isComplete:false visibleTextLengthTarget:95 isStreamFinished:false",
             startIndex: 5,

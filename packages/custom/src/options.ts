@@ -1,6 +1,8 @@
 export type CustomBlockOptions = {
   startChar: string;
   endChar: string;
+  defaultVisible: boolean;
+  visibleKeyPaths: string[];
   invisibleKeyPaths: string[];
   typeKey: string;
 };
@@ -8,6 +10,8 @@ export type CustomBlockOptions = {
 export const defaultOptions: CustomBlockOptions = {
   startChar: "【",
   endChar: "】",
+  defaultVisible: false,
+  visibleKeyPaths: [],
   invisibleKeyPaths: [],
   typeKey: "type",
 };
