@@ -183,6 +183,18 @@ describe("matchBlocks", () => {
             llmOutput: "helloWorldhelloWorld",
             isComplete: true,
           },
+          {
+            block,
+            outputRaw: "helloWorld",
+            visibleText: "",
+            output:
+              "helloWorld isComplete:true visibleTextLengthTarget:0 isStreamFinished:true",
+            startIndex: 10,
+            endIndex: 20,
+            priority: 0,
+            llmOutput: "helloWorldhelloWorld",
+            isComplete: true,
+          },
         ],
       } satisfies TestCase;
     },
@@ -366,6 +378,18 @@ describe("matchBlocks", () => {
             startIndex: 0,
             endIndex: 10,
             priority: 1,
+            llmOutput: "helloWorld world",
+            isComplete: true,
+          },
+          {
+            block: block,
+            outputRaw: " world",
+            visibleText: "",
+            output:
+              " world isComplete:true visibleTextLengthTarget:0 isStreamFinished:true",
+            startIndex: 10,
+            endIndex: 16,
+            priority: 0,
             llmOutput: "helloWorld world",
             isComplete: true,
           },
