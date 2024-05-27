@@ -1,5 +1,16 @@
 # @llm-ui/markdown
 
+## 0.8.0
+
+### Minor Changes
+
+- [#217](https://github.com/llm-ui-kit/llm-ui/pull/217) [`4e17508`](https://github.com/llm-ui-kit/llm-ui/commit/4e175085ec1c352e7a4ebc7db801ce5f74b9378f) Thanks [@richardgill](https://github.com/richardgill)! - Markdown visible text no longer includes \n. This was causing behavior that was difficult to predict.
+
+### Patch Changes
+
+- Updated dependencies [[`4e17508`](https://github.com/llm-ui-kit/llm-ui/commit/4e175085ec1c352e7a4ebc7db801ce5f74b9378f)]:
+  - @llm-ui/react@0.8.0
+
 ## 0.7.0
 
 ### Patch Changes
