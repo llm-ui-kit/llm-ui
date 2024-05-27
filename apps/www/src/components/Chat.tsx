@@ -75,7 +75,6 @@ export const Chat = () => {
         {reversedMessagesWithoutSystem.length != 0 && (
           <div className="pb-[200px] h-screen pt-4 md:pt-20">
             <div className="overflow-y-auto flex flex-col-reverse h-full">
-              <div ref={bottomOfMessagesRef}></div>
               {reversedMessagesWithoutSystem.map((message, index) => {
                 const isStreamFinished =
                   ["user", "system"].includes(message.role) ||
