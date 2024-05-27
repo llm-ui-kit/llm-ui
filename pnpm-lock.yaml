@@ -107,12 +107,12 @@ importers:
       '@llm-ui/code':
         specifier: workspace:*
         version: link:../../packages/code
-      '@llm-ui/custom':
-        specifier: workspace:*
-        version: link:../../packages/custom
       '@llm-ui/examples':
         specifier: workspace:*
         version: link:../../tooling/examples
+      '@llm-ui/json':
+        specifier: workspace:*
+        version: link:../../packages/json
       '@llm-ui/markdown':
         specifier: workspace:*
         version: link:../../packages/markdown
@@ -277,13 +277,13 @@ importers:
   examples/code/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
@@ -338,13 +338,13 @@ importers:
   examples/code/vite:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
@@ -408,16 +408,16 @@ importers:
         specifier: ^5.2.0
         version: 5.2.7
 
-  examples/custom-components/nextjs:
+  examples/json/nextjs:
     dependencies:
-      '@llm-ui/custom':
-        specifier: ^0.7.0
-        version: link:../../../packages/custom
+      '@llm-ui/json':
+        specifier: ^0.9.0
+        version: link:../../../packages/json
       '@llm-ui/markdown':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/react
       next:
         specifier: 14.2.3
@@ -466,16 +466,16 @@ importers:
         specifier: ^5
         version: 5.4.3
 
-  examples/custom-components/vite:
+  examples/json/vite:
     dependencies:
-      '@llm-ui/custom':
-        specifier: ^0.7.0
-        version: link:../../../packages/custom
+      '@llm-ui/json':
+        specifier: ^0.9.0
+        version: link:../../../packages/json
       '@llm-ui/markdown':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/react
       react:
         specifier: ^18.2.0
@@ -539,10 +539,10 @@ importers:
   examples/markdown/nextjs:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/react
       next:
         specifier: 14.2.3
@@ -591,10 +591,10 @@ importers:
   examples/markdown/vite:
     dependencies:
       '@llm-ui/markdown':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/react
       react:
         specifier: ^18.2.0
@@ -655,13 +655,13 @@ importers:
   examples/openai/nextjs:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
@@ -719,13 +719,13 @@ importers:
   examples/openai/vite-and-express:
     dependencies:
       '@llm-ui/code':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/react
       dotenv:
         specifier: ^16.4.5
@@ -813,17 +813,17 @@ importers:
         specifier: ^0.0.14
         version: 0.0.14(zod@3.23.8)
       '@llm-ui/code':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/code
       '@llm-ui/markdown':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/markdown
       '@llm-ui/react':
-        specifier: ^0.7.0
+        specifier: ^0.9.0
         version: link:../../../packages/react
       ai:
-        specifier: ^3.1.13
-        version: 3.1.13(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
+        specifier: ^3.1.14
+        version: 3.1.14(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -938,7 +938,7 @@ importers:
         specifier: ^5.4.3
         version: 5.4.3
 
-  packages/custom:
+  packages/json:
     dependencies:
       '@llm-ui/react':
         specifier: workspace:*
@@ -5154,8 +5154,8 @@ packages:
       zod-to-json-schema: 3.22.5(zod@3.23.8)
     dev: false
 
-  /ai@3.1.13(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
-    resolution: {integrity: sha512-1DVdKv2MgkBe7OLa+S4uKFVXNZPWFFaW0rjcNi1bH8nH8b3vqurby0McWUUY77r/RA1i/QY4LnWobn/dPO0Qcg==}
+  /ai@3.1.14(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8):
+    resolution: {integrity: sha512-yW9ipraLm2PzzWc74eWUUVUIVZbO/Ggv//83iBfDkOTndrBmFqyIk6DtVVzf+RwKNUYuZzj8v5MKcgnHQhceXw==}
     engines: {node: '>=18'}
     peerDependencies:
       openai: ^4.42.0

@@ -178,11 +178,11 @@ const matchesWithLookback = ({
     const visibleTextSoFar = acc
       .map((m) => m.visibleText.length)
       .reduce((a, b) => a + b, 0);
-    const localVisibleTextLengthTarget =
-      visibleTextLengthTarget - visibleTextSoFar;
-    if (localVisibleTextLengthTarget <= 0) {
-      return acc;
-    }
+    const localVisibleTextLengthTarget = Math.max(
+      visibleTextLengthTarget - visibleTextSoFar,
+      0,
+    );
+
     const isLastMatch = index === matches.length - 1;
     const isComplete = !isLastMatch || isStreamFinished;
     const { output, visibleText } = match.block.lookBack({
@@ -204,6 +204,7 @@ const matchesWithLookback = ({
       llmOutput: match.llmOutput,
       output,
       visibleText,
+      isVisible: visibleText.length > 0,
     };
 
     return [...acc, matchWithLookback];

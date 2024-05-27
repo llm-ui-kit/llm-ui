@@ -1,24 +1,31 @@
 import { fireConfetti } from "@/animations/confetti";
 import { multipleStars } from "@/animations/stars";
-import { customBlock, parseJson5 } from "@llm-ui/custom";
+import { jsonBlock, parseJson5 } from "@llm-ui/json";
 import type { LLMOutputBlock, LLMOutputComponent } from "@llm-ui/react";
+import { z } from "zod";
 import { Button } from "../ui/Button";
 import { buttonsSchema } from "./buttonsSchema";
 
 type OnClick = (buttonText: string | undefined) => void;
 
-const buttonsPartialSchema = buttonsSchema.deepPartial();
+const partialSchema = z.object({
+  type: z.literal("buttons"),
+  buttons: z
+    .array(z.object({ text: z.string().nullable().optional() }))
+    .nullable()
+    .optional(),
+});
 
 const buttonsComponent = (onClick: OnClick) => {
   const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-    const buttons = buttonsPartialSchema.parse(parseJson5(blockMatch.output));
-    if (!buttons) {
+    const buttons = partialSchema.parse(parseJson5(blockMatch.output));
+    if (!buttons || !blockMatch.isVisible) {
       return undefined;
     }
     return (
       <div className="flex flex-row my-4 gap-2">
         {buttons?.buttons?.map((button, index) => (
-          <Button key={index} onClick={() => onClick(button?.text)}>
+          <Button key={index} onClick={() => onClick(button?.text ?? "")}>
             {button?.text}
           </Button>
         ))}
@@ -39,6 +46,6 @@ export const starsAndConfetti = (buttonText: string = "") => {
 export const buttonsBlock = (
   onClick: OnClick = starsAndConfetti,
 ): LLMOutputBlock => ({
-  ...customBlock("buttons"),
+  ...jsonBlock("buttons", { defaultVisible: true }),
   component: buttonsComponent(onClick),
 });

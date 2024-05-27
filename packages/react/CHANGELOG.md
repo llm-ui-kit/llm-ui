@@ -1,5 +1,14 @@
 # @llm-ui/react
 
+## 0.9.0
+
+## 0.8.0
+
+### Minor Changes
+
+- [#217](https://github.com/llm-ui-kit/llm-ui/pull/217) [`4e17508`](https://github.com/llm-ui-kit/llm-ui/commit/4e175085ec1c352e7a4ebc7db801ce5f74b9378f) Thanks [@richardgill](https://github.com/richardgill)! - - `useLLMOutput` hook now returns all known blocks, it doesn't truncate the blocks based on how much is visible.
+  - `isVisible: true|false` added to 'blockMatch' returned from `useLLMOutput` hook.
+
 ## 0.7.0
 
 ## 0.6.0

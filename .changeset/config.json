@@ -13,13 +13,14 @@
       "@llm-ui/markdown",
       "@llm-ui/code",
       "@llm-ui/shared",
-      "@llm-ui/custom"
+      "@llm-ui/json"
     ]
   ],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
+  "bumpVersionsWithWorkspaceProtocolOnly": true,
   "ignore": [
     "@llm-ui/www",
     "llm-ui-*-example",

@@ -1,0 +1,53 @@
+{
+  "name": "@llm-ui/json",
+  "version": "0.9.0",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build-watch": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@llm-ui/react": "workspace:*",
+    "@llm-ui/shared": "workspace:*",
+    "jsonpath-plus": "^9.0.0",
+    "jsonrepair": "^3.8.0",
+    "remeda": "^1.57.0",
+    "zod-to-json-schema": "^3.23.0"
+  },
+  "devDependencies": {
+    "@llm-ui/tsconfig": "workspace:*",
+    "@types/react": "18.2.60",
+    "@types/react-dom": "18.2.19",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "zod": "^3.23.8"
+  }
+}

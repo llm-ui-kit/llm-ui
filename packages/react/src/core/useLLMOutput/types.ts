@@ -20,6 +20,7 @@ export type BlockMatchNoLookback = MatchBase & {
 export type LLMOutputMatchWithLookBack = LLMOutputMatch & {
   output: string;
   visibleText: string;
+  isVisible: boolean;
 };
 
 export type MaybeLLMOutputMatch = LLMOutputMatch | undefined;

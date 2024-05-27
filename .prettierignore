@@ -9,3 +9,5 @@ pnpm-lock.yaml
 *.hbs
 
 .next
+
+dist/

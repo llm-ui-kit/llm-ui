@@ -1,5 +1,21 @@
 # @llm-ui/code
 
+## 0.9.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.9.0
+  - @llm-ui/shared@0.9.0
+
+## 0.8.0
+
+### Patch Changes
+
+- Updated dependencies [[`4e17508`](https://github.com/llm-ui-kit/llm-ui/commit/4e175085ec1c352e7a4ebc7db801ce5f74b9378f)]:
+  - @llm-ui/react@0.8.0
+  - @llm-ui/shared@0.8.0
+
 ## 0.7.0
 
 ### Patch Changes
