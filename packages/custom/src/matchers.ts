@@ -12,11 +12,13 @@ const findCustomBlock = (
   const matcher = regexMatcher(regex);
   return (llmOutput: string) => {
     const match = matcher(llmOutput);
-    if (match) {
-      const block = parseJson5(removeStartEndChars(match.outputRaw, options));
-      if (!block || block[options.typeKey] !== type) {
-        return undefined;
-      }
+    if (!match) {
+      return undefined;
+    }
+    const block = parseJson5(removeStartEndChars(match.outputRaw, options));
+
+    if (!block || block[options.typeKey] !== type) {
+      return undefined;
     }
     return match;
   };
