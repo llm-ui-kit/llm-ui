@@ -184,18 +184,23 @@ const buttonsSchema = z.object({
 });
 `;
 
-export const customButtonsComponent = `//imports here
-const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-  if (!blockMatch.isComplete) {
-    return <div>Buttons loading...</div>;
-  }
-  // use buttonsSchema from step 2
-  // todo parse safe
-  const buttons = buttonsSchema.parse(parseJson5(blockMatch.output));
+export const customButtonsComponent = `import { parseJson5 } from "@llm-ui/json";
+import { type LLMOutputComponent } from "@llm-ui/react";
 
+const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
+  if (!blockMatch.isVisible) {
+    return null;
+  }
+  const { data: buttons, error } = buttonsSchema.safeParse(
+    parseJson5(blockMatch.output),
+  );
+
+  if (error) {
+    return <div>{error.toString()}</div>;
+  }
   return (
     <div>
-      {buttons.btns.map((button, index) => (
+      {buttons.buttons.map((button, index) => (
         <button key={index}>{button.text}</button>
       ))}
     </div>
@@ -203,12 +208,26 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
 };
 `;
 
-export const customButtonsUseLlmOutput = `//imports here
+export const customButtonsUseLlmOutput = `import { markdownLookBack } from "@llm-ui/markdown";
+import { useLLMOutput, type LLMOutputComponent, useStreamExample } from "@llm-ui/react";
+import parseHtml from "html-react-parser";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { jsonBlock } from "@llm-ui/json";
+
+const example = \`Buttons:
+
+【{type:"buttons",buttons:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
+\`;
+
+const { isStreamFinished, output } = useStreamExample(example);
+
+
 const { blockMatches } = useLLMOutput({
   llmOutput: output,
   blocks: [
     {
-      ...customBlock("btn"),
+      ...jsonBlock("buttons"),
       component: ButtonsComponent, // from step 3
     },
   ],
@@ -232,10 +251,111 @@ return (
 
 export const generateButtonsPrompt = `import { jsonBlockPrompt } from "@llm-ui/json";
 
-// use buttonsSchema from step 2
-customBlockPrompt("Button", buttonsSchema, [
-  { t: "btn", btns: [{ text: "Button 1" }, { text: "Button 2" }] },
-]);
+const prompt = jsonBlockPrompt({
+  name: "Button",
+  schema: buttonsSchema, // use schema from step 2
+  examples: [
+    { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
+  ]
+});
 `;
 
-export const fullCustomQuickStart = ``;
+export const fullCustomQuickStart = `import { jsonBlock, jsonBlockPrompt, parseJson5 } from "@llm-ui/json";
+import { markdownLookBack } from "@llm-ui/markdown";
+import {
+  useLLMOutput,
+  useStreamExample,
+  type LLMOutputComponent,
+} from "@llm-ui/react";
+
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import z from "zod";
+
+const buttonsSchema = z.object({
+  type: z.literal("buttons"),
+  buttons: z.array(z.object({ text: z.string() })),
+});
+
+const buttonsPrompt = jsonBlockPrompt({
+  name: "buttons",
+  schema: buttonsSchema,
+  examples: [
+    { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
+  ],
+});
+// -------Step 1: Create a markdown component-------
+
+// Customize this component with your own styling
+const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
+  const markdown = blockMatch.output;
+  return (
+    <ReactMarkdown className={"markdown"} remarkPlugins={[remarkGfm]}>
+      {markdown}
+    </ReactMarkdown>
+  );
+};
+
+// -------Step 2: Create a buttons component-------
+
+// Customize this component with your own styling
+const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
+  if (!blockMatch.isVisible) {
+    return null;
+  }
+  const { data: buttons, error } = buttonsSchema.safeParse(
+    parseJson5(blockMatch.output),
+  );
+
+  if (error) {
+    return <div>{error.toString()}</div>;
+  }
+  return (
+    <div>
+      {buttons.buttons.map((button, index) => (
+        <button key={index}>{button.text}</button>
+      ))}
+    </div>
+  );
+};
+
+// -------Step 3: Render markdown with llm-ui-------
+
+const example = \`
+## Example
+ more text 123
+ more text 123
+【{type:"buttons",buttons:null}】
+one more time
+\`;
+
+const Example = () => {
+  const { isStreamFinished, output } = useStreamExample(example);
+
+  const { blockMatches } = useLLMOutput({
+    llmOutput: output,
+    blocks: [
+      {
+        ...jsonBlock("buttons"),
+        component: ButtonsComponent,
+      },
+    ],
+    fallbackBlock: {
+      component: MarkdownComponent,
+      lookBack: markdownLookBack(),
+    },
+    isStreamFinished,
+  });
+  return (
+    <div>
+      <pre>Prompt: {buttonsPrompt}</pre>
+      {blockMatches.map((blockMatch, index) => {
+        const Component = blockMatch.block.component;
+        return <Component key={index} blockMatch={blockMatch} />;
+      })}
+    </div>
+  );
+};
+
+export default Example;
+`;

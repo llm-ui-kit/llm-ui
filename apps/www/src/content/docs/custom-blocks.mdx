@@ -15,6 +15,7 @@ import {
   customJsonSchema,
   customButtonsComponent,
   customButtonsUseLlmOutput,
+  generateButtonsPrompt,
 } from "../../snippets/quickStart";
 import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
 import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
@@ -50,7 +51,7 @@ Let the LLM know it can reply with a JSON block:
 
 <CopyOrGithub
   codeToCopy={fullCustomQuickStart}
-  githubUrl={`${examplesUrl}/custom-components`}
+  githubUrl={`${examplesUrl}/json`}
 />
 
 ## Install dependencies
@@ -120,8 +121,10 @@ Now we’ve created our components, we’re ready to use useLLMOutput to render 
 
 ## Step 5: Prompt LLM with your custom block
 
-Prompt LLM with your custom block:
+Generate the prompt for your JSON block:
+
+<CodeBlock code={generateButtonsPrompt} lang="tsx" />
+
+Generates:
 
 <CodeBlock code={buttonPrompt} />
-
-You can generate the prompt:

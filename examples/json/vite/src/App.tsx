@@ -39,8 +39,7 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 
 // Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-  const isVisible = blockMatch.isVisible;
-  if (!isVisible) {
+  if (!blockMatch.isVisible) {
     return null;
   }
   const { data: buttons, error } = buttonsSchema.safeParse(
@@ -50,15 +49,11 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
   if (error) {
     return <div>{error.toString()}</div>;
   }
-  if (!buttons) {
-    return undefined;
-  }
   return (
     <div>
-      {buttons?.buttons?.map(
-        (button, index) =>
-          button?.text && <button key={index}>{button.text}</button>,
-      )}
+      {buttons.buttons.map((button, index) => (
+        <button key={index}>{button.text}</button>
+      ))}
     </div>
   );
 };

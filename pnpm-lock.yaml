@@ -810,8 +810,8 @@ importers:
   examples/vercel-ai/nextjs:
     dependencies:
       '@ai-sdk/openai':
-        specifier: ^0.0.15
-        version: 0.0.15(zod@3.23.8)
+        specifier: ^0.0.16
+        version: 0.0.16(zod@3.23.8)
       '@llm-ui/code':
         specifier: ^0.9.0
         version: link:../../../packages/code
@@ -1131,8 +1131,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /@ai-sdk/openai@0.0.15(zod@3.23.8):
-    resolution: {integrity: sha512-WqLbR+hZRjAqh+JrI1hqP5CopeSg2kyHUOL9Vh68hY6QhRBELURxya152nlU9tcpMIE0eqZWPSK2RYu+RP7/vw==}
+  /@ai-sdk/openai@0.0.16(zod@3.23.8):
+    resolution: {integrity: sha512-rORtaSb3jmx6TGgD9HdwvFkGKbpoSeJoRQR9lCZchwF/EIixIAaHpTc5uO+4KfhOlqIbWt05a4A7ABmkPmj1fg==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
