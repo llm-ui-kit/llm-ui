@@ -1,5 +1,6 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Button, type ButtonProps } from "../Button";
+
 export const GithubLinkButton: React.FC<
   {
     href: string;

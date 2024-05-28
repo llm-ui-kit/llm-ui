@@ -3,6 +3,8 @@ title: Custom blocks
 description: ""
 ---
 
+import { LinkButton } from "@/components/ui/custom/LinkButton";
+
 Custom blocks allow LLMs to reply with specific formats which can be rendered as custom components in your application.
 
 # Formats
@@ -20,15 +22,23 @@ Custom blocks allow LLMs to reply with specific formats which can be rendered as
 - ✅ Good for advanced use cases
 - ⚠️ High overhead of non-content characters
 
-## Seperated values
+<div className="mt-6">
+  <LinkButton href="/docs/blocks/json">Read the docs</LinkButton>
+</div>
+
+## CSV
 
 <CodeBlockInline>
 
 ```plain
-±Button 1;Button 2§
+⦅Button 1,Button 2⦆
 ```
 
 </CodeBlockInline>
 
 - ✅ Good for simple responses
-- ✅ Low overhead of non-content characters (only: ±,§ and ;)
+- ✅ Low overhead of non-content characters (only: `⦅` `,` `⦆`)
+
+<div className="mt-6">
+  <LinkButton href="/docs/blocks/csv">Read the docs</LinkButton>
+</div>
