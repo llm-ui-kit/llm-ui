@@ -9,6 +9,8 @@ import { useChat } from "ai/react";
 import * as React from "react";
 import * as R from "remeda";
 
+const IS_SERVER = typeof window === "undefined";
+
 const ChatMessage: React.FC<{
   message: Message;
   isStreamFinished: boolean;
@@ -38,6 +40,7 @@ const ChatMessage: React.FC<{
 };
 
 export const Chat = () => {
+  const storage = !IS_SERVER ? window.localStorage : null;
   const [currentApiKey, setCurrentApiKey] = React.useState<string>("");
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
@@ -59,6 +62,11 @@ export const Chat = () => {
     setCurrentApiKey(newApiKey);
   };
 
+  React.useEffect(() => {
+    const storedApiKey = storage?.getItem("apiKey");
+    setCurrentApiKey(storedApiKey || "");
+  }, []);
+
   const messagesWithoutSystem = messages.slice(1);
   const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
   return (
@@ -73,7 +81,10 @@ export const Chat = () => {
       </div>
       <form
         autoComplete="off"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          storage?.setItem("apiKey", currentApiKey);
+          handleSubmit(e);
+        }}
         className="p-2 flex flex-col"
       >
         {reversedMessagesWithoutSystem.length != 0 && (
