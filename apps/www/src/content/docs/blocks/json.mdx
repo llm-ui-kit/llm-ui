@@ -24,22 +24,11 @@ import { examplesUrl } from "@/constants/constants";
 
 Allow LLMs to reply with JSON, which can be rendered as custom components in your application.
 
-# Features
-
-- Allow LLM to reply with custom components
-- Streaming support (1 visible character at a time)
-
-## Prompt
-
-Let the LLM know it can reply with a JSON block:
-
-<CodeBlock code={buttonPrompt} />
-
 ## Demo
 
 <ExampleSideBySide
   client:load
-  example={`Buttons:\n【{type:"buttons",buttons:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】`}
+  example={`Buttons:\n【{\n   type: "buttons",\n   buttons:[\n     {text:"Star ⭐"},\n     {text:"Confetti 🎉"}\n   ]\n}】`}
   options={{ delayMultiplier: 0.2 }}
 />
 
