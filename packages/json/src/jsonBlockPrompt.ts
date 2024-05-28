@@ -9,17 +9,17 @@ export const jsonBlockPrompt = <
   name,
   schema,
   examples,
-  userOptions,
+  options,
 }: {
   name: string;
   schema: Schema;
   examples: z.infer<Schema>[];
-  userOptions?: Partial<JsonBlockOptions>;
+  options?: Partial<JsonBlockOptions>;
 }): string => {
-  const { startChar, endChar } = getOptions(userOptions);
+  const { startChar, endChar } = getOptions(options);
   const schemaPrompt = jsonBlockSchema(schema);
   const examplePrompts = examples.map((example) =>
-    jsonBlockExample(schema, example, userOptions),
+    jsonBlockExample({ schema, example, options }),
   );
   return `You can respond with a ${name} component by wrapping JSON in ${startChar}${endChar}. The schema is:\n${schemaPrompt}\n\nExamples: \n${examplePrompts.join(`\n`)}`;
 };
