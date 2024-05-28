@@ -938,6 +938,25 @@ importers:
         specifier: ^5.4.3
         version: 5.4.3
 
+  packages/csv:
+    dependencies:
+      '@llm-ui/react':
+        specifier: workspace:*
+        version: link:../react
+      '@llm-ui/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@llm-ui/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/tsconfig
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(typescript@5.4.3)
+      typescript:
+        specifier: ^5.4.3
+        version: 5.4.3
+
   packages/json:
     dependencies:
       '@llm-ui/react':

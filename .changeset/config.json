@@ -13,7 +13,8 @@
       "@llm-ui/markdown",
       "@llm-ui/code",
       "@llm-ui/shared",
-      "@llm-ui/json"
+      "@llm-ui/json",
+      "@llm-ui/csv"
     ]
   ],
   "linked": [],
