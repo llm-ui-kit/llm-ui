@@ -8,6 +8,7 @@ export const prerender = false;
 const chatRequestSchema = z.object({
   messages: z.any(),
   apiKey: z.string(),
+  model: z.string(),
 });
 
 export const POST: APIRoute = async ({ request }) => {
@@ -21,12 +22,12 @@ export const POST: APIRoute = async ({ request }) => {
       { status: 400 },
     );
   }
-  const { apiKey, messages } = result.data;
+  const { apiKey, messages, model } = result.data;
   const openai = new OpenAI({
     apiKey,
   });
   const completion = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
+    model,
     messages: messages,
     stream: true,
   });
