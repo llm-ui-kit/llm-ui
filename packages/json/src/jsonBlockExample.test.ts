@@ -28,11 +28,20 @@ describe("jsonBlockExample", () => {
       example: { a: [{ a: "a", b: "b" }] },
       expected: '【{"a":[{"a":"a","b":"b"}]}】',
     },
+    {
+      name: "custom start and end chars",
+      schema: z.object({
+        a: z.array(z.object({ a: z.string(), b: z.string() })),
+      }),
+      example: { a: [{ a: "a", b: "b" }] },
+      options: { startChar: "z", endChar: "x" },
+      expected: 'z{"a":[{"a":"a","b":"b"}]}x',
+    },
   ];
 
-  testCases.forEach(({ name, schema, example, expected }) => {
+  testCases.forEach(({ name, schema, example, options, expected }) => {
     it(name, () => {
-      expect(jsonBlockExample(schema, example)).toEqual(expected);
+      expect(jsonBlockExample({ schema, example, options })).toEqual(expected);
     });
   });
 });

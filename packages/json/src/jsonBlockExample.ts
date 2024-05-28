@@ -3,13 +3,17 @@ import { JsonBlockOptions, getOptions } from "./options";
 
 export const jsonBlockExample = <
   Schema extends ZodTypeAny = ZodSchema<undefined>,
->(
-  schema: Schema,
-  example: z.infer<Schema>,
-  userOptions?: Partial<JsonBlockOptions>,
-): string => {
+>({
+  schema,
+  example,
+  options,
+}: {
+  schema: Schema;
+  example: z.infer<Schema>;
+  options?: Partial<JsonBlockOptions>;
+}): string => {
   // throw if example does not match schema
   const parsed = schema.parse(example);
-  const { startChar, endChar } = getOptions(userOptions);
+  const { startChar, endChar } = getOptions(options);
   return `${startChar}${JSON.stringify(parsed)}${endChar}`;
 };

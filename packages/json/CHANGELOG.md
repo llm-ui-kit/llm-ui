@@ -1,5 +1,18 @@
 # @llm-ui/custom
 
+## 0.10.0
+
+### Minor Changes
+
+- [#226](https://github.com/llm-ui-kit/llm-ui/pull/226) [`0fdafd8`](https://github.com/llm-ui-kit/llm-ui/commit/0fdafd8d7575d225c7b03afdafc7d361c2eff11c) Thanks [@richardgill](https://github.com/richardgill)! - - jsonBlockExample params are now an object
+  - jsonBlockPrompt params `userOptions` -> `options`
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.10.0
+  - @llm-ui/shared@0.10.0
+
 ## 0.9.0
 
 ### Minor Changes

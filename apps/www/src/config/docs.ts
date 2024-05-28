@@ -16,9 +16,8 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: "Core",
+      title: "Built-in blocks",
       items: [
-        { title: "LLM output hook", href: "/docs/llm-output-hook" },
         {
           title: "Markdown block",
           href: "/docs/blocks/markdown",
@@ -27,9 +26,22 @@ export const docsConfig: DocsConfig = {
           title: "Code block",
           href: "/docs/blocks/code",
         },
+      ],
+    },
+    {
+      title: "Custom components",
+      items: [
         {
-          title: "Custom blocks",
+          title: "Introduction",
           href: "/docs/custom-blocks",
+        },
+        {
+          title: "JSON block",
+          href: "/docs/blocks/json",
+        },
+        {
+          title: "Seperated values block",
+          href: "/docs/blocks/separated-values",
         },
       ],
     },
@@ -45,6 +57,7 @@ export const docsConfig: DocsConfig = {
     {
       title: "Advanced",
       items: [
+        { title: "LLM output hook", href: "/docs/llm-output-hook" },
         {
           title: "Throttle functions",
           href: "/docs/advanced/throttle-functions",
