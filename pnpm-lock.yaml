@@ -946,10 +946,19 @@ importers:
       '@llm-ui/shared':
         specifier: workspace:*
         version: link:../shared
+      react:
+        specifier: ^18.0.0
+        version: 18.2.0
     devDependencies:
       '@llm-ui/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/tsconfig
+      '@types/react':
+        specifier: 18.2.60
+        version: 18.2.60
+      '@types/react-dom':
+        specifier: 18.2.19
+        version: 18.2.19
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(typescript@5.4.3)

@@ -37,7 +37,12 @@
   },
   "devDependencies": {
     "@llm-ui/tsconfig": "workspace:*",
+    "@types/react": "18.2.60",
+    "@types/react-dom": "18.2.19",
     "tsup": "^8.0.2",
     "typescript": "^5.4.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
   }
 }
