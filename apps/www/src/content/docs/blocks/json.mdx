@@ -1,0 +1,451 @@
+---
+title: JSON Block
+description: ""
+---
+
+import { buttonPrompt } from "@/components/examples/examples";
+import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
+import { PackageInstall } from "@/components/docs/PackageInstall";
+import {
+  markdownQuickStart,
+  codeblockQuickstart,
+  llmUiOutputQuickStart,
+  llmUiOutputQuickStartStep,
+  fullCustomQuickStart,
+  customJsonSchema,
+  customButtonsComponent,
+  customButtonsUseLlmOutput,
+  generateButtonsPrompt,
+} from "../../../snippets/quickStart";
+import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
+import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
+import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
+import { examplesUrl } from "@/constants/constants";
+
+Allow LLMs to reply with JSON, which can be rendered as custom components in your application.
+
+## Demo
+
+<ExampleSideBySide
+  client:load
+  example={`Buttons:\n【{\n   type: "buttons",\n   buttons:[\n     {text:"Star ⭐"},\n     {text:"Confetti 🎉"}\n   ]\n}】`}
+  options={{ delayMultiplier: 0.2 }}
+/>
+
+# Installation
+
+<PackageInstall client:load packages={["@llm-ui/json"]} />
+
+# Quick start
+
+<CopyOrGithub
+  codeToCopy={fullCustomQuickStart}
+  githubUrl={`${examplesUrl}/json`}
+/>
+
+## Install dependencies
+
+<PackageInstall
+  client:load
+  packages={[
+    "@llm-ui/json",
+    "@llm-ui/react",
+    "@llm-ui/markdown",
+    "react-markdown",
+    "remark-gfm",
+    "html-react-parser",
+    "zod",
+  ]}
+/>
+
+## Step 1: Create a markdown component
+
+Create a component to render markdown using `react-markdown`.
+
+<CodeBlock code={markdownQuickStart} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCustomQuickStart} />
+  Read more in the [markdown block docs](/docs/blocks/markdown)
+</CopyDocsContainer>
+
+## Step 2: Setup your custom block's JSON schema
+
+Use [zod](https://zod.dev/?id=objects) to create a schema for your custom block.
+
+We'll set up a 'buttons' block:
+
+<CodeBlock code={customJsonSchema} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCustomQuickStart} />
+</CopyDocsContainer>
+
+Example JSON for your block:
+
+<CodeBlockInline>
+
+```json
+{
+  "type": "buttons",
+  "buttons": [{ "text": "Button 1" }, { "text": "Button 2" }]
+}
+```
+
+</CodeBlockInline>
+
+## Step 3: Create a custom block component
+
+<CodeBlock code={customButtonsComponent} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCustomQuickStart} />
+</CopyDocsContainer>
+
+## Step 4: Render custom blocks with llm-ui
+
+Now we’ve created our components, we’re ready to use useLLMOutput to render language model output which contains markdown and buttons components.
+
+<CodeBlock code={customButtonsUseLlmOutput} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCustomQuickStart} />
+</CopyDocsContainer>
+
+## Step 5: Prompt LLM with your custom block
+
+Generate the prompt for your JSON block:
+
+<CodeBlock code={generateButtonsPrompt} lang="tsx" />
+
+Generates:
+
+<CodeBlock code={buttonPrompt} />
+
+# Options
+
+<CodeBlockInline>
+
+```tsx
+{
+  startChar: "【",
+  endChar: "】",
+  typeKey: "type" // the key in the JSON object which determines the block type e.g. {"type": "buttons"}
+  defaultVisible: false, // See below
+  visibleKeyPaths: [], // See below
+  invisibleKeyPaths: [], // See below
+}
+```
+
+</CodeBlockInline>
+
+## `defaultVisible`
+
+### `defaultVisible: false`
+
+Generate no 'visibleText' until the whole block is parsed.
+
+When a partial block is parsed:
+
+<CodeBlockInline>
+
+```plain
+【{ type:"buttons", buttons: [{text:"Button 1"}, {text:"But `
+```
+
+</CodeBlockInline>
+
+<CodeBlockInline>
+
+```tsx
+blockMatch.visibleText;
+// => ""
+
+blockMatch.isVisible;
+// => false
+
+// llm-ui completes the partial JSON
+blockMatch.output;
+// => "{ type:"buttons", buttons: [{text:"Button 1"}, {text:"But"}] }"
+```
+
+</CodeBlockInline>
+
+When the whole block is parsed:
+
+<CodeBlockInline>
+
+```plain
+【{ type:"buttons", buttons: [{text:"Button 1"}, {text:"Button 2"}] }】
+```
+
+</CodeBlockInline>
+
+<CodeBlockInline>
+
+```tsx
+blockMatch.visibleText;
+// => " "
+
+blockMatch.isVisible;
+// => true
+
+blockMatch.output;
+// => "{ type:"buttons", buttons: [{text:"Button 1"}, {text:"Button 2"}] }"
+```
+
+</CodeBlockInline>
+
+### `defaultVisible: true`
+
+Generates 'visibleText' as the reponse is parsed:
+
+<CodeBlockInline>
+
+```plain
+【{ type:"buttons", buttons: [{text:"Button 1"}, {text:"But
+```
+
+</CodeBlockInline>
+
+<CodeBlockInline>
+
+```tsx
+blockMatch.visibleText;
+// => "B"
+// then
+// => "Bu"
+// then
+// => "But"
+
+blockMatch.isVisible;
+// => true
+
+blockMatch.output;
+// => "{ type:"buttons", buttons: [{text:"B"}] }"
+// then
+// => "{ type:"buttons", buttons: [{text:"Bu"}] }"
+// then
+// => "{ type:"buttons", buttons: [{text:"But"}] }"
+```
+
+</CodeBlockInline>
+
+## `visibleKeyPaths` and `invisibleKeyPaths`
+
+You can use `visibleKeyPaths` and `invisibleKeyPaths` to determine which fields in the JSON object are visible or invisible.
+
+The path syntax is [jsonpath](https://goessner.net/articles/JsonPath/index.html#e3).
+
+<CodeBlockInline>
+
+```tsx
+{
+  defaultVisible: false,
+  visibleKeyPaths: ["$.buttons[*].text"],
+}
+```
+
+</CodeBlockInline>
+
+<CodeBlockInline>
+
+```tsx
+{
+  defaultVisible: true, // typeKey e.g. "type" is always invisible
+  invisibleKeyPaths: ["$.buttons[*].color"],
+}
+```
+
+</CodeBlockInline>
+
+# Prompts
+
+## `jsonBlockPrompt`
+
+Returns a full prompt to send to the LLM.
+
+<CodeBlockInline>
+
+```tsx
+import { jsonBlockPrompt } from "@llm-ui/json";
+import z from "zod";
+
+jsonBlockPrompt({
+  name: "Button",
+  schema: z.object({
+    type: z.literal("buttons"),
+    buttons: z.array(z.object({ text: z.string() })),
+  });
+  examples: [
+    { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
+  ],
+  // optional
+  options: {
+    startChar: "【",
+    endChar: "】",
+    typeKey: "type",
+    defaultVisible: false,
+  },
+});
+// =>
+"
+You can respond with a Button component by wrapping JSON in 【】.
+The JSON schema is:
+{"type":"object","properties":{"type":{"type":"string","const":"buttons"},"buttons":{"type":"array","items":{"type":"object","properties":{"text":{"type":"string"}},"required":["text"],"additionalProperties":false}}},"required":["type","buttons"]}
+
+Examples:
+【{"type":"buttons","buttons":[{"text":"Button 1"},{"text":"Button 2"}]}】
+"
+```
+
+</CodeBlockInline>
+
+## `jsonBlockSchema`
+
+Returns the schema as a JSON schema string.
+
+<CodeBlockInline>
+
+```tsx
+import { jsonBlockSchema } from "@llm-ui/json";
+import z from "zod";
+
+jsonBlockSchema(z.object({
+  type: z.literal("buttons"),
+  buttons: z.array(z.object({ text: z.string() })),
+}));
+// =>
+{"type":"object","properties":{"type":{"type":"string","const":"buttons"},"buttons":{"type":"array","items":{"type":"object","properties":{"text":{"type":"string"}},"required":["text"],"additionalProperties":false}}},"required":["type","buttons"]}
+```
+
+</CodeBlockInline>
+
+## `jsonBlockExample`
+
+Generates a single JSON block usage example.
+
+<CodeBlockInline>
+
+```tsx
+import { jsonBlockExample } from "@llm-ui/json";
+import z from "zod";
+
+jsonBlockExample({
+  schema: z.object({
+    type: z.literal("buttons"),
+    buttons: z.array(z.object({ text: z.string() })),
+  }),
+  example: { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
+  // optional
+  options: {
+    startChar: "【",
+    endChar: "】",
+    typeKey: "type",
+    defaultVisible: false,
+  },
+});
+// =>
+【{"type":"buttons","buttons":[{"text":"Button 1"},{"text":"Button 2"}]}】
+```
+
+</CodeBlockInline>
+
+# Json block functions
+
+## `jsonBlock`
+
+Returns a JSON block object to be used by [`useLLMOutput`](/docs/llm-output-hook#blocks-object).
+
+```
+import { jsonBlock } from "@llm-ui/json";
+
+const options = {
+  startChar: "【",
+  endChar: "】",
+  typeKey: "type",
+  defaultVisible: false,
+};
+
+jsonBlock(options);
+// =>
+{
+  findCompleteMatch: findCompleteJsonBlock(options),
+  findPartialMatch: findPartialJsonBlock(options),
+  lookBack: jsonBlockLookBack(options),
+  component: () => <div>Json block</div>,
+}
+```
+
+Accepts [options](#options) parameter.
+
+## `findCompleteJsonBlock`
+
+Finds a [complete JSON block](/docs/llm-output-hook#blocks-object) in a string.
+
+Example:
+
+```
+【{"type":"buttons","buttons":[{"text":"Button 1"},{"text":"Button 2"}]}】
+```
+
+Accepts [options](#options) parameter.
+
+## `findPartialJsonBlock`
+
+Find a [partial JSON block](/docs/llm-output-hook#blocks-object) in a string.
+
+Example:
+
+```
+【{"type":"buttons","buttons":[{"text":"Button 1"},{"text":
+```
+
+## `jsonBlockLookBack`
+
+[Look back function](/docs/llm-output-hook#blocks-object) for the JSON block.
+
+Accepts [options](#options) parameter.
+
+# Parse
+
+## `parseJson5`
+
+Parse a JSON5 output string.
+
+<CodeBlockInline>
+
+```tsx
+import { parseJson5 } from "@llm-ui/json";
+
+parseJson5(
+  '{type:"buttons",buttons:[{"text":"Button 1"},{"text":"Button 2"}]}',
+);
+// =>
+{
+  type: "buttons",
+  buttons: [{ text: "Button 1" }, { text: "Button 2" }],
+}
+```
+
+</CodeBlockInline>
+
+# Optimizing for performance
+
+When using the JSON block you'll want to consider the performance of your application.
+
+JSON has a high overhead of non-content characters, this may result in a noticable pause as llm-ui waits for the full block.
+
+You may wish to use skeleton or other loading states to indicate to the user that the block is being parsed.
+
+In production we also recommend using a JSON format which is as concise as possible to reduce the overhead of non-content characters.
+
+For example:
+
+```plain
+【{"type":"buttons","buttons":[{"text":"Button 1"},{"text":...
+```
+
+Becomes:
+
+```plain
+【{"t":"b","bs":[{"t":"Button 1"},{"t":...
+```
+
+You could also consider using the [seperated values block](/docs/blocks/seperated-values) for a lower overhead format.

@@ -11,7 +11,8 @@ describe("jsonBlockPrompt", () => {
         examples: [{ a: "example" }],
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a simple component by wrapping JSON in 【】. The schema is:
+      "You can respond with a simple component by wrapping JSON in 【】.
+      The JSON schema is:
       {"type":"object","properties":{"a":{"type":"string"}},"required":["a"]}
 
       Examples: 
@@ -29,7 +30,8 @@ describe("jsonBlockPrompt", () => {
         examples: [{ a: [{ a: "a", b: "b" }] }],
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a complex component by wrapping JSON in 【】. The schema is:
+      "You can respond with a complex component by wrapping JSON in 【】.
+      The JSON schema is:
       {"type":"object","properties":{"a":{"type":"array","items":{"type":"object","properties":{"a":{"type":"string"},"b":{"type":"string"}},"required":["a","b"],"additionalProperties":false}}},"required":["a"]}
 
       Examples: 

@@ -1,4 +1,6 @@
+import { jsonBlockPrompt } from "@llm-ui/json";
 import { stringToTokenArray, type TokenWithDelay } from "@llm-ui/react";
+import { buttonsSchema } from "./buttonsSchema";
 import { defaultExampleProbs } from "./contants";
 
 const ctaBeforePause = `# llm-ui
@@ -56,3 +58,11 @@ export const presentationPauseExample: TokenWithDelay[] = [
   { token: " ", delayMs: 600 },
   ...stringToTokenArray(afterPause, defaultExampleProbs),
 ];
+
+export const buttonPrompt = jsonBlockPrompt({
+  name: "Button",
+  schema: buttonsSchema,
+  examples: [
+    { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
+  ],
+});

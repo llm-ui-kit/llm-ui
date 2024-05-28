@@ -39,20 +39,21 @@ const MarkdownComponent: LLMOutputComponent = ({ blockMatch }) => {
 
 // Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-  const isVisible = blockMatch.isVisible;
-  if (!isVisible) {
+  if (!blockMatch.isVisible) {
     return null;
   }
-  const buttons = buttonsSchema.parse(parseJson5(blockMatch.output));
-  if (!buttons) {
-    return undefined;
+  const { data: buttons, error } = buttonsSchema.safeParse(
+    parseJson5(blockMatch.output),
+  );
+
+  if (error) {
+    return <div>{error.toString()}</div>;
   }
   return (
     <div>
-      {buttons?.buttons?.map(
-        (button, index) =>
-          button?.text && <button key={index}>{button.text}</button>,
-      )}
+      {buttons.buttons.map((button, index) => (
+        <button key={index}>{button.text}</button>
+      ))}
     </div>
   );
 };
