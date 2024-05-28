@@ -13,7 +13,7 @@ export const jsonBlock = (
     lookBack: jsonBlockLookBack(type, userOptions),
     component: ({ blockMatch }) => (
       <div>
-        <a href="https://llm-ui.com/docs/custom-blocks">
+        <a href="https://llm-ui.com/docs/blocks/json">
           Docs to setup your own component
         </a>
         <pre>{blockMatch.output}</pre>

@@ -50,7 +50,8 @@ describe("jsonBlockPrompt", () => {
         options: { startChar: "z", endChar: "x" },
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a complex component by wrapping JSON in zx. The schema is:
+      "You can respond with a complex component by wrapping JSON in zx.
+      The JSON schema is:
       {"type":"object","properties":{"a":{"type":"array","items":{"type":"object","properties":{"a":{"type":"string"},"b":{"type":"string"}},"required":["a","b"],"additionalProperties":false}}},"required":["a"]}
 
       Examples: 

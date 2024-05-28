@@ -1,5 +1,5 @@
 {
-  "name": "@llm-ui/code",
+  "name": "@llm-ui/csv",
   "version": "0.11.0",
   "type": "module",
   "license": "MIT",
@@ -43,7 +43,6 @@
     "typescript": "^5.4.3"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
-    "shiki": "^1.6.0"
+    "react": "^18.0.0"
   }
 }
