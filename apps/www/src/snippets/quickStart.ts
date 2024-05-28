@@ -233,7 +233,7 @@ const { blockMatches } = useLLMOutput({
   ],
   fallbackBlock: {
     lookBack: markdownLookBack(),
-    component: MarkdownComponent, // from step 2
+    component: MarkdownComponent, // from step 1
   },
   isStreamFinished,
 });

@@ -29,11 +29,19 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: "Custom blocks",
+      title: "Custom components",
       items: [
         {
-          title: "JSON blocks",
+          title: "Introduction",
           href: "/docs/custom-blocks",
+        },
+        {
+          title: "JSON block",
+          href: "/docs/blocks/json",
+        },
+        {
+          title: "Seperated values block",
+          href: "/docs/blocks/separated-values",
         },
       ],
     },
