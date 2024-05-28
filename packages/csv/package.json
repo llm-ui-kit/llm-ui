@@ -1,0 +1,48 @@
+{
+  "name": "@llm-ui/csv",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build-watch": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@llm-ui/react": "workspace:*",
+    "@llm-ui/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@llm-ui/tsconfig": "workspace:*",
+    "@types/react": "18.2.60",
+    "@types/react-dom": "18.2.19",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  }
+}

@@ -1,8 +1,7 @@
 import { LLMOutputMatcher } from "@llm-ui/react";
-import { regexMatcher } from "@llm-ui/shared";
+import { regexMatcher, removeStartEndChars } from "@llm-ui/shared";
 import { JsonBlockOptions, getOptions } from "./options";
 import { parseJson5 } from "./parseJson5";
-import { removeStartEndChars } from "./shared";
 
 const findJsonBlock = (
   type: string,

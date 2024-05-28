@@ -96,6 +96,7 @@ jobs:
           cat << EOF > .changeset/force-canary-build.md
           ---
           '@llm-ui/json': patch
+          '@llm-ui/csv': patch
           '@llm-ui/code': patch
           '@llm-ui/markdown': patch
           '@llm-ui/react': patch

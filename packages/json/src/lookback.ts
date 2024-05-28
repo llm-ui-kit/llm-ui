@@ -1,9 +1,9 @@
 import { LookBackFunction } from "@llm-ui/react";
+import { removeStartEndChars } from "@llm-ui/shared";
 import { setJsonPath } from "./jsonPathSet";
 import { isAllowed, isIgnored, traverseLeafNodes } from "./jsonPathTraverse";
 import { JsonBlockOptions, getOptions } from "./options";
 import { parseJson5 } from "./parseJson5";
-import { removeStartEndChars } from "./shared";
 
 export const jsonBlockLookBack = (
   type: string,
