@@ -10,6 +10,7 @@ import * as React from "react";
 import * as R from "remeda";
 
 const IS_SERVER = typeof window === "undefined";
+const CHAT_OPENAI_API_KEY = "CHAT_OPENAI_API_KEY";
 
 const ChatMessage: React.FC<{
   message: Message;
@@ -41,7 +42,9 @@ const ChatMessage: React.FC<{
 
 export const Chat = () => {
   const storage = !IS_SERVER ? window.localStorage : null;
-  const [currentApiKey, setCurrentApiKey] = React.useState<string>("");
+  const [currentApiKey, setCurrentApiKey] = React.useState<string>(
+    storage?.getItem(CHAT_OPENAI_API_KEY) ?? "",
+  );
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/chat",
@@ -62,11 +65,6 @@ export const Chat = () => {
     setCurrentApiKey(newApiKey);
   };
 
-  React.useEffect(() => {
-    const storedApiKey = storage?.getItem("apiKey");
-    setCurrentApiKey(storedApiKey || "");
-  }, []);
-
   const messagesWithoutSystem = messages.slice(1);
   const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
   return (
@@ -82,7 +80,7 @@ export const Chat = () => {
       <form
         autoComplete="off"
         onSubmit={(e) => {
-          storage?.setItem("apiKey", currentApiKey);
+          storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
           handleSubmit(e);
         }}
         className="p-2 flex flex-col"
