@@ -1,6 +1,13 @@
 import { Message as MessageComponent } from "@/components/demo/message/Message";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { Icons } from "@/icons";
 import { cn } from "@/lib/utils";
@@ -11,6 +18,7 @@ import * as R from "remeda";
 
 const IS_SERVER = typeof window === "undefined";
 const CHAT_OPENAI_API_KEY = "CHAT_OPENAI_API_KEY";
+const CHAT_GPT_MODELS = ["gpt-3.5-turbo", "gpt-4-turbo", "gpt-4o"];
 
 const ChatMessage: React.FC<{
   message: Message;
@@ -45,6 +53,8 @@ export const Chat = () => {
   const [currentApiKey, setCurrentApiKey] = React.useState<string>(
     storage?.getItem(CHAT_OPENAI_API_KEY) ?? "",
   );
+  const [selectedChatGptModel, setSelectedChatGptModel] =
+    React.useState<string>(CHAT_GPT_MODELS[0]);
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/chat",
@@ -57,6 +67,7 @@ export const Chat = () => {
       ],
       body: {
         apiKey: currentApiKey,
+        model: selectedChatGptModel,
       },
     });
 
@@ -65,11 +76,31 @@ export const Chat = () => {
     setCurrentApiKey(newApiKey);
   };
 
+  const handleUpdateChatGptModel = (value: string) => {
+    setSelectedChatGptModel(value);
+  };
+
   const messagesWithoutSystem = messages.slice(1);
   const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
   return (
     <div className="bg-muted/50 relative overflow-y-hidden w-full h-[calc(100vh-theme(spacing.18)-2px)]">
       <div className="absolute top-4 left-4">
+        <Select onValueChange={handleUpdateChatGptModel}>
+          <SelectTrigger className="w-[180px] mb-4">
+            {selectedChatGptModel}
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {CHAT_GPT_MODELS.map((model: string) => {
+                return (
+                  <SelectItem key={model} value={model}>
+                    {model}
+                  </SelectItem>
+                );
+              })}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
         <Input
           value={currentApiKey}
           className="focus-within:border-white"
