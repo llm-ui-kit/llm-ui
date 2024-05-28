@@ -55,7 +55,7 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: "Ref",
+      title: "Advanced",
       items: [
         { title: "LLM output hook", href: "/docs/llm-output-hook" },
         {
