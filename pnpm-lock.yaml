@@ -278,13 +278,13 @@ importers:
     dependencies:
       '@llm-ui/code':
         specifier: ^0.9.0
-        version: link:../../../packages/code
+        version: 0.9.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
         specifier: ^0.9.0
-        version: link:../../../packages/markdown
+        version: 0.9.0(react@18.2.0)
       '@llm-ui/react':
         specifier: ^0.9.0
-        version: link:../../../packages/react
+        version: 0.9.0(react@18.2.0)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -339,13 +339,13 @@ importers:
     dependencies:
       '@llm-ui/code':
         specifier: ^0.9.0
-        version: link:../../../packages/code
+        version: 0.9.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
         specifier: ^0.9.0
-        version: link:../../../packages/markdown
+        version: 0.9.0(react@18.2.0)
       '@llm-ui/react':
         specifier: ^0.9.0
-        version: link:../../../packages/react
+        version: 0.9.0(react@18.2.0)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -412,13 +412,13 @@ importers:
     dependencies:
       '@llm-ui/json':
         specifier: ^0.9.0
-        version: link:../../../packages/json
+        version: 0.9.0(react@18.2.0)(zod@3.23.8)
       '@llm-ui/markdown':
         specifier: ^0.9.0
-        version: link:../../../packages/markdown
+        version: 0.9.0(react@18.2.0)
       '@llm-ui/react':
         specifier: ^0.9.0
-        version: link:../../../packages/react
+        version: 0.9.0(react@18.2.0)
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -470,13 +470,13 @@ importers:
     dependencies:
       '@llm-ui/json':
         specifier: ^0.9.0
-        version: link:../../../packages/json
+        version: 0.9.0(react@18.2.0)(zod@3.23.8)
       '@llm-ui/markdown':
         specifier: ^0.9.0
-        version: link:../../../packages/markdown
+        version: 0.9.0(react@18.2.0)
       '@llm-ui/react':
         specifier: ^0.9.0
-        version: link:../../../packages/react
+        version: 0.9.0(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -540,10 +540,10 @@ importers:
     dependencies:
       '@llm-ui/markdown':
         specifier: ^0.9.0
-        version: link:../../../packages/markdown
+        version: 0.9.0(react@18.2.0)
       '@llm-ui/react':
         specifier: ^0.9.0
-        version: link:../../../packages/react
+        version: 0.9.0(react@18.2.0)
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -592,10 +592,10 @@ importers:
     dependencies:
       '@llm-ui/markdown':
         specifier: ^0.9.0
-        version: link:../../../packages/markdown
+        version: 0.9.0(react@18.2.0)
       '@llm-ui/react':
         specifier: ^0.9.0
-        version: link:../../../packages/react
+        version: 0.9.0(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -656,13 +656,13 @@ importers:
     dependencies:
       '@llm-ui/code':
         specifier: ^0.9.0
-        version: link:../../../packages/code
+        version: 0.9.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
         specifier: ^0.9.0
-        version: link:../../../packages/markdown
+        version: 0.9.0(react@18.2.0)
       '@llm-ui/react':
         specifier: ^0.9.0
-        version: link:../../../packages/react
+        version: 0.9.0(react@18.2.0)
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -720,13 +720,13 @@ importers:
     dependencies:
       '@llm-ui/code':
         specifier: ^0.9.0
-        version: link:../../../packages/code
+        version: 0.9.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
         specifier: ^0.9.0
-        version: link:../../../packages/markdown
+        version: 0.9.0(react@18.2.0)
       '@llm-ui/react':
         specifier: ^0.9.0
-        version: link:../../../packages/react
+        version: 0.9.0(react@18.2.0)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -814,13 +814,13 @@ importers:
         version: 0.0.14(zod@3.23.8)
       '@llm-ui/code':
         specifier: ^0.9.0
-        version: link:../../../packages/code
+        version: 0.9.0(react@18.2.0)(shiki@1.6.0)
       '@llm-ui/markdown':
         specifier: ^0.9.0
-        version: link:../../../packages/markdown
+        version: 0.9.0(react@18.2.0)
       '@llm-ui/react':
         specifier: ^0.9.0
-        version: link:../../../packages/react
+        version: 0.9.0(react@18.2.0)
       ai:
         specifier: ^3.1.14
         version: 3.1.14(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
@@ -2813,6 +2813,68 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@llm-ui/code@0.9.0(react@18.2.0)(shiki@1.6.0):
+    resolution: {integrity: sha512-Zseba2rgVjBT1yQSHx6mEMiMtxDJq11OI2pmtOIdKIyAS742wFtisddM8PCzmlLp8WNVO8ftkQ0gdHDF6hRWmQ==}
+    peerDependencies:
+      react: ^18.0.0
+      shiki: ^1.6.0
+    dependencies:
+      '@llm-ui/react': 0.9.0(react@18.2.0)
+      '@llm-ui/shared': 0.9.0(react@18.2.0)
+      react: 18.2.0
+      shiki: 1.6.0
+    dev: false
+
+  /@llm-ui/json@0.9.0(react@18.2.0)(zod@3.23.8):
+    resolution: {integrity: sha512-3uXLV/nlAS/yPjccRmc7olTCUx/zdE86hTSPuRFm1FakZmPsMi+sDzw7vTabPgGOtrzbP+OIxjY0UD80CqkuQw==}
+    peerDependencies:
+      react: ^18.0.0
+      zod: ^3.23.8
+    dependencies:
+      '@llm-ui/react': 0.9.0(react@18.2.0)
+      '@llm-ui/shared': 0.9.0(react@18.2.0)
+      jsonpath-plus: 9.0.0
+      jsonrepair: 3.8.0
+      react: 18.2.0
+      remeda: 1.57.0
+      zod: 3.23.8
+      zod-to-json-schema: 3.23.0(zod@3.23.8)
+    dev: false
+
+  /@llm-ui/markdown@0.9.0(react@18.2.0):
+    resolution: {integrity: sha512-4IEr99Bgzn583vqiwCtP6oK5eZg0V7u9tp8FuaIv4ITlu8t5657ysaetMGsPdUTOvtw10vj6xPY1B6PSVZohjw==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@llm-ui/react': 0.9.0(react@18.2.0)
+      mdast-util-from-markdown: 2.0.0
+      mdast-util-gfm: 3.0.0
+      mdast-util-to-markdown: 2.1.0
+      micromark-extension-gfm: 3.0.0
+      react: 18.2.0
+      remeda: 1.57.0
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@llm-ui/react@0.9.0(react@18.2.0):
+    resolution: {integrity: sha512-7cVRDO5vUba66GRaQLRmlvDbJ78XeQchJYGuj7mJiZxKXCGKZFXC2hHm/vvpI2bzc101dVgY3o1tcTxMrJrPDQ==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      react: 18.2.0
+      remeda: 1.57.0
+    dev: false
+
+  /@llm-ui/shared@0.9.0(react@18.2.0):
+    resolution: {integrity: sha512-VHNeiYoJr/tEvQcphV3x/axJxXjRATd8LMyxqxi7X9nRQkOSX1/lde76BxebB7P1B2GE0P/3tm0QDIpk8DWXvg==}
+    dependencies:
+      '@llm-ui/react': 0.9.0(react@18.2.0)
+    transitivePeerDependencies:
+      - react
+    dev: false
 
   /@manypkg/find-root@1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
