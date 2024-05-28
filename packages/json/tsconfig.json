@@ -3,6 +3,6 @@
   "compilerOptions": {
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*", "*.ts", "test", "../csv/src/options.test.ts"],
+  "include": ["src/**/*", "*.ts", "test"],
   "exclude": ["node_modules"]
 }
