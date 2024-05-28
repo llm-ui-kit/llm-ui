@@ -40,8 +40,8 @@ export const docsConfig: DocsConfig = {
           href: "/docs/blocks/json",
         },
         {
-          title: "Seperated values block",
-          href: "/docs/blocks/separated-values",
+          title: "CSV block",
+          href: "/docs/blocks/csv",
         },
       ],
     },
