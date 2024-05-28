@@ -327,20 +327,20 @@ Generates a single JSON block usage example.
 import { jsonBlockExample } from "@llm-ui/json";
 import z from "zod";
 
-jsonBlockExample(
-  z.object({
+jsonBlockExample({
+  schema: z.object({
     type: z.literal("buttons"),
     buttons: z.array(z.object({ text: z.string() })),
   }),
-  { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
-  // optional options
-  {
+  example: { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
+  // optional
+  options: {
     startChar: "【",
     endChar: "】",
     typeKey: "type",
     defaultVisible: false,
   },
-);
+});
 // =>
 【{"type":"buttons","buttons":[{"text":"Button 1"},{"text":"Button 2"}]}】
 ```
