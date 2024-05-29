@@ -5,9 +5,15 @@ import { Button } from "../ui/Button";
 
 type OnClick = (buttonText: string | undefined) => void;
 
+const options = {
+  type: "buttons",
+  delimiter: ";",
+};
+
 const buttonsComponent = (onClick: OnClick) => {
   const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
-    const buttons = parseCsv(blockMatch.output);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_type, ...buttons] = parseCsv(blockMatch.output, options);
     if (!buttons || !blockMatch.isVisible) {
       return undefined;
     }
@@ -27,6 +33,6 @@ const buttonsComponent = (onClick: OnClick) => {
 export const buttonsCsvBlock = (
   onClick: OnClick = starsAndConfetti,
 ): LLMOutputBlock => ({
-  ...csvBlock(),
+  ...csvBlock(options),
   component: buttonsComponent(onClick),
 });

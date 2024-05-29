@@ -26,7 +26,7 @@ Allow LLMs to reply with CSV, which can be rendered as custom components in your
 
 <ExampleSideBySide
   client:load
-  example={`Buttons:\n⦅Star ⭐,Confetti 🎉⦆`}
+  example={`Buttons:\n⦅buttons;Star ⭐;Confetti 🎉⦆`}
   options={{ delayMultiplier: 0.2 }}
 />
 
@@ -115,7 +115,7 @@ Generates 'visibleText' as the reponse is parsed:
 <CodeBlockInline>
 
 ```plain
-⦅Button 1,But
+⦅buttons,Button 1,But
 ```
 
 </CodeBlockInline>
@@ -152,7 +152,7 @@ When a partial block is parsed:
 <CodeBlockInline>
 
 ```plain
-⦅Button 1,But`
+⦅buttons,Button 1,But`
 ```
 
 </CodeBlockInline>
@@ -167,7 +167,7 @@ blockMatch.isVisible;
 // => false
 
 blockMatch.output;
-// => "Button 1,But"
+// => "buttons,Button 1,But"
 ```
 
 </CodeBlockInline>
@@ -177,7 +177,7 @@ When the whole block is parsed:
 <CodeBlockInline>
 
 ```plain
-⦅Button 1,Button 2⦆
+⦅buttons,Button 1,Button 2⦆
 ```
 
 </CodeBlockInline>
@@ -192,7 +192,7 @@ blockMatch.isVisible;
 // => true
 
 blockMatch.output;
-// => "Button 1,Button 2"
+// => "buttons,Button 1,Button 2"
 ```
 
 </CodeBlockInline>
@@ -240,7 +240,7 @@ csvBlockPrompt({
 You can respond with a Button component by wrapping a , separated string in ⦅⦆ tags.
 
 Examples:
-⦅Button 1,Button2⦆
+⦅buttons,Button 1,Button2⦆
 "
 ```
 
@@ -265,7 +265,7 @@ jsonBlockExample({
   },
 });
 // =>
-⦅Button 1,Button2⦆
+⦅buttons,Button 1,Button2⦆
 ```
 
 </CodeBlockInline>
@@ -280,6 +280,7 @@ Returns a CSV block object to be used by [`useLLMOutput`](/docs/llm-output-hook#
 import { csvBlock } from "@llm-ui/csv";
 
 const options = {
+  type: "buttons", // the first item in the CSV
   startChar: "【",
   endChar: "】",
   delimiter: ",",
@@ -305,7 +306,7 @@ Finds a [complete CSV block](/docs/llm-output-hook#blocks-object) in a string.
 Example:
 
 ```
-⦅Button 1,Button2⦆
+⦅buttons,Button 1,Button2⦆
 ```
 
 Accepts [options](#options) parameter.
@@ -317,7 +318,7 @@ Find a [partial CSV block](/docs/llm-output-hook#blocks-object) in a string.
 Example:
 
 ```
-⦅Button 1,But
+⦅buttons,Button 1,But
 ```
 
 ## `csvBlockLookBack`
@@ -337,9 +338,9 @@ Parse a CSV output string.
 ```tsx
 import { parseCsv } from "@llm-ui/csv";
 
-parseCsv("Button 1,Button2");
+parseCsv("buttons,Button 1,Button2");
 // =>
-["Button 1", "Button 2"];
+["buttons", "Button 1", "Button 2"];
 ```
 
 </CodeBlockInline>
