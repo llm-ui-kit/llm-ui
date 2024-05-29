@@ -10,9 +10,9 @@ export const csvBlockPrompt = ({
   examples: string[][];
   options: CsvBlockOptions;
 }): string => {
-  const { startChar, endChar, delimiter } = getOptions(options);
+  const { startChar, endChar, delimiter, type } = getOptions(options);
   const examplePrompts = examples.map((example) =>
     csvBlockExample(example, options),
   );
-  return `You can respond with a ${name} component by wrapping a ${delimiter} separated string in ${startChar}${endChar} tags.\n\nExamples: \n${examplePrompts.join(`\n`)}`;
+  return `You can respond with a ${name} component using the following ${delimiter} delimited syntax: ${startChar}${type}${delimiter}${endChar}\n\nExamples: \n${examplePrompts.join(`\n`)}`;
 };

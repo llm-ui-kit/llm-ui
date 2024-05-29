@@ -19,7 +19,7 @@ export const csvBlockLookBack = (
       completeOptions,
     );
     const visibleIndexes = allIndexesVisible
-      ? array.map((_, i) => i)
+      ? array.map((_, i) => i).slice(1) // Skip index 0 as it is the type
       : visibleIndexesOption;
 
     let charsRemaining = visibleTextLengthTarget;

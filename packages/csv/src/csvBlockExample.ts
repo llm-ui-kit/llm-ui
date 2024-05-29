@@ -4,6 +4,6 @@ export const csvBlockExample = (
   example: string[],
   options: CsvBlockOptions,
 ): string => {
-  const { startChar, endChar, delimiter } = getOptions(options);
-  return `${startChar}${example.join(delimiter)}${endChar}`;
+  const { startChar, endChar, delimiter, type } = getOptions(options);
+  return `${startChar}${[type, ...example].join(delimiter)}${endChar}`;
 };

@@ -10,10 +10,10 @@ describe("csvBlockPrompt", () => {
         examples: [["abc"]],
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a simple component by wrapping a , separated string in ⦅⦆ tags.
+      "You can respond with a simple component using the following , delimited syntax: ⦅buttons,⦆
 
-      Examples:
-      ⦅abc⦆"
+      Examples: 
+      ⦅buttons,abc⦆"
     `);
   });
 
@@ -28,11 +28,11 @@ describe("csvBlockPrompt", () => {
         ],
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a complex component by wrapping a , separated string in ⦅⦆ tags.
+      "You can respond with a complex component using the following , delimited syntax: ⦅buttons,⦆
 
-      Examples:
-      ⦅abc,def⦆
-      ⦅ghi,jkl⦆"
+      Examples: 
+      ⦅buttons,abc,def⦆
+      ⦅buttons,ghi,jkl⦆"
     `);
   });
 
@@ -47,11 +47,11 @@ describe("csvBlockPrompt", () => {
         ],
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a complex component by wrapping a ; separated string in ⦅⦆ tags.
+      "You can respond with a complex component using the following ; delimited syntax: ⦅buttons;⦆
 
-      Examples:
-      ⦅abc;def⦆
-      ⦅ghi;jkl⦆"
+      Examples: 
+      ⦅buttons;abc;def⦆
+      ⦅buttons;ghi;jkl⦆"
     `);
   });
   it("custom start and end chars", () => {
@@ -65,11 +65,11 @@ describe("csvBlockPrompt", () => {
         ],
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a complex component by wrapping a , separated string in xy tags.
+      "You can respond with a complex component using the following , delimited syntax: xtype,y
 
-      Examples:
-      xabc,defy
-      xghi,jkly"
+      Examples: 
+      xtype,abc,defy
+      xtype,ghi,jkly"
     `);
   });
 });
