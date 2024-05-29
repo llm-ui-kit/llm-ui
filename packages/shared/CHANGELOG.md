@@ -1,5 +1,12 @@
 # @llm-ui/shared
 
+## 0.12.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.12.0
+
 ## 0.11.1
 
 ### Patch Changes

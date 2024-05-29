@@ -1,5 +1,17 @@
 # @llm-ui/custom
 
+## 0.12.0
+
+### Minor Changes
+
+- [#235](https://github.com/llm-ui-kit/llm-ui/pull/235) [`7885b68`](https://github.com/llm-ui-kit/llm-ui/commit/7885b68205b1a1cf8decc614d9f141dceb1c54cc) Thanks [@richardgill](https://github.com/richardgill)! - @llm-ui/json: move type to options
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.12.0
+  - @llm-ui/shared@0.12.0
+
 ## 0.11.1
 
 ### Patch Changes
