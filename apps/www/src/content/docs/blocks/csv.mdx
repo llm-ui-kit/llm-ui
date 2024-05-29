@@ -96,6 +96,7 @@ Default options:
 
 ```tsx
 {
+  type: "buttons", // the first item in the CSV
   startChar: "⦅",
   endChar: "⦆",
   delimiter: ",", // the seperator between items
@@ -205,6 +206,7 @@ You can use `visibleIndexes` with `allIndexesVisible: false` to determine which 
 
 ```tsx
 {
+  type: "buttons",
   allIndexesVisible: false,
   visibleIndexes: [0], // only the first item is 'visible'
 }
@@ -228,8 +230,8 @@ csvBlockPrompt({
   examples: [
     ["Button 1", "Button 2"]
   ],
-  // optional
   options: {
+    type: "buttons",
     startChar: "【",
     endChar: "】",
     delimiter: ",",
@@ -257,8 +259,8 @@ import { csvBlockExample } from "@llm-ui/csv";
 
 jsonBlockExample({
   example: ["Button 1", "Button 2"],
-  // optional
   options: {
+    type: "buttons",
     startChar: "【",
     endChar: "】",
     delimiter: ",",
