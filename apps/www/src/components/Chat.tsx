@@ -35,7 +35,7 @@ const ChatMessage: React.FC<{
       )}
       <div
         className={cn(
-          "space-y-2",
+          "space-y-2 overflow-x-hidden",
           role === "user" && "bg-black rounded-lg px-4 py-1",
         )}
       >
@@ -120,7 +120,7 @@ export const Chat = () => {
           <div className="h-[calc(100vh-theme(spacing.18))]">
             {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
 
-            <div className="h-full overflow-y-auto flex flex-col-reverse mx-auto">
+            <div className="h-full overflow-y-auto flex flex-col-reverse mx-auto max-w-2xl">
               <div className="flex flex-1 min-h-[140px]" />
               {reversedMessagesWithoutSystem.map((message, index) => {
                 const { role } = message;
