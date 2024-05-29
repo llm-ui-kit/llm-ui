@@ -6,7 +6,7 @@ import { CsvBlockOptions } from "./options";
 type TestCase = {
   name: string;
   output: string;
-  options?: Partial<CsvBlockOptions>;
+  options: CsvBlockOptions;
   isStreamFinished: boolean;
   isComplete: boolean;
   visibleTextLengthTarget: number;
@@ -21,6 +21,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 1,
+      options: { type: "buttons" },
       expected: {
         output: "a",
         visibleText: "a",
@@ -32,6 +33,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 6,
+      options: { type: "buttons" },
       expected: {
         output: "abc,def",
         visibleText: "abcdef",
@@ -43,7 +45,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 6,
-      options: { delimiter: ";" },
+      options: { type: "buttons", delimiter: ";" },
       expected: {
         output: "abc;def",
         visibleText: "abcdef",
@@ -55,7 +57,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 6,
-      options: { startChar: "x", endChar: "y" },
+      options: { type: "buttons", startChar: "x", endChar: "y" },
       expected: {
         output: "abc,def",
         visibleText: "abcdef",
@@ -67,6 +69,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 5,
+      options: { type: "buttons" },
       expected: {
         output: "abc,de",
         visibleText: "abcde",
@@ -78,6 +81,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 0,
+      options: { type: "buttons" },
       expected: {
         output: ",",
         visibleText: "",
@@ -89,6 +93,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 3,
+      options: { type: "buttons" },
       expected: {
         output: "",
         visibleText: "",
@@ -100,6 +105,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 4,
+      options: { type: "buttons" },
       expected: {
         output: "abc",
         visibleText: "abc",
@@ -111,6 +117,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 4,
+      options: { type: "buttons" },
       expected: {
         output: "abc",
         visibleText: "abc",
@@ -122,6 +129,7 @@ describe("csvBlockLookBack", () => {
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 4,
+      options: { type: "buttons" },
       expected: {
         output: "abc,d",
         visibleText: "abcd",
@@ -131,6 +139,7 @@ describe("csvBlockLookBack", () => {
       name: "allIndexesVisible: false",
       output: "⦅abc,def⦆",
       options: {
+        type: "buttons",
         allIndexesVisible: false,
       },
       isStreamFinished: true,
@@ -145,6 +154,7 @@ describe("csvBlockLookBack", () => {
       name: "allIndexesVisible: false + partial",
       output: "⦅abc,de",
       options: {
+        type: "buttons",
         allIndexesVisible: false,
       },
       isStreamFinished: false,
@@ -159,6 +169,7 @@ describe("csvBlockLookBack", () => {
       name: "visibleIndexes 1st only",
       output: "⦅abc,def⦆",
       options: {
+        type: "buttons",
         allIndexesVisible: false,
         visibleIndexes: [0],
       },
@@ -174,6 +185,7 @@ describe("csvBlockLookBack", () => {
       name: "visibleIndexes 0th and 2nd",
       output: "⦅abc,def,ghi⦆",
       options: {
+        type: "buttons",
         allIndexesVisible: false,
         visibleIndexes: [0, 2],
       },

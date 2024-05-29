@@ -4,17 +4,20 @@ import { CsvBlockOptions, getOptions } from "./options";
 import { parseCsv } from "./parseCsv";
 
 export const csvBlockLookBack = (
-  userOptions?: Partial<CsvBlockOptions>,
+  options: CsvBlockOptions,
 ): LookBackFunction => {
-  const options = getOptions(userOptions);
+  const completeOptions = getOptions(options);
   const {
     allIndexesVisible,
     visibleIndexes: visibleIndexesOption,
     delimiter,
-  } = options;
+  } = completeOptions;
 
   return ({ output, isComplete, visibleTextLengthTarget }) => {
-    const array = parseCsv(removeStartEndChars(output, options), options);
+    const array = parseCsv(
+      removeStartEndChars(output, completeOptions),
+      completeOptions,
+    );
     const visibleIndexes = allIndexesVisible
       ? array.map((_, i) => i)
       : visibleIndexesOption;

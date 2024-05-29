@@ -6,7 +6,7 @@ type TestCase = {
   name: string;
   input: string;
   expected: string[];
-  options?: Partial<CsvBlockOptions>;
+  options: CsvBlockOptions;
 };
 
 describe("parseCsv", () => {

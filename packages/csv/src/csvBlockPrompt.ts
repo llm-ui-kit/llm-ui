@@ -4,15 +4,15 @@ import { CsvBlockOptions, getOptions } from "./options";
 export const csvBlockPrompt = ({
   name,
   examples,
-  userOptions,
+  options,
 }: {
   name: string;
   examples: string[][];
-  userOptions?: Partial<CsvBlockOptions>;
+  options: CsvBlockOptions;
 }): string => {
-  const { startChar, endChar, delimiter } = getOptions(userOptions);
+  const { startChar, endChar, delimiter } = getOptions(options);
   const examplePrompts = examples.map((example) =>
-    csvBlockExample(example, userOptions),
+    csvBlockExample(example, options),
   );
   return `You can respond with a ${name} component by wrapping a ${delimiter} separated string in ${startChar}${endChar} tags.\n\nExamples: \n${examplePrompts.join(`\n`)}`;
 };

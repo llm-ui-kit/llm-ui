@@ -7,13 +7,14 @@ type TestCase = {
   name: string;
   input: string;
   expected: MaybeLLMOutputMatch;
-  options?: CsvBlockOptions;
+  options: CsvBlockOptions;
 };
 describe("findCompleteCsvBlock", () => {
   const testCases: TestCase[] = [
     {
       name: "single char",
       input: "⦅a⦆",
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 3,
@@ -23,6 +24,7 @@ describe("findCompleteCsvBlock", () => {
     {
       name: "multiple chars",
       input: "⦅abc⦆",
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 5,
@@ -32,6 +34,7 @@ describe("findCompleteCsvBlock", () => {
     {
       name: "delimited",
       input: "⦅a,b,c⦆",
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 7,
@@ -41,6 +44,7 @@ describe("findCompleteCsvBlock", () => {
     {
       name: "text before",
       input: "abc⦅a,b,c⦆",
+      options: { type: "buttons" },
       expected: {
         startIndex: 3,
         endIndex: 10,
@@ -50,6 +54,7 @@ describe("findCompleteCsvBlock", () => {
     {
       name: "text after",
       input: "⦅a,b,c⦆ def",
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 7,
@@ -59,6 +64,7 @@ describe("findCompleteCsvBlock", () => {
     {
       name: "text before and after",
       input: "abc⦅a,b,c⦆ def",
+      options: { type: "buttons" },
       expected: {
         startIndex: 3,
         endIndex: 10,
@@ -68,11 +74,14 @@ describe("findCompleteCsvBlock", () => {
     {
       name: "not a block",
       input: "```\nhello\n```",
+      options: { type: "buttons" },
+
       expected: undefined,
     },
     {
       name: "unfinished block",
       input: "⦅a,b,c",
+      options: { type: "buttons" },
       expected: undefined,
     },
   ];
@@ -90,6 +99,7 @@ describe("findPartialCsvBlock", () => {
     {
       name: "single char",
       input: "⦅a",
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 2,
@@ -99,6 +109,7 @@ describe("findPartialCsvBlock", () => {
     {
       name: "multiple chars",
       input: "⦅abc",
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 4,
@@ -108,6 +119,7 @@ describe("findPartialCsvBlock", () => {
     {
       name: "delimited",
       input: "⦅a,b,c",
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 6,
@@ -117,6 +129,7 @@ describe("findPartialCsvBlock", () => {
     {
       name: "text before",
       input: "abc⦅a,b,c",
+      options: { type: "buttons" },
       expected: {
         startIndex: 3,
         endIndex: 9,
@@ -126,6 +139,7 @@ describe("findPartialCsvBlock", () => {
     {
       name: "not a block",
       input: "```\nhello\n```",
+      options: { type: "buttons" },
       expected: undefined,
     },
   ];

@@ -5,7 +5,7 @@ import { CsvBlockOptions } from "./options";
 type TestCase = {
   name: string;
   example: string[];
-  options?: Partial<CsvBlockOptions>;
+  options: CsvBlockOptions;
   expected: string;
 };
 
