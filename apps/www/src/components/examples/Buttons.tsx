@@ -45,6 +45,6 @@ export const starsAndConfetti = (buttonText: string = "") => {
 export const buttonsBlock = (
   onClick: OnClick = starsAndConfetti,
 ): LLMOutputBlock => ({
-  ...jsonBlock("buttons", { defaultVisible: true }),
+  ...jsonBlock({ type: "buttons", defaultVisible: true }),
   component: buttonsComponent(onClick),
 });

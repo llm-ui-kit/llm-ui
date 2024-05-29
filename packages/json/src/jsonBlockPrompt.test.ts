@@ -9,6 +9,7 @@ describe("jsonBlockPrompt", () => {
         name: "simple",
         schema: z.object({ a: z.string() }),
         examples: [{ a: "example" }],
+        options: { type: "buttons" },
       }),
     ).toMatchInlineSnapshot(`
       "You can respond with a simple component by wrapping JSON in 【】.
@@ -28,6 +29,7 @@ describe("jsonBlockPrompt", () => {
           a: z.array(z.object({ a: z.string(), b: z.string() })),
         }),
         examples: [{ a: [{ a: "a", b: "b" }] }],
+        options: { type: "buttons" },
       }),
     ).toMatchInlineSnapshot(`
       "You can respond with a complex component by wrapping JSON in 【】.
@@ -47,7 +49,7 @@ describe("jsonBlockPrompt", () => {
           a: z.array(z.object({ a: z.string(), b: z.string() })),
         }),
         examples: [{ a: [{ a: "a", b: "b" }] }],
-        options: { startChar: "z", endChar: "x" },
+        options: { type: "buttons", startChar: "z", endChar: "x" },
       }),
     ).toMatchInlineSnapshot(`
       "You can respond with a complex component by wrapping JSON in zx.

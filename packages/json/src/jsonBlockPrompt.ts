@@ -14,7 +14,7 @@ export const jsonBlockPrompt = <
   name: string;
   schema: Schema;
   examples: z.infer<Schema>[];
-  options?: Partial<JsonBlockOptions>;
+  options: JsonBlockOptions;
 }): string => {
   const { startChar, endChar } = getOptions(options);
   const schemaPrompt = jsonBlockSchema(schema);

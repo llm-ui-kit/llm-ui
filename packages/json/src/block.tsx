@@ -3,14 +3,11 @@ import { jsonBlockLookBack } from "./lookback";
 import { findCompleteJsonBlock, findPartialJsonBlock } from "./matchers";
 import { JsonBlockOptions } from "./options";
 
-export const jsonBlock = (
-  type: string,
-  userOptions?: Partial<JsonBlockOptions>,
-): LLMOutputBlock => {
+export const jsonBlock = (options: JsonBlockOptions): LLMOutputBlock => {
   return {
-    findCompleteMatch: findCompleteJsonBlock(type, userOptions),
-    findPartialMatch: findPartialJsonBlock(type, userOptions),
-    lookBack: jsonBlockLookBack(type, userOptions),
+    findCompleteMatch: findCompleteJsonBlock(options),
+    findPartialMatch: findPartialJsonBlock(options),
+    lookBack: jsonBlockLookBack(options),
     component: ({ blockMatch }) => (
       <div>
         <a href="https://llm-ui.com/docs/blocks/json">

@@ -7,7 +7,7 @@ type TestCase = {
   name: string;
   input: string;
   expected: MaybeLLMOutputMatch;
-  options?: Partial<JsonBlockOptions>;
+  options: JsonBlockOptions;
 };
 
 describe("findCompleteJsonBlock", () => {
@@ -15,31 +15,37 @@ describe("findCompleteJsonBlock", () => {
     {
       name: "opening brace",
       input: "【",
+      options: { type: "buttons" },
       expected: undefined,
     },
     {
       name: "start of json5",
       input: "【{",
+      options: { type: "buttons" },
       expected: undefined,
     },
     {
       name: "start of type",
       input: "【{",
+      options: { type: "buttons" },
       expected: undefined,
     },
     {
       name: "start of type",
       input: "【{type:",
+      options: { type: "buttons" },
       expected: undefined,
     },
     {
       name: "start of type",
       input: '【{type:"buttons"',
+      options: { type: "buttons" },
       expected: undefined,
     },
     {
       name: "full custom component",
       input: '【{type:"buttons"}】',
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 18,
@@ -49,6 +55,7 @@ describe("findCompleteJsonBlock", () => {
     {
       name: "full custom component sandwiched",
       input: 'abc【{type:"buttons"}】def',
+      options: { type: "buttons" },
       expected: {
         startIndex: 3,
         endIndex: 21,
@@ -58,6 +65,7 @@ describe("findCompleteJsonBlock", () => {
     {
       name: "full custom component with fields",
       input: '【{type:"buttons", something: "something", else: "else"}】',
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 56,
@@ -68,6 +76,7 @@ describe("findCompleteJsonBlock", () => {
       name: "full custom component with fields sandwiched",
       input:
         'the start【{type:"buttons", something: "something", else: "else"}】keeps going',
+      options: { type: "buttons" },
       expected: {
         startIndex: 9,
         endIndex: 65,
@@ -78,6 +87,7 @@ describe("findCompleteJsonBlock", () => {
       name: "custom type key",
       input: '【{t:"buttons", something: "something", else: "else"}】',
       options: {
+        type: "buttons",
         typeKey: "t",
       },
       expected: {
@@ -90,6 +100,7 @@ describe("findCompleteJsonBlock", () => {
       name: "with custom start and end",
       input: '±{type:"buttons", something: "something", else: "else"}§',
       options: {
+        type: "buttons",
         startChar: "±",
         endChar: "§",
       },
@@ -103,7 +114,7 @@ describe("findCompleteJsonBlock", () => {
 
   testCases.forEach(({ name, input, expected, options }) => {
     it(name, () => {
-      const result = findCompleteJsonBlock("buttons", options)(input);
+      const result = findCompleteJsonBlock(options)(input);
       expect(result).toEqual(expected);
     });
   });
@@ -115,25 +126,30 @@ describe("findPartialJsonBlock", () => {
       name: "opening brace",
       input: "【",
       expected: undefined,
+      options: { type: "buttons" },
     },
     {
       name: "start of json5",
       input: "【{",
       expected: undefined,
+      options: { type: "buttons" },
     },
     {
       name: "start of type",
       input: "【{",
       expected: undefined,
+      options: { type: "buttons" },
     },
     {
       name: "start of type",
       input: "【{t:",
       expected: undefined,
+      options: { type: "buttons" },
     },
     {
       name: "start of type",
       input: '【{type:"buttons"',
+      options: { type: "buttons" },
       expected: {
         startIndex: 0,
         endIndex: 16,
@@ -143,6 +159,7 @@ describe("findPartialJsonBlock", () => {
     {
       name: "with prefix",
       input: 'other stuff【{type:"buttons"',
+      options: { type: "buttons" },
       expected: {
         startIndex: 11,
         endIndex: 27,
@@ -158,6 +175,7 @@ describe("findPartialJsonBlock", () => {
         outputRaw: '±{type:"buttons"',
       },
       options: {
+        type: "buttons",
         startChar: "±",
         endChar: "§",
       },
@@ -166,7 +184,7 @@ describe("findPartialJsonBlock", () => {
 
   testCases.forEach(({ name, input, expected, options }) => {
     it(name, () => {
-      const result = findPartialJsonBlock("buttons", options)(input);
+      const result = findPartialJsonBlock(options)(input);
       expect(result).toEqual(expected);
     });
   });
