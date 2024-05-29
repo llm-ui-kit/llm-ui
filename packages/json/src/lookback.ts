@@ -6,11 +6,10 @@ import { JsonBlockOptions, getOptions } from "./options";
 import { parseJson5 } from "./parseJson5";
 
 export const jsonBlockLookBack = (
-  type: string,
-  userOptions?: Partial<JsonBlockOptions>,
+  userOptions: JsonBlockOptions,
 ): LookBackFunction => {
   const options = getOptions(userOptions);
-  const { typeKey, defaultVisible, visibleKeyPaths, invisibleKeyPaths } =
+  const { type, typeKey, defaultVisible, visibleKeyPaths, invisibleKeyPaths } =
     options;
   return ({ output, visibleTextLengthTarget, isComplete }) => {
     const object = parseJson5(removeStartEndChars(output, options));
