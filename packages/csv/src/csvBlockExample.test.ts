@@ -27,7 +27,7 @@ describe("csvBlockExample", () => {
       name: "custom type",
       example: ["abc", "def"],
       options: { type: "type", delimiter: ";" },
-      expected: "⦅type,abc;def⦆",
+      expected: "⦅type;abc;def⦆",
     },
     {
       name: "custom delimiter",
