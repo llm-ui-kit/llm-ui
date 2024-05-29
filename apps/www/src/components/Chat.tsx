@@ -117,10 +117,11 @@ export const Chat = () => {
         className="p-2 flex flex-col"
       >
         {reversedMessagesWithoutSystem.length != 0 && (
-          <div className="pb-[200px] h-screen pt-4 md:pt-20">
+          <div className="h-[calc(100vh-theme(spacing.18))]">
             {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
-            <div className="overflow-y-auto flex flex-col-reverse h-full  mx-auto">
-              <div className="flex flex-1" />
+
+            <div className="h-full overflow-y-auto flex flex-col-reverse mx-auto">
+              <div className="flex flex-1 min-h-[140px]" />
               {reversedMessagesWithoutSystem.map((message, index) => {
                 const { role } = message;
                 const isStreamFinished =
@@ -151,7 +152,7 @@ export const Chat = () => {
         )}
         <div className="w-2/3 m-auto inset-x-0 fixed bottom-0 max-w-2xl mx-auto">
           <div>
-            <div className="bg-background flex flex-col overflow-hidden max-h-60 focus-within:border-white relative px-4 py-2 shadow-lg mb-4 sm:rounded-xl sm:border md:py-4">
+            <div className="bg-background flex flex-col overflow-hidden max-h-60 focus-within:border-white relative px-4 py-2 shadow-lg mb-6 sm:rounded-xl sm:border md:py-4">
               <Textarea
                 placeholder="What would you like to know?"
                 value={input}
