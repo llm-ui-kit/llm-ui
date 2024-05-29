@@ -3,13 +3,11 @@ import { csvBlockLookBack } from "./lookback";
 import { findCompleteCsvBlock, findPartialCsvBlock } from "./matchers";
 import { CsvBlockOptions } from "./options";
 
-export const csvBlock = (
-  userOptions?: Partial<CsvBlockOptions>,
-): LLMOutputBlock => {
+export const csvBlock = (options: CsvBlockOptions): LLMOutputBlock => {
   return {
-    findCompleteMatch: findCompleteCsvBlock(userOptions),
-    findPartialMatch: findPartialCsvBlock(userOptions),
-    lookBack: csvBlockLookBack(userOptions),
+    findCompleteMatch: findCompleteCsvBlock(options),
+    findPartialMatch: findPartialCsvBlock(options),
+    lookBack: csvBlockLookBack(options),
     component: ({ blockMatch }) => (
       <div>
         <a href="https://llm-ui.com/docs/blocks/csv">

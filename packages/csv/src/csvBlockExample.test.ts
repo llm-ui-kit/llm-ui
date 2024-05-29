@@ -5,7 +5,7 @@ import { CsvBlockOptions } from "./options";
 type TestCase = {
   name: string;
   example: string[];
-  options?: Partial<CsvBlockOptions>;
+  options: CsvBlockOptions;
   expected: string;
 };
 
@@ -14,24 +14,32 @@ describe("csvBlockExample", () => {
     {
       name: "single",
       example: ["abc"],
-      expected: "⦅abc⦆",
+      options: { type: "t" },
+      expected: "⦅t,abc⦆",
     },
     {
       name: "multiple",
       example: ["abc", "def"],
-      expected: "⦅abc,def⦆",
+      options: { type: "t" },
+      expected: "⦅t,abc,def⦆",
+    },
+    {
+      name: "custom type",
+      example: ["abc", "def"],
+      options: { type: "type", delimiter: ";" },
+      expected: "⦅type;abc;def⦆",
     },
     {
       name: "custom delimiter",
       example: ["abc", "def"],
-      options: { delimiter: ";" },
-      expected: "⦅abc;def⦆",
+      options: { type: "t", delimiter: ";" },
+      expected: "⦅t;abc;def⦆",
     },
     {
       name: "custom start and end chars",
       example: ["abc", "def"],
-      options: { startChar: "x", endChar: "y" },
-      expected: "xabc,defy",
+      options: { type: "t", startChar: "x", endChar: "y" },
+      expected: "xt,abc,defy",
     },
   ];
 

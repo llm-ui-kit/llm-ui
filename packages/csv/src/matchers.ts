@@ -4,19 +4,21 @@ import { CsvBlockOptions, getOptions } from "./options";
 import { regexMatcher } from "@llm-ui/shared";
 
 export const findCompleteCsvBlock = (
-  userOptions?: Partial<CsvBlockOptions>,
+  options: CsvBlockOptions,
 ): LLMOutputMatcher => {
-  const { startChar, endChar } = getOptions(userOptions);
+  const { type, startChar, endChar, delimiter } = getOptions(options);
 
-  const regex = new RegExp(`${startChar}([\\s\\S]*?)${endChar}`);
+  const regex = new RegExp(
+    `${startChar}${type}${delimiter}([\\s\\S]*?)${endChar}`,
+  );
   return regexMatcher(regex);
 };
 
 export const findPartialCsvBlock = (
-  userOptions?: Partial<CsvBlockOptions>,
+  options: CsvBlockOptions,
 ): LLMOutputMatcher => {
-  const { startChar } = getOptions(userOptions);
+  const { type, startChar, delimiter } = getOptions(options);
 
-  const regex = new RegExp(`${startChar}([\\s\\S]*)`);
+  const regex = new RegExp(`${startChar}${type}${delimiter}([\\s\\S]*)`);
   return regexMatcher(regex);
 };
