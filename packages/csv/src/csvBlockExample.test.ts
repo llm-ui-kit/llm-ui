@@ -14,23 +14,25 @@ describe("csvBlockExample", () => {
     {
       name: "single",
       example: ["abc"],
+      options: { type: "t" },
       expected: "⦅abc⦆",
     },
     {
       name: "multiple",
       example: ["abc", "def"],
+      options: { type: "t" },
       expected: "⦅abc,def⦆",
     },
     {
       name: "custom delimiter",
       example: ["abc", "def"],
-      options: { delimiter: ";" },
+      options: { type: "t", delimiter: ";" },
       expected: "⦅abc;def⦆",
     },
     {
       name: "custom start and end chars",
       example: ["abc", "def"],
-      options: { startChar: "x", endChar: "y" },
+      options: { type: "t", startChar: "x", endChar: "y" },
       expected: "xabc,defy",
     },
   ];
