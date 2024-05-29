@@ -19,7 +19,7 @@ const exampleDescriptionVite = "CSV block example (Vite)";
 
 const getDependencies = (llmUiVersion: string) => [
   ...markdownDependencies(llmUiVersion),
-  `@llm-ui/csv@0.0.0-alpha.vfef583c421ecc44e7022a9f07a7fc1430eff6339`,
+  `@llm-ui/csv@${llmUiVersion}`,
 ];
 
 const nextjs = async ({

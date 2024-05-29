@@ -11,9 +11,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@llm-ui/code": "^0.12.0",
-    "@llm-ui/markdown": "^0.12.0",
-    "@llm-ui/react": "^0.12.0",
+    "@llm-ui/code": "^0.13.0",
+    "@llm-ui/markdown": "^0.13.0",
+    "@llm-ui/react": "^0.13.0",
     "html-react-parser": "^5.1.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
