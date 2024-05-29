@@ -24,8 +24,6 @@ import { examplesUrl } from "@/constants/constants";
 
 Allow LLMs to reply with JSON, which can be rendered as custom components in your application.
 
-## Demo
-
 <ExampleSideBySide
   client:load
   example={`Buttons:\n【{\n   type: "buttons",\n   buttons:[\n     {text:"Star ⭐"},\n     {text:"Confetti 🎉"}\n   ]\n}】`}
@@ -118,7 +116,11 @@ Generates:
 
 <CodeBlock code={buttonPrompt} />
 
+You can also hardcode the prompt into your application.
+
 # Options
+
+Default options:
 
 <CodeBlockInline>
 
