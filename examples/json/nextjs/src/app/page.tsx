@@ -11,6 +11,10 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import z from "zod";
 
+const options = {
+  type: "buttons",
+};
+
 const buttonsSchema = z.object({
   type: z.literal("buttons"),
   buttons: z.array(z.object({ text: z.string() })),
@@ -22,6 +26,7 @@ const buttonsPrompt = jsonBlockPrompt({
   examples: [
     { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
   ],
+  options,
 });
 // -------Step 1: Create a markdown component-------
 
@@ -75,7 +80,7 @@ const Example = () => {
     llmOutput: output,
     blocks: [
       {
-        ...jsonBlock("buttons"),
+        ...jsonBlock(options),
         component: ButtonsComponent,
       },
     ],
