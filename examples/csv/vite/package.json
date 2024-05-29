@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@llm-ui/csv": "^0.0.0-alpha.vfef583c421ecc44e7022a9f07a7fc1430eff6339",
-    "@llm-ui/markdown": "^0.11.1",
-    "@llm-ui/react": "^0.11.1",
+    "@llm-ui/markdown": "^0.12.0",
+    "@llm-ui/react": "^0.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^9.0.1",
