@@ -1,4 +1,4 @@
-# Custom block example (Next.js)
+# JSON block example (Next.js)
 
 ## How to use
 

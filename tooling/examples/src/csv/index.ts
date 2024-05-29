@@ -9,18 +9,17 @@ import { CommonParams, Example } from "../types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const exampleFolderNextJs = "json/nextjs";
+const exampleFolderNextJs = "csv/nextjs";
 const exampleNameNextJs = folderToExampleName(exampleFolderNextJs);
-const exampleDescriptionNextJs = "JSON block example (Next.js)";
+const exampleDescriptionNextJs = "CSV block example (Next.js)";
 
-const exampleFolderVite = "json/vite";
+const exampleFolderVite = "csv/vite";
 const exampleNameVite = folderToExampleName(exampleFolderVite);
-const exampleDescriptionVite = "JSON block example (Vite)";
+const exampleDescriptionVite = "CSV block example (Vite)";
 
 const getDependencies = (llmUiVersion: string) => [
   ...markdownDependencies(llmUiVersion),
-  "zod",
-  `@llm-ui/json@${llmUiVersion}`,
+  `@llm-ui/csv@${llmUiVersion}`,
 ];
 
 const nextjs = async ({
@@ -41,7 +40,7 @@ const nextjs = async ({
   });
 
   await fs.copyFile(
-    path.join(__dirname, "jsonExample.ts.hbs"),
+    path.join(__dirname, "csvExample.ts.hbs"),
     path.join(folder, "src/app/page.tsx"),
   );
 };
@@ -64,19 +63,19 @@ const vite = async ({
   });
 
   await fs.copyFile(
-    path.join(__dirname, "jsonExample.ts.hbs"),
+    path.join(__dirname, "csvExample.ts.hbs"),
     path.join(folder, "src/App.tsx"),
   );
 };
 
-export const jsonNextJs: Example = {
+export const csvNextJs: Example = {
   folder: exampleFolderNextJs,
   exampleName: exampleNameNextJs,
   exampleDescription: exampleDescriptionNextJs,
   generate: nextjs,
 };
 
-export const jsonVite: Example = {
+export const csvVite: Example = {
   folder: exampleFolderVite,
   exampleName: exampleNameVite,
   exampleDescription: exampleDescriptionVite,
