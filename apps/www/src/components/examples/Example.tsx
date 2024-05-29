@@ -1,3 +1,4 @@
+import { starsAndConfetti } from "@/animations/buttonHandler";
 import { cn, delay } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
@@ -20,7 +21,7 @@ import React, {
 } from "react";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
-import { buttonsJsonBlock, starsAndConfetti } from "./ButtonsJson";
+import { buttonsJsonBlock } from "./ButtonsJson";
 import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";

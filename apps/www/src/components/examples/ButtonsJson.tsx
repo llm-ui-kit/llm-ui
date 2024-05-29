@@ -1,5 +1,4 @@
-import { fireConfetti } from "@/animations/confetti";
-import { multipleStars } from "@/animations/stars";
+import { starsAndConfetti } from "@/animations/buttonHandler";
 import { jsonBlock, parseJson5 } from "@llm-ui/json";
 import type { LLMOutputBlock, LLMOutputComponent } from "@llm-ui/react";
 import z from "zod";
@@ -32,14 +31,6 @@ const buttonsComponent = (onClick: OnClick) => {
     );
   };
   return ButtonsComponent;
-};
-
-export const starsAndConfetti = (buttonText: string = "") => {
-  if (buttonText.toLowerCase().includes("star")) {
-    multipleStars();
-  } else if (buttonText.toLowerCase().includes("confetti")) {
-    fireConfetti();
-  }
 };
 
 export const buttonsJsonBlock = (
