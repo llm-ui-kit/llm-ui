@@ -1,6 +1,6 @@
 {
   "name": "@llm-ui/csv",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "module",
   "license": "MIT",
   "main": "./dist/index.cjs",

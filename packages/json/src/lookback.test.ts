@@ -6,7 +6,7 @@ import { JsonBlockOptions } from "./options";
 type TestCase = {
   name: string;
   output: string;
-  options?: Partial<JsonBlockOptions>;
+  options: JsonBlockOptions;
   isStreamFinished: boolean;
   isComplete: boolean;
   visibleTextLengthTarget: number;
@@ -21,6 +21,7 @@ describe("jsonBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 1,
+      options: { type: "buttons" },
       expected: {
         output: JSON.stringify(
           { type: "buttons", something: "1234", else: "5678" },
@@ -36,6 +37,7 @@ describe("jsonBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 0,
+      options: { type: "buttons" },
       expected: {
         output: JSON.stringify(
           { type: "buttons", something: "1234", else: "5678" },
@@ -52,6 +54,7 @@ describe("jsonBlockLookBack", () => {
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 1,
+      options: { type: "buttons" },
       expected: {
         output: JSON.stringify(
           { type: "buttons", something: "1234", else: "" },
@@ -67,6 +70,7 @@ describe("jsonBlockLookBack", () => {
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 1,
+      options: { type: "buttons" },
       expected: {
         output: JSON.stringify({ type: "buttons" }, null, 2),
         visibleText: "",
@@ -78,7 +82,7 @@ describe("jsonBlockLookBack", () => {
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 3,
-      options: { visibleKeyPaths: ["$.something"] },
+      options: { type: "buttons", visibleKeyPaths: ["$.something"] },
       expected: {
         output: JSON.stringify(
           { type: "buttons", something: "123", else: "5678" },
@@ -91,7 +95,7 @@ describe("jsonBlockLookBack", () => {
     {
       name: "visibleKeyPaths",
       output: '【{type:"buttons", something: "1234", else: "5678"}】',
-      options: { visibleKeyPaths: ["$.something"] },
+      options: { type: "buttons", visibleKeyPaths: ["$.something"] },
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 3,
@@ -107,7 +111,11 @@ describe("jsonBlockLookBack", () => {
     {
       name: "excludeVisibleKeys",
       output: '【{type:"buttons", something: "1234", else: "5678"}】',
-      options: { defaultVisible: true, invisibleKeyPaths: ["$.else"] },
+      options: {
+        type: "buttons",
+        defaultVisible: true,
+        invisibleKeyPaths: ["$.else"],
+      },
       isStreamFinished: true,
       isComplete: true,
       visibleTextLengthTarget: 3,
@@ -123,7 +131,7 @@ describe("jsonBlockLookBack", () => {
     {
       name: "partial excludeVisibleKeys",
       output: '【{type:"buttons", something',
-      options: { defaultVisible: true },
+      options: { type: "buttons", defaultVisible: true },
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 3,
@@ -137,7 +145,7 @@ describe("jsonBlockLookBack", () => {
       output: '【{type:"buttons", something: "123',
       isStreamFinished: false,
       isComplete: false,
-      options: { visibleKeyPaths: ["$.something"] },
+      options: { type: "buttons", visibleKeyPaths: ["$.something"] },
       visibleTextLengthTarget: 2,
       expected: {
         output: JSON.stringify({ type: "buttons", something: "12" }, null, 2),
@@ -150,7 +158,11 @@ describe("jsonBlockLookBack", () => {
       isStreamFinished: false,
       isComplete: false,
       visibleTextLengthTarget: 2,
-      options: { typeKey: "t", visibleKeyPaths: ["$.something"] },
+      options: {
+        type: "buttons",
+        typeKey: "t",
+        visibleKeyPaths: ["$.something"],
+      },
       expected: {
         output: JSON.stringify({ t: "buttons", something: "12" }, null, 2),
         visibleText: "12",
@@ -169,10 +181,12 @@ describe("jsonBlockLookBack", () => {
       visibleTextLengthTarget,
     }) => {
       it(name, () => {
-        const result = jsonBlockLookBack(
-          "buttons",
-          options,
-        )({ output, isStreamFinished, visibleTextLengthTarget, isComplete });
+        const result = jsonBlockLookBack(options)({
+          output,
+          isStreamFinished,
+          visibleTextLengthTarget,
+          isComplete,
+        });
         expect(result).toEqual(expected);
       });
     },

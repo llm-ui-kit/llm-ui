@@ -1,4 +1,5 @@
-export type JsonBlockOptions = {
+export type JsonBlockOptionsComplete = {
+  type: string;
   startChar: string;
   endChar: string;
   defaultVisible: boolean;
@@ -7,7 +8,7 @@ export type JsonBlockOptions = {
   typeKey: string;
 };
 
-export const defaultOptions: JsonBlockOptions = {
+export const defaultOptions: Omit<JsonBlockOptionsComplete, "type"> = {
   startChar: "【",
   endChar: "】",
   defaultVisible: false,
@@ -16,6 +17,14 @@ export const defaultOptions: JsonBlockOptions = {
   typeKey: "type",
 };
 
-export const getOptions = (userOptions?: Partial<JsonBlockOptions>) => {
+export type JsonBlockOptions = Partial<Omit<JsonBlockOptionsComplete, "type">> &
+  Pick<JsonBlockOptionsComplete, "type">;
+
+export const getOptions = (
+  userOptions: JsonBlockOptions,
+): JsonBlockOptionsComplete => {
+  if (!userOptions.type) {
+    throw new Error("type option is required");
+  }
   return { ...defaultOptions, ...userOptions };
 };

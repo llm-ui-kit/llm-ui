@@ -8,7 +8,7 @@ type TestCase = {
   schema: ZodSchema;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   example: any;
-  options?: Partial<JsonBlockOptions>;
+  options: JsonBlockOptions;
   expected: string;
 };
 
@@ -18,6 +18,8 @@ describe("jsonBlockExample", () => {
       name: "top level key",
       schema: z.object({ a: z.string() }),
       example: { a: "example" },
+      options: { type: "buttons" },
+
       expected: '【{"a":"example"}】',
     },
     {
@@ -26,6 +28,7 @@ describe("jsonBlockExample", () => {
         a: z.array(z.object({ a: z.string(), b: z.string() })),
       }),
       example: { a: [{ a: "a", b: "b" }] },
+      options: { type: "buttons" },
       expected: '【{"a":[{"a":"a","b":"b"}]}】',
     },
     {
@@ -34,7 +37,7 @@ describe("jsonBlockExample", () => {
         a: z.array(z.object({ a: z.string(), b: z.string() })),
       }),
       example: { a: [{ a: "a", b: "b" }] },
-      options: { startChar: "z", endChar: "x" },
+      options: { type: "buttons", startChar: "z", endChar: "x" },
       expected: 'z{"a":[{"a":"a","b":"b"}]}x',
     },
   ];

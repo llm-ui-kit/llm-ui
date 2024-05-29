@@ -124,6 +124,7 @@ Generates:
 
 ```tsx
 {
+  type: "buttons", // required
   startChar: "【",
   endChar: "】",
   typeKey: "type" // the key in the JSON object which determines the block type e.g. {"type": "buttons"}
@@ -276,8 +277,8 @@ jsonBlockPrompt({
   examples: [
     { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
   ],
-  // optional
   options: {
+    type: "buttons",
     startChar: "【",
     endChar: "】",
     typeKey: "type",
@@ -333,8 +334,8 @@ jsonBlockExample({
     buttons: z.array(z.object({ text: z.string() })),
   }),
   example: { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
-  // optional
   options: {
+    type: "buttons",
     startChar: "【",
     endChar: "】",
     typeKey: "type",
@@ -357,6 +358,7 @@ Returns a JSON block object to be used by [`useLLMOutput`](/docs/llm-output-hook
 import { jsonBlock } from "@llm-ui/json";
 
 const options = {
+  type: "buttons",
   startChar: "【",
   endChar: "】",
   typeKey: "type",
@@ -377,9 +379,13 @@ Accepts [options](#options) parameter.
 
 ## `findCompleteJsonBlock`
 
-Finds a [complete JSON block](/docs/llm-output-hook#blocks-object) in a string.
+Finds a [complete JSON block](/docs/llm-output-hook#blocks-object) in a string:
 
-Example:
+```tsx
+findCompleteJsonBlock({ type: "buttons" });
+```
+
+Will match:
 
 ```
 【{"type":"buttons","buttons":[{"text":"Button 1"},{"text":"Button 2"}]}】
@@ -391,15 +397,25 @@ Accepts [options](#options) parameter.
 
 Find a [partial JSON block](/docs/llm-output-hook#blocks-object) in a string.
 
-Example:
+```tsx
+findPartialJsonBlock({ type: "buttons" });
+```
+
+Will match:
 
 ```
 【{"type":"buttons","buttons":[{"text":"Button 1"},{"text":
 ```
 
+Accepts [options](#options) parameter.
+
 ## `jsonBlockLookBack`
 
 [Look back function](/docs/llm-output-hook#blocks-object) for the JSON block.
+
+```tsx
+jsonBlockLookBack({ type: "buttons" });
+```
 
 Accepts [options](#options) parameter.
 
