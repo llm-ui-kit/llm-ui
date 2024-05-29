@@ -1,5 +1,5 @@
 {
-  "name": "llm-ui-openai-nextjs-example",
+  "name": "llm-ui-csv-nextjs-example",
   "license": "MIT",
   "version": "0.1.0",
   "private": true,
@@ -10,17 +10,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@llm-ui/code": "^0.11.1",
+    "@llm-ui/csv": "^0.0.0-alpha.vfef583c421ecc44e7022a9f07a7fc1430eff6339",
     "@llm-ui/markdown": "^0.11.1",
     "@llm-ui/react": "^0.11.1",
-    "html-react-parser": "^5.1.10",
     "next": "14.2.3",
-    "openai": "^4.47.2",
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
-    "remark-gfm": "^4.0.0",
-    "shiki": "^1.6.1"
+    "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",

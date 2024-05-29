@@ -10,18 +10,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^0.0.16",
-    "@llm-ui/code": "^0.9.0",
-    "@llm-ui/markdown": "^0.9.0",
-    "@llm-ui/react": "^0.9.0",
-    "ai": "^3.1.15",
+    "@ai-sdk/openai": "^0.0.17",
+    "@llm-ui/code": "^0.11.1",
+    "@llm-ui/markdown": "^0.11.1",
+    "@llm-ui/react": "^0.11.1",
+    "ai": "^3.1.16",
     "html-react-parser": "^5.1.10",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
     "remark-gfm": "^4.0.0",
-    "shiki": "^1.6.0",
+    "shiki": "^1.6.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
