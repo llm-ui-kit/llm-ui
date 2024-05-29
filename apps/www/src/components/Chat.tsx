@@ -55,6 +55,7 @@ export const Chat = () => {
   );
   const [selectedChatGptModel, setSelectedChatGptModel] =
     React.useState<string>(CHAT_GPT_MODELS[0]);
+  const [systemMessage, setSystemMessage] = React.useState<string>("");
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/chat",
@@ -62,7 +63,10 @@ export const Chat = () => {
         {
           id: nanoid(),
           role: "system",
-          content: "You are a helpful assistant.",
+          content:
+            systemMessage.length !== 0
+              ? systemMessage
+              : "You are a helpful assistant",
         },
       ],
       body: {
@@ -126,10 +130,10 @@ export const Chat = () => {
               ["user", "system"].includes(role) ||
               index > reversedMessagesWithoutSystem.length - 1 ||
               !isLoading;
-            const isLastElement = index != 0;
 
             return (
               <div key={message.id}>
+                <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div>
                 <ChatMessage
                   key={message.id}
                   message={message}
@@ -139,14 +143,28 @@ export const Chat = () => {
                     role === "user" && "justify-end",
                   )}
                 />
-                {isLastElement && (
-                  <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div>
-                )}
               </div>
             );
           })}
+          <div className="flex gap-2 flex-col max-w-2xl mx-auto w-full">
+            <div className="bg-background overflow-hidden focus-within:border-white px-1 py-1 shadow-lg mb-2 sm:rounded-xl sm:border md:py-1 ">
+              <AutosizeTextarea
+                id="system-instructions"
+                disabled={messages.length > 1}
+                placeholder="System prompt"
+                rows={1}
+                value={systemMessage}
+                minHeight={21}
+                maxHeight={200}
+                onChange={(e) => {
+                  setSystemMessage(e.target.value);
+                }}
+                className="focus-visible:ring-0 resize-none bg-transparent focus-within:outline-none sm:text-sm border-none"
+              />
+            </div>
+          </div>
         </div>
-        <div className="bg-background w-full flex flex-col overflow-hidden focus-within:border-white relative px-4 py-2 shadow-lg mb-6 sm:rounded-xl sm:border md:py-4 max-w-2xl mx-auto">
+        <div className="bg-background w-full flex flex-col overflow-hidden focus-within:border-white relative px-3 py-1 shadow-lg mb-6 sm:rounded-xl sm:border md:py-3 max-w-2xl mx-auto">
           <AutosizeTextarea
             placeholder="Message ChatGPT"
             value={input}
@@ -159,7 +177,7 @@ export const Chat = () => {
           />
           <Button
             disabled={isLoading || !input}
-            className="absolute right-0 bottom-4 sm:right-4"
+            className="absolute right-0 bottom-3 sm:right-4"
             type="submit"
           >
             Run <Icons.return className="size-4 ml-2" />
