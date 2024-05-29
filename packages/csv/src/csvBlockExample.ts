@@ -2,8 +2,8 @@ import { CsvBlockOptions, getOptions } from "./options";
 
 export const csvBlockExample = (
   example: string[],
-  userOptions?: Partial<CsvBlockOptions>,
+  options: CsvBlockOptions,
 ): string => {
-  const { startChar, endChar, delimiter } = getOptions(userOptions);
-  return `${startChar}${example.join(delimiter)}${endChar}`;
+  const { startChar, endChar, delimiter, type } = getOptions(options);
+  return `${startChar}${[type, ...example].join(delimiter)}${endChar}`;
 };

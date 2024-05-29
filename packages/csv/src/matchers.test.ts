@@ -7,72 +7,90 @@ type TestCase = {
   name: string;
   input: string;
   expected: MaybeLLMOutputMatch;
-  options?: CsvBlockOptions;
+  options: CsvBlockOptions;
 };
 describe("findCompleteCsvBlock", () => {
   const testCases: TestCase[] = [
     {
       name: "single char",
-      input: "⦅a⦆",
+      input: "⦅t,a⦆",
+      options: { type: "t" },
       expected: {
         startIndex: 0,
-        endIndex: 3,
-        outputRaw: "⦅a⦆",
+        endIndex: 5,
+        outputRaw: "⦅t,a⦆",
       },
     },
     {
       name: "multiple chars",
-      input: "⦅abc⦆",
+      input: "⦅t,abc⦆",
+      options: { type: "t" },
       expected: {
         startIndex: 0,
-        endIndex: 5,
-        outputRaw: "⦅abc⦆",
+        endIndex: 7,
+        outputRaw: "⦅t,abc⦆",
       },
     },
     {
       name: "delimited",
-      input: "⦅a,b,c⦆",
+      input: "⦅t,a,b,c⦆",
+      options: { type: "t" },
       expected: {
         startIndex: 0,
-        endIndex: 7,
-        outputRaw: "⦅a,b,c⦆",
+        endIndex: 9,
+        outputRaw: "⦅t,a,b,c⦆",
+      },
+    },
+    {
+      name: "custom type",
+      input: "⦅type,a,b,c⦆",
+      options: { type: "type" },
+      expected: {
+        startIndex: 0,
+        endIndex: 12,
+        outputRaw: "⦅type,a,b,c⦆",
       },
     },
     {
       name: "text before",
-      input: "abc⦅a,b,c⦆",
+      input: "abc⦅t,a,b,c⦆",
+      options: { type: "t" },
       expected: {
         startIndex: 3,
-        endIndex: 10,
-        outputRaw: "⦅a,b,c⦆",
+        endIndex: 12,
+        outputRaw: "⦅t,a,b,c⦆",
       },
     },
     {
       name: "text after",
-      input: "⦅a,b,c⦆ def",
+      input: "⦅t,a,b,c⦆ def",
+      options: { type: "t" },
       expected: {
         startIndex: 0,
-        endIndex: 7,
-        outputRaw: "⦅a,b,c⦆",
+        endIndex: 9,
+        outputRaw: "⦅t,a,b,c⦆",
       },
     },
     {
       name: "text before and after",
-      input: "abc⦅a,b,c⦆ def",
+      input: "abc⦅t,a,b,c⦆ def",
+      options: { type: "t" },
       expected: {
         startIndex: 3,
-        endIndex: 10,
-        outputRaw: "⦅a,b,c⦆",
+        endIndex: 12,
+        outputRaw: "⦅t,a,b,c⦆",
       },
     },
     {
       name: "not a block",
       input: "```\nhello\n```",
+      options: { type: "t" },
       expected: undefined,
     },
     {
       name: "unfinished block",
-      input: "⦅a,b,c",
+      input: "⦅t,a,b,c",
+      options: { type: "t" },
       expected: undefined,
     },
   ];
@@ -88,44 +106,61 @@ describe("findCompleteCsvBlock", () => {
 describe("findPartialCsvBlock", () => {
   const testCases: TestCase[] = [
     {
-      name: "single char",
-      input: "⦅a",
+      name: "opening bracket",
+      input: "⦅",
+      options: { type: "t" },
+      expected: undefined,
+    },
+    {
+      name: "opening bracket + type",
+      input: "⦅t",
+      options: { type: "t" },
+      expected: undefined,
+    },
+    {
+      name: "opening bracket + type + delimiter",
+      input: "⦅t,",
+      options: { type: "t" },
       expected: {
         startIndex: 0,
-        endIndex: 2,
-        outputRaw: "⦅a",
+        endIndex: 3,
+        outputRaw: "⦅t,",
       },
     },
     {
-      name: "multiple chars",
-      input: "⦅abc",
+      name: "custom type",
+      input: "⦅type,",
+      options: { type: "type" },
       expected: {
         startIndex: 0,
-        endIndex: 4,
-        outputRaw: "⦅abc",
+        endIndex: 6,
+        outputRaw: "⦅type,",
       },
     },
     {
       name: "delimited",
-      input: "⦅a,b,c",
+      input: "⦅t,a,b,c",
+      options: { type: "t" },
       expected: {
         startIndex: 0,
-        endIndex: 6,
-        outputRaw: "⦅a,b,c",
+        endIndex: 8,
+        outputRaw: "⦅t,a,b,c",
       },
     },
     {
       name: "text before",
-      input: "abc⦅a,b,c",
+      input: "abc⦅t,a,b,c",
+      options: { type: "t" },
       expected: {
         startIndex: 3,
-        endIndex: 9,
-        outputRaw: "⦅a,b,c",
+        endIndex: 11,
+        outputRaw: "⦅t,a,b,c",
       },
     },
     {
       name: "not a block",
       input: "```\nhello\n```",
+      options: { type: "t" },
       expected: undefined,
     },
   ];

@@ -8,13 +8,13 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/Select";
-import { Textarea } from "@/components/ui/Textarea";
 import { Icons } from "@/icons";
 import { cn } from "@/lib/utils";
 import { nanoid, type Message } from "ai";
 import { useChat } from "ai/react";
 import * as React from "react";
 import * as R from "remeda";
+import { AutosizeTextarea } from "./ui/custom/AutosizeTextarea";
 
 const IS_SERVER = typeof window === "undefined";
 const CHAT_OPENAI_API_KEY = "CHAT_OPENAI_API_KEY";
@@ -35,7 +35,7 @@ const ChatMessage: React.FC<{
       )}
       <div
         className={cn(
-          "space-y-2",
+          "space-y-2 overflow-x-hidden",
           role === "user" && "bg-black rounded-lg px-4 py-1",
         )}
       >
@@ -55,6 +55,7 @@ export const Chat = () => {
   );
   const [selectedChatGptModel, setSelectedChatGptModel] =
     React.useState<string>(CHAT_GPT_MODELS[0]);
+  const [systemMessage, setSystemMessage] = React.useState<string>("");
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/chat",
@@ -62,7 +63,10 @@ export const Chat = () => {
         {
           id: nanoid(),
           role: "system",
-          content: "You are a helpful assistant.",
+          content:
+            systemMessage.length !== 0
+              ? systemMessage
+              : "You are a helpful assistant",
         },
       ],
       body: {
@@ -83,7 +87,7 @@ export const Chat = () => {
   const messagesWithoutSystem = messages.slice(1);
   const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
   return (
-    <div className="bg-muted/50 relative overflow-y-hidden w-full h-[calc(100vh-theme(spacing.18)-2px)]">
+    <div className="flex bg-muted/50 relative overflow-y-hidden w-full h-[calc(100vh-theme(spacing.18)-2px)]">
       <div className="absolute top-4 left-4">
         <Select onValueChange={handleUpdateChatGptModel}>
           <SelectTrigger className="w-[180px] mb-4">
@@ -114,59 +118,70 @@ export const Chat = () => {
           storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
           handleSubmit(e);
         }}
-        className="p-2 flex flex-col"
+        className="flex flex-col flex-1"
       >
-        {reversedMessagesWithoutSystem.length != 0 && (
-          <div className="pb-[200px] h-screen pt-4 md:pt-20">
-            {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
-            <div className="overflow-y-auto flex flex-col-reverse h-full  mx-auto">
-              <div className="flex flex-1" />
-              {reversedMessagesWithoutSystem.map((message, index) => {
-                const { role } = message;
-                const isStreamFinished =
-                  ["user", "system"].includes(role) ||
-                  index > reversedMessagesWithoutSystem.length - 1 ||
-                  !isLoading;
-                const isLastElement = index != 0;
+        {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
+        <div className="flex flex-1 flex-col-reverse overflow-y-auto pt-4 pb-3">
+          {/* This div takes up all the remaining space so the messages start at the top */}
+          <div className="flex flex-1" />
+          {reversedMessagesWithoutSystem.map((message, index) => {
+            const { role } = message;
+            const isStreamFinished =
+              ["user", "system"].includes(role) ||
+              index > reversedMessagesWithoutSystem.length - 1 ||
+              !isLoading;
 
-                return (
-                  <div key={message.id}>
-                    <ChatMessage
-                      key={message.id}
-                      message={message}
-                      isStreamFinished={isStreamFinished}
-                      className={cn(
-                        "mx-auto max-w-2xl",
-                        role === "user" && "justify-end",
-                      )}
-                    />
-                    {isLastElement && (
-                      <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-        <div className="w-2/3 m-auto inset-x-0 fixed bottom-0 max-w-2xl mx-auto">
-          <div>
-            <div className="bg-background flex flex-col overflow-hidden max-h-60 focus-within:border-white relative px-4 py-2 shadow-lg mb-4 sm:rounded-xl sm:border md:py-4">
-              <Textarea
-                placeholder="What would you like to know?"
-                value={input}
-                onChange={handleInputChange}
-                className="min-h-[60px] w-[calc(100%-theme(spacing.18))] focus-visible:ring-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
+            return (
+              <div key={message.id}>
+                <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div>
+                <ChatMessage
+                  key={message.id}
+                  message={message}
+                  isStreamFinished={isStreamFinished}
+                  className={cn(
+                    "mx-auto max-w-2xl",
+                    role === "user" && "justify-end",
+                  )}
+                />
+              </div>
+            );
+          })}
+          <div className="flex gap-2 flex-col max-w-2xl mx-auto w-full">
+            <div className="bg-background overflow-hidden focus-within:border-white px-1 py-1 shadow-lg mb-2 sm:rounded-xl sm:border md:py-1 ">
+              <AutosizeTextarea
+                id="system-instructions"
+                disabled={messages.length > 1}
+                placeholder="System prompt"
+                rows={1}
+                value={systemMessage}
+                minHeight={21}
+                maxHeight={200}
+                onChange={(e) => {
+                  setSystemMessage(e.target.value);
+                }}
+                className="focus-visible:ring-0 resize-none bg-transparent focus-within:outline-none sm:text-sm border-none"
               />
-              <Button
-                disabled={isLoading || !input}
-                className="absolute right-0 bottom-2 sm:right-4"
-                type="submit"
-              >
-                Run <Icons.return className="size-4 ml-2" />
-              </Button>
             </div>
           </div>
+        </div>
+        <div className="bg-background w-full flex flex-col overflow-hidden focus-within:border-white relative px-3 py-1 shadow-lg mb-6 sm:rounded-xl sm:border md:py-3 max-w-2xl mx-auto">
+          <AutosizeTextarea
+            placeholder="Message ChatGPT"
+            value={input}
+            rows={1}
+            style={{ height: 42 }}
+            minHeight={42}
+            maxHeight={200}
+            onChange={handleInputChange}
+            className="focus-visible:ring-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
+          />
+          <Button
+            disabled={isLoading || !input}
+            className="absolute right-0 bottom-3 sm:right-4"
+            type="submit"
+          >
+            Run <Icons.return className="size-4 ml-2" />
+          </Button>
         </div>
       </form>
     </div>
