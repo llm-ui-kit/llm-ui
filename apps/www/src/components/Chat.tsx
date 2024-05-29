@@ -8,13 +8,13 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/Select";
-import { Textarea } from "@/components/ui/Textarea";
 import { Icons } from "@/icons";
 import { cn } from "@/lib/utils";
 import { nanoid, type Message } from "ai";
 import { useChat } from "ai/react";
 import * as React from "react";
 import * as R from "remeda";
+import { AutosizeTextarea } from "./ui/custom/AutosizeTextarea";
 
 const IS_SERVER = typeof window === "undefined";
 const CHAT_OPENAI_API_KEY = "CHAT_OPENAI_API_KEY";
@@ -83,7 +83,7 @@ export const Chat = () => {
   const messagesWithoutSystem = messages.slice(1);
   const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
   return (
-    <div className="bg-muted/50 relative overflow-y-hidden w-full h-[calc(100vh-theme(spacing.18)-2px)]">
+    <div className="flex bg-muted/50 relative overflow-y-hidden w-full h-[calc(100vh-theme(spacing.18)-2px)]">
       <div className="absolute top-4 left-4">
         <Select onValueChange={handleUpdateChatGptModel}>
           <SelectTrigger className="w-[180px] mb-4">
@@ -114,60 +114,56 @@ export const Chat = () => {
           storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
           handleSubmit(e);
         }}
-        className="p-2 flex flex-col"
+        className="flex flex-col flex-1"
       >
-        {reversedMessagesWithoutSystem.length != 0 && (
-          <div className="h-[calc(100vh-theme(spacing.18))]">
-            {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
+        {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
+        <div className="flex flex-1 flex-col-reverse overflow-y-auto pt-4 pb-3">
+          {/* This div takes up all the remaining space so the messages start at the top */}
+          <div className="flex flex-1" />
+          {reversedMessagesWithoutSystem.map((message, index) => {
+            const { role } = message;
+            const isStreamFinished =
+              ["user", "system"].includes(role) ||
+              index > reversedMessagesWithoutSystem.length - 1 ||
+              !isLoading;
+            const isLastElement = index != 0;
 
-            <div className="h-full overflow-y-auto flex flex-col-reverse mx-auto max-w-2xl">
-              <div className="flex flex-1 min-h-[140px]" />
-              {reversedMessagesWithoutSystem.map((message, index) => {
-                const { role } = message;
-                const isStreamFinished =
-                  ["user", "system"].includes(role) ||
-                  index > reversedMessagesWithoutSystem.length - 1 ||
-                  !isLoading;
-                const isLastElement = index != 0;
-
-                return (
-                  <div key={message.id}>
-                    <ChatMessage
-                      key={message.id}
-                      message={message}
-                      isStreamFinished={isStreamFinished}
-                      className={cn(
-                        "mx-auto max-w-2xl",
-                        role === "user" && "justify-end",
-                      )}
-                    />
-                    {isLastElement && (
-                      <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-        <div className="w-2/3 m-auto inset-x-0 fixed bottom-0 max-w-2xl mx-auto">
-          <div>
-            <div className="bg-background flex flex-col overflow-hidden max-h-60 focus-within:border-white relative px-4 py-2 shadow-lg mb-6 sm:rounded-xl sm:border md:py-4">
-              <Textarea
-                placeholder="What would you like to know?"
-                value={input}
-                onChange={handleInputChange}
-                className="min-h-[60px] w-[calc(100%-theme(spacing.18))] focus-visible:ring-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
-              />
-              <Button
-                disabled={isLoading || !input}
-                className="absolute right-0 bottom-2 sm:right-4"
-                type="submit"
-              >
-                Run <Icons.return className="size-4 ml-2" />
-              </Button>
-            </div>
-          </div>
+            return (
+              <div key={message.id}>
+                <ChatMessage
+                  key={message.id}
+                  message={message}
+                  isStreamFinished={isStreamFinished}
+                  className={cn(
+                    "mx-auto max-w-2xl",
+                    role === "user" && "justify-end",
+                  )}
+                />
+                {isLastElement && (
+                  <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <div className="bg-background w-full flex flex-col overflow-hidden focus-within:border-white relative px-4 py-2 shadow-lg mb-6 sm:rounded-xl sm:border md:py-4 max-w-2xl mx-auto">
+          <AutosizeTextarea
+            placeholder="Message ChatGPT"
+            value={input}
+            rows={1}
+            style={{ height: 42 }}
+            minHeight={42}
+            maxHeight={200}
+            onChange={handleInputChange}
+            className="focus-visible:ring-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
+          />
+          <Button
+            disabled={isLoading || !input}
+            className="absolute right-0 bottom-4 sm:right-4"
+            type="submit"
+          >
+            Run <Icons.return className="size-4 ml-2" />
+          </Button>
         </div>
       </form>
     </div>
