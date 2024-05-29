@@ -107,6 +107,9 @@ importers:
       '@llm-ui/code':
         specifier: workspace:*
         version: link:../../packages/code
+      '@llm-ui/csv':
+        specifier: workspace:*
+        version: link:../../packages/csv
       '@llm-ui/examples':
         specifier: workspace:*
         version: link:../../tooling/examples

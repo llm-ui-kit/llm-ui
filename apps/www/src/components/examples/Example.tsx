@@ -21,6 +21,7 @@ import React, {
 } from "react";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
+import { buttonsCsvBlock } from "./ButtonsCsv";
 import { buttonsJsonBlock } from "./ButtonsJson";
 import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
@@ -228,7 +229,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   const { finishCount, restart, blockMatches, isFinished, visibleText } =
     useLLMOutput({
       llmOutput: output,
-      blocks: [codeBlockBlock, buttonsBlockRef.current],
+      blocks: [codeBlockBlock, buttonsBlockRef.current, buttonsCsvBlock()],
       fallbackBlock: {
         component: Markdown,
         lookBack: markdownLookBack(),
@@ -343,7 +344,7 @@ export const ExampleSideBySideTokenArray: React.FC<
   const { finishCount, restart, blockMatches, isFinished, visibleText } =
     useLLMOutput({
       llmOutput: output,
-      blocks: [codeBlockBlock, buttonsBlockRef.current],
+      blocks: [codeBlockBlock, buttonsBlockRef.current, buttonsCsvBlock()],
       fallbackBlock: {
         component: Markdown,
         lookBack: markdownLookBack(),
