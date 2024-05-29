@@ -1,5 +1,35 @@
 # @llm-ui/csv
 
+## 0.13.0
+
+### Minor Changes
+
+- [#238](https://github.com/llm-ui-kit/llm-ui/pull/238) [`34ccfc2`](https://github.com/llm-ui-kit/llm-ui/commit/34ccfc21ff1eb6a91fe8fbabf7d88423d1d8bc8c) Thanks [@richardgill](https://github.com/richardgill)! - @llm-ui/csv: Added type option to distinguish between custom blocks
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.13.0
+  - @llm-ui/shared@0.13.0
+
+## 0.12.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.12.0
+  - @llm-ui/shared@0.12.0
+
+## 0.11.1
+
+### Patch Changes
+
+- [#233](https://github.com/llm-ui-kit/llm-ui/pull/233) [`731fc4b`](https://github.com/llm-ui-kit/llm-ui/commit/731fc4bef363e3c12ebaa28c50d6d25ab7dcd2d8) Thanks [@richardgill](https://github.com/richardgill)! - export parseCsv from @llm-ui/csv
+
+- Updated dependencies []:
+  - @llm-ui/react@0.11.1
+  - @llm-ui/shared@0.11.1
+
 ## 0.11.0
 
 ### Minor Changes

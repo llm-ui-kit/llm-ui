@@ -12,7 +12,7 @@ const commonParams: CommonParams = {
   examplesFolder: path.join(repoRoot, "examples"),
   nextjsVersion: "14.2.3",
   viteVersion: "5.2.3",
-  llmUiVersion: "0.9.0",
+  llmUiVersion: "0.13.0",
 };
 
 (async () => {

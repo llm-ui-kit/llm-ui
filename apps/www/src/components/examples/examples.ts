@@ -65,4 +65,7 @@ export const buttonPrompt = jsonBlockPrompt({
   examples: [
     { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
   ],
+  options: {
+    type: "buttons",
+  },
 });

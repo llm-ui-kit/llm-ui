@@ -227,7 +227,7 @@ const { blockMatches } = useLLMOutput({
   llmOutput: output,
   blocks: [
     {
-      ...jsonBlock("buttons"),
+      ...jsonBlock({type: "buttons"}),
       component: ButtonsComponent, // from step 3
     },
   ],
@@ -283,6 +283,7 @@ const buttonsPrompt = jsonBlockPrompt({
   examples: [
     { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
   ],
+  options: {type: "buttons"},
 });
 // -------Step 1: Create a markdown component-------
 
@@ -336,7 +337,7 @@ const Example = () => {
     llmOutput: output,
     blocks: [
       {
-        ...jsonBlock("buttons"),
+        ...jsonBlock({type: "buttons"}),
         component: ButtonsComponent,
       },
     ],

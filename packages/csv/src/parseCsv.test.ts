@@ -6,34 +6,52 @@ type TestCase = {
   name: string;
   input: string;
   expected: string[];
-  options?: Partial<CsvBlockOptions>;
+  options: CsvBlockOptions;
 };
 
 describe("parseCsv", () => {
   const testCases: TestCase[] = [
-    { name: "single char", input: "a", expected: ["a"] },
-    { name: "multiple chars", input: "abc", expected: ["abc"] },
-    { name: "separated", input: "abc,def", expected: ["abc", "def"] },
+    {
+      name: "single char",
+      input: "t",
+      options: { type: "t" },
+      expected: ["t"],
+    },
+    {
+      name: "multiple chars",
+      input: "type",
+      options: { type: "type" },
+      expected: ["type"],
+    },
+    {
+      name: "separated",
+      input: "t,abc,def",
+      options: { type: "t" },
+      expected: ["t", "abc", "def"],
+    },
     {
       name: "leading whitespace",
-      input: " abc,def",
-      expected: [" abc", "def"],
+      input: "t, abc,def",
+      options: { type: "t" },
+      expected: ["t", " abc", "def"],
     },
     {
       name: "trailing whitespace",
-      input: "abc,def ",
-      expected: ["abc", "def "],
+      input: "t,abc,def ",
+      options: { type: "t" },
+      expected: ["t", "abc", "def "],
     },
     {
       name: "trailing delimiter",
-      input: "abc,",
-      expected: ["abc"],
+      input: "t,abc,",
+      options: { type: "t" },
+      expected: ["t", "abc"],
     },
     {
       name: "separated custom delimiter",
-      input: "abc;def",
-      options: { delimiter: ";" },
-      expected: ["abc", "def"],
+      input: "t;abc;def",
+      options: { type: "t", delimiter: ";" },
+      expected: ["t", "abc", "def"],
     },
   ];
 

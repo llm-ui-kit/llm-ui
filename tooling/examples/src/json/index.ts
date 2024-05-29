@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const exampleFolderNextJs = "json/nextjs";
 const exampleNameNextJs = folderToExampleName(exampleFolderNextJs);
-const exampleDescriptionNextJs = "Custom block example (Next.js)";
+const exampleDescriptionNextJs = "JSON block example (Next.js)";
 
 const exampleFolderVite = "json/vite";
 const exampleNameVite = folderToExampleName(exampleFolderVite);

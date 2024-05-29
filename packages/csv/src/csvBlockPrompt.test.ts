@@ -6,13 +6,14 @@ describe("csvBlockPrompt", () => {
     expect(
       csvBlockPrompt({
         name: "simple",
+        options: { type: "buttons" },
         examples: [["abc"]],
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a simple component by wrapping a , separated string in ⦅⦆ tags.
+      "You can respond with a simple component using the following , delimited syntax: ⦅buttons,⦆
 
       Examples: 
-      ⦅abc⦆"
+      ⦅buttons,abc⦆"
     `);
   });
 
@@ -20,18 +21,18 @@ describe("csvBlockPrompt", () => {
     expect(
       csvBlockPrompt({
         name: "complex",
-
+        options: { type: "buttons" },
         examples: [
           ["abc", "def"],
           ["ghi", "jkl"],
         ],
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a complex component by wrapping a , separated string in ⦅⦆ tags.
+      "You can respond with a complex component using the following , delimited syntax: ⦅buttons,⦆
 
       Examples: 
-      ⦅abc,def⦆
-      ⦅ghi,jkl⦆"
+      ⦅buttons,abc,def⦆
+      ⦅buttons,ghi,jkl⦆"
     `);
   });
 
@@ -39,38 +40,36 @@ describe("csvBlockPrompt", () => {
     expect(
       csvBlockPrompt({
         name: "complex",
-
+        options: { type: "buttons", delimiter: ";" },
         examples: [
           ["abc", "def"],
           ["ghi", "jkl"],
         ],
-        userOptions: { delimiter: ";" },
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a complex component by wrapping a ; separated string in ⦅⦆ tags.
+      "You can respond with a complex component using the following ; delimited syntax: ⦅buttons;⦆
 
       Examples: 
-      ⦅abc;def⦆
-      ⦅ghi;jkl⦆"
+      ⦅buttons;abc;def⦆
+      ⦅buttons;ghi;jkl⦆"
     `);
   });
   it("custom start and end chars", () => {
     expect(
       csvBlockPrompt({
         name: "complex",
-
+        options: { type: "type", startChar: "x", endChar: "y" },
         examples: [
           ["abc", "def"],
           ["ghi", "jkl"],
         ],
-        userOptions: { startChar: "x", endChar: "y" },
       }),
     ).toMatchInlineSnapshot(`
-      "You can respond with a complex component by wrapping a , separated string in xy tags.
+      "You can respond with a complex component using the following , delimited syntax: xtype,y
 
       Examples: 
-      xabc,defy
-      xghi,jkly"
+      xtype,abc,defy
+      xtype,ghi,jkly"
     `);
   });
 });

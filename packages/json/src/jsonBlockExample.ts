@@ -10,7 +10,7 @@ export const jsonBlockExample = <
 }: {
   schema: Schema;
   example: z.infer<Schema>;
-  options?: Partial<JsonBlockOptions>;
+  options: JsonBlockOptions;
 }): string => {
   // throw if example does not match schema
   const parsed = schema.parse(example);
