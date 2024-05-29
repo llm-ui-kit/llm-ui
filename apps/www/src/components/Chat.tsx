@@ -162,7 +162,6 @@ export const Chat = () => {
                 className="focus-visible:ring-0 resize-none bg-transparent focus-within:outline-none sm:text-sm border-none"
               />
             </div>
-            {/* <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div> */}
           </div>
         </div>
         <div className="bg-background w-full flex flex-col overflow-hidden focus-within:border-white relative px-3 py-1 shadow-lg mb-6 sm:rounded-xl sm:border md:py-3 max-w-2xl mx-auto">
