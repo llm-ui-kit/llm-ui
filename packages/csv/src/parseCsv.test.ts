@@ -11,28 +11,46 @@ type TestCase = {
 
 describe("parseCsv", () => {
   const testCases: TestCase[] = [
-    { name: "single char", input: "a", expected: ["a"] },
-    { name: "multiple chars", input: "abc", expected: ["abc"] },
-    { name: "separated", input: "abc,def", expected: ["abc", "def"] },
+    {
+      name: "single char",
+      input: "a",
+      options: { type: "t" },
+      expected: ["a"],
+    },
+    {
+      name: "multiple chars",
+      input: "abc",
+      options: { type: "t" },
+      expected: ["abc"],
+    },
+    {
+      name: "separated",
+      input: "abc,def",
+      options: { type: "t" },
+      expected: ["abc", "def"],
+    },
     {
       name: "leading whitespace",
       input: " abc,def",
+      options: { type: "t" },
       expected: [" abc", "def"],
     },
     {
       name: "trailing whitespace",
       input: "abc,def ",
+      options: { type: "t" },
       expected: ["abc", "def "],
     },
     {
       name: "trailing delimiter",
       input: "abc,",
+      options: { type: "t" },
       expected: ["abc"],
     },
     {
       name: "separated custom delimiter",
       input: "abc;def",
-      options: { delimiter: ";" },
+      options: { type: "t", delimiter: ";" },
       expected: ["abc", "def"],
     },
   ];
