@@ -20,7 +20,7 @@ import React, {
 } from "react";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
-import { buttonsBlock, starsAndConfetti } from "./Buttons";
+import { buttonsJsonBlock, starsAndConfetti } from "./ButtonsJson";
 import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
@@ -209,7 +209,9 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
       starsAndConfetti(buttonText);
     }
   }, []);
-  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsBlock(onButtonClick));
+  const buttonsBlockRef = useRef<LLMOutputBlock>(
+    buttonsJsonBlock(onButtonClick),
+  );
 
   const {
     output,
@@ -326,7 +328,7 @@ export const ExampleSideBySideTokenArray: React.FC<
 
   const [mobileTabIndex, setMobileTabIndex] = useState(0);
   const [desktopTabIndex, setDesktopTabIndex] = useState(0);
-  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsBlock());
+  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsJsonBlock());
   const {
     output,
     isStreamFinished,
