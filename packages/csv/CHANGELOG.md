@@ -1,5 +1,17 @@
 # @llm-ui/csv
 
+## 0.13.0
+
+### Minor Changes
+
+- [#238](https://github.com/llm-ui-kit/llm-ui/pull/238) [`34ccfc2`](https://github.com/llm-ui-kit/llm-ui/commit/34ccfc21ff1eb6a91fe8fbabf7d88423d1d8bc8c) Thanks [@richardgill](https://github.com/richardgill)! - @llm-ui/csv: Added type option to distinguish between custom blocks
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.13.0
+  - @llm-ui/shared@0.13.0
+
 ## 0.12.0
 
 ### Patch Changes
