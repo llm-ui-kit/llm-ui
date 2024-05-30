@@ -337,7 +337,7 @@ const example = \`
 ## Example
  more text 123
  more text 123
-【{type:"buttons",buttons:null}】
+【{"type":"buttons","buttons":[{"text":"Button 1"},{"text":"Button 2"}]}】
 one more time
 \`;
 
