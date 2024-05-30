@@ -165,7 +165,7 @@ export const Chat = () => {
             </div>
           </div>
         </div>
-        <div className="bg-background w-full flex flex-col overflow-hidden focus-within:border-white relative px-3 py-1 shadow-lg mb-6 sm:rounded-xl sm:border md:py-3 max-w-2xl mx-auto">
+        <div className="bg-background w-full flex flex-row overflow-hidden focus-within:border-white relative px-3 py-1 shadow-lg mb-6 sm:rounded-xl sm:border md:py-3 max-w-2xl mx-auto">
           <AutosizeTextarea
             onKeyDown={(e) => {
               if (isLoading) {
@@ -183,11 +183,11 @@ export const Chat = () => {
             minHeight={42}
             maxHeight={200}
             onChange={handleInputChange}
-            className="focus-visible:ring-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
+            className="focus-visible:ring-0 pr-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
           />
           <Button
             disabled={isLoading || !input}
-            className="absolute right-0 bottom-3 sm:right-4"
+            className="self-end"
             type="submit"
           >
             Run <Icons.return className="size-4 ml-2" />
