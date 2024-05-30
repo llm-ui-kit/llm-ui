@@ -59,7 +59,7 @@ export const presentationPauseExample: TokenWithDelay[] = [
   ...stringToTokenArray(afterPause, defaultExampleProbs),
 ];
 
-export const buttonPrompt = jsonBlockPrompt({
+export const buttonJsonPrompt = jsonBlockPrompt({
   name: "Button",
   schema: buttonsSchema,
   examples: [

@@ -3,4 +3,322 @@ title: CSV block
 description: ""
 ---
 
-Coming soon. Come to discord to chat.
+import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
+import { PackageInstall } from "@/components/docs/PackageInstall";
+import {
+  markdownQuickStart,
+  codeblockQuickstart,
+  llmUiOutputQuickStart,
+  llmUiOutputQuickStartStep,
+  fullCsvQuickStart,
+  jsonUseLlmOutput,
+  csvComponent,
+  generateCsvPromptCode,
+  fullCsvOptions,
+  getCsvPrompt,
+  generateCsvExampleCode,
+  getCsvExample,
+  csvUseLlmOutput,
+} from "../../../snippets/quickStart";
+import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
+import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
+import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
+import { examplesUrl } from "@/constants/constants";
+
+Allow LLMs to reply with CSV, which can be rendered as custom components in your application.
+
+<ExampleSideBySide
+  client:load
+  example={`Buttons:\n⦅buttons;Star ⭐;Confetti 🎉⦆`}
+  options={{ delayMultiplier: 0.2 }}
+/>
+
+# Installation
+
+<PackageInstall client:load packages={["@llm-ui/csv"]} />
+
+# Quick start
+
+<CopyOrGithub codeToCopy={fullCsvQuickStart} githubUrl={`${examplesUrl}/csv`} />
+
+## Install dependencies
+
+<PackageInstall
+  client:load
+  packages={[
+    "@llm-ui/csv",
+    "@llm-ui/react",
+    "@llm-ui/markdown",
+    "react-markdown",
+    "remark-gfm",
+    "html-react-parser",
+  ]}
+/>
+
+## Step 1: Create a markdown component
+
+Create a component to render markdown using `react-markdown`.
+
+<CodeBlock code={markdownQuickStart} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCsvQuickStart} />
+  Read more in the [markdown block docs](/docs/blocks/markdown)
+</CopyDocsContainer>
+
+## Step 2: Create a custom block component
+
+<CodeBlock code={csvComponent} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCsvQuickStart} />
+</CopyDocsContainer>
+
+## Step 3: Render custom blocks with llm-ui
+
+Now we’ve created our components, we’re ready to use useLLMOutput to render language model output which contains markdown and buttons components.
+
+<CodeBlock code={csvUseLlmOutput} lang="tsx" />
+<CopyDocsContainer>
+  <CopyExampleButton toCopy={fullCsvQuickStart} />
+</CopyDocsContainer>
+
+## Step 4: Prompt LLM with your custom block
+
+Generate the prompt for your JSON block:
+
+<CodeBlock code={generateCsvPromptCode(fullCsvOptions)} lang="tsx" />
+
+Generates:
+
+<CodeBlock code={getCsvPrompt(fullCsvOptions)} />
+
+You can also hardcode the prompt into your application.
+
+# Options
+
+<CodeBlockInline>
+
+```tsx
+{
+  // Required:
+  type: "buttons", // the first item in the CSV
+  // Optional, defaults:
+  startChar: "⦅",
+  endChar: "⦆",
+  delimiter: ",", // the seperator between items
+  allIndexesVisible: true,
+  visibleIndexes: [],
+}
+```
+
+</CodeBlockInline>
+
+## `allIndexesVisible`
+
+### `allIndexesVisible: true`
+
+`type` is always skipped.
+
+Generates 'visibleText' as the reponse is parsed:
+
+<CodeBlockInline>
+
+```plain
+⦅buttons,Button 1,But
+```
+
+</CodeBlockInline>
+
+<CodeBlockInline>
+
+```tsx
+blockMatch.visibleText;
+// => "B"
+// then
+// => "Bu"
+// then
+// => "But"
+// later..
+// => "Button 1But"
+
+blockMatch.isVisible;
+// => true
+
+blockMatch.output;
+// => "buttons,B"
+// then
+// => "buttons,Bu"
+// then
+// => "buttons,But"
+// later..
+// => "buttons,Button 1,But"
+```
+
+</CodeBlockInline>
+
+### `allIndexesVisible: false`
+
+Generate no 'visibleText' until the whole block is parsed.
+
+When a partial block is parsed:
+
+<CodeBlockInline>
+
+```plain
+⦅buttons,Button 1,But`
+```
+
+</CodeBlockInline>
+
+<CodeBlockInline>
+
+```tsx
+blockMatch.visibleText;
+// => ""
+
+blockMatch.isVisible;
+// => false
+
+blockMatch.output;
+// => "buttons,Button 1,But"
+```
+
+</CodeBlockInline>
+
+When the whole block is parsed:
+
+<CodeBlockInline>
+
+```plain
+⦅buttons,Button 1,Button 2⦆
+```
+
+</CodeBlockInline>
+
+<CodeBlockInline>
+
+```tsx
+blockMatch.visibleText;
+// => " "
+
+blockMatch.isVisible;
+// => true
+
+blockMatch.output;
+// => "buttons,Button 1,Button 2"
+```
+
+</CodeBlockInline>
+
+## `visibleIndexes`
+
+You can use `visibleIndexes` with `allIndexesVisible: false` to determine which array indexes are visible.
+
+<CodeBlockInline>
+
+```tsx
+{
+  type: "buttons",
+  allIndexesVisible: false,
+  visibleIndexes: [1], // only the first item (after the type) is 'visible'
+}
+```
+
+</CodeBlockInline>
+
+# Prompts
+
+## `csvBlockPrompt`
+
+Returns a full prompt to send to the LLM.
+
+<CodeBlock code={generateCsvPromptCode(fullCsvOptions)} lang="tsx" />
+
+Generates:
+
+<CodeBlock code={getCsvPrompt(fullCsvOptions)} />
+
+You can also hardcode the prompt into your application.
+
+## `csvBlockExample`
+
+Returns a single CSV block usage example.
+
+<CodeBlock code={generateCsvExampleCode(fullCsvOptions)} lang="tsx" />
+
+Generates:
+
+<CodeBlock code={getCsvExample(fullCsvOptions)} />
+
+# CSV block functions
+
+## `csvBlock`
+
+Returns a CSV block object to be used by [`useLLMOutput`](/docs/llm-output-hook#blocks-object).
+
+```tsx
+import { csvBlock } from "@llm-ui/csv";
+
+const options = {
+  type: "buttons", // the first item in the CSV
+  delimiter: ";",
+  startChar: "[",
+  endChar: "]",
+};
+
+csvBlock(options);
+// =>
+{
+  findCompleteMatch: findCompleteCsvBlock(options),
+  findPartialMatch: findPartialCsvBlock(options),
+  lookBack: csvBlockLookBack(options),
+  component: () => <div>Json block</div>,
+}
+```
+
+Accepts [options](#options) parameter.
+
+## `findCompleteCsvBlock`
+
+Finds a [complete CSV block](/docs/llm-output-hook#blocks-object) in a string.
+
+For example:
+
+```
+⦅buttons,Button 1,Button2⦆
+```
+
+Accepts [options](#options) parameter.
+
+## `findPartialCsvBlock`
+
+Find a [partial CSV block](/docs/llm-output-hook#blocks-object) in a string.
+
+For example:
+
+```
+⦅buttons,Button 1,But
+```
+
+## `csvBlockLookBack`
+
+[Look back function](/docs/llm-output-hook#blocks-object) for the CSV block.
+
+Accepts [options](#options) parameter.
+
+# Parse
+
+## `parseCsv`
+
+Parse a CSV output string.
+
+<CodeBlockInline>
+
+```tsx
+import { parseCsv } from "@llm-ui/csv";
+
+parseCsv("buttons,Button 1,Button2");
+// =>
+["buttons", "Button 1", "Button 2"];
+```
+
+</CodeBlockInline>

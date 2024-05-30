@@ -107,6 +107,9 @@ importers:
       '@llm-ui/code':
         specifier: workspace:*
         version: link:../../packages/code
+      '@llm-ui/csv':
+        specifier: workspace:*
+        version: link:../../packages/csv
       '@llm-ui/examples':
         specifier: workspace:*
         version: link:../../tooling/examples
@@ -119,6 +122,9 @@ importers:
       '@llm-ui/react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@prettier/sync':
+        specifier: ^0.5.2
+        version: 0.5.2(prettier@3.2.5)
       '@radix-ui/react-accordion':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
@@ -3372,6 +3378,15 @@ packages:
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dev: true
+
+  /@prettier/sync@0.5.2(prettier@3.2.5):
+    resolution: {integrity: sha512-Yb569su456XNx5BsH/Vyem7xD6g/y9iLmLUzRKM1a/dhU/D7HqqvkAG72znulXlMXztbV0iiu9O5AL8K98TzZQ==}
+    peerDependencies:
+      prettier: '*'
+    dependencies:
+      make-synchronized: 0.2.9
+      prettier: 3.2.5
+    dev: false
 
   /@radix-ui/number@1.0.1:
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
@@ -9480,6 +9495,10 @@ packages:
       semver: 6.3.1
     dev: false
 
+  /make-synchronized@0.2.9:
+    resolution: {integrity: sha512-4wczOs8SLuEdpEvp3vGo83wh8rjJ78UsIk7DIX5fxdfmfMJGog4bQzxfvOwq7Q3yCHLC4jp1urPHIxRS/A93gA==}
+    dev: false
+
   /map-obj@1.0.1:
     resolution: {integrity: sha512-7N/q3lyZ+LVCp7PzuxrJr4KMbBE2hW7BT7YNia330OFxIf4d3r5zVpicP2650l7CPN6RM9zOJRl3NGpqSiw3Eg==}
     engines: {node: '>=0.10.0'}
@@ -11119,7 +11138,6 @@ packages:
     resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
 
   /pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}

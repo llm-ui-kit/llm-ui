@@ -1,3 +1,4 @@
+import { starsAndConfetti } from "@/animations/buttonHandler";
 import { cn, delay } from "@/lib/utils";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
@@ -20,7 +21,8 @@ import React, {
 } from "react";
 import { Loader } from "../ui/custom/Loader";
 import { H2 } from "../ui/custom/Text";
-import { buttonsBlock, starsAndConfetti } from "./Buttons";
+import { buttonsCsvBlock } from "./ButtonsCsv";
+import { buttonsJsonBlock } from "./ButtonsJson";
 import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
@@ -209,7 +211,9 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
       starsAndConfetti(buttonText);
     }
   }, []);
-  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsBlock(onButtonClick));
+  const buttonsBlockRef = useRef<LLMOutputBlock>(
+    buttonsJsonBlock(onButtonClick),
+  );
 
   const {
     output,
@@ -225,7 +229,7 @@ export const ExampleTabsTokenArray: React.FC<ExampleTokenArrayProps> = ({
   const { finishCount, restart, blockMatches, isFinished, visibleText } =
     useLLMOutput({
       llmOutput: output,
-      blocks: [codeBlockBlock, buttonsBlockRef.current],
+      blocks: [codeBlockBlock, buttonsBlockRef.current, buttonsCsvBlock()],
       fallbackBlock: {
         component: Markdown,
         lookBack: markdownLookBack(),
@@ -326,7 +330,7 @@ export const ExampleSideBySideTokenArray: React.FC<
 
   const [mobileTabIndex, setMobileTabIndex] = useState(0);
   const [desktopTabIndex, setDesktopTabIndex] = useState(0);
-  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsBlock());
+  const buttonsBlockRef = useRef<LLMOutputBlock>(buttonsJsonBlock());
   const {
     output,
     isStreamFinished,
@@ -340,7 +344,7 @@ export const ExampleSideBySideTokenArray: React.FC<
   const { finishCount, restart, blockMatches, isFinished, visibleText } =
     useLLMOutput({
       llmOutput: output,
-      blocks: [codeBlockBlock, buttonsBlockRef.current],
+      blocks: [codeBlockBlock, buttonsBlockRef.current, buttonsCsvBlock()],
       fallbackBlock: {
         component: Markdown,
         lookBack: markdownLookBack(),

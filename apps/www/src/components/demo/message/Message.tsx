@@ -1,11 +1,13 @@
 "use client";
-import { buttonsBlock as createButtonsBlock } from "@/components/examples/Buttons";
+import { buttonsCsvBlock as createCsvButtonsBlock } from "@/components/examples/ButtonsCsv";
+import { buttonsJsonBlock as createJsonButtonsBlock } from "@/components/examples/ButtonsJson";
 import { codeBlockBlock } from "@/components/examples/CodeBlock";
 import { Markdown } from "@/components/examples/Markdown";
 import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput } from "@llm-ui/react";
 
-const buttonsBlock = createButtonsBlock();
+const buttonsJsonBlock = createJsonButtonsBlock();
+const buttonsCsvBlock = createCsvButtonsBlock();
 
 export const Message: React.FC<{
   message: string;
@@ -17,7 +19,7 @@ export const Message: React.FC<{
       component: Markdown,
       lookBack: markdownLookBack(),
     },
-    blocks: [codeBlockBlock, buttonsBlock],
+    blocks: [codeBlockBlock, buttonsJsonBlock, buttonsCsvBlock],
     isStreamFinished,
   });
 
