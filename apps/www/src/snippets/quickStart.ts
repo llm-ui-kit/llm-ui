@@ -218,10 +218,7 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
 `;
 
 export const jsonUseLlmOutput = `import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput, type LLMOutputComponent, useStreamExample } from "@llm-ui/react";
-import parseHtml from "html-react-parser";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { useLLMOutput, useStreamExample } from "@llm-ui/react";
 import { jsonBlock } from "@llm-ui/json";
 
 const example = \`Buttons:
@@ -229,32 +226,34 @@ const example = \`Buttons:
 【{type:"buttons",buttons:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
 \`;
 
-const { isStreamFinished, output } = useStreamExample(example);
+const Example = () => {
+  const { isStreamFinished, output } = useStreamExample(example);
 
 
-const { blockMatches } = useLLMOutput({
-  llmOutput: output,
-  blocks: [
-    {
-      ...jsonBlock({type: "buttons"}),
-      component: ButtonsComponent, // from step 3
+  const { blockMatches } = useLLMOutput({
+    llmOutput: output,
+    blocks: [
+      {
+        ...jsonBlock({type: "buttons"}),
+        component: ButtonsComponent, // from step 3
+      },
+    ],
+    fallbackBlock: {
+      lookBack: markdownLookBack(),
+      component: MarkdownComponent, // from step 1
     },
-  ],
-  fallbackBlock: {
-    lookBack: markdownLookBack(),
-    component: MarkdownComponent, // from step 1
-  },
-  isStreamFinished,
-});
+    isStreamFinished,
+  });
 
-return (
-  <div>
-    {blockMatches.map((blockMatch, index) => {
-      const Component = blockMatch.block.component;
-      return <Component key={index} blockMatch={blockMatch} />;
-    })}
-  </div>
-);
+  return (
+    <div>
+      {blockMatches.map((blockMatch, index) => {
+        const Component = blockMatch.block.component;
+        return <Component key={index} blockMatch={blockMatch} />;
+      })}
+    </div>
+  );
+}
 
 `;
 
