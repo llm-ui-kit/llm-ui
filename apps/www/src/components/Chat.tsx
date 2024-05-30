@@ -154,6 +154,7 @@ export const Chat = () => {
                 placeholder="System prompt"
                 rows={1}
                 value={systemMessage}
+                style={{ height: 21 }}
                 minHeight={21}
                 maxHeight={200}
                 onChange={(e) => {
