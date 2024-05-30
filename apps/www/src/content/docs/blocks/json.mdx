@@ -3,7 +3,7 @@ title: JSON Block
 description: ""
 ---
 
-import { buttonPrompt } from "@/components/examples/examples";
+import { buttonJsonPrompt } from "@/components/examples/examples";
 import { ExampleSideBySide } from "@/components/examples/ExampleMdx";
 import { PackageInstall } from "@/components/docs/PackageInstall";
 import {
@@ -11,11 +11,11 @@ import {
   codeblockQuickstart,
   llmUiOutputQuickStart,
   llmUiOutputQuickStartStep,
-  fullCustomQuickStart,
-  customJsonSchema,
-  customButtonsComponent,
-  customButtonsUseLlmOutput,
-  generateButtonsPrompt,
+  fullJsonQuickStart,
+  jsonSchema,
+  jsonComponent,
+  jsonUseLlmOutput,
+  generateJsonPrompt,
 } from "../../../snippets/quickStart";
 import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
 import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
@@ -37,7 +37,7 @@ Allow LLMs to reply with JSON, which can be rendered as custom components in you
 # Quick start
 
 <CopyOrGithub
-  codeToCopy={fullCustomQuickStart}
+  codeToCopy={fullJsonQuickStart}
   githubUrl={`${examplesUrl}/json`}
 />
 
@@ -62,7 +62,7 @@ Create a component to render markdown using `react-markdown`.
 
 <CodeBlock code={markdownQuickStart} lang="tsx" />
 <CopyDocsContainer>
-  <CopyExampleButton toCopy={fullCustomQuickStart} />
+  <CopyExampleButton toCopy={fullJsonQuickStart} />
   Read more in the [markdown block docs](/docs/blocks/markdown)
 </CopyDocsContainer>
 
@@ -72,9 +72,9 @@ Use [zod](https://zod.dev/?id=objects) to create a schema for your custom block.
 
 We'll set up a 'buttons' block:
 
-<CodeBlock code={customJsonSchema} lang="tsx" />
+<CodeBlock code={jsonSchema} lang="tsx" />
 <CopyDocsContainer>
-  <CopyExampleButton toCopy={fullCustomQuickStart} />
+  <CopyExampleButton toCopy={fullJsonQuickStart} />
 </CopyDocsContainer>
 
 Example JSON for your block:
@@ -92,41 +92,41 @@ Example JSON for your block:
 
 ## Step 3: Create a custom block component
 
-<CodeBlock code={customButtonsComponent} lang="tsx" />
+<CodeBlock code={jsonComponent} lang="tsx" />
 <CopyDocsContainer>
-  <CopyExampleButton toCopy={fullCustomQuickStart} />
+  <CopyExampleButton toCopy={fullJsonQuickStart} />
 </CopyDocsContainer>
 
 ## Step 4: Render custom blocks with llm-ui
 
 Now we’ve created our components, we’re ready to use useLLMOutput to render language model output which contains markdown and buttons components.
 
-<CodeBlock code={customButtonsUseLlmOutput} lang="tsx" />
+<CodeBlock code={jsonUseLlmOutput} lang="tsx" />
 <CopyDocsContainer>
-  <CopyExampleButton toCopy={fullCustomQuickStart} />
+  <CopyExampleButton toCopy={fullJsonQuickStart} />
 </CopyDocsContainer>
 
 ## Step 5: Prompt LLM with your custom block
 
 Generate the prompt for your JSON block:
 
-<CodeBlock code={generateButtonsPrompt} lang="tsx" />
+<CodeBlock code={generateJsonPrompt} lang="tsx" />
 
 Generates:
 
-<CodeBlock code={buttonPrompt} />
+<CodeBlock code={buttonJsonPrompt} />
 
 You can also hardcode the prompt into your
 
 # Options
 
-Default options:
-
 <CodeBlockInline>
 
 ```tsx
 {
-  type: "buttons", // required
+  // Required
+  type: "buttons",
+  // Optional, defaults:
   startChar: "【",
   endChar: "】",
   typeKey: "type" // the key in the JSON object which determines the block type e.g. {"type": "buttons"}

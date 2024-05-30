@@ -122,6 +122,9 @@ importers:
       '@llm-ui/react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@prettier/sync':
+        specifier: ^0.5.2
+        version: 0.5.2(prettier@3.2.5)
       '@radix-ui/react-accordion':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
@@ -281,13 +284,13 @@ importers:
     dependencies:
       '@llm-ui/code':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)(shiki@1.6.1)
+        version: link:../../../packages/code
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -342,13 +345,13 @@ importers:
     dependencies:
       '@llm-ui/code':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)(shiki@1.6.1)
+        version: link:../../../packages/code
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -415,13 +418,13 @@ importers:
     dependencies:
       '@llm-ui/csv':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/csv
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -470,13 +473,13 @@ importers:
     dependencies:
       '@llm-ui/csv':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/csv
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -537,13 +540,13 @@ importers:
     dependencies:
       '@llm-ui/json':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)(zod@3.23.8)
+        version: link:../../../packages/json
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -595,13 +598,13 @@ importers:
     dependencies:
       '@llm-ui/json':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)(zod@3.23.8)
+        version: link:../../../packages/json
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -665,10 +668,10 @@ importers:
     dependencies:
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
@@ -717,10 +720,10 @@ importers:
     dependencies:
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -781,13 +784,13 @@ importers:
     dependencies:
       '@llm-ui/code':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)(shiki@1.6.1)
+        version: link:../../../packages/code
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       html-react-parser:
         specifier: ^5.1.10
         version: 5.1.10(@types/react@18.2.73)(react@18.2.0)
@@ -845,13 +848,13 @@ importers:
     dependencies:
       '@llm-ui/code':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)(shiki@1.6.1)
+        version: link:../../../packages/code
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -939,13 +942,13 @@ importers:
         version: 0.0.17(zod@3.23.8)
       '@llm-ui/code':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)(shiki@1.6.1)
+        version: link:../../../packages/code
       '@llm-ui/markdown':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/markdown
       '@llm-ui/react':
         specifier: ^0.13.0
-        version: 0.13.0(react@18.2.0)
+        version: link:../../../packages/react
       ai:
         specifier: ^3.1.18
         version: 3.1.18(react@18.2.0)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27)(zod@3.23.8)
@@ -2964,78 +2967,6 @@ packages:
     dev: false
     optional: true
 
-  /@llm-ui/code@0.13.0(react@18.2.0)(shiki@1.6.1):
-    resolution: {integrity: sha512-lqrkkpuIeBfOGrloIVi0mah+OtWEquqvj4xs7Y7kILolJHT9be0yLd/ukGIJXyKCtVAU9L57v/nZpv2JfmrEzg==}
-    peerDependencies:
-      react: ^18.0.0
-      shiki: ^1.6.0
-    dependencies:
-      '@llm-ui/react': 0.13.0(react@18.2.0)
-      '@llm-ui/shared': 0.13.0(react@18.2.0)
-      react: 18.2.0
-      shiki: 1.6.1
-    dev: false
-
-  /@llm-ui/csv@0.13.0(react@18.2.0):
-    resolution: {integrity: sha512-Y6mUb2uaeBK6+4AjlVi7Lhtdql9tk2x5Sxkkh1IA1SSrrYNZhst0284La4QivDjxe1YzSzqH9U9mgse+CiC77Q==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      '@llm-ui/react': 0.13.0(react@18.2.0)
-      '@llm-ui/shared': 0.13.0(react@18.2.0)
-      react: 18.2.0
-    dev: false
-
-  /@llm-ui/json@0.13.0(react@18.2.0)(zod@3.23.8):
-    resolution: {integrity: sha512-NwJ0ljtyhvcDAPJuxJyXg/fIVpE4UPhcurInHOeyK+176pQSOnVSxOkG4mCsJZRLT+QLpWjJ7bhGH16Kr0Izcg==}
-    peerDependencies:
-      react: ^18.0.0
-      zod: ^3.23.8
-    dependencies:
-      '@llm-ui/react': 0.13.0(react@18.2.0)
-      '@llm-ui/shared': 0.13.0(react@18.2.0)
-      jsonpath-plus: 9.0.0
-      jsonrepair: 3.8.0
-      react: 18.2.0
-      remeda: 1.57.0
-      zod: 3.23.8
-      zod-to-json-schema: 3.23.0(zod@3.23.8)
-    dev: false
-
-  /@llm-ui/markdown@0.13.0(react@18.2.0):
-    resolution: {integrity: sha512-zK+QqpWOWj5Q8BAUSaJGJokTpY4YYeOqKNuBQA2TQdIUCU5FmeOqw4R0bEfi+w+UUXUDfeuJilx3Gac8b/kryQ==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      '@llm-ui/react': 0.13.0(react@18.2.0)
-      mdast-util-from-markdown: 2.0.0
-      mdast-util-gfm: 3.0.0
-      mdast-util-to-markdown: 2.1.0
-      micromark-extension-gfm: 3.0.0
-      react: 18.2.0
-      remeda: 1.57.0
-      unist-util-visit: 5.0.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@llm-ui/react@0.13.0(react@18.2.0):
-    resolution: {integrity: sha512-Ht4i1K64p2fdD3iigu4miNIZy+QhqoiyCNRuMHBtfB1jPcsEgH1JKfLt8Dqh/DnQxfptOObYGyeMqqhi26px2g==}
-    peerDependencies:
-      react: ^18.0.0
-    dependencies:
-      react: 18.2.0
-      remeda: 1.57.0
-    dev: false
-
-  /@llm-ui/shared@0.13.0(react@18.2.0):
-    resolution: {integrity: sha512-NNHvcFpt5hXx3VW6MrvKFPdETutdv/a6vTeY7B7GDLu6UkVFAhDwlKeRIw4BUd66v/zlGXvbf1mZPW62Fez6lg==}
-    dependencies:
-      '@llm-ui/react': 0.13.0(react@18.2.0)
-    transitivePeerDependencies:
-      - react
-    dev: false
-
   /@manypkg/find-root@1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
     dependencies:
@@ -3375,6 +3306,15 @@ packages:
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dev: true
+
+  /@prettier/sync@0.5.2(prettier@3.2.5):
+    resolution: {integrity: sha512-Yb569su456XNx5BsH/Vyem7xD6g/y9iLmLUzRKM1a/dhU/D7HqqvkAG72znulXlMXztbV0iiu9O5AL8K98TzZQ==}
+    peerDependencies:
+      prettier: '*'
+    dependencies:
+      make-synchronized: 0.2.9
+      prettier: 3.2.5
+    dev: false
 
   /@radix-ui/number@1.0.1:
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
@@ -9483,6 +9423,10 @@ packages:
       semver: 6.3.1
     dev: false
 
+  /make-synchronized@0.2.9:
+    resolution: {integrity: sha512-4wczOs8SLuEdpEvp3vGo83wh8rjJ78UsIk7DIX5fxdfmfMJGog4bQzxfvOwq7Q3yCHLC4jp1urPHIxRS/A93gA==}
+    dev: false
+
   /map-obj@1.0.1:
     resolution: {integrity: sha512-7N/q3lyZ+LVCp7PzuxrJr4KMbBE2hW7BT7YNia330OFxIf4d3r5zVpicP2650l7CPN6RM9zOJRl3NGpqSiw3Eg==}
     engines: {node: '>=0.10.0'}
@@ -11122,7 +11066,6 @@ packages:
     resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
 
   /pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}

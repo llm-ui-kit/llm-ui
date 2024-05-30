@@ -1,3 +1,10 @@
+import {
+  csvBlockExample,
+  csvBlockPrompt,
+  type CsvBlockOptions,
+} from "@llm-ui/csv";
+import prettier from "@prettier/sync";
+
 export const markdownImports = `import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { type LLMOutputComponent } from "@llm-ui/react";
@@ -175,7 +182,7 @@ const step3Comment =
 
 export const fullQuickStart = `${markdownAndCodeblockImports}\n\n${step1Comment}\n\n${markdownComponent}\n\n${step2Comment}\n\n${codeblockComponent}\n\n${step3Comment}\n\n${llmUiOutputUsage}\n\nexport default Example`;
 
-export const customJsonSchema = `// buttonsSchema.ts
+export const jsonSchema = `// buttonsSchema.ts
 import z from "zod";
 
 const buttonsSchema = z.object({
@@ -184,13 +191,15 @@ const buttonsSchema = z.object({
 });
 `;
 
-export const customButtonsComponent = `import { parseJson5 } from "@llm-ui/json";
+export const jsonComponent = `import { parseJson5 } from "@llm-ui/json";
 import { type LLMOutputComponent } from "@llm-ui/react";
 
+// Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
   if (!blockMatch.isVisible) {
     return null;
   }
+  // use buttonsSchema from step 2
   const { data: buttons, error } = buttonsSchema.safeParse(
     parseJson5(blockMatch.output),
   );
@@ -208,7 +217,7 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
 };
 `;
 
-export const customButtonsUseLlmOutput = `import { markdownLookBack } from "@llm-ui/markdown";
+export const jsonUseLlmOutput = `import { markdownLookBack } from "@llm-ui/markdown";
 import { useLLMOutput, type LLMOutputComponent, useStreamExample } from "@llm-ui/react";
 import parseHtml from "html-react-parser";
 import ReactMarkdown from "react-markdown";
@@ -249,18 +258,20 @@ return (
 
 `;
 
-export const generateButtonsPrompt = `import { jsonBlockPrompt } from "@llm-ui/json";
+export const generateJsonPrompt = `import { jsonBlockPrompt } from "@llm-ui/json";
 
 const prompt = jsonBlockPrompt({
   name: "Button",
-  schema: buttonsSchema, // use schema from step 2
+  schema: buttonsSchema,
   examples: [
     { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
-  ]
-});
-`;
+  ],
+  options: {
+    type: "buttons",
+  },
+});`;
 
-export const fullCustomQuickStart = `import { jsonBlock, jsonBlockPrompt, parseJson5 } from "@llm-ui/json";
+export const fullJsonQuickStart = `import { jsonBlock, jsonBlockPrompt, parseJson5 } from "@llm-ui/json";
 import { markdownLookBack } from "@llm-ui/markdown";
 import {
   useLLMOutput,
@@ -360,3 +371,64 @@ const Example = () => {
 
 export default Example;
 `;
+
+export const csvComponent = `import { type LLMOutputComponent } from "@llm-ui/react";
+
+// Customize this component with your own styling
+const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
+  if (!blockMatch.isVisible) {
+    return null;
+  }
+  const [_type, ...buttons] = parseCsv(blockMatch.output, options);
+
+  return (
+    <div>
+      {buttons.map((buttonText, index) => (
+        <button key={index}>{buttonText}</button>
+      ))}
+    </div>
+  );
+};
+`;
+
+export const getCsvPromptOptions = (
+  options: CsvBlockOptions = { type: "buttons" },
+) => ({
+  type: "buttons",
+  name: "Buttons",
+  examples: [["Button 1", "Button 2"]],
+  options,
+});
+
+export const fullCsvOptions = {
+  type: "buttons",
+  delimiter: ";",
+  startChar: "[",
+  endChar: "]",
+};
+
+export const generateCsvPromptCode = (
+  options: CsvBlockOptions = { type: "buttons" },
+) =>
+  prettier.format(
+    `import { csvBlockPrompt } from "@llm-ui/csv";
+
+const prompt = csvBlockPrompt(${JSON.stringify(getCsvPromptOptions(options))});`,
+    { parser: "typescript", printWidth: 60 },
+  );
+
+export const getCsvPrompt = (options: CsvBlockOptions | undefined) =>
+  csvBlockPrompt(getCsvPromptOptions(options));
+
+export const generateCsvExampleCode = (
+  options: CsvBlockOptions = { type: "buttons" },
+) =>
+  prettier.format(
+    `import { csvBlockExample } from "@llm-ui/csv";
+
+const prompt = csvBlockExample(["Button 1", "Button 2"], ${JSON.stringify(options)});`,
+    { parser: "typescript", printWidth: 60 },
+  );
+
+export const getCsvExample = (options: CsvBlockOptions = { type: "buttons" }) =>
+  csvBlockExample(["Button 1", "Button 2"], options);

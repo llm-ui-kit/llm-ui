@@ -11,16 +11,19 @@ import {
   llmUiOutputQuickStart,
   llmUiOutputQuickStartStep,
   fullCustomQuickStart,
-  customJsonSchema,
-  customButtonsComponent,
-  customButtonsUseLlmOutput,
-  generateButtonsPrompt,
+  jsonUseLlmOutput,
+  csvComponent,
+  generateCsvPromptCode,
+  fullCsvOptions,
+  getCsvPrompt,
+  generateCsvExampleCode,
+  getCsvExample,
 } from "../../../snippets/quickStart";
 import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
 import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
 import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
 import { examplesUrl } from "@/constants/constants";
-import { buttonPrompt } from "@/components/examples/examples";
+import { buttonCsvPrompt } from "@/components/examples/examples";
 
 Allow LLMs to reply with CSV, which can be rendered as custom components in your application.
 
@@ -62,7 +65,7 @@ Create a component to render markdown using `react-markdown`.
 
 ## Step 2: Create a custom block component
 
-<CodeBlock code={customButtonsComponent} lang="tsx" />
+<CodeBlock code={csvComponent} lang="tsx" />
 <CopyDocsContainer>
   <CopyExampleButton toCopy={fullCustomQuickStart} />
 </CopyDocsContainer>
@@ -71,7 +74,7 @@ Create a component to render markdown using `react-markdown`.
 
 Now we’ve created our components, we’re ready to use useLLMOutput to render language model output which contains markdown and buttons components.
 
-<CodeBlock code={customButtonsUseLlmOutput} lang="tsx" />
+<CodeBlock code={jsonUseLlmOutput} lang="tsx" />
 <CopyDocsContainer>
   <CopyExampleButton toCopy={fullCustomQuickStart} />
 </CopyDocsContainer>
@@ -80,11 +83,11 @@ Now we’ve created our components, we’re ready to use useLLMOutput to render 
 
 Generate the prompt for your JSON block:
 
-<CodeBlock code={generateButtonsPrompt} lang="tsx" />
+<CodeBlock code={generateCsvPromptCode(fullCsvOptions)} lang="tsx" />
 
 Generates:
 
-<CodeBlock code={buttonPrompt} />
+<CodeBlock code={getCsvPrompt(fullCsvOptions)} />
 
 You can also hardcode the prompt into your application.
 
@@ -92,11 +95,11 @@ You can also hardcode the prompt into your application.
 
 <CodeBlockInline>
 
-Default options:
-
 ```tsx
 {
+  // Required:
   type: "buttons", // the first item in the CSV
+  // Optional, defaults:
   startChar: "⦅",
   endChar: "⦆",
   delimiter: ",", // the seperator between items
@@ -220,57 +223,23 @@ You can use `visibleIndexes` with `allIndexesVisible: false` to determine which 
 
 Returns a full prompt to send to the LLM.
 
-<CodeBlockInline>
+<CodeBlock code={generateCsvPromptCode(fullCsvOptions)} lang="tsx" />
 
-```tsx
-import { csvBlockPrompt } from "@llm-ui/csv";
+Generates:
 
-csvBlockPrompt({
-  name: "Button",
-  examples: [
-    ["Button 1", "Button 2"]
-  ],
-  options: {
-    type: "buttons",
-    startChar: "【",
-    endChar: "】",
-    delimiter: ",",
-  },
-});
-// =>
-"
-You can respond with a Button component by wrapping a , separated string in ⦅⦆ tags.
+<CodeBlock code={getCsvPrompt(fullCsvOptions)} />
 
-Examples:
-⦅buttons,Button 1,Button2⦆
-"
-```
-
-</CodeBlockInline>
+You can also hardcode the prompt into your application.
 
 ## `csvBlockExample`
 
-Generates a single CSV block usage example.
+Returns a single CSV block usage example.
 
-<CodeBlockInline>
+<CodeBlock code={generateCsvExampleCode(fullCsvOptions)} lang="tsx" />
 
-```tsx
-import { csvBlockExample } from "@llm-ui/csv";
+Generates:
 
-jsonBlockExample({
-  example: ["Button 1", "Button 2"],
-  options: {
-    type: "buttons",
-    startChar: "【",
-    endChar: "】",
-    delimiter: ",",
-  },
-});
-// =>
-⦅buttons,Button 1,Button2⦆
-```
-
-</CodeBlockInline>
+<CodeBlock code={getCsvExample(fullCsvOptions)} />
 
 # CSV block functions
 
@@ -278,15 +247,14 @@ jsonBlockExample({
 
 Returns a CSV block object to be used by [`useLLMOutput`](/docs/llm-output-hook#blocks-object).
 
-```
+```typescript
 import { csvBlock } from "@llm-ui/csv";
 
 const options = {
   type: "buttons", // the first item in the CSV
-  startChar: "【",
-  endChar: "】",
-  delimiter: ",",
-  allIndexesVisible: true,
+  delimiter: ";",
+  startChar: "[",
+  endChar: "]",
 };
 
 csvBlock(options);
@@ -305,7 +273,7 @@ Accepts [options](#options) parameter.
 
 Finds a [complete CSV block](/docs/llm-output-hook#blocks-object) in a string.
 
-Example:
+For example:
 
 ```
 ⦅buttons,Button 1,Button2⦆
@@ -317,7 +285,7 @@ Accepts [options](#options) parameter.
 
 Find a [partial CSV block](/docs/llm-output-hook#blocks-object) in a string.
 
-Example:
+For example:
 
 ```
 ⦅buttons,Button 1,But
