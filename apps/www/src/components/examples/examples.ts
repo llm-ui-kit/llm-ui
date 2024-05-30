@@ -1,4 +1,3 @@
-import { csvBlockPrompt } from "@llm-ui/csv";
 import { jsonBlockPrompt } from "@llm-ui/json";
 import { stringToTokenArray, type TokenWithDelay } from "@llm-ui/react";
 import { buttonsSchema } from "./buttonsSchema";
@@ -66,14 +65,6 @@ export const buttonJsonPrompt = jsonBlockPrompt({
   examples: [
     { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
   ],
-  options: {
-    type: "buttons",
-  },
-});
-
-export const buttonCsvPrompt = csvBlockPrompt({
-  name: "Button",
-  examples: [["Button 1", "Button 2"]],
   options: {
     type: "buttons",
   },

@@ -23,7 +23,6 @@ import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
 import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
 import CopyOrGithub from "@/components/content/CopyOrGithub.astro";
 import { examplesUrl } from "@/constants/constants";
-import { buttonCsvPrompt } from "@/components/examples/examples";
 
 Allow LLMs to reply with CSV, which can be rendered as custom components in your application.
 
@@ -247,7 +246,7 @@ Generates:
 
 Returns a CSV block object to be used by [`useLLMOutput`](/docs/llm-output-hook#blocks-object).
 
-```typescript
+```tsx
 import { csvBlock } from "@llm-ui/csv";
 
 const options = {
