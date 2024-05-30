@@ -154,8 +154,8 @@ export const Chat = () => {
                 placeholder="System prompt"
                 rows={1}
                 value={systemMessage}
-                style={{ height: 21 }}
-                minHeight={21}
+                style={{ height: 36 }}
+                minHeight={36}
                 maxHeight={200}
                 onChange={(e) => {
                   setSystemMessage(e.target.value);
@@ -167,6 +167,15 @@ export const Chat = () => {
         </div>
         <div className="bg-background w-full flex flex-col overflow-hidden focus-within:border-white relative px-3 py-1 shadow-lg mb-6 sm:rounded-xl sm:border md:py-3 max-w-2xl mx-auto">
           <AutosizeTextarea
+            onKeyDown={(e) => {
+              if (isLoading) {
+                return;
+              }
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+              }
+            }}
             placeholder="Message ChatGPT"
             value={input}
             rows={1}
