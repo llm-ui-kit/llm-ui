@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import type { APIRoute } from "astro";
 import OpenAI from "openai";
@@ -23,15 +25,24 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
   const { apiKey, messages, model } = result.data;
-  const openai = new OpenAI({
-    apiKey,
-  });
-  const completion = await openai.chat.completions.create({
-    model,
-    messages: messages,
-    stream: true,
-  });
-  const stream = OpenAIStream(completion);
+  try {
+    const openai = new OpenAI({
+      apiKey,
+    });
+    const completion = await openai.chat.completions.create({
+      model,
+      messages: messages,
+      stream: true,
+    });
+    const stream = OpenAIStream(completion);
 
-  return new StreamingTextResponse(stream);
+    return new StreamingTextResponse(stream);
+  } catch (error: any) {
+    return new Response(
+      JSON.stringify({
+        message: `${error.message}`,
+      }),
+      { status: 500 },
+    );
+  }
 };

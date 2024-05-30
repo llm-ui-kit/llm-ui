@@ -37,6 +37,8 @@
 
     --radius: 0.5rem;
     --ds-shadow-border: 0 0 0 1px rgba(0, 0, 0, 0.08);
+
+    --warning: 0 96% 50%;
   }
 
   .dark {
@@ -73,6 +75,8 @@
 
     --radius: 0.5rem;
     --ds-shadow-border: 0 0 0 1px hsla(0, 0%, 100%, 0.145);
+
+    --warning: 0 96% 50%;
   }
 }
 
