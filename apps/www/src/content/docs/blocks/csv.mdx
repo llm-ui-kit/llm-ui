@@ -18,6 +18,7 @@ import {
   getCsvPrompt,
   generateCsvExampleCode,
   getCsvExample,
+  csvUseLlmOutput,
 } from "../../../snippets/quickStart";
 import CopyDocsContainer from "@/components/content/CopyDocsContainer.astro";
 import CopyExampleButton from "@/components/content/CopyExampleButton.astro";
@@ -75,7 +76,7 @@ Create a component to render markdown using `react-markdown`.
 
 Now we’ve created our components, we’re ready to use useLLMOutput to render language model output which contains markdown and buttons components.
 
-<CodeBlock code={jsonUseLlmOutput} lang="tsx" />
+<CodeBlock code={csvUseLlmOutput} lang="tsx" />
 <CopyDocsContainer>
   <CopyExampleButton toCopy={fullCsvQuickStart} />
 </CopyDocsContainer>

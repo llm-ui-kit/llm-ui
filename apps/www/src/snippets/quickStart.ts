@@ -372,13 +372,14 @@ export default Example;
 `;
 
 export const csvComponent = `import { type LLMOutputComponent } from "@llm-ui/react";
+import { parseCsv } from '@llm-ui/csv'
 
 // Customize this component with your own styling
 const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
   if (!blockMatch.isVisible) {
     return null;
   }
-  const [_type, ...buttons] = parseCsv(blockMatch.output, options);
+  const [_type, ...buttons] = parseCsv(blockMatch.output, {type: 'buttons'});
 
   return (
     <div>
@@ -387,7 +388,47 @@ const ButtonsComponent: LLMOutputComponent = ({ blockMatch }) => {
       ))}
     </div>
   );
+};`;
+
+export const csvUseLlmOutput = `import { csvBlock } from "@llm-ui/csv";
+import { markdownLookBack } from "@llm-ui/markdown";
+import {
+  useLLMOutput,
+  useStreamExample,
+} from "@llm-ui/react";
+
+const example = \`
+Buttons
+⦅buttons,Button 1,Button2⦆
+\`;
+
+const Example = () => {
+  const { isStreamFinished, output } = useStreamExample(example);
+
+  const { blockMatches } = useLLMOutput({
+    llmOutput: output,
+    blocks: [
+      {
+        ...csvBlock({type: 'buttons'}), // from step 2
+        component: ButtonsComponent,
+      },
+    ],
+    fallbackBlock: {
+      component: MarkdownComponent, // from step 1
+      lookBack: markdownLookBack(),
+    },
+    isStreamFinished,
+  });
+  return (
+    <div>
+      {blockMatches.map((blockMatch, index) => {
+        const Component = blockMatch.block.component;
+        return <Component key={index} blockMatch={blockMatch} />;
+      })}
+    </div>
+  );
 };
+
 `;
 
 export const getCsvPromptOptions = (
@@ -521,6 +562,4 @@ const Example = () => {
 };
 
 export default Example;
-
-
 `;
