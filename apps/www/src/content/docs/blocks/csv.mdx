@@ -116,6 +116,8 @@ You can also hardcode the prompt into your application.
 
 ### `allIndexesVisible: true`
 
+`type` is always skipped.
+
 Generates 'visibleText' as the reponse is parsed:
 
 <CodeBlockInline>
@@ -135,16 +137,20 @@ blockMatch.visibleText;
 // => "Bu"
 // then
 // => "But"
+// later..
+// => "Button 1But"
 
 blockMatch.isVisible;
 // => true
 
 blockMatch.output;
-// => "B"
+// => "buttons,B"
 // then
-// => "Bu"
+// => "buttons,Bu"
 // then
-// => "But"
+// => "buttons,But"
+// later..
+// => "buttons,Button 1,But"
 ```
 
 </CodeBlockInline>
@@ -213,7 +219,7 @@ You can use `visibleIndexes` with `allIndexesVisible: false` to determine which 
 {
   type: "buttons",
   allIndexesVisible: false,
-  visibleIndexes: [0], // only the first item is 'visible'
+  visibleIndexes: [1], // only the first item (after the type) is 'visible'
 }
 ```
 

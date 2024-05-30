@@ -434,7 +434,6 @@ const Example = () => {
 export const getCsvPromptOptions = (
   options: CsvBlockOptions = { type: "buttons" },
 ) => ({
-  type: "buttons",
   name: "Buttons",
   examples: [["Button 1", "Button 2"]],
   options,
