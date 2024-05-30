@@ -129,7 +129,7 @@ You can also hardcode the prompt into your
   // Optional, defaults:
   startChar: "【",
   endChar: "】",
-  typeKey: "type" // the key in the JSON object which determines the block type e.g. {"type": "buttons"}
+  typeKey: "type", // the key in the JSON object which determines the block type e.g. {"type": "buttons"}
   defaultVisible: false, // See below
   visibleKeyPaths: [], // See below
   invisibleKeyPaths: [], // See below
@@ -275,7 +275,7 @@ jsonBlockPrompt({
   schema: z.object({
     type: z.literal("buttons"),
     buttons: z.array(z.object({ text: z.string() })),
-  });
+  }),
   examples: [
     { type: "buttons", buttons: [{ text: "Button 1" }, { text: "Button 2" }] },
   ],
