@@ -10,7 +10,7 @@ import {
   codeblockQuickstart,
   llmUiOutputQuickStart,
   llmUiOutputQuickStartStep,
-  fullCustomQuickStart,
+  fullCsvQuickStart,
   jsonUseLlmOutput,
   csvComponent,
   generateCsvPromptCode,
@@ -38,10 +38,7 @@ Allow LLMs to reply with CSV, which can be rendered as custom components in your
 
 # Quick start
 
-<CopyOrGithub
-  codeToCopy={fullCustomQuickStart}
-  githubUrl={`${examplesUrl}/csv`}
-/>
+<CopyOrGithub codeToCopy={fullCsvQuickStart} githubUrl={`${examplesUrl}/csv`} />
 
 ## Install dependencies
 
@@ -63,7 +60,7 @@ Create a component to render markdown using `react-markdown`.
 
 <CodeBlock code={markdownQuickStart} lang="tsx" />
 <CopyDocsContainer>
-  <CopyExampleButton toCopy={fullCustomQuickStart} />
+  <CopyExampleButton toCopy={fullCsvQuickStart} />
   Read more in the [markdown block docs](/docs/blocks/markdown)
 </CopyDocsContainer>
 
@@ -71,7 +68,7 @@ Create a component to render markdown using `react-markdown`.
 
 <CodeBlock code={csvComponent} lang="tsx" />
 <CopyDocsContainer>
-  <CopyExampleButton toCopy={fullCustomQuickStart} />
+  <CopyExampleButton toCopy={fullCsvQuickStart} />
 </CopyDocsContainer>
 
 ## Step 3: Render custom blocks with llm-ui
@@ -80,7 +77,7 @@ Now we’ve created our components, we’re ready to use useLLMOutput to render 
 
 <CodeBlock code={jsonUseLlmOutput} lang="tsx" />
 <CopyDocsContainer>
-  <CopyExampleButton toCopy={fullCustomQuickStart} />
+  <CopyExampleButton toCopy={fullCsvQuickStart} />
 </CopyDocsContainer>
 
 ## Step 4: Prompt LLM with your custom block
