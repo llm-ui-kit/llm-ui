@@ -49,6 +49,7 @@ const ChatMessage: React.FC<{
 };
 
 export const Chat = () => {
+  const messagesDivRef = React.useRef<HTMLInputElement>(null);
   const storage = !IS_SERVER ? window.localStorage : null;
   const [currentApiKey, setCurrentApiKey] = React.useState<string>(
     storage?.getItem(CHAT_OPENAI_API_KEY) ?? "",
@@ -75,6 +76,12 @@ export const Chat = () => {
       },
     });
 
+  const scrollToBottom = () => {
+    if (messagesDivRef.current) {
+      messagesDivRef.current.scrollTop = messagesDivRef.current.scrollHeight;
+    }
+  };
+
   const handleUpdateApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newApiKey = e.target.value;
     setCurrentApiKey(newApiKey);
@@ -82,6 +89,12 @@ export const Chat = () => {
 
   const handleUpdateChatGptModel = (value: string) => {
     setSelectedChatGptModel(value);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
+    scrollToBottom();
+    handleSubmit(e);
   };
 
   const messagesWithoutSystem = messages.slice(1);
@@ -114,14 +127,14 @@ export const Chat = () => {
       </div>
       <form
         autoComplete="off"
-        onSubmit={(e) => {
-          storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
-          handleSubmit(e);
-        }}
+        onSubmit={onSubmit}
         className="flex flex-col flex-1"
       >
         {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
-        <div className="flex flex-1 flex-col-reverse overflow-y-auto pt-4 pb-3">
+        <div
+          ref={messagesDivRef}
+          className="flex flex-1 flex-col-reverse overflow-y-auto pt-4 pb-3"
+        >
           {/* This div takes up all the remaining space so the messages start at the top */}
           <div className="flex flex-1" />
           {reversedMessagesWithoutSystem.map((message, index) => {
@@ -173,7 +186,7 @@ export const Chat = () => {
               }
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
-                handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+                onSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
               }
             }}
             placeholder="Message ChatGPT"
