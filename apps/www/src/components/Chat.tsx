@@ -9,6 +9,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/Select";
 import { Icons } from "@/icons";
+import { getMaskedKey } from "@/lib/maskKey";
 import { cn } from "@/lib/utils";
 import { nanoid, type Message } from "ai";
 import { useChat } from "ai/react";
@@ -85,6 +86,8 @@ export const Chat = () => {
   const handleUpdateApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newApiKey = e.target.value;
     setCurrentApiKey(newApiKey);
+
+    e.currentTarget.blur();
   };
 
   const handleUpdateChatGptModel = (value: string) => {
@@ -119,10 +122,24 @@ export const Chat = () => {
           </SelectContent>
         </Select>
         <Input
-          value={currentApiKey}
+          value={getMaskedKey(currentApiKey)}
+          onKeyDown={(e) => {
+            if (!((e.ctrlKey || e.metaKey) && e.key === "v")) {
+              e.preventDefault();
+            }
+          }}
+          onFocus={(e) => {
+            e.currentTarget.select();
+          }}
           className="focus-within:border-white"
-          placeholder="Enter Your API Key"
+          placeholder="Paste Your API Key"
           onChange={handleUpdateApiKey}
+          onDragStart={(e) => e.preventDefault()}
+          onDragOver={(e) => e.preventDefault()}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            e.currentTarget.focus();
+          }}
         />
       </div>
       <form
