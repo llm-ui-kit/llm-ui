@@ -1,5 +1,13 @@
 # @llm-ui/csv
 
+## 0.13.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @llm-ui/react@0.13.1
+  - @llm-ui/shared@0.13.1
+
 ## 0.13.0
 
 ### Minor Changes
