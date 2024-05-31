@@ -1,2 +1,2 @@
-export { regexMatcher } from "./regexMatcher";
+export { regexMatcher, regexMatcherGlobal } from "./regexMatcher";
 export { removeStartEndChars } from "./removeStartEndChars";

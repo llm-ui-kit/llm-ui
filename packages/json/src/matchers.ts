@@ -1,5 +1,5 @@
 import { LLMOutputMatcher } from "@llm-ui/react";
-import { regexMatcher, removeStartEndChars } from "@llm-ui/shared";
+import { regexMatcherGlobal, removeStartEndChars } from "@llm-ui/shared";
 import {
   JsonBlockOptions,
   JsonBlockOptionsComplete,
@@ -12,18 +12,20 @@ const findJsonBlock = (
   options: JsonBlockOptionsComplete,
 ): LLMOutputMatcher => {
   const { type } = options;
-  const matcher = regexMatcher(regex);
+  const matcher = regexMatcherGlobal(regex);
   return (llmOutput: string) => {
-    const match = matcher(llmOutput);
-    if (!match) {
+    const matches = matcher(llmOutput);
+    if (matches.length === 0) {
       return undefined;
     }
-    const block = parseJson5(removeStartEndChars(match.outputRaw, options));
+    return matches.find((match) => {
+      const block = parseJson5(removeStartEndChars(match.outputRaw, options));
 
-    if (!block || block[options.typeKey] !== type) {
-      return undefined;
-    }
-    return match;
+      if (!block || block[options.typeKey] !== type) {
+        return undefined;
+      }
+      return match;
+    });
   };
 };
 
@@ -32,7 +34,7 @@ export const findCompleteJsonBlock = (
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
   const { startChar, endChar } = options;
-  const regex = new RegExp(`${startChar}([\\s\\S]*?)${endChar}`);
+  const regex = new RegExp(`${startChar}([\\s\\S]*?)${endChar}`, "g");
   return findJsonBlock(regex, options);
 };
 
@@ -41,6 +43,6 @@ export const findPartialJsonBlock = (
 ): LLMOutputMatcher => {
   const options = getOptions(userOptions);
   const { startChar } = options;
-  const regex = new RegExp(`${startChar}([\\s\\S]*)`);
+  const regex = new RegExp(`${startChar}([\\s\\S]*)`, "g");
   return findJsonBlock(regex, options);
 };
