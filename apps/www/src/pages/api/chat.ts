@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import type { APIRoute } from "astro";
 import OpenAI from "openai";
@@ -11,6 +13,13 @@ const chatRequestSchema = z.object({
   model: z.string(),
 });
 
+const getApiKey = (apiKey: string, model: string) => {
+  if (model === "gpt-3.5-turbo" && apiKey.length === 0) {
+    return process.env.OPENAI_API_KEY;
+  }
+  return apiKey;
+};
+
 export const POST: APIRoute = async ({ request }) => {
   const jsonBody = await request.json();
   const result = chatRequestSchema.safeParse(jsonBody);
@@ -23,15 +32,24 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
   const { apiKey, messages, model } = result.data;
-  const openai = new OpenAI({
-    apiKey,
-  });
-  const completion = await openai.chat.completions.create({
-    model,
-    messages: messages,
-    stream: true,
-  });
-  const stream = OpenAIStream(completion);
+  try {
+    const openai = new OpenAI({
+      apiKey: getApiKey(apiKey, model),
+    });
+    const completion = await openai.chat.completions.create({
+      model,
+      messages: messages,
+      stream: true,
+    });
+    const stream = OpenAIStream(completion);
 
-  return new StreamingTextResponse(stream);
+    return new StreamingTextResponse(stream);
+  } catch (error: any) {
+    return new Response(
+      JSON.stringify({
+        message: `${error.message}`,
+      }),
+      { status: 500 },
+    );
+  }
 };

@@ -9,6 +9,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/Select";
 import { Icons } from "@/icons";
+import { getMaskedKey } from "@/lib/maskKey";
 import { cn } from "@/lib/utils";
 import { nanoid, type Message } from "ai";
 import { useChat } from "ai/react";
@@ -57,6 +58,7 @@ export const Chat = () => {
   const [selectedChatGptModel, setSelectedChatGptModel] =
     React.useState<string>(CHAT_GPT_MODELS[0]);
   const [systemMessage, setSystemMessage] = React.useState<string>("");
+  const [error, setError] = React.useState<Error>();
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/chat",
@@ -74,6 +76,9 @@ export const Chat = () => {
         apiKey: currentApiKey,
         model: selectedChatGptModel,
       },
+      onError: (error: Error) => {
+        setError(JSON.parse(error.message));
+      },
     });
 
   const scrollToBottom = () => {
@@ -85,6 +90,8 @@ export const Chat = () => {
   const handleUpdateApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newApiKey = e.target.value;
     setCurrentApiKey(newApiKey);
+
+    e.currentTarget.blur();
   };
 
   const handleUpdateChatGptModel = (value: string) => {
@@ -92,6 +99,7 @@ export const Chat = () => {
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    setError(undefined);
     storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
     scrollToBottom();
     handleSubmit(e);
@@ -119,10 +127,24 @@ export const Chat = () => {
           </SelectContent>
         </Select>
         <Input
-          value={currentApiKey}
+          value={getMaskedKey(currentApiKey)}
+          onKeyDown={(e) => {
+            if (!((e.ctrlKey || e.metaKey) && e.key === "v")) {
+              e.preventDefault();
+            }
+          }}
+          onFocus={(e) => {
+            e.currentTarget.select();
+          }}
           className="focus-within:border-white"
-          placeholder="Enter Your API Key"
+          placeholder="Paste Your API Key"
           onChange={handleUpdateApiKey}
+          onDragStart={(e) => e.preventDefault()}
+          onDragOver={(e) => e.preventDefault()}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            e.currentTarget.focus();
+          }}
         />
       </div>
       <form
@@ -178,33 +200,40 @@ export const Chat = () => {
             </div>
           </div>
         </div>
-        <div className="bg-background w-full flex flex-row overflow-hidden focus-within:border-white relative px-3 py-1 shadow-lg mb-6 sm:rounded-xl sm:border md:py-3 max-w-2xl mx-auto">
-          <AutosizeTextarea
-            onKeyDown={(e) => {
-              if (isLoading) {
-                return;
-              }
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                onSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
-              }
-            }}
-            placeholder="Message ChatGPT"
-            value={input}
-            rows={1}
-            style={{ height: 42 }}
-            minHeight={42}
-            maxHeight={200}
-            onChange={handleInputChange}
-            className="focus-visible:ring-0 pr-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
-          />
-          <Button
-            disabled={isLoading || !input}
-            className="self-end"
-            type="submit"
-          >
-            Run <Icons.return className="size-4 ml-2" />
-          </Button>
+        <div className="flex flex-col w-full max-w-2xl mx-auto">
+          {error && (
+            <div className="text-destructive text-center mb-4 font-bold p-2">
+              <p>{error?.message}</p>
+            </div>
+          )}
+          <div className="bg-background flex flex-row overflow-hidden focus-within:border-white px-3 py-1 shadow-lg mb-6 sm:rounded-xl sm:border md:py-3">
+            <AutosizeTextarea
+              onKeyDown={(e) => {
+                if (isLoading) {
+                  return;
+                }
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  onSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+                }
+              }}
+              placeholder="Message ChatGPT"
+              value={input}
+              rows={1}
+              style={{ height: 42 }}
+              minHeight={42}
+              maxHeight={200}
+              onChange={handleInputChange}
+              className="focus-visible:ring-0 pr-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
+            />
+            <Button
+              disabled={isLoading || !input}
+              className="self-end"
+              type="submit"
+            >
+              Run <Icons.return className="size-4 ml-2" />
+            </Button>
+          </div>
         </div>
       </form>
     </div>
