@@ -21,6 +21,8 @@ const IS_SERVER = typeof window === "undefined";
 const CHAT_OPENAI_API_KEY = "CHAT_OPENAI_API_KEY";
 const CHAT_GPT_MODELS = ["gpt-3.5-turbo", "gpt-4-turbo", "gpt-4o"];
 
+const CONTAINER_CLASSES = "mx-auto max-w-2xl container";
+
 const ChatMessage: React.FC<{
   message: Message;
   isStreamFinished: boolean;
@@ -108,8 +110,10 @@ export const Chat = () => {
   const messagesWithoutSystem = messages.slice(1);
   const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
   return (
-    <div className="flex bg-muted/50 relative overflow-y-hidden w-full h-[calc(100vh-theme(spacing.18)-2px)]">
-      <div className="absolute top-4 left-4">
+    <div className="flex flex-col bg-muted/50 relative overflow-y-hidden w-full h-[calc(100vh-theme(spacing.18)-2px)]">
+      <div
+        className={`flex flex-col items-start min-[1150px]:absolute min-[1150px]:pl-4 pt-4 max-[1150px]:mx-auto max-[1150px]:max-w-2xl max-[1150px]:container`}
+      >
         <Select onValueChange={handleUpdateChatGptModel}>
           <SelectTrigger className="w-[180px] mb-4">
             {selectedChatGptModel}
@@ -168,20 +172,22 @@ export const Chat = () => {
 
             return (
               <div key={message.id}>
-                <div className="shrink-0 bg-border h-[1px] w-full my-4 mx-auto max-w-2xl"></div>
+                <div
+                  className={`shrink-0 bg-border h-[1px] w-full my-4 ${CONTAINER_CLASSES}`}
+                ></div>
                 <ChatMessage
                   key={message.id}
                   message={message}
                   isStreamFinished={isStreamFinished}
                   className={cn(
-                    "mx-auto max-w-2xl",
+                    CONTAINER_CLASSES,
                     role === "user" && "justify-end",
                   )}
                 />
               </div>
             );
           })}
-          <div className="flex gap-2 flex-col max-w-2xl mx-auto w-full">
+          <div className={`flex gap-2 flex-col w-full ${CONTAINER_CLASSES}`}>
             <div className="bg-background overflow-hidden focus-within:border-white px-1 py-1 shadow-lg mb-2 sm:rounded-xl sm:border md:py-1 ">
               <AutosizeTextarea
                 id="system-instructions"
@@ -200,7 +206,7 @@ export const Chat = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full max-w-2xl mx-auto">
+        <div className={`flex flex-col w-full ${CONTAINER_CLASSES}`}>
           {error && (
             <div className="text-destructive text-center mb-4 font-bold p-2">
               <p>{error?.message}</p>

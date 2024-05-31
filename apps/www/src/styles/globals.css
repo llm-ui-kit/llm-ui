@@ -185,6 +185,10 @@
   display: none;
 }
 
+html.dark {
+  color-scheme: dark;
+}
+
 html.dark pre {
   background-color: theme("colors.background.200") !important;
 }
