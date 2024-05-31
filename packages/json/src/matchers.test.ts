@@ -63,6 +63,36 @@ describe("findCompleteJsonBlock", () => {
       },
     },
     {
+      name: "full custom same component twice",
+      input: '【{type:"buttons"}】【{type:"buttons"}】',
+      options: { type: "buttons" },
+      expected: {
+        startIndex: 0,
+        endIndex: 18,
+        outputRaw: '【{type:"buttons"}】',
+      },
+    },
+    {
+      name: "full custom 2 different components",
+      input: '【{type:"buttons"}】【{type:"somethingelse"}】',
+      options: { type: "buttons" },
+      expected: {
+        startIndex: 0,
+        endIndex: 18,
+        outputRaw: '【{type:"buttons"}】',
+      },
+    },
+    {
+      name: "full custom 2 different components reversed",
+      input: '【{type:"somethingelse"}】【{type:"buttons"}】',
+      options: { type: "buttons" },
+      expected: {
+        startIndex: 24,
+        endIndex: 42,
+        outputRaw: '【{type:"buttons"}】',
+      },
+    },
+    {
       name: "full custom component with fields",
       input: '【{type:"buttons", something: "something", else: "else"}】',
       options: { type: "buttons" },
