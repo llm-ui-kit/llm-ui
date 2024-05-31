@@ -79,6 +79,11 @@ export const Chat = () => {
       onError: (error: Error) => {
         setError(JSON.parse(error.message));
       },
+      onResponse: (response) => {
+        if (response.status === 200) {
+          return setError(undefined);
+        }
+      },
     });
 
   const scrollToBottom = () => {

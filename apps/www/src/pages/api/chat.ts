@@ -25,9 +25,13 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
   const { apiKey, messages, model } = result.data;
+  const isGptThreePointFive = model === "gpt-3.5-turbo";
   try {
     const openai = new OpenAI({
-      apiKey,
+      apiKey:
+        isGptThreePointFive && apiKey.length === 0
+          ? process.env.OPENAI_API_KEY
+          : apiKey,
     });
     const completion = await openai.chat.completions.create({
       model,
