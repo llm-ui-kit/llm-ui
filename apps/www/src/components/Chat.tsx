@@ -79,11 +79,6 @@ export const Chat = () => {
       onError: (error: Error) => {
         setError(JSON.parse(error.message));
       },
-      onResponse: (response) => {
-        if (response.status === 200) {
-          return setError(undefined);
-        }
-      },
     });
 
   const scrollToBottom = () => {
@@ -104,6 +99,7 @@ export const Chat = () => {
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    setError(undefined);
     storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
     scrollToBottom();
     handleSubmit(e);
