@@ -13,6 +13,13 @@ const chatRequestSchema = z.object({
   model: z.string(),
 });
 
+const getApiKey = (apiKey: string, model: string) => {
+  if (model === "gpt-3.5-turbo" && apiKey.length === 0) {
+    return process.env.OPENAI_API_KEY;
+  }
+  return apiKey;
+};
+
 export const POST: APIRoute = async ({ request }) => {
   const jsonBody = await request.json();
   const result = chatRequestSchema.safeParse(jsonBody);
@@ -25,13 +32,9 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
   const { apiKey, messages, model } = result.data;
-  const isGptThreePointFive = model === "gpt-3.5-turbo";
   try {
     const openai = new OpenAI({
-      apiKey:
-        isGptThreePointFive && apiKey.length === 0
-          ? process.env.OPENAI_API_KEY
-          : apiKey,
+      apiKey: getApiKey(apiKey, model),
     });
     const completion = await openai.chat.completions.create({
       model,
