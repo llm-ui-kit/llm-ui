@@ -82,6 +82,36 @@ describe("findCompleteCsvBlock", () => {
       },
     },
     {
+      name: "two same type blocks",
+      input: "⦅t,a,b,c⦆⦅t,a,b,c⦆",
+      options: { type: "t" },
+      expected: {
+        startIndex: 0,
+        endIndex: 9,
+        outputRaw: "⦅t,a,b,c⦆",
+      },
+    },
+    {
+      name: "two different blocks",
+      input: "⦅t,a,b,c⦆⦅z,a,b,c⦆",
+      options: { type: "t" },
+      expected: {
+        startIndex: 0,
+        endIndex: 9,
+        outputRaw: "⦅t,a,b,c⦆",
+      },
+    },
+    {
+      name: "two different blocks reversed",
+      input: "⦅z,a,b,c⦆⦅t,a,b,c⦆",
+      options: { type: "t" },
+      expected: {
+        startIndex: 9,
+        endIndex: 18,
+        outputRaw: "⦅t,a,b,c⦆",
+      },
+    },
+    {
       name: "not a block",
       input: "```\nhello\n```",
       options: { type: "t" },
