@@ -202,7 +202,7 @@ export const Chat = () => {
         </div>
         <div className="flex flex-col w-full max-w-2xl mx-auto">
           {error && (
-            <div className="text-warning text-center mb-4 font-bold p-2">
+            <div className="text-destructive text-center mb-4 font-bold p-2">
               <p>{error?.message}</p>
             </div>
           )}
