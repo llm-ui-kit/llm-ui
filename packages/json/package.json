@@ -1,6 +1,6 @@
 {
   "name": "@llm-ui/json",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "type": "module",
   "license": "MIT",
   "main": "./dist/index.cjs",

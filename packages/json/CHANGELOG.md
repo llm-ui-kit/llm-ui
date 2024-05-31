@@ -1,5 +1,17 @@
 # @llm-ui/custom
 
+## 0.13.1
+
+### Patch Changes
+
+- [#251](https://github.com/llm-ui-kit/llm-ui/pull/251) [`88eb937`](https://github.com/llm-ui-kit/llm-ui/commit/88eb9376a6c79f95805ab7b5d539ac39b8da6108) Thanks [@richardgill](https://github.com/richardgill)! - Multiple JSON blocks bug fixes
+
+  Sometimes two JSON blocks of different types would not be found properly. This has been fixed.
+
+- Updated dependencies []:
+  - @llm-ui/react@0.13.1
+  - @llm-ui/shared@0.13.1
+
 ## 0.13.0
 
 ### Patch Changes
