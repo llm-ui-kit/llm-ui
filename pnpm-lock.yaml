@@ -74,6 +74,9 @@ importers:
       '@astrojs/mdx':
         specifier: ^2.2.0
         version: 2.2.2(astro@4.5.12)
+      '@astrojs/node':
+        specifier: ^8.2.5
+        version: 8.2.5(astro@4.5.12)
       '@astrojs/react':
         specifier: ^3.1.0
         version: 3.1.0(@types/react-dom@18.2.23)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)(vite@5.2.7)
@@ -1517,6 +1520,18 @@ packages:
       source-map: 0.7.4
       unist-util-visit: 5.0.0
       vfile: 6.0.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@astrojs/node@8.2.5(astro@4.5.12):
+    resolution: {integrity: sha512-IdVD4dBNyg+ScmCATZ0FM7vNLAHq0TSdiJ3LpR4jcWIUhpN1ps5Jg+9CfzMaLmCCe/SJUZejK5EnzqUJdnGYyg==}
+    peerDependencies:
+      astro: ^4.2.0
+    dependencies:
+      astro: 4.5.12(typescript@5.4.3)
+      send: 0.18.0
+      server-destroy: 1.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -11866,6 +11881,10 @@ packages:
       send: 0.18.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /server-destroy@1.0.1:
+    resolution: {integrity: sha512-rb+9B5YBIEzYcD6x2VKidaa+cqYBJQKnU4oe4E3ANwRRN56yk/ua1YCJT1n21NTS8w6CcOclAKNP3PhdCXKYtQ==}
     dev: false
 
   /server-only@0.0.1:
