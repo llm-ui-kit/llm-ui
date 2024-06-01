@@ -1,5 +1,11 @@
 # @llm-ui/react
 
+## 0.13.2
+
+### Patch Changes
+
+- [#261](https://github.com/llm-ui-kit/llm-ui/pull/261) [`9360d30`](https://github.com/llm-ui-kit/llm-ui/commit/9360d3049cfa669a133ef673fb5bb220c5823f09) Thanks [@richardgill](https://github.com/richardgill)! - Performance improvement: Only log console warnings in dev
+
 ## 0.13.1
 
 ## 0.13.0
