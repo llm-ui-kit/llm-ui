@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "pages/api/chat.ts": {
-      "maxDuration": 60
-    }
-  },
   "rewrites": [
     {
       "source": "/ingest/static/:path(.*)",

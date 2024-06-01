@@ -34,5 +34,7 @@ export default defineConfig({
     simpleStackForm(),
   ],
   output: "hybrid",
-  adapter: vercel(),
+  adapter: vercel({
+    maxDuration: 60,
+  }),
 });
