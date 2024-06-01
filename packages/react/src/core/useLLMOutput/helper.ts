@@ -191,7 +191,10 @@ const matchesWithLookback = ({
       isStreamFinished: isStreamFinished,
       output: match.match.outputRaw,
     });
-    if (visibleText.length > localVisibleTextLengthTarget) {
+    if (
+      visibleText.length > localVisibleTextLengthTarget &&
+      process.env.NODE_ENV !== "production"
+    ) {
       console.warn(
         `Visible text length exceeded target for: ${visibleText} has length ${visibleText.length} target: ${localVisibleTextLengthTarget}. Raw output: ${llmOutputRaw}`,
       );

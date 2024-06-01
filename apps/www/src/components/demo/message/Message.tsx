@@ -4,7 +4,7 @@ import { buttonsJsonBlock as createJsonButtonsBlock } from "@/components/example
 import { codeBlockBlock } from "@/components/examples/CodeBlock";
 import { Markdown } from "@/components/examples/Markdown";
 import { markdownLookBack } from "@llm-ui/markdown";
-import { useLLMOutput } from "@llm-ui/react";
+import { throttleBasic, useLLMOutput } from "@llm-ui/react";
 
 const buttonsJsonBlock = createJsonButtonsBlock();
 const buttonsCsvBlock = createCsvButtonsBlock();
@@ -21,6 +21,7 @@ export const Message: React.FC<{
     },
     blocks: [codeBlockBlock, buttonsJsonBlock, buttonsCsvBlock],
     isStreamFinished,
+    throttle: throttleBasic({ targetBufferChars: 60 }),
   });
 
   // min-w-0 stops overflows
