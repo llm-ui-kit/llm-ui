@@ -24,7 +24,7 @@ export const CodeBlockContainer: React.FC<{
   }, [children]);
 
   return (
-    <div ref={containerRef} className={cn(className, "relative group")}>
+    <div ref={containerRef} className={cn(className, "relative group w-full")}>
       <CopyButton
         size={"sm"}
         variant={"secondary"}
