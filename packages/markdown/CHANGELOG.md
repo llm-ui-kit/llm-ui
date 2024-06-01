@@ -1,5 +1,12 @@
 # @llm-ui/markdown
 
+## 0.13.3
+
+### Patch Changes
+
+- Updated dependencies [[`7f81520`](https://github.com/llm-ui-kit/llm-ui/commit/7f81520aa8805ec991d37c37b8d4d8ebb959eaed)]:
+  - @llm-ui/react@0.13.3
+
 ## 0.13.2
 
 ### Patch Changes
