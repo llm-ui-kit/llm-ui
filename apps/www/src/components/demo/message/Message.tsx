@@ -23,8 +23,9 @@ export const Message: React.FC<{
     isStreamFinished,
   });
 
+  // min-w-0 stops overflows
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col min-w-0">
       {blockMatches.map((blockMatch, index) => {
         const Component = blockMatch.block.component;
         return <Component key={index} blockMatch={blockMatch} />;

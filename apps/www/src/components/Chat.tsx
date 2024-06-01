@@ -38,8 +38,9 @@ const ChatMessage: React.FC<{
       )}
       <div
         className={cn(
-          "flex flex-1 space-y-2 overflow-x-hidden",
+          "flex space-y-2 min-w-0", // min-w-0 stops overflows
           role === "user" && "bg-background rounded-lg px-4 py-1",
+          role !== "user" && "flex-1",
         )}
       >
         <MessageComponent
@@ -162,7 +163,7 @@ export const Chat = () => {
           className="flex flex-1 flex-col-reverse overflow-y-auto pt-4 pb-3"
         >
           {/* This div takes up all the remaining space so the messages start at the top */}
-          <div className="flex flex-1 flex-col" />
+          <div className="flex flex-1 flex-col" />{" "}
           {reversedMessagesWithoutSystem.map((message, index) => {
             const { role } = message;
             const isStreamFinished =
