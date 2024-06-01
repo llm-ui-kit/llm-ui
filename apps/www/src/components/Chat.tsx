@@ -101,11 +101,11 @@ export const Chat = () => {
     setSelectedChatGptModel(value);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.FormEvent) => {
     setError(undefined);
     storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
     scrollToBottom();
-    handleSubmit(e);
+    handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
   };
 
   const messagesWithoutSystem = messages.slice(1);
@@ -152,11 +152,7 @@ export const Chat = () => {
           }}
         />
       </div>
-      <form
-        autoComplete="off"
-        onSubmit={onSubmit}
-        className="flex flex-col flex-1 overflow-y-hidden"
-      >
+      <div className="flex flex-col flex-1 overflow-y-hidden">
         {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
         <div
           ref={messagesDivRef}
@@ -236,13 +232,13 @@ export const Chat = () => {
             <Button
               disabled={isLoading || !input}
               className="self-end"
-              type="submit"
+              onClick={onSubmit}
             >
               Run <Icons.return className="size-4 ml-2" />
             </Button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
