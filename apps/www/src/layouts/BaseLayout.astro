@@ -2,7 +2,6 @@
 import "@fontsource/inter";
 import BaseHead from "@/components/layout/BaseHead.astro";
 import PostHog from "@/components/Posthog.astro";
-import TailwindIndicator from "@/components/TailwindIndicator.astro";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -23,7 +22,6 @@ const { title, description, bodyClass } = Astro.props;
   </head>
   <body class={cn("flex flex-col min-h-screen", bodyClass)}>
     <slot />
-    <TailwindIndicator />
     <Toaster richColors client:only="react" />
   </body>
 </html>
