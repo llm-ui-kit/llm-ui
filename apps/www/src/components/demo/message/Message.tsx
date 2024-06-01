@@ -24,7 +24,7 @@ export const Message: React.FC<{
   });
 
   return (
-    <div className="flex flex-1">
+    <div className="flex flex-1 flex-col">
       {blockMatches.map((blockMatch, index) => {
         const Component = blockMatch.block.component;
         return <Component key={index} blockMatch={blockMatch} />;

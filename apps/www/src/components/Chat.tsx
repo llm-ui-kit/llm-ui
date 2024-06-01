@@ -162,7 +162,7 @@ export const Chat = () => {
           className="flex flex-1 flex-col-reverse overflow-y-auto pt-4 pb-3"
         >
           {/* This div takes up all the remaining space so the messages start at the top */}
-          <div className="flex flex-1" />
+          <div className="flex flex-1 flex-col" />
           {reversedMessagesWithoutSystem.map((message, index) => {
             const { role } = message;
             const isStreamFinished =
