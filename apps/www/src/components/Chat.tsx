@@ -38,7 +38,7 @@ const ChatMessage: React.FC<{
       )}
       <div
         className={cn(
-          "space-y-2 overflow-x-hidden",
+          "flex flex-1 space-y-2 overflow-x-hidden",
           role === "user" && "bg-background rounded-lg px-4 py-1",
         )}
       >
