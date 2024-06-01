@@ -1,6 +1,6 @@
 {
   "functions": {
-    "chat.ts": {
+    "apps/www/src/pages/api/chat.ts": {
       "maxDuration": 60
     }
   },
