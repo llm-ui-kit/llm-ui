@@ -193,7 +193,7 @@ const matchesWithLookback = ({
     });
     if (
       visibleText.length > localVisibleTextLengthTarget &&
-      process.env.NODE_ENV !== "production"
+      process.env.NODE_ENV === "development"
     ) {
       console.warn(
         `Visible text length exceeded target for: ${visibleText} has length ${visibleText.length} target: ${localVisibleTextLengthTarget}. Raw output: ${llmOutputRaw}`,
