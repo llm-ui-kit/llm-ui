@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { throttleBasic } from "../../throttle";
 import { matchBlocks } from "./helper";
 import {
@@ -59,17 +59,21 @@ export const useLLMOutput = ({
   const visibleTextIncrementsRef = useRef<number[]>([]);
   const visibleTextLengthTargetRef = useRef<number>(0);
 
+  const memoMatchBlocks = useMemo(() => {
+    return matchBlocks({
+      llmOutput,
+      blocks,
+      fallbackBlock,
+      isStreamFinished,
+    });
+  }, [llmOutput, isStreamFinished]);
+
   const [{ blockMatches, ...state }, setState] = useState<
     Omit<UseLLMOutputReturn, "restart">
   >({
     ...initialState,
     finishCount: 0,
-    blockMatches: matchBlocks({
-      llmOutput,
-      blocks,
-      fallbackBlock,
-      isStreamFinished,
-    }),
+    blockMatches: memoMatchBlocks,
   });
 
   const reset = useCallback(() => {
