@@ -111,7 +111,7 @@ export const Chat = () => {
   const messagesWithoutSystem = messages.slice(1);
   const reversedMessagesWithoutSystem = R.reverse(messagesWithoutSystem);
   return (
-    <div className="flex flex-col bg-muted/50 relative w-full h-[calc(100vh-theme(spacing.18)-2px)]">
+    <div className="flex flex-col bg-muted/50 relative w-full h-full">
       <div
         className={`flex flex-col items-start min-[1150px]:absolute min-[1150px]:pl-4 pt-4 max-[1150px]:mx-auto max-[1150px]:max-w-2xl max-[1150px]:container`}
       >
