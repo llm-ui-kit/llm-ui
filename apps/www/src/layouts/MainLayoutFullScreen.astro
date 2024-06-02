@@ -16,7 +16,7 @@ const { title, description, mainClass, bodyClass } = Astro.props;
   title={title}
   description={description}
   bodyClass={cn("h-screen", bodyClass)}
-  mainClass={cn("flex flex-1 flex-col", mainClass)}
+  mainClass={cn("flex flex-1 flex-col overflow-y-hidden", mainClass)}
 >
   <slot />
 </MainLayout>
