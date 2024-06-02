@@ -209,7 +209,7 @@ export const Chat = () => {
               <p>{error?.message}</p>
             </div>
           )}
-          <div className="bg-background flex flex-row overflow-hidden focus-within:border-white px-3 py-1 shadow-lg mb-6 sm:rounded-xl sm:border md:py-3">
+          <div className="bg-background flex flex-row overflow-hidden focus-within:border-white px-3 py-1 shadow-lg mb-2 sm:mb-6 sm:rounded-xl sm:border md:py-3">
             <AutosizeTextarea
               onKeyDown={(e) => {
                 if (isLoading) {
