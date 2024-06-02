@@ -111,14 +111,19 @@ export const Chat = () => {
   };
 
   const handleUpdateChatGptModel = (value: string) => {
+    setMissingApiKey(false);
     setSelectedChatGptModel(value);
   };
 
   const onSubmit = (e: React.FormEvent) => {
-    if (currentApiKey.length === 0) {
+    if (
+      currentApiKey.length === 0 &&
+      selectedChatGptModel != CHAT_GPT_MODELS[0]
+    ) {
       setMissingApiKey(true);
     } else {
       setError(undefined);
+      setMissingApiKey(false);
       storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
       scrollToBottom();
       handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
