@@ -27,7 +27,7 @@ import { codeBlockBlock } from "./CodeBlock";
 import { Controls } from "./Controls";
 import { Markdown } from "./Markdown";
 import { NeverShrinkContainer } from "./NeverShrinkContainer";
-import { defaultExampleProbs } from "./contants";
+import { defaultExampleProbs } from "./constants";
 import { getThrottle, type ThrottleType } from "./throttle";
 import type { Tab } from "./types";
 
