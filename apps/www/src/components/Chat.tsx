@@ -65,6 +65,7 @@ export const Chat = () => {
   const [selectedChatGptModel, setSelectedChatGptModel] =
     React.useState<string>(CHAT_GPT_MODELS[0]);
   const [systemMessage, setSystemMessage] = React.useState<string>("");
+  const [missingApiKey, setMissingApiKey] = React.useState<boolean>(false);
   const [error, setError] = React.useState<Error>();
 
   React.useEffect(() => {
@@ -110,14 +111,23 @@ export const Chat = () => {
   };
 
   const handleUpdateChatGptModel = (value: string) => {
+    setMissingApiKey(false);
     setSelectedChatGptModel(value);
   };
 
   const onSubmit = (e: React.FormEvent) => {
-    setError(undefined);
-    storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
-    scrollToBottom();
-    handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+    if (
+      currentApiKey.length === 0 &&
+      selectedChatGptModel != CHAT_GPT_MODELS[0]
+    ) {
+      setMissingApiKey(true);
+    } else {
+      setError(undefined);
+      setMissingApiKey(false);
+      storage?.setItem(CHAT_OPENAI_API_KEY, currentApiKey);
+      scrollToBottom();
+      handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+    }
   };
 
   const messagesWithoutSystem = messages.slice(1);
@@ -143,27 +153,39 @@ export const Chat = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Input
-          value={getMaskedKey(currentApiKey)}
-          onKeyDown={(e) => {
-            if (!((e.ctrlKey || e.metaKey) && e.key === "v")) {
-              e.preventDefault();
-            }
-          }}
-          onFocus={(e) => {
-            e.currentTarget.select();
-          }}
-          autoComplete="off"
-          className="focus-within:border-white"
-          placeholder="Paste Your API Key"
-          onChange={handleUpdateApiKey}
-          onDragStart={(e) => e.preventDefault()}
-          onDragOver={(e) => e.preventDefault()}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            e.currentTarget.focus();
-          }}
-        />
+        {selectedChatGptModel !== CHAT_GPT_MODELS[0] && (
+          <>
+            <Input
+              value={getMaskedKey(currentApiKey)}
+              onKeyDown={(e) => {
+                if (!((e.ctrlKey || e.metaKey) && e.key === "v")) {
+                  e.preventDefault();
+                }
+              }}
+              onFocus={(e) => {
+                e.currentTarget.select();
+              }}
+              autoComplete="off"
+              className={cn(
+                "focus-within:border-white",
+                missingApiKey && "border-destructive",
+              )}
+              placeholder="Paste Your API Key"
+              onChange={handleUpdateApiKey}
+              onDragStart={(e) => e.preventDefault()}
+              onDragOver={(e) => e.preventDefault()}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                e.currentTarget.focus();
+              }}
+            />
+            {missingApiKey && (
+              <label className="w-full text-center mt-2 text-destructive">
+                Please paste an API key
+              </label>
+            )}
+          </>
+        )}
       </div>
       <div className="flex flex-col flex-1 overflow-y-hidden">
         {/* Col-reverse is used to enable automatic scrolling as content populates the div */}

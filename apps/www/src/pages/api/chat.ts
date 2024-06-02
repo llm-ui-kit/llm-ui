@@ -14,7 +14,7 @@ const chatRequestSchema = z.object({
 });
 
 const getApiKey = (apiKey: string, model: string) => {
-  if (model === "gpt-3.5-turbo" && apiKey.length === 0) {
+  if (model === "gpt-3.5-turbo") {
     return process.env.OPENAI_API_KEY;
   }
   return apiKey;
