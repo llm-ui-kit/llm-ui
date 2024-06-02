@@ -1,7 +1,7 @@
 import { jsonBlockPrompt } from "@llm-ui/json";
 import { stringToTokenArray, type TokenWithDelay } from "@llm-ui/react";
 import { buttonsSchema } from "./buttonsSchema";
-import { defaultExampleProbs } from "./contants";
+import { HIDDEN_CHAR, defaultExampleProbs } from "./constants";
 
 const ctaBeforePause = `# llm-ui
 
@@ -19,7 +19,7 @@ Lets add a custom button:
 
 This works by prompting the LLM to let it know it can use buttons by replying like this:
 \`\`\`plain
-【{type:"buttons",buttons:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
+【{type:"${HIDDEN_CHAR}buttons",buttons:[{text:"Star ⭐"}, {text:"Confetti 🎉"}]}】
 \`\`\`
 
 ^^^ llm-ui also has code blocks with syntax highlighting for over 100 languages with [Shiki](https://shiki.style/).
