@@ -2,7 +2,7 @@
 
 The React library for LLMs.
 
-<img src="/media/demo.webp" width="500" height="300" />
+<img src="/media/demo.webp" width="500"  />
 
 [Documentation](http://llm-ui.com/docs)
 
