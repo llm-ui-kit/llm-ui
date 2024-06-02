@@ -19,6 +19,16 @@ module.exports = {
       },
       height: {
         18: "4.5rem",
+        screen: [
+          "100vh /* fallback for Opera, IE etc. */",
+          "100dvh /* correct height for mobile */",
+        ],
+      },
+      minHeight: {
+        screen: [
+          "100vh /* fallback for Opera, IE etc. */",
+          "100dvh /* correct height for mobile */",
+        ],
       },
       spacing: {
         18: "4.5rem",

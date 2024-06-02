@@ -1,0 +1,22 @@
+---
+import { cn } from "@/lib/utils";
+import MainLayout from "./MainLayout.astro";
+
+type Props = {
+  title: string;
+  description?: string;
+  mainClass?: string;
+  bodyClass?: string;
+};
+
+const { title, description, mainClass, bodyClass } = Astro.props;
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  bodyClass={cn("h-screen", bodyClass)}
+  mainClass={cn("flex flex-1 flex-col overflow-y-hidden", mainClass)}
+>
+  <slot />
+</MainLayout>
