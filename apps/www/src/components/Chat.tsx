@@ -143,27 +143,29 @@ export const Chat = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Input
-          value={getMaskedKey(currentApiKey)}
-          onKeyDown={(e) => {
-            if (!((e.ctrlKey || e.metaKey) && e.key === "v")) {
+        {selectedChatGptModel !== CHAT_GPT_MODELS[0] && (
+          <Input
+            value={getMaskedKey(currentApiKey)}
+            onKeyDown={(e) => {
+              if (!((e.ctrlKey || e.metaKey) && e.key === "v")) {
+                e.preventDefault();
+              }
+            }}
+            onFocus={(e) => {
+              e.currentTarget.select();
+            }}
+            autoComplete="off"
+            className="focus-within:border-white"
+            placeholder="Paste Your API Key"
+            onChange={handleUpdateApiKey}
+            onDragStart={(e) => e.preventDefault()}
+            onDragOver={(e) => e.preventDefault()}
+            onMouseDown={(e) => {
               e.preventDefault();
-            }
-          }}
-          onFocus={(e) => {
-            e.currentTarget.select();
-          }}
-          autoComplete="off"
-          className="focus-within:border-white"
-          placeholder="Paste Your API Key"
-          onChange={handleUpdateApiKey}
-          onDragStart={(e) => e.preventDefault()}
-          onDragOver={(e) => e.preventDefault()}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            e.currentTarget.focus();
-          }}
-        />
+              e.currentTarget.focus();
+            }}
+          />
+        )}
       </div>
       <div className="flex flex-col flex-1 overflow-y-hidden">
         {/* Col-reverse is used to enable automatic scrolling as content populates the div */}
