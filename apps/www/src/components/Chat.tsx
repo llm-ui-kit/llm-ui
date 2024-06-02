@@ -15,7 +15,10 @@ import { nanoid, type Message } from "ai";
 import { useChat } from "ai/react";
 import * as React from "react";
 import * as R from "remeda";
-import { AutosizeTextarea } from "./ui/custom/AutosizeTextarea";
+import {
+  AutosizeTextarea,
+  type AutosizeTextAreaRef,
+} from "./ui/custom/AutosizeTextarea";
 
 const IS_SERVER = typeof window === "undefined";
 const CHAT_OPENAI_API_KEY = "CHAT_OPENAI_API_KEY";
@@ -54,6 +57,7 @@ const ChatMessage: React.FC<{
 
 export const Chat = () => {
   const messagesDivRef = React.useRef<HTMLInputElement>(null);
+  const messageTextAreaRef = React.useRef<AutosizeTextAreaRef>(null);
   const storage = !IS_SERVER ? window.localStorage : null;
   const [currentApiKey, setCurrentApiKey] = React.useState<string>(
     storage?.getItem(CHAT_OPENAI_API_KEY) ?? "",
@@ -62,6 +66,14 @@ export const Chat = () => {
     React.useState<string>(CHAT_GPT_MODELS[0]);
   const [systemMessage, setSystemMessage] = React.useState<string>("");
   const [error, setError] = React.useState<Error>();
+
+  React.useEffect(() => {
+    const textArea = messageTextAreaRef.current?.textArea;
+    if (textArea) {
+      textArea.focus();
+    }
+  }, []);
+
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/chat",
@@ -141,6 +153,7 @@ export const Chat = () => {
           onFocus={(e) => {
             e.currentTarget.select();
           }}
+          autoComplete="off"
           className="focus-within:border-white"
           placeholder="Paste Your API Key"
           onChange={handleUpdateApiKey}
@@ -191,6 +204,7 @@ export const Chat = () => {
                 disabled={messages.length > 1}
                 placeholder="System prompt"
                 rows={1}
+                autoComplete="off"
                 value={systemMessage}
                 style={{ height: 36 }}
                 minHeight={36}
@@ -211,6 +225,7 @@ export const Chat = () => {
           )}
           <div className="bg-background flex flex-row overflow-hidden focus-within:border-white px-3 py-1 shadow-lg mb-2 sm:mb-6 sm:rounded-xl sm:border md:py-3">
             <AutosizeTextarea
+              ref={messageTextAreaRef}
               onKeyDown={(e) => {
                 if (isLoading) {
                   return;
@@ -220,6 +235,7 @@ export const Chat = () => {
                   onSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
                 }
               }}
+              autoComplete="off"
               placeholder="Message ChatGPT"
               value={input}
               rows={1}
