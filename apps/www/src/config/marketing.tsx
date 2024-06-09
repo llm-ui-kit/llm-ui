@@ -9,8 +9,8 @@ export const marketingConfig: MarketingConfig = {
       isDesktopOnly: true,
     },
     {
-      title: "Changelog",
-      href: `${siteConfig.links.github}/releases`,
+      title: "Demo",
+      href: `/chat`,
     },
 
     {
