@@ -31,7 +31,7 @@ import { defaultExampleProbs } from "./constants";
 import { getThrottle, type ThrottleType } from "./throttle";
 import type { Tab } from "./types";
 
-const LOOP_DELAY = 3000;
+const LOOP_DELAY = 5000;
 
 const SideBySideContainer: React.FC<{
   className?: string;
