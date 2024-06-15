@@ -18,10 +18,12 @@ import * as R from "remeda";
 import {
   AutosizeTextarea,
   type AutosizeTextAreaRef,
-} from "./ui/custom/AutosizeTextarea";
+} from "../ui/custom/AutosizeTextarea";
+import { EmptyState } from "./EmptyState";
 
 const IS_SERVER = typeof window === "undefined";
 const CHAT_OPENAI_API_KEY = "CHAT_OPENAI_API_KEY";
+const LAST_MODEL = "LAST_MODEL";
 const CHAT_GPT_MODELS = ["gpt-3.5-turbo", "gpt-4-turbo", "gpt-4o"];
 
 const CONTAINER_CLASSES = "mx-auto max-w-2xl container";
@@ -56,6 +58,7 @@ const ChatMessage: React.FC<{
 };
 
 export const Chat = () => {
+  const submitButtonRef = React.useRef<HTMLButtonElement>(null);
   const messagesDivRef = React.useRef<HTMLInputElement>(null);
   const messageTextAreaRef = React.useRef<AutosizeTextAreaRef>(null);
   const storage = !IS_SERVER ? window.localStorage : null;
@@ -63,7 +66,7 @@ export const Chat = () => {
     storage?.getItem(CHAT_OPENAI_API_KEY) ?? "",
   );
   const [selectedChatGptModel, setSelectedChatGptModel] =
-    React.useState<string>(CHAT_GPT_MODELS[0]);
+    React.useState<string>(storage?.getItem(LAST_MODEL) ?? CHAT_GPT_MODELS[0]);
   const [systemMessage, setSystemMessage] = React.useState<string>("");
   const [missingApiKey, setMissingApiKey] = React.useState<boolean>(false);
   const [error, setError] = React.useState<Error>();
@@ -113,9 +116,11 @@ export const Chat = () => {
   const handleUpdateChatGptModel = (value: string) => {
     setMissingApiKey(false);
     setSelectedChatGptModel(value);
+    storage?.setItem(LAST_MODEL, value);
   };
 
   const onSubmit = (e: React.FormEvent) => {
+    console.log("zzz subbmitting");
     if (
       currentApiKey.length === 0 &&
       selectedChatGptModel != CHAT_GPT_MODELS[0]
@@ -194,7 +199,23 @@ export const Chat = () => {
           className="flex flex-1 flex-col-reverse overflow-y-auto pt-4 pb-3"
         >
           {/* This div takes up all the remaining space so the messages start at the top */}
-          <div className="flex flex-1 flex-col" />{" "}
+          <div className={`flex flex-1 flex-col justify-center`}>
+            {messages.length <= 1 && (
+              <EmptyState
+                onExampleClick={(example) => {
+                  setSystemMessage(example.systemPrompt);
+                  if (example.userPrompt) {
+                    handleInputChange({
+                      target: { value: example.userPrompt },
+                    } as React.ChangeEvent<HTMLTextAreaElement>);
+                    if (submitButtonRef?.current) {
+                      setTimeout(() => submitButtonRef?.current?.click(), 1);
+                    }
+                  }
+                }}
+              />
+            )}
+          </div>
           {reversedMessagesWithoutSystem.map((message, index) => {
             const { role } = message;
             const isStreamFinished =
@@ -268,6 +289,7 @@ export const Chat = () => {
               className="focus-visible:ring-0 pr-0 resize-none bg-transparent focus-within:outline-none sm:text-base border-none"
             />
             <Button
+              ref={submitButtonRef}
               disabled={isLoading || !input}
               className="self-end"
               onClick={onSubmit}
