@@ -1,5 +1,5 @@
 import { LookBack } from "@llm-ui/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { jsonBlockLookBack } from "./lookback";
 import { JsonBlockOptions } from "./options";
 
@@ -191,4 +191,26 @@ describe("jsonBlockLookBack", () => {
       });
     },
   );
+});
+
+describe("jsonBlockLookBack prototype pollution", () => {
+  afterEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    delete (Object.prototype as any).polluted;
+  });
+
+  it("does not pollute Object.prototype from LLM output (#301)", () => {
+    const output = JSON.stringify({
+      type: "x",
+      ["__proto%5f%5f"]: { polluted: "PWNED" },
+    });
+    jsonBlockLookBack({ type: "x", defaultVisible: true })({
+      output,
+      isStreamFinished: true,
+      visibleTextLengthTarget: 1000,
+      isComplete: true,
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(({} as any).polluted).toBeUndefined();
+  });
 });

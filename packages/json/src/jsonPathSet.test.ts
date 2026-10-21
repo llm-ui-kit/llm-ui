@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { setJsonPath } from "./jsonPathSet";
 
 type TestCase = {
@@ -42,5 +42,37 @@ describe("setJsonPath", () => {
       setJsonPath(jsonObject, path, newValue);
       expect(jsonObject).toEqual(expected);
     });
+  });
+});
+
+describe("setJsonPath prototype pollution", () => {
+  afterEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    delete (Object.prototype as any).polluted;
+  });
+
+  it("does not decode a percent-encoded __proto__ key", () => {
+    const jsonObject = JSON.parse('{"__proto%5f%5f": {"polluted": "a"}}');
+    setJsonPath(jsonObject, "$.__proto%5f%5f.polluted", "PWNED");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(({} as any).polluted).toBeUndefined();
+    expect(jsonObject["__proto%5f%5f"].polluted).toBe("PWNED");
+  });
+
+  it("keeps a plain __proto__ key as an own property", () => {
+    const jsonObject = JSON.parse('{"__proto__": {"polluted": "a"}}');
+    setJsonPath(jsonObject, "$.__proto__.polluted", "PWNED");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(({} as any).polluted).toBeUndefined();
+    expect(
+      Object.getOwnPropertyDescriptor(jsonObject, "__proto__")?.value,
+    ).toEqual({ polluted: "PWNED" });
+  });
+
+  it("sets keys containing % literally", () => {
+    const jsonObject = { "100%": "a", "a%20b": "b" };
+    setJsonPath(jsonObject, "$.100%", "c");
+    setJsonPath(jsonObject, "$.a%20b", "d");
+    expect(jsonObject).toEqual({ "100%": "c", "a%20b": "d" });
   });
 });
