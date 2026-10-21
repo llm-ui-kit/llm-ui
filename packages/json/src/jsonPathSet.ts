@@ -1,6 +1,12 @@
 import { JSONPath } from "jsonpath-plus";
 import { JsonAny } from "./types";
 
+// JSON Pointer (RFC 6901) only escapes "~" and "/". The pointers come from
+// jsonpath-plus and are not URI-encoded, so they must not be URI-decoded:
+// decoding turned keys like "__proto%5f%5f" into "__proto__" (#301).
+const decodeJsonPointerPart = (part: string): string =>
+  part.replace(/~1/g, "/").replace(/~0/g, "~");
+
 /**
  * Sets the value at a specified JSONPath within a JSON object, assuming the path is to a primitive value.
  *
@@ -27,16 +33,15 @@ export const setJsonPath = (
 
     // Traverse to the last object holding the target property
     parts.forEach((part) => {
-      part = decodeURIComponent(part.replace(/~1/g, "/").replace(/~0/g, "~")); // Decode JSON Pointer parts
-      if (!(part in currentObject)) {
+      part = decodeJsonPointerPart(part);
+      // Own properties only, so the traversal can never reach Object.prototype
+      if (!Object.prototype.hasOwnProperty.call(currentObject, part)) {
         throw new Error("Intermediate path not found in the object.");
       }
       currentObject = currentObject[part];
     });
 
-    lastPart = decodeURIComponent(
-      lastPart.replace(/~1/g, "/").replace(/~0/g, "~"),
-    ); // Decode JSON Pointer last part
+    lastPart = decodeJsonPointerPart(lastPart);
     currentObject[lastPart] = value;
   });
 };
